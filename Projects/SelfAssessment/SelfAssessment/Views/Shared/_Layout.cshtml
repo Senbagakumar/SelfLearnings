@@ -1,42 +1,133 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Online Self-Assessment Module for Business Excellence</title>
+    <meta name="description" content="Online Self-Assessment Module for Business Excellence">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" href="~/apple-icon.png">
+    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <link rel="stylesheet" href="~/admin/assets/css/normalize.css">
+    <link rel="stylesheet" href="~/admin/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/admin/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/admin/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/admin/assets/css/flag-icon.min.css">
+    <link rel="stylesheet" href="~/admin/assets/css/cs-skin-elastic.css">
+    <!-- <link rel="stylesheet" href="~/admin/assets/css/bootstrap-select.less"> -->
+    <link href="~/admin/assets/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/admin/assets/css/lib/chosen/chosen.min.css">
+    <link rel="stylesheet" href="~/admin/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
-    <div class="container body-content">
-        @RenderBody()
-        @*<hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>*@
-    </div>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    <aside id="left-panel" class="left-panel">
+        <nav class="navbar navbar-expand-sm navbar-default">
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="./"><img src="~/admin/images/logo.png" alt="Logo"></a>
+                <a class="navbar-brand hidden" href="./"><img src="~/admin/images/logo.png" alt="Logo"></a>
+            </div>
+
+            <div id="main-menu" class="main-menu collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a></li>
+                    <h3 class="menu-title">Master</h3><!-- /.menu-title -->
+                    <li><a href="/Sector/Index"><i class="menu-icon fa fa-laptop"></i>Sector </a></li>
+                    <li><a href="subSector.html"> <i class="menu-icon fa fa-laptop"></i>Sub Sector </a> </li>
+                    <li><a href="revenue.html"> <i class="menu-icon fa fa-laptop"></i>Revenue </a> </li>
+                    <li><a href="typeofServices.html"> <i class="menu-icon fa fa-suitcase"></i>Type Of Services </a> </li>
+
+                    <li><a href="group.html"> <i class="menu-icon fa  fa-users"></i>Group </a> </li>
+                    <!--<li ><a href="question.html"> <i class="menu-icon fa  fa-question"></i>Questions </a> </li>-->
+
+                    <li><a href="emailTemplate.html"> <i class="menu-icon ti-layers-alt"></i>Email Template </a> </li>
+                    <h3 class="menu-title">Assessment</h3><!-- /.menu-title -->
+
+                    <li class="menu-item-has-children  dropdown ">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-stats-up"></i>Manage Assessment</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-pencil"></i><a href="manageAssessment.html">Create Assessment</a></li>
+                            <li><i class="menu-icon fa fa-th-list"></i><a href="listAssessment.html">Assessment List</a></li>
+                            <li><a href="assginQuestion.html"> <i class="menu-icon fa fa-question-circle"></i>Assign Question To Assessment </a> </li>
+                            <li><a href="assignOrganization.html"> <i class="menu-icon fa fa-signal"></i>Assign Organization To Level </a> </li>
+                        </ul>
+                    </li>
+
+                    <h3 class="menu-title">Assessment</h3><!-- /.menu-title -->
+
+                    <li class="menu-item-has-children  dropdown ">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon ti-pie-chart"></i>Reports</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-users"></i><a href="customerWiseReports.html">Customer Wise Report</a></li>
+                            <li><i class="menu-icon fa fa-th-list"></i><a href="sectorwiseReports.html">Sector Wise Report</a></li>
+
+                        </ul>
+                    </li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </nav>
+    </aside><!-- /#left-panel -->
+    <div id="right-panel" class="right-panel">
+        <header id="header" class="header">
+
+            <div class="header-menu">
+
+                <div class="col-sm-7">
+                    <a id="menuToggle" class="menutoggle pull-left"><i class="fa fa fa-tasks"></i></a>
+                    <div class="header-left">
+                        <div class="dropdown for-notification">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-bell"></i>
+                                <span class="count bg-danger">5</span>
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="notification">
+                                <p class="red">You have 3 Notification</p>
+                                <a class="dropdown-item media bg-flat-color-1" href="#">
+                                    <i class="fa fa-check"></i>
+                                    <p>Server #1 overloaded.</p>
+                                </a>
+                                <a class="dropdown-item media bg-flat-color-4" href="#">
+                                    <i class="fa fa-info"></i>
+                                    <p>Server #2 overloaded.</p>
+                                </a>
+                                <a class="dropdown-item media bg-flat-color-5" href="#">
+                                    <i class="fa fa-warning"></i>
+                                    <p>Server #3 overloaded.</p>
+                                </a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-sm-5">
+                    <div class="user-area dropdown float-right">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle" src="~/Admin/images/admin.jpg" alt="User Avatar">
+                        </a>
+
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i> My Profile</a>
+                            <a class="nav-link" href="#"><i class="fa fa-user"></i> Notifications <span class="count">13</span></a>
+                            <a class="nav-link" href="settings.html"><i class="fa fa-cog"></i> Settings</a>
+                            <a class="nav-link" href="#"><i class="fa fa-power-off"></i> Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+        @RenderBody()
+
+    </div>  
     @RenderSection("scripts", required: false)
 </body>
 </html>
