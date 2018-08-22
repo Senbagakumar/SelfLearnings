@@ -10,6 +10,7 @@ namespace SelfAssessment.Models
     {
         public int Id { get; set; }
         public int GroupId { get; set; }
+        public string QuestionCode { get; set; }
         public string QuestionText { get; set; }
         public string QType { get; set; }
         public string QHint { get; set; }
@@ -19,7 +20,7 @@ namespace SelfAssessment.Models
         public string Option4 { get; set; }
         public string Option5 { get; set; }
         public string Answer { get; set; }
-        public int TimerValue { get; set; }
+        public string TimerValue { get; set; }
         public bool Mandatory { get; set; }
     }
 }

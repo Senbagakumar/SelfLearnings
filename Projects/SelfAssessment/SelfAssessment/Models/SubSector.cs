@@ -13,4 +13,12 @@ namespace SelfAssessment.Models
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
     }
+
+    public class UISubSector
+    {
+        public int Id { get; set; }     
+        public string SubSectorName { get; set; }
+        public string SectorName { get; set; }
+
+    }
 }

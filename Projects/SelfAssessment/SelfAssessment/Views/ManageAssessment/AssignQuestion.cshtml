@@ -1,0 +1,369 @@
+﻿
+@{
+    ViewBag.Title = "AssignQuestion";
+}
+
+<h2>AssignQuestion</h2>
+
+<div class="content mt-3">
+
+    <div class="col-md-12" id="divAssignQuestionViewForm" style="display:none;">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">ASSIGN QUESTION TO ASSESSMENT</strong>
+                <button type="button" class="close text-danger" id="frmViewClose"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <div class="row form-group" style="text-align:center;">
+
+                        <div class="col col-md-2">
+                            <label for="text-input" class=" form-control-label">Assessment Name</label>
+                        </div>
+                        <div class="col-12 col-md-3 fontweight700">
+                            : Assessment Name
+                            <input type="hidden" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                        <div class="col col-md-2">
+                            <label for="text-input" class=" form-control-label">Level</label>
+                        </div>
+                        <div class="col-12 col-md-3 fontweight700">
+                            : Level1
+                            <input type="hidden" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+
+                    </div>
+
+
+                    <hr>
+                    <div class="col-md-12" style="margin-bottom:15px;">
+                        <h5 class="text-info" style="text-transform:uppercase; margin-bottom:8px">Group 2 </h5>
+                        <div class="row">
+                            <ul class="list-group list-group-flush " style="text-indent:15px;">
+                                <li class="list-group-item" style="border:0px">
+                                    <b>1. Is the 3TG internationally added to your product ?</b>
+                                </li>
+                                <li class="list-group-item" style="border:0px">
+                                    <b>2. Do you any of the smartlers to your product</b>
+                                </li>
+
+                                <li class="list-group-item" style="border:0px">
+                                    <b>3. Is the 3TG internationally added to your product</b>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="col-md-12" style="margin-bottom:15px;">
+                        <h5 class="text-info" style="text-transform:uppercase; margin-bottom:8px">Group 1 </h5>
+                        <div class="row">
+                            <ul class="list-group list-group-flush" style="text-indent:15px;">
+                                <li class="list-group-item" style="border:0px">
+                                    <b>1. Is the 3TG internationally added to your product ?</b>
+                                </li>
+                                <li class="list-group-item" style="border:0px">
+                                    <b>2. Do you any of the smartlers to your product</b>
+                                </li>
+
+                                <li class="list-group-item" style="border:0px">
+                                    <b>3. Is the 3TG internationally added to your product</b>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnViewClose">Close</button>
+            </div>
+
+        </div>
+
+    </div>
+
+<div class="col-sm-12" id="divAssignQuestionAddEditForm" style="display:none;">
+    <div class="card">
+        <div class="card-header">
+            <strong>ASSIGN QUESTION TO ASSESSMENT</strong>
+
+
+        </div>
+        <div class="card-body card-block">
+            <form action="" method="post" class="form-horizontal">
+
+                <div class="row form-group" style="text-align:center">
+
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
+                    <div class="col-12 col-md-3">
+                        <label for="hf-password" class="fontweight700 form-control-label"> : Assessment Name</label>
+                    </div>
+
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-3">
+                        <select class="form-control">
+                            <option value="0">-Select-</option>
+                            <option value="survey 1" selected>Level 1</option>
+                            <option value="survey 2">Level 2</option>
+                            <option value="survey 3">Level 3</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12 col-md-3">
+                        <button class="btn btn-primary" id="checkAll">Check All</button>
+                        <button class="btn btn-primary" id="uncheckAll">Uncheck All</button>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row form-group">
+                    <div class="col-12 col-md-12" style="margin-left:20px;">
+
+                        <div id="treeview_container" class="hummingbird-treeview well h-scroll-large">
+
+                            <!-- <div id="treeview_container" class="hummingbird-treeview"> -->
+                            <ul id="treeview" class="hummingbird-base">
+                                <li>
+                                    <i class="fa fa-minus"></i>
+                                    <label>
+                                        <input id="node-0" data-id="custom-0" type="checkbox">
+                                        <b class="text-info fontsize18">Group 1 </b>
+                                    </label>
+                                    <ul style="display: block; margin:1em;">
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                main menu which uses lists as its basis. The problem is, the lists are very wide, and they do not indent far enough when expanded. So, this is my problem?
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                The problem is, they do not indent far enough when expanded. So, this is my problem! How do I make the indent amount on lists larger via CSS?
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <i class="fa fa-plus"></i>
+                                    <label>
+                                        <input id="node-1" data-id="custom-1" type="checkbox">
+                                        <b class="text-info fontsize18">Group 2 </b>
+                                    </label>
+                                    <ul style="margin:1em;">
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                The problem is, the lists are very wide, and they do not indent far enough when expanded. So, this is my problem! How do I make the indent
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                have drop down main menu which uses lists as its basis. The problem is, the lists are very wide, and they do not indent far enough when expanded. So, problem!
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-plus"></i>
+                                    <label>
+                                        <input id="node-1" data-id="custom-1" type="checkbox">
+                                        <b class="text-info fontsize18">Group 3 </b>
+                                    </label>
+                                    <ul style="margin:1em;">
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                Question 1
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                Question 2
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <i class="fa fa-plus"></i>
+                                    <label>
+                                        <input id="node-1" data-id="custom-1" type="checkbox">
+                                        <b class="text-info fontsize18">Group 4 </b>
+                                    </label>
+                                    <ul style="margin:1em;">
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                Question 1
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <i class="fa fa-minus"></i>
+                                            <label>
+                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
+                                                Question 2
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" id="frmAddEditClose">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">ASSIGN QUESTION TO ASSESSMENT</strong>
+
+            <button type="button" class="btn btn-success btn-sm " id="btnAddAssignQuestion" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+
+        </div>
+        <div class="card-body">
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Assessment</th>
+                        <th>Level</th>
+                        <th>No Of Group</th>
+                        <th>No Of Questions</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Assessment Name</td>
+                        <td>Level 1</td>
+                        <td>8</td>
+                        <td>50</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssignQuestionEditForm"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssignQuestionViewForm"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Assessment Name</td>
+                        <td>Level 2</td>
+                        <td>9</td>
+                        <td>70</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnQuestionEditForm"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnQuestionViewForm"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Assessment Name</td>
+                        <td>Level 3</td>
+                        <td>4</td>
+                        <td>20</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnQuestionEditForm"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnQuestionViewForm"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>&nbsp;</div>
+</div>
+
+
+
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/admin/assets/js/popper.min.js"></script>
+<script src="~/admin/assets/js/plugins.js"></script>
+<script src="~/admin/assets/js/hummingbird-treeview.js"></script>
+
+<script>
+$("#treeview").hummingbird();
+$( "#checkAll" ).click(function() {
+  $("#treeview").hummingbird("checkAll");
+});
+$( "#uncheckAll" ).click(function() {
+  $("#treeview").hummingbird("uncheckAll");
+});
+$( "#collapseAll" ).click(function() {
+  $("#treeview").hummingbird("collapseAll");
+});
+$( "#checkNode" ).click(function() {
+  $("#treeview").hummingbird("checkNode",{attr:"id",name: "node-0-2-2",expandParents:false});
+});
+
+$(document).ready(function() {
+          //$('#bootstrap-data-table-export').DataTable();
+
+		  $("#btnAddAssignQuestion").click(function(){
+				$("#divAssignQuestionViewForm").hide();
+				$("#divAssignQuestionAddEditForm").show();
+		  });
+
+		  $("#btnAssignQuestionEditForm").click(function(){
+				$("#divAssignQuestionViewForm").hide();
+				$("#divAssignQuestionAddEditForm").show();
+		  });
+
+		  $("#frmAddEditClose").click(function(){
+				$("#divAssignQuestionAddEditForm").hide();
+		  });
+		  $("#btnCancel").click(function(){
+				$("#divQuestionAddEditForm").hide();
+		  });
+
+		  $("#frmViewClose").click(function(){
+				$("#divAssignQuestionViewForm").hide();
+		  });
+
+		  $("#btnViewClose").click(function(){
+				$("#divAssignQuestionViewForm").hide();
+		  });
+
+		  $("#btnAssignQuestionViewForm").click(function(){
+				$("#divAssignQuestionViewForm").show();
+				$("#divAssignQuestionAddEditForm").hide();
+		  });
+
+
+
+        } );
+
+</script>

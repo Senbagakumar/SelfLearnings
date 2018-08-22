@@ -6,24 +6,23 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
-    public class AdminController : Controller
+    public class ManageUserController : Controller
     {
-        // GET: Admin
+        // GET: ManageUser
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult CustomerWiseReport()
+        public ActionResult ListAssessment()
         {
             return View();
         }
-
-        public ActionResult SectorWiseReport()
+        public ActionResult CustomerAssessment()
         {
             return View();
         }
-        public ActionResult CustomerDetails()
+        public ActionResult AssessmentReport()
         {
             return View();
         }

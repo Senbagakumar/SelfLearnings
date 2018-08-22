@@ -1,0 +1,555 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>ManageAssessment</h2>
+
+
+<div class="content mt-3">
+    <div class="col-md-12" id="divAssessmentAddEditForm" style="display:none;">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">ASSESSMENT</strong>
+                <button type="button" class="close text-danger" id="frmAddEditClose"><span aria-hidden="true">×</span></button>
+            </div>
+            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                <div class="modal-body">
+
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">Assessment Name</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">Description</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="textarea-input" id="textarea-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">Welcome Message</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="textarea-input" id="textarea-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="textarea-input" class=" form-control-label">End Message</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <textarea name="textarea-input" id="textarea-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">Admin Email</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <input type="text" id="text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="select" class=" form-control-label">Assessment Format</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            <select name="select" id="select" class="form-control">
+                                <option value="0">Select Format</option>
+                                <option value="1">Question By Question</option>
+                                <option value="2">Group By Group</option>
+                                <option value="3">All in one</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="select" class=" form-control-label">Start & End Date</label>
+                        </div>
+                        <div class="col-5 col-md-3">
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="col-5 col-md-3">
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="selectLg" class=" form-control-label"></label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Show Welcome Screen</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Show [>>Next] Button</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Show Question Index</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="selectLg" class=" form-control-label"></label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Show Progress Bar</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Participants May Print Answer</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Public Statistics</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="selectLg" class=" form-control-label"></label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">List Assessment Publically</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="col-3 col-md-3">
+                            <label class="help-block form-text">Allow Public Registration</label>
+                            <label class="switch switch-text switch-success">
+                                <input type="checkbox" class="switch-input" checked="true">
+                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+
+<div class="col-md-12" id="divAssessmentViewForm" style="display:none;">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">ASSESSMENT</strong>
+            <button type="button" class="close text-danger" id="frmViewClose"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Assessment Name</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display Assessment Name
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="textarea-input" class=" form-control-label">Description</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display Assessment Description
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="textarea-input" class=" form-control-label">Welcome Message</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display Welcome Message
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="textarea-input" class=" form-control-label">End Message</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display End Message
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="text-input" class=" form-control-label">Admin Email</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display Admin Email
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="select" class=" form-control-label">Assessment Format</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    : Display Assessment Format
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="select" class=" form-control-label">Start & End Date</label>
+                </div>
+                <div class="col-5 col-md-3">
+                    : 2018-05-25 &
+                </div>
+                <div class="col-5 col-md-3">
+                    2018-07-30
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="selectLg" class=" form-control-label"></label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Show Welcome Screen</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Show [>>Next] Button</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Show Question Index</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="selectLg" class=" form-control-label"></label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Show Progress Bar</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Participants May Print Answer</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Public Statistics</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
+                    <label for="selectLg" class=" form-control-label"></label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">List Assessment Publically</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+                <div class="col-3 col-md-3">
+                    <label class="help-block form-text">Allow Public Registration</label>
+                    <label class="switch switch-text switch-success">
+                        <input type="checkbox" class="switch-input" checked="true">
+                        <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="btnViewClose">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <strong class="card-title">Assessment</strong>
+
+            <button type="button" class="btn btn-success btn-sm " id="btnAddAssessment" data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+            &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
+        </div>
+        <div class="card-body">
+            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><input type="checkbox" name="chk1"></th>
+                        <th>Assessment Name</th>
+                        <th>Description</th>
+                        <th>Admin Email</th>
+                        <th>Assessment Format</th>
+                        <th>Options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Ashton Cox</td>
+                        <td>Junior Technical Author</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Cedric Kelly</td>
+                        <td>Senior Javascript Developer</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Airi Satou</td>
+                        <td>Accountant</td>
+                        <td>System Architect</td>
+                        <td>Admin@twt.com</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Brielle Williamson</td>
+                        <td>Integration Specialist</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Herrod Chandler</td>
+                        <td>Sales Assistant</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Rhona Davidson</td>
+                        <td>Integration Specialist</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Colleen Hurst</td>
+                        <td>Javascript Developer</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Colleen Hurst</td>
+                        <td>Javascript Developer</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><input type="checkbox" name="chk1"></td>
+                        <td>Colleen Hurst</td>
+                        <td>Javascript Developer</td>
+                        <td>Admin@twt.com</td>
+                        <td>System Architect</td>
+                        <td>
+                            <a href="#" class="btn btn-warning btn-sm" id="btnAssessmentEditForm1"> <i class="fa fa-pencil"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssessmentViewForm1"><i class="fa fa-eye"></i></a>
+                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- .animated -->
+        </div><!-- .content -->
+
+
+
+
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/admin/assets/js/popper.min.js"></script>
+<script src="~/admin/assets/js/plugins.js"></script>
+<script src="~/admin/assets/js/main.js"></script>
+
+
+<script src="~/admin/assets/js/lib/data-table/datatables.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/jszip.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/pdfmake.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/datatables-init.js"></script>
+
+<!-- tinymce js -->
+<script src="~/admin/assets/js/lib/wysiwyg-editor/js/tinymce.min.js"></script>
+<!-- Custom js -->
+<script src="~/admin/assets/js/lib/wysiwyg-editor/wysiwyg-editor.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+
+        $("#btnAddAssessment").click(function () {
+            $("#divAssessmentViewForm").hide();
+            $("#divAssessmentAddEditForm").show();
+        });
+
+        $("#btnAssessmentEditForm").click(function () {
+            $("#divAssessmentViewForm").hide();
+            $("#divAssessmentAddEditForm").show();
+        });
+
+        $("#frmAddEditClose").click(function () {
+            $("#divAssessmentAddEditForm").hide();
+        });
+        $("#btnCancel").click(function () {
+            $("#divAssessmentAddEditForm").hide();
+        });
+
+        $("#frmViewClose").click(function () {
+            $("#divAssessmentViewForm").hide();
+        });
+
+        $("#btnViewClose").click(function () {
+            $("#divAssessmentViewForm").hide();
+        });
+
+        $("#btnAssessmentViewForm").click(function () {
+            $("#divAssessmentViewForm").show();
+        });
+
+    });
+</script>

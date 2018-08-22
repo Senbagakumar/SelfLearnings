@@ -149,7 +149,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\ManageAssessmentController.cs" />
+    <Compile Include="Controllers\ManageUserController.cs" />
+    <Compile Include="Controllers\RevenueController.cs" />
     <Compile Include="Controllers\SectorController.cs" />
+    <Compile Include="Controllers\StateController.cs" />
+    <Compile Include="Controllers\SubSectorController.cs" />
+    <Compile Include="Controllers\TypesOfServiceController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2395,11 +2404,33 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Sector\Index.cshtml" />
+    <Content Include="Views\SubSector\Index.cshtml" />
+    <Content Include="Views\Revenue\Index.cshtml" />
+    <Content Include="Views\TypesOfService\Index.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\State\Index.cshtml" />
+    <Content Include="Views\City\Index.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\_ViewStart.cshtml" />
+    <Content Include="Views\User\Register.cshtml" />
+    <Content Include="Views\User\ForGetPassword.cshtml" />
+    <Content Include="Views\ManageAssessment\Index.cshtml" />
+    <Content Include="Views\ManageAssessment\AssignOrganization.cshtml" />
+    <Content Include="Views\ManageAssessment\ListAssessment.cshtml" />
+    <Content Include="Views\ManageAssessment\AssignQuestion.cshtml" />
+    <Content Include="Views\Admin\CustomerWiseReport.cshtml" />
+    <Content Include="Views\Admin\SectorWiseReport.cshtml" />
+    <Content Include="Views\Admin\CustomerDetails.cshtml" />
+    <Content Include="Views\ManageUser\Index.cshtml" />
+    <Content Include="Views\ManageUser\ListAssessment.cshtml" />
+    <Content Include="Views\ManageUser\CustomerAssessment.cshtml" />
+    <Content Include="Views\ManageUser\AssessmentReport.cshtml" />
+    <Content Include="Views\Shared\_ManageLayout.cshtml" />
+    <Content Include="Views\ManageUser\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

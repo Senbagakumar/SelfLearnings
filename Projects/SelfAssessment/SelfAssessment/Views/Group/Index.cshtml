@@ -1,0 +1,667 @@
+﻿@model IEnumerable<SelfAssessment.Models.UIGroup>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div class="content mt-3">
+    <div class="col-md-12" id="divGroupAddEditForm" style="display:none">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">GROUP</strong>
+                <button type="button" class="close text-danger" id="frmAddEditClose"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="smallEditmodalLabel">ADD QUESTION</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="text-input" class="form-control-label">Question code</label>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <input type="hidden" id="txt-QC-text-input" name="text-input" placeholder="Text" class="form-control" />
+                                            <input type="hidden" id="txt-GroupId-text-input" name="text-input" placeholder="Text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="text-input" class=" form-control-label">Question Text</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <textarea cols="2" id="txt-QT-text-input" name="text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row form-group">
+
+                                        <div class="col col-md-2">
+                                            <label for="text-input" class=" form-control-label">User Hint</label>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <input type="text" id="txt-UH-text-input" name="text-input" placeholder="Text" class="form-control">
+                                        </div><div class="col col-md-1">&nbsp;</div>
+                                        <div class="col col-md-2">
+                                            <label for="select" class="form-control-label">Question Type</label>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <select name="select" id="select" class="form-control">
+                                                <option value="1">5 Point Choice</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="select" class="form-control-label">Question Option &nbsp;&nbsp;&nbsp; 1)</label>
+                                        </div>
+
+                                        <div class="col col-md-9">
+                                            <textarea rows="2" id="txt-Opt1-text-input" name="text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 2)</label>
+                                        </div>
+
+                                        <div class="col col-md-9">
+                                            <textarea rows="2" name="text-input" id="txt-Opt2-text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 3)</label>
+                                        </div>
+
+                                        <div class="col col-md-9">
+                                            <textarea rows="2" name="text-input" id="txt-Opt3-text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 4)</label>
+                                        </div>
+
+                                        <div class="col col-md-9">
+                                            <textarea rows="2" name="text-input" id="txt-Opt4-text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 5)</label>
+                                        </div>
+
+                                        <div class="col col-md-9">
+                                            <textarea rows="2" name="text-input" id="txt-Opt5-text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="text-input" class=" form-control-label">Question  Answer</label>
+                                        </div>
+                                        <div class="col-12 col-md-9">
+                                            <textarea rows="2" name="text-input" id="txt-QA-text-input" placeholder="Text" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+                                        <div class="col col-md-2">
+                                            <label for="text-input" class=" form-control-label">Timer Limit</label>
+                                        </div>
+                                        <div class="col-12 col-md-3">
+                                            <input type="text" name="text-input" id="txt-TL-text-input" placeholder="Text" class="form-control">
+                                        </div>
+                                        <div class="col col-md-1">&nbsp;</div>
+                                        <div class="col col-md-2">
+                                            <label for="selectLg" class=" form-control-label">Mandatory</label>
+                                        </div>
+                                        <div class="col-3 col-md-3">
+                                            <label class="switch switch-text switch-success">
+                                                <input type="checkbox" id="chk-Mandatory" class="switch-input" checked="checked">
+                                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="btnSubmit" type="button" class="btn btn-primary">Add</button>
+                                        <button id="btnCancel" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="text-input" class=" form-control-label">Group Name</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <input type="text" id="txt-GN-text-input" name="text-input" placeholder="Text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="text-input" class=" form-control-label">Group Description</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <textarea id="txt-GD-text-input" name="text-input" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-10">&nbsp;</div>
+                        <div class="col-12 col-md-2"><button type="button" class="btn btn-success btn-sm " id="btnAddQuestion" data-toggle="modal" data-target="#questionModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i> &nbsp;Add Question</button></div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <table id="editQuestiontable" class="table table-striped table-bordered">
+                        <thead>
+
+                            <tr>
+                                <th>#</th>
+                                <th>Question Code</th>
+                                <th>Question</th>
+                                <th>User Hint</th>
+                                <th>Timer Limit</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button id="btnGroupSave" type="button" class="btn btn-primary">Save</button>
+                <button id="btnGroupCancel" type="button" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12" id="divGroupViewForm" style="display:none;">
+
+        <div class="modal fade" id="questionViewModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="smallViewmodalLabel">QUESTION</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row form-group">
+
+                            <div class="col col-md-2">
+                                <label for="text-input" class="form-control-label">Question code</label>
+                            </div>
+                            <div class="col-12 col-md-3" id="lbl-QC-text-input">
+                                : Qus10001                                
+                            </div>
+                            <div class="col col-md-2">
+                                <label for="select" class="form-control-label">Question Type</label>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                : 5 Point Choice
+                            </div>
+
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col col-md-2">
+                                <label for="text-input" class="form-control-label">User Hint</label>
+                            </div>
+                            <div class="col-12 col-md-3" id="lbl-UH-text-input">
+                                : User Hint User Hint User Hint
+                            </div><div class="col col-md-1">&nbsp;</div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="text-input" class=" form-control-label">Question Text</label>
+                            </div>
+                            <div class="col-12 col-md-9" id="lbl-QT-text-input">
+                                : Display Question Display Option Value 1Display Option Value 1 Display Option Value 1
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 1)</label>
+                            </div>
+
+                            <div class="col col-md-9" id="lbl-Opt1-text-input">
+                                : Display Option Value 1
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 2)</label>
+                            </div>
+
+                            <div class="col col-md-9" id="lbl-Opt2-text-input">
+                                : Display Option Value 2
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 3)</label>
+                            </div>
+
+                            <div class="col col-md-9" id="lbl-Opt3-text-input">
+                                : Display Option Value 3
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 4)</label>
+                            </div>
+
+                            <div class="col col-md-9" id="lbl-Opt4-text-input">
+                                : Display Option Value 4
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 5)</label>
+                            </div>
+
+                            <div class="col col-md-9" id="lbl-Opt5-text-input">
+                                : Display Option Value 5
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="text-input" class=" form-control-label">Question  Answer</label>
+                            </div>
+                            <div class="col-12 col-md-9" id="lbl-QA-text-input">
+                                : Display Question Answer
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col col-md-2">
+                                <label for="text-input" class=" form-control-label">Timer Limit</label>
+                            </div>
+                            <div class="col-12 col-md-3" id="lbl-TL-text-input">
+                                : 01.00 Hrs
+                            </div>
+                            <div class="col col-md-1">&nbsp;</div>
+                            <div class="col col-md-2">
+                                <label for="selectLg" class=" form-control-label">Mandatory</label>
+                            </div>
+                            <div class="col-3 col-md-3">
+                                : <label class="switch switch-text switch-success">
+                                    <input type="checkbox" id="lbl-chk-Mandatory" class="switch-input" checked="checked" readonly="readonly">
+                                    <span data-on="On" data-off="On" class="switch-label"></span> <span class="switch-handle"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">GROUP</strong>
+                <button type="button" class="close text-danger" id="frmViewClose"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group">
+                    <div class="col col-md-2">
+                        <label for="text-input" class=" form-control-label">Group Name</label>
+                    </div>
+                    <div class="col-12 col-md-10"> :  <label id="lbl-GN-text-input" /> </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col col-md-2">
+                        <label for="text-input" class=" form-control-label">Group Description</label>
+                    </div>
+                    <div class="col-12 col-md-10">
+                        :  <label id="lbl-GD-text-input" />
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+
+                <table id="questiontable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Question Code</th>
+                            <th>Question</th>
+                            <th>User Hint</th>
+                            <th>Timer Limit</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Group</strong>
+
+                <button type="button" class="btn btn-success btn-sm " id="btnAddGroup" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><input type="checkbox" name="chk1"></th>
+                            <th>Group Name</th>
+                            <th>No Of Questions</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>                        
+                        @foreach(var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td><input type="checkbox" name="chk1" /></td>
+                                <td>@item.GroupName</td>
+                                <td>@item.NoOfQuestions</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-sm" onclick="GetQuestions(@item.Id,'Edit');"> <i class="fa fa-pencil"></i></a>
+                                    &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnGroupViewForm" onclick="GetQuestions(@item.Id,'View');"><i class="fa fa-eye"></i></a>
+                                    &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/admin/assets/js/popper.min.js"></script>
+<script src="~/admin/assets/js/plugins.js"></script>
+<script src="~/admin/assets/js/main.js"></script>
+
+
+<script src="~/admin/assets/js/lib/data-table/datatables.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/jszip.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/pdfmake.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/datatables-init.js"></script>
+
+
+<script type="text/javascript">
+        $(document).ready(function() {
+          $('#bootstrap-data-table-export').DataTable();
+
+		  $("#btnAddGroup").click(function(){
+				$("#divGroupViewForm").hide();
+				$("#divGroupAddEditForm").show();
+            });
+
+            $("#btnGroupSave").click(function () {
+                alert('GroupSave');
+            });
+
+            $("#btnGroupCancel").click(function () {
+                alert("GroupCancel");
+            });
+
+            $("#btnAddQuestion").click(function () {
+                $("#txt-QC-text-input").text('');
+            });
+
+            $("#btnGroupSave").click(function () {
+                var groupId = $('#txt-GroupId-text-input').val();
+                var groupName = $('#txt-GN-text-input').val();
+                var groupDescription = $('#txt-GD-text-input').val();
+
+                var model = {
+                    Id: groupId,
+                    GroupName: groupName,
+                    GroupDescription: groupDescription
+                };
+                var url = "/Group/SaveGroup";
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(model),
+                    url: url,
+                    contentType: "application/json"
+                }).done(function (res) {
+                    alert('Group Saved Successfully');
+                    $('#txt-GN-text-input').val('');
+                    $('#txt-GD-text-input').val('');
+                    $('#btnGroupCancel').click();
+                    $('#btnGroupCancel').click();
+                    $("#divGroupAddEditForm").hide();
+                });
+
+            });
+
+            $("#btnSubmit").click(function () {    
+
+                var QCode = $("#txt-QC-text-input").text();
+                var model = {
+                    QuestionCode: $("#txt-QC-text-input").text(),
+                    QuestionText: $("#txt-QT-text-input").val(),
+                    QHint: $("#txt-UH-text-input").val(),
+                    Option1: $("#txt-Opt1-text-input").val(),
+                    Option2: $("#txt-Opt2-text-input").val(),
+                    Option3: $("#txt-Opt3-text-input").val(),
+                    Option4: $("#txt-Opt4-text-input").val(),
+                    Option5: $("#txt-Opt5-text-input").val(),
+                    Answer: $("#txt-QA-text-input").val(),
+                    TimerValue: $("#txt-TL-text-input").val(),
+                    Mandatory: $("#chk-Mandatory").val(),
+                    GroupId: $('#txt-GroupId-text-input').val()
+                };
+
+                var url = "/Group/CreateQuestion";
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(model),
+                    url: url,
+                    contentType: "application/json"
+                }).done(function (res) {
+                    if (QCode != '') {  
+                        var rows = $("#editQuestiontable").find("tbody>tr");
+                        $(rows).find("td").eq(2).text(model.QuestionText);
+                        $(rows).find("td").eq(3).text(model.QHint);
+                        $(rows).find("td").eq(4).text(model.TimerValue);
+                    }
+                    else {
+                        var markup = "<tr><td>" + res.Id + "</td><td>" + res.QuestionCode + "</td><td>" + res.QuestionText + "</td><td>" + res.QHint + "</td><td>" + res.TimerValue + "</td>";
+                        markup += "<td><a href='#' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#questionModal'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a href='#' class='btn btn-danger btn-sm'> <i class='fa fa-trash-o'></i></a></td></tr>";
+                        $("#editQuestiontable tbody").append(markup); 
+
+                        $('#txt-GroupId-text-input').val(res.GroupId); // New Question and New Group
+                    }                   
+                    $("#btnCancel").click();  
+                    $("#btnCancel").click();  
+                    Clear();
+                });
+            });
+
+            $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
+                if (this.className == "btn btn-warning btn-sm") {
+                    $("#divGroupViewForm").hide();
+                    $("#divGroupAddEditForm").show();
+                }
+                if (this.className == "btn btn-info btn-sm") {
+                    $("#divGroupViewForm").show();
+                    $("#divGroupAddEditForm").hide();
+                }
+            });
+
+            $(document).on("click", "#editQuestiontable tbody tr td a", function () {
+                var questionid = $(this).parent().siblings("td:eq(1)").text();
+                if (this.className == "btn btn-warning btn-sm") {                  
+                    GetQuestion(questionid,"Edit")
+                }
+                if (this.className == "btn btn-danger btn-sm") {
+
+                }
+            });
+
+            $(document).on("click", "#questiontable tbody tr td a", function () {
+                var questionid = $(this).parent().siblings("td:eq(1)").text();
+                if (this.className == "btn btn-info btn-sm") {
+                    GetQuestion(questionid, "View")
+                }
+            });
+
+		  $("#frmAddEditClose").click(function(){
+				$("#divGroupAddEditForm").hide();
+		  });
+		  //$("#btnCancel").click(function(){
+				//$("#divGroupAddEditForm").hide();
+		  //});
+
+		  $("#frmViewClose").click(function(){
+				$("#divGroupViewForm").hide();
+		  });
+
+		  $("#btnViewClose").click(function(){
+				$("#divGroupViewForm").hide();
+		  });
+
+		  $("#btnGroupViewForm").click(function(){
+				$("#divGroupViewForm").show();
+            });           
+    });
+
+    function GetQuestion(id, type) {
+        var url = "/Group/GetQuestionById/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) {
+            if (type == "Edit") {
+                $("#smallEditmodalLabel").text("Edit Question");
+                $("#txt-QC-text-input").text(result.QuestionCode);
+                $("#txt-QT-text-input").val(result.QuestionText);
+                $("#txt-UH-text-input").val(result.QHint);
+                $("#txt-Opt1-text-input").val(result.Option1);
+                $("#txt-Opt2-text-input").val(result.Option2);
+                $("#txt-Opt3-text-input").val(result.Option3);
+                $("#txt-Opt4-text-input").val(result.Option4);
+                $("#txt-Opt5-text-input").val(result.Option5);
+                $("#txt-QA-text-input").val(result.Answer);
+                $("#txt-TL-text-input").val(result.TimerValue);                
+                $("#chk-Mandatory").prop('checked', result.Mandatory);                
+            }
+            else {
+                $("#smallViewmodalLabel").text("View Question");
+                $("#lbl-QC-text-input").text(result.QuestionCode);
+                $("#lbl-QT-text-input").text(result.QuestionText);
+                $("#lbl-UH-text-input").text(result.QHint);
+                $("#lbl-Opt1-text-input").text(result.Option1);
+                $("#lbl-Opt2-text-input").text(result.Option2);
+                $("#lbl-Opt3-text-input").text(result.Option3);
+                $("#lbl-Opt4-text-input").text(result.Option4);
+                $("#lbl-Opt5-text-input").text(result.Option5);
+                $("#lbl-QA-text-input").text(result.Answer);
+                $("#lbl-TL-text-input").text(result.TimerValue);
+                $('#lbl-chk-Mandatory').prop('checked', result.Mandatory);
+            }
+        });
+    }
+
+
+    function GetQuestions(groupid, type) {       
+        DoAction(groupid,type);
+    }
+
+    function Clear() {
+        $("#txt-QC-text-input").text('');
+        $("#txt-QT-text-input").val('');
+        $("#txt-UH-text-input").val('');
+        $("#txt-Opt1-text-input").val('');
+        $("#txt-Opt2-text-input").val('');
+        $("#txt-Opt3-text-input").val('');
+        $("#txt-Opt4-text-input").val('');
+        $("#txt-Opt5-text-input").val('');
+        $("#txt-QA-text-input").val('');
+        $("#txt-TL-text-input").val('');
+        $("#chk-Mandatory").val();      
+    }
+
+    function DoAction(id,type) {
+        var url = "/Group/GetAllQByGroupId/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) { 
+          
+            if (type == "Edit") {
+                $("#editQuestiontable").find("tr:not(:first)").remove();
+                $("#txt-GN-text-input").val(result.GroupName);
+                $("#txt-GD-text-input").val(result.GroupDescription);  
+                $("#txt-GroupId-text-input").val(id);               
+            }
+            else {
+                $("#questiontable").find("tr:not(:first)").remove();
+                $("#lbl-GN-text-input").text(result.GroupName);
+                $("#lbl-GD-text-input").text(result.GroupDescription);
+            }
+
+            $.each(result.questions, function (key, value) {               
+                var markup = "<tr><td>" + value.Id + "</td><td>" + value.QuestionCode + "</td><td>" + value.QuestionText + "</td><td>" + value.QHint + "</td><td>" + value.TimerValue + "</td>";
+
+                if (type == "Edit") {
+                    markup += "<td><a href='#' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#questionModal'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a href='#' class='btn btn-danger btn-sm'> <i class='fa fa-trash-o'></i></a></td></tr>";
+                    $("#editQuestiontable tbody").append(markup);
+                }
+                else {
+                    markup += "<td><a href='#' class='btn btn-info btn-sm' data-toggle='modal' data-target='#questionViewModal'> <i class='fa fa-eye'></i></a></td></tr>";
+                    $("#questiontable tbody").append(markup);
+                }                            
+            });
+        });
+    }
+
+</script>

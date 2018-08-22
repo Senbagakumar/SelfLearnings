@@ -1,0 +1,206 @@
+﻿@model SelfAssessment.Models.UIOrganization
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+<div class="row contact-info">
+
+    <div class="col-md-7">
+        <div class="form">
+
+            <div class="section-header">
+                <h3>Registration </h3>
+                <p>Welcome to new registration. Register here...!</p>
+            </div>
+
+
+            <div id="sendmessage">Thank you!</div>
+            <div id="errormessage"></div>
+            <form action="" method="post" role="form" class="">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <input type="text" name="name" class="form-control" id="txtName" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                        <div class="validation"></div>
+                    </div>
+
+                </div>
+                <div class="form-group ">
+                    <textarea class="form-control" id="txtAddress" name="address" rows="2" data-rule="required" data-msg="Please enter address" placeholder="Address"></textarea>
+                    <div class="validation"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <input type="text" name="contactname" class="form-control" id="txtContactname" placeholder="Contact Name" data-rule="required" data-msg="Please enter at least 4 chars">
+                        <div class="validation"></div>
+                    </div> <!-- <div style="" >&nbsp;&nbsp;*</div>-->
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="designation" class="form-control" id="txtDesignation" placeholder="Designation" data-rule="required" data-msg="Please enter designation">
+                    <div class="validation"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="email" class="form-control" name="email" id="txtEmail" placeholder="Email" data-rule="email" data-msg="Please enter a valid email">
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="mobileno" class="form-control" id="txtMobileno" placeholder="Mobile No" data-rule="required" data-msg="Please enter Mobile No">
+                        <div class="validation"></div>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
+                    </div>
+                    <div class="validation"></div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("City", (IEnumerable<SelectListItem>)ViewBag.City, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("State", (IEnumerable<SelectListItem>)ViewBag.State, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                </div>
+                <div class="form-row" style="display:none" id="divOthers">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="txtSector" id="txtSector" class="form-control" placeholder="Enter New Sector " style="display:none" data-rule="required" data-msg="Please enter New Sector">
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="txtSubSector" id="txtSubSector" class="form-control" style="display:none" placeholder="Enter New Sub Sector " data-rule="required" data-msg="Please enter New Sub Sector">
+                        <div class="validation"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("Revenue", (IEnumerable<SelectListItem>)ViewBag.Revenue, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        @Html.DropDownList("Type", (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control" })
+                        <div class="validation"></div>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-primary btn-sm">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div style="border-right:solid 1px #ddd; margin:0px 40px 0px 45px; text-align:center "></div>
+    <div class="col-md-4">
+        <div class="form">
+            <div class="section-header">
+                <h3></h3>
+
+            </div>
+            <p align="justify">
+                Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+                Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+            </p>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#Sector').on('change', function () {
+            if ($(this).val() == "OTHERS") {
+                alert('cmbsector');
+                $('#divOthers').show();
+                $('#txtSector').show();
+            } else {
+                alert('txtsector');
+                $('#divOthers').hide();
+                $('#txtSector').hide();
+            }
+        });
+
+        $('#SubSector').on('change', function () {
+            if ($(this).val() == "OTHERS") {
+                alert('cmbsubsector');
+                $('#divOthers').show();
+                $('#txtSubSector').show();
+            } else {
+                alert('txtsubsector');
+                $('#divOthers').hide();
+                $('#txtSubSector').hide();
+            }
+        });
+
+        $('#btnLogin').click(function () {
+
+            var modle = {};
+
+            var sect = $('#txtSector').val();
+            if (sect == '')
+                sect = $('#Sector').val();
+
+            var subSect = $('#txtSubSector').val();
+            if (subSect == '')
+                subSect = $('#SubSector').val();
+
+            model = {
+                Name: $('#txtName').val(),
+                Address: $('#txtAddress').val(),
+                ContactName: $('#txtContactname').val(),
+                Designation: $('#txtDesignation').val(),
+                Email: $('#txtEmail').val(),
+                MobileNo: $('#txtMobileno').val(),
+                TypeOfService: $('#TypeOfService').val(),
+                City: $('#City').val(),
+                State: $('#State').val(),
+                Sector: sect,//txtSector, txtSubSector
+                SubSector: subSect,
+                Revenue: $('#Revenue').val(),
+                Type: $('#Type').val()
+            };
+
+            var url = "/User/Register";
+
+            alert(subSect);
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(model),
+                url: url,
+                contentType: "application/json"
+            }).done(function (res) {
+                $('#text-input').val('');
+                $('#txtId').val('');
+                $('#btnCancel').click();
+                $('#btnCancel').click();
+            });
+
+        });
+
+    });
+
+</script>

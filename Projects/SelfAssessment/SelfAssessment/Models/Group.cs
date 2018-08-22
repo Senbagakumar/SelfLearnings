@@ -14,4 +14,14 @@ namespace SelfAssessment.Models
         public DateTime UpdateDate { get; set; }
 
     }
+
+    public class UIGroup
+    {
+        public int Id { get; set; }
+        public string GroupName { get; set; }
+        public string GroupDescription { get; set; }
+        public int NoOfQuestions { get; set; }
+        public List<Questions> questions { get; set; }
+
+    }
 }
