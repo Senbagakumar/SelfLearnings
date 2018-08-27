@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<SelfAssessment.Models.UIAssessment>
 @{
     ViewBag.Title = "ListAssessment";
 }
@@ -48,15 +48,16 @@
                     </aside>
                 </div>
 
-
-                <div class="col-md-4">
+                @foreach(var assessment in Model)
+                {
+                     <div class="col-md-4">
                     <aside class="profile-nav alt">
                         <section class="card">
                             <div class="card-header user-header alt bg-dark">
                                 <div class="media">
                                     <a href="listAssessment1.html">
                                         <div class="media-body">
-                                            <h2 class="text-light display-6">Level 2 </h2>
+                                            <h2 class="text-light display-6">@assessment.Type</h2>
 
                                         </div>
                                     </a>
@@ -66,17 +67,17 @@
 
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">10</span></a>
+                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">@assessment.NoOfGroup</span></a>
                                 </li>
                                 <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">10</span></a>
+                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">@assessment.NoOfQuestion</span></a>
                                 </li>
 
                                 <li class="list-group-item">
                                     <a href="#">
                                         <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
                                             <br>
-                                            pending<br>&nbsp;
+                                            @assessment.AssignmentStatus<br>&nbsp;
                                         </span>
                                     </a>
                                 </li>
@@ -85,43 +86,7 @@
                         </section>
                     </aside>
                 </div>
-
-                <div class="col-md-4">
-                    <aside class="profile-nav alt">
-                        <section class="card">
-                            <div class="card-header user-header alt bg-dark">
-                                <div class="media">
-                                    <a href="listAssessment1.html">
-                                        <div class="media-body">
-                                            <h2 class="text-light display-6">Level 3 </h2>
-
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">10</span></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">10</span></a>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <a href="#">
-                                        <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
-                                            <br>
-                                            pending<br>&nbsp;
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </section>
-                    </aside>
-                </div>
+                }
 
 
             </div>

@@ -1,4 +1,4 @@
-﻿
+﻿@model List<SelfAssessment.Models.UIAssignQuestion>
 @{
     ViewBag.Title = "AssignQuestion";
 }
@@ -85,226 +85,132 @@
 
     </div>
 
-<div class="col-sm-12" id="divAssignQuestionAddEditForm" style="display:none;">
-    <div class="card">
-        <div class="card-header">
-            <strong>ASSIGN QUESTION TO ASSESSMENT</strong>
+    <div class="col-sm-12" id="divAssignQuestionAddEditForm" style="display:none;">
+        <div class="card">
+            <div class="card-header">
+                <strong>ASSIGN QUESTION TO ASSESSMENT</strong>
 
 
-        </div>
-        <div class="card-body card-block">
-            <form action="" method="post" class="form-horizontal">
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" class="form-horizontal">
 
-                <div class="row form-group" style="text-align:center">
+                    <div class="row form-group" style="text-align:center">
 
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
-                    <div class="col-12 col-md-3">
-                        <label for="hf-password" class="fontweight700 form-control-label"> : Assessment Name</label>
+                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
+                        <div class="col-12 col-md-3">
+                            <label for="hf-password" class="fontweight700 form-control-label"> : Assessment Name</label>
+                        </div>
+
+                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                        <div class="col-12 col-md-3">
+                            <select class="form-control" id="slLevel">
+                                <option value="0">-Select-</option>
+                                <option value="Level 1" selected>Level 1</option>
+                                <option value="Level 2">Level 2</option>
+                                <option value="Level 3">Level 3</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <button class="btn btn-primary" id="checkAll">Check All</button>
+                            <button class="btn btn-primary" id="uncheckAll">Uncheck All</button>
+                        </div>
+
                     </div>
+                    <hr>
+                    <div class="row form-group">
+                        <div class="col-12 col-md-12" style="margin-left:20px;">
+                            <input type="hidden" id="txt-AssessmentId-text-input" name="text-input" placeholder="Text" class="form-control" />
+                            <div id="treeview_container" class="hummingbird-treeview well h-scroll-large">
 
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0">-Select-</option>
-                            <option value="survey 1" selected>Level 1</option>
-                            <option value="survey 2">Level 2</option>
-                            <option value="survey 3">Level 3</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <button class="btn btn-primary" id="checkAll">Check All</button>
-                        <button class="btn btn-primary" id="uncheckAll">Uncheck All</button>
-                    </div>
-
-                </div>
-                <hr>
-                <div class="row form-group">
-                    <div class="col-12 col-md-12" style="margin-left:20px;">
-
-                        <div id="treeview_container" class="hummingbird-treeview well h-scroll-large">
-
-                            <!-- <div id="treeview_container" class="hummingbird-treeview"> -->
-                            <ul id="treeview" class="hummingbird-base">
-                                <li>
-                                    <i class="fa fa-minus"></i>
-                                    <label>
-                                        <input id="node-0" data-id="custom-0" type="checkbox">
-                                        <b class="text-info fontsize18">Group 1 </b>
-                                    </label>
-                                    <ul style="display: block; margin:1em;">
+                                <!-- <div id="treeview_container" class="hummingbird-treeview"> -->
+                                <ul id="treeview" class="hummingbird-base">
+                                    @foreach (var group in Model[0].uIAssignGroups)
+                                    {
                                         <li>
                                             <i class="fa fa-minus"></i>
                                             <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                main menu which uses lists as its basis. The problem is, the lists are very wide, and they do not indent far enough when expanded. So, this is my problem?
+                                                <input id="@group.GroupId" data-id="custom-0" type="checkbox">
+                                                <b class="text-info fontsize18">@group.GroupName</b>
                                             </label>
+                                            <ul style="display: block; margin:1em;">
+                                                @foreach (var question in group.uIAssignGroupQuestions)
+                                                {
+                                                    <li>
+                                                        <i class="fa fa-minus"></i>
+                                                        <label>
+                                                            <input id="@question.QuestionId" data-id="custom-1" type="checkbox">
+                                                            @question.QuestionName
+                                                        </label>
+                                                    </li>
+                                                }
+                                            </ul>
                                         </li>
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                The problem is, they do not indent far enough when expanded. So, this is my problem! How do I make the indent amount on lists larger via CSS?
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <i class="fa fa-plus"></i>
-                                    <label>
-                                        <input id="node-1" data-id="custom-1" type="checkbox">
-                                        <b class="text-info fontsize18">Group 2 </b>
-                                    </label>
-                                    <ul style="margin:1em;">
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                The problem is, the lists are very wide, and they do not indent far enough when expanded. So, this is my problem! How do I make the indent
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                have drop down main menu which uses lists as its basis. The problem is, the lists are very wide, and they do not indent far enough when expanded. So, problem!
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <i class="fa fa-plus"></i>
-                                    <label>
-                                        <input id="node-1" data-id="custom-1" type="checkbox">
-                                        <b class="text-info fontsize18">Group 3 </b>
-                                    </label>
-                                    <ul style="margin:1em;">
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                Question 1
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                Question 2
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                                <li>
-                                    <i class="fa fa-plus"></i>
-                                    <label>
-                                        <input id="node-1" data-id="custom-1" type="checkbox">
-                                        <b class="text-info fontsize18">Group 4 </b>
-                                    </label>
-                                    <ul style="margin:1em;">
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                Question 1
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-minus"></i>
-                                            <label>
-                                                <input id="node-0-1" data-id="custom-1" type="checkbox">
-                                                Question 2
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-
+                                    }
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" id="frmAddEditClose">Cancel</button>
-                </div>
-            </form>
+                    <div class="modal-footer">
+                        <button id="btnSave" type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" id="frmAddEditClose">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">ASSIGN QUESTION TO ASSESSMENT</strong>
+
+                <button type="button" class="btn btn-success btn-sm " id="btnAddAssignQuestion" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Assessment</th>
+                            <th>Level</th>
+                            <th>No Of Group</th>
+                            <th>No Of Questions</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>                      
+
+                        @foreach(var item in Model)
+                        {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.AssignMentName</td>
+                            <td>@item.Level</td>
+                            <td>@item.NoOfGroup</td>
+                            <td>@item.NoOfQuestions</td>
+
+                            <td>
+                                <a href="#" class="btn btn-warning btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'Edit');"> <i class="fa fa-pencil"></i></a>
+                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
+                                &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                            </td>
+
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-</div>
-
-<div class="col-md-12">
-    <div class="card">
-        <div class="card-header">
-            <strong class="card-title">ASSIGN QUESTION TO ASSESSMENT</strong>
-
-            <button type="button" class="btn btn-success btn-sm " id="btnAddAssignQuestion" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
-
-        </div>
-        <div class="card-body">
-            <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Assessment</th>
-                        <th>Level</th>
-                        <th>No Of Group</th>
-                        <th>No Of Questions</th>
-                        <th>Options</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Assessment Name</td>
-                        <td>Level 1</td>
-                        <td>8</td>
-                        <td>50</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm" id="btnAssignQuestionEditForm"> <i class="fa fa-pencil"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnAssignQuestionViewForm"><i class="fa fa-eye"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Assessment Name</td>
-                        <td>Level 2</td>
-                        <td>9</td>
-                        <td>70</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm" id="btnQuestionEditForm"> <i class="fa fa-pencil"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnQuestionViewForm"><i class="fa fa-eye"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Assessment Name</td>
-                        <td>Level 3</td>
-                        <td>4</td>
-                        <td>20</td>
-                        <td>
-                            <a href="#" class="btn btn-warning btn-sm" id="btnQuestionEditForm"> <i class="fa fa-pencil"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnQuestionViewForm"><i class="fa fa-eye"></i></a>
-                            &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
-                        </td>
-
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div>&nbsp;</div>
+    <div>&nbsp;</div>
 </div>
 
 
@@ -315,55 +221,116 @@
 <script src="~/admin/assets/js/hummingbird-treeview.js"></script>
 
 <script>
-$("#treeview").hummingbird();
-$( "#checkAll" ).click(function() {
-  $("#treeview").hummingbird("checkAll");
-});
-$( "#uncheckAll" ).click(function() {
-  $("#treeview").hummingbird("uncheckAll");
-});
-$( "#collapseAll" ).click(function() {
-  $("#treeview").hummingbird("collapseAll");
-});
-$( "#checkNode" ).click(function() {
-  $("#treeview").hummingbird("checkNode",{attr:"id",name: "node-0-2-2",expandParents:false});
-});
+    $("#treeview").hummingbird();
+    $("#checkAll").click(function () {
+        $("#treeview").hummingbird("checkAll");
+    });
+    $("#uncheckAll").click(function () {
+        $("#treeview").hummingbird("uncheckAll");
+    });
+    $("#collapseAll").click(function () {
+        $("#treeview").hummingbird("collapseAll");
+    });
+    $("#checkNode").click(function () {
+        alert('Node check');
+        $("#treeview").hummingbird("checkNode", { attr: "id", name: "node-0-2-2", expandParents: false });
+    });
 
-$(document).ready(function() {
-          //$('#bootstrap-data-table-export').DataTable();
+    function GetGroupQuestion(id, type) {
+       
+        var url = "/ManageAssessment/GetQuestionByAssignmentId/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) {
+            $("#txt-AssessmentId-text-input").val(id);     // Hidden value for AssignementId          
 
-		  $("#btnAddAssignQuestion").click(function(){
-				$("#divAssignQuestionViewForm").hide();
-				$("#divAssignQuestionAddEditForm").show();
-		  });
+            $.each(result, function (key, value) {
+                //alert(value.GroupName);
+                $.each(value.uIAssignGroupQuestions, function (key, value) {                  
+                        $("#treeview ul").find("#" + value.QuestionId).prop("checked", true);
+                });
+            });          
+        });
+    }
+    $(document).ready(function () {
+        //$('#bootstrap-data-table-export').DataTable();
 
-		  $("#btnAssignQuestionEditForm").click(function(){
-				$("#divAssignQuestionViewForm").hide();
-				$("#divAssignQuestionAddEditForm").show();
-		  });
+        $("#btnAddAssignQuestion").click(function () {
+            $("#btnSave").hide();
+            $("#divAssignQuestionViewForm").hide();
+            $("#divAssignQuestionAddEditForm").show();
+        });
 
-		  $("#frmAddEditClose").click(function(){
-				$("#divAssignQuestionAddEditForm").hide();
-		  });
-		  $("#btnCancel").click(function(){
-				$("#divQuestionAddEditForm").hide();
-		  });
+        $("#btnSave").click(function () {
 
-		  $("#frmViewClose").click(function(){
-				$("#divAssignQuestionViewForm").hide();
-		  });
+            var questionId = [];
+              $("#treeview input[type=checkbox]").each(function (idx, elem) {
+                  var is_checked = $(this).prop("checked");
+                  var quest = $(this).data("id");
+                  if (is_checked && quest == "custom-1") {
+                          //alert($(this).prop("id")); 
+                          questionId.push($(this).prop("id"));                      
+                  }
+            });
+            var model = {
+                AssignmentId: $("#txt-AssessmentId-text-input").val(),
+                QuestionId: questionId,
+                Level: $("#slLevel").val()
+            };
+            var url = "/ManageAssessment/SaveQuestion";
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(model),
+                url: url,
+                contentType: "application/json"
+            }).done(function (res) {
+                $("#txt-AssessmentId-text-input").val('');
+                $("#slLevel").val("Level 1");
+                $("#frmAddEditClose").click();
+                $("#frmAddEditClose").click();
+                $("#treeview").hummingbird("uncheckAll");
+            });
 
-		  $("#btnViewClose").click(function(){
-				$("#divAssignQuestionViewForm").hide();
-		  });
 
-		  $("#btnAssignQuestionViewForm").click(function(){
-				$("#divAssignQuestionViewForm").show();
-				$("#divAssignQuestionAddEditForm").hide();
-		  });
+        });
+
+        $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
+            if (this.className == "btn btn-warning btn-sm") {
+                $("#btnSave").show();
+                $("#divAssignQuestionViewForm").hide();
+                $("#divAssignQuestionAddEditForm").show();
+
+            }
+            if (this.className == "btn btn-info btn-sm") {
+                $("#divAssignQuestionViewForm").show();
+                $("#divAssignQuestionAddEditForm").hide();
+            }
+        });
+
+        $("#frmAddEditClose").click(function () {
+            $("#divAssignQuestionAddEditForm").hide();
+        });
+        $("#btnCancel").click(function () {
+            $("#divQuestionAddEditForm").hide();
+        });
+
+        $("#frmViewClose").click(function () {
+            $("#divAssignQuestionViewForm").hide();
+        });
+
+        $("#btnViewClose").click(function () {
+            $("#divAssignQuestionViewForm").hide();
+        });
+
+        //$("#btnAssignQuestionViewForm").click(function () {
+        //    $("#divAssignQuestionViewForm").show();
+        //    $("#divAssignQuestionAddEditForm").hide();
+        //});
 
 
 
-        } );
+    });
 
 </script>

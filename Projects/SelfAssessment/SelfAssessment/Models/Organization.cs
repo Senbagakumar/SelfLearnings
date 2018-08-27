@@ -23,6 +23,7 @@ namespace SelfAssessment.Models
         public string TempPassword { get; set; }
         public string Password { get; set; }
         public string CurrentAssignmentType { get; set; }
+        public string CurrentAssignmentStatus { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
     }
@@ -50,5 +51,12 @@ namespace SelfAssessment.Models
     {
         public string UserName { get; set; }
         public string UserPwd { get; set; }
+    }
+    
+    public class ChangePassword
+    {
+        public string OldPassword { get; set; }
+        public string NewPassword { get; set; }
+        public string UserId { get; set; }
     }
 }

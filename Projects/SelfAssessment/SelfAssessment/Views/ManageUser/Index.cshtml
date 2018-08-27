@@ -1,4 +1,4 @@
-﻿
+﻿@model SelfAssessment.Models.UIOrganization
 @{
     ViewBag.Title = "Index";
 }
@@ -21,36 +21,34 @@
         <div class="card-body">
             <div class="row form-group">
 
-                <div class="col-4 col-md-4"><h2>JOY LUEEU</h2></div>
+                <div class="col-4 col-md-4"><h2>@Model.Name</h2></div>
 
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Email</label></div>
-                <div class="col-3 col-md-3"> : <b>joy@mail.com</b></div>
+                <div class="col-3 col-md-3"> : <b>@Model.Email</b></div>
 
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Desgination</label></div>
-                <div class="col-3 col-md-3"><b> : Manager</b></div>
+                <div class="col-3 col-md-3"><b> : @Model.Designation</b></div>
 
             </div>
 
             <div class="row form-group">
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Address</label></div>
-                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : church street, Chennai</b></label></div>
+                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.Address</b></label></div>
 
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Mobile </label></div>
-                <div class="col-3 col-md-3"><b> : 9856231475</b></div>
+                <div class="col-3 col-md-3"><b> : @Model.MobileNo</b></div>
 
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Service</label></div>
-                <div class="col-3 col-md-3"><b> : Assessment</b></div>
+                <div class="col-3 col-md-3"><b> : @Model.TypeOfService</b></div>
 
             </div>
 
             <div class="row form-group">
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">City</label></div>
-                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : Chennai</b></label></div>
+                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.City</b></label></div>
 
                 <div class="col col-md-1"><label for="hf-password" class=" form-control-label">State </label></div>
-                <div class="col-3 col-md-3"><b> : Tamilnadu</b></div>
-
-
+                <div class="col-3 col-md-3"><b> : @Model.State</b></div>
             </div>
 
 
