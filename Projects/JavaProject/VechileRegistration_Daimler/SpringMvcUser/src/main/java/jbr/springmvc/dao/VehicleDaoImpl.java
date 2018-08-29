@@ -33,7 +33,7 @@ public class VehicleDaoImpl implements VehicleDao {
   JdbcTemplate jdbcTemplate;
 
   public List<VehicleVO> getVehicles() {
-    String sql = "SELECT vehicle_No,supplier,supplier_Name,RCBOOK_Valid_Date,insurance_Valid_Date,FC_Valid_Date,license_Valid_Date,pollution_Certificate_Valid_Date,pass_Type,status_update,truck_No,vehicle_Type,ReportingTime FROM vehicle";
+    String sql = "SELECT vehicle_No,supplier,supplier_Name,RCBOOK_Valid_Date,insurance_Valid_Date,FC_Valid_Date,license_Valid_Date,pollution_Certificate_Valid_Date,pass_Type,status_update,truck_No,vehicle_Type,ReportingTime,pass_Validity_Date FROM vehicle";
     List<VehicleVO> vehicles = jdbcTemplate.query(sql, new VehicleMappers());
     return vehicles;
   }
@@ -45,7 +45,7 @@ public class VehicleDaoImpl implements VehicleDao {
   }
   
   public VehicleVO getVehicle(String vehicle) {
-    String sql = "SELECT vehicle_No,vehicle_type,supplier,supplier_Name,RCBOOK_Valid_Date,insurance_Valid_Date,FC_Valid_Date,license_Valid_Date,pollution_Certificate_Valid_Date,pass_Type,status_update,truck_No,vehicle_Type,ReportingTime FROM vehicle where vehicle_No='"+vehicle+"'";
+    String sql = "SELECT vehicle_No,vehicle_type,supplier,supplier_Name,RCBOOK_Valid_Date,insurance_Valid_Date,FC_Valid_Date,license_Valid_Date,pollution_Certificate_Valid_Date,pass_Type,status_update,truck_No,vehicle_Type,ReportingTime,pass_Validity_Date FROM vehicle where vehicle_No='"+vehicle+"'";
     List<VehicleVO> vehicles = jdbcTemplate.query(sql, new VehicleMappers());
     if(vehicles.size() > 0) {
       return vehicles.get(0);

@@ -127,8 +127,8 @@
 				$("#lblVehicleType").html(": <b>"+obj.vehicle_type+"</b>");
 				
 				$("#lblNoOfInvoice").text(": NA");
-				$("#lblDriverName").text(": NA");
-				$("#lblContactNo").text(": NA");
+				$("#lblPassType").html(": <b>"+obj.passType+"</b>");
+				$("#lblPassExpiryDate").html(": <b>"+obj.passTypeValidityDate+"</b>");
 				$("#lblPassCode").text(": NA");
 				
 			
@@ -738,10 +738,10 @@
 																	
 																</label>
 																
-																<label class="col-sm-2 col-form-label">Pass Code</label>
+														<!-- 		<label class="col-sm-2 col-form-label">Pass Code</label>
 																<label id="lblPassCode" class="col-sm-3 col-form-label"> : &nbsp;
 																	
-																</label> 
+																</label>  -->
 																
 															</div>
 															<div class="row row-mar-botm ">
@@ -763,16 +763,16 @@
 
 															</div>
 															<div class="row row-mar-botm ">
-																<label class="col-sm-2 col-form-label">Driver
-																	Name </label> <label id="lblDriverName" class="col-sm-3 col-form-label"> :
+																<label class="col-sm-2 col-form-label">Pass Type
+																	Name </label> <label id="lblPassType" class="col-sm-3 col-form-label"> :
 																	
-																</label> <label class="col-sm-2 col-form-label">Contact
-																	No </label> <label id="lblContactNo" class="col-sm-3 col-form-label"> :
+																</label> <label class="col-sm-2 col-form-label">Pass Expiry Date
+																	</label> <label id="lblPassExpiryDate" class="col-sm-3 col-form-label"> :
 																	
 																</label>
 
 															</div>
-															<div class="row row-mar-botm ">
+														<!-- 	<div class="row row-mar-botm ">
 																<label class="col-sm-2 col-form-label">Tag No </label> <label
 																	class="col-sm-10 col-form-label"> : <b>&nbsp;
 																		D - <input type="text" name="txt1" readonly
@@ -784,7 +784,7 @@
 																</b>
 																</label>
 
-															</div>
+															</div> -->
 
 														</div>
 

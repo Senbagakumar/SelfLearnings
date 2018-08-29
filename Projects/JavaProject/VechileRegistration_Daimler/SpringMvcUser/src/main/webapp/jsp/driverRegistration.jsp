@@ -56,6 +56,42 @@
 		
 		
 	}
+    
+		function OnPrint(driver_Pass){		
+		
+			$.ajax({
+				url : "/SpringMvcUser/getDriver",
+				type : 'GET',
+				dataType : 'text',
+				data: { 
+				    driver_Pass:driver_Pass
+				},
+			contentType : 'application/json',
+			mimeType : 'application/json',
+			success : function(data) {
+				
+				var obj = JSON.parse(data);
+				
+				$("#lblGateNo").text(": NA");
+				$("#lblDriverID").html(": <b>"+driver_Pass+"</b>");
+				$("#lblDriverName").html(": <b>"+obj.name+"</b>");
+				$("#lblContactNo").html(": <b>"+obj.contactno+"</b>");
+				$("#lblLicenseNo").html(": <b>"+obj.licenceno+"</b>");
+				
+				$("#lblLicenseValidity").html(": <b>"+obj.licence+"</b>");
+				$("#lblPassType").html(": <b>"+obj.passtype+"</b>");
+				$("#lblPassExpiryDate").html(": <b>"+obj.passExpiryDate+"</b>");			
+
+			},
+				
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Invalid Pass: Contact Admin "+errorThrown);
+            }
+		});
+		
+	}
+	
+    
     $( document ).ready(function() {
     	
     	$("#linkAdd").click(function () {
@@ -444,6 +480,104 @@
                                            
                                         </div>
                                            
+                                           
+                                           
+									<div class="modal fade" id="print-Modal" tabindex="-1"
+										role="dialog">
+										<div class="modal-dialog modal-lg" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title">E-PASS</h4>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body" id="print-modal">
+													<form id="frmModelPrint" action="#" method="post"
+														novalidate>
+														<div class="card-block">
+
+															<div class="row row-mar-botm ">
+																<label class="col-sm-2 col-form-label">Gate No </label>
+																<label id="lblGateNo" class="col-sm-3 col-form-label"> : &nbsp;
+																	
+																</label> 
+																<label class="col-sm-6 col-form-label"
+																	style="font-size: 32px;"> &nbsp; <i
+																	class="icofont icofont-barcode"></i><i
+																	class="icofont icofont-barcode"></i></label> <label
+																	class="col-sm-2 col-form-label">Driver ID </label>
+																<label id="lblDriverID" class="col-sm-3 col-form-label"> : &nbsp;
+																	
+																</label>
+																
+														<!-- 		<label class="col-sm-2 col-form-label">Pass Code</label>
+																<label id="lblPassCode" class="col-sm-3 col-form-label"> : &nbsp;
+																	
+																</label>  -->
+																
+															</div>
+															<div class="row row-mar-botm ">
+																<label class="col-sm-2 col-form-label">Driver Name
+																	 </label> <label id="lblDriverName" class="col-sm-3 col-form-label"> :
+																	
+																</label> <label class="col-sm-2 col-form-label">ContactNo </label> <label
+																	class="col-sm-3 col-form-label" id="lblContactNo"> </label>
+
+															</div>
+															<div class="row row-mar-botm ">
+																<label class="col-sm-2 col-form-label">LicenseNo
+																	</label> <label id="lblLicenseNo" class="col-sm-3 col-form-label"> :
+																	
+																</label> <label class="col-sm-2 col-form-label">LicenseValidity
+																 </label> <label id="lblLicenseValidity" class="col-sm-3 col-form-label">
+																	
+																</label>
+
+															</div>
+															<div class="row row-mar-botm ">
+																<label class="col-sm-2 col-form-label">Pass Type
+																	Name </label> <label id="lblPassType" class="col-sm-3 col-form-label"> :
+																	
+																</label> <label class="col-sm-2 col-form-label">Pass Expiry Date
+																	</label> <label id="lblPassExpiryDate" class="col-sm-3 col-form-label"> :
+																	
+																</label>
+
+															</div>
+														<!-- 	<div class="row row-mar-botm ">
+																<label class="col-sm-2 col-form-label">Tag No </label> <label
+																	class="col-sm-10 col-form-label"> : <b>&nbsp;
+																		D - <input type="text" name="txt1" readonly
+																		class="col-1" value="95">
+																		&nbsp;&nbsp;&nbsp;&nbsp; C - <input type="text"
+																		name="txt2" readonly class="col-1" value="Nill">
+																		&nbsp;&nbsp;&nbsp;&nbsp; Jacket - <input type="text"
+																		name="txt2" readonly class="col-1" value="Nill">
+																</b>
+																</label>
+
+															</div> -->
+
+														</div>
+
+													</form>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default waves-effect "
+														data-dismiss="modal">Close</button>
+													<button type="button" onClick="printDiv('print-modal');"
+														class="btn btn-primary waves-effect waves-light ">Print
+														Pass</button>
+												</div>
+											</div>
+										</div>
+									</div>
+
+                                           
+                                           
+                                           
                                             <div class="card">
                                             <div class="panel panel-default">
                                                 <div class="panel-heading bg-default txt-white">
@@ -486,7 +620,7 @@
                                                                     <button id="btnUpdate" class="btn btn-warning btn-icon" onclick="assignEdit('${driver.id}','${driver.name}','${driver.contact_No}','${driver.license_No}','${driver.license_Validity}','${driver.pass_Type}','${driver.pass_Expiry_Date}');"><i style="margin-right:0px;" class="icofont icofont-pencil"></i></button>&nbsp;
                                                                     <button class="btn btn-info btn-icon"><i style="margin-right:0px;"  class="icofont icofont-eye-alt"></i></button> &nbsp;
                                                                     <button class="btn btn-danger btn-icon"><i style="margin-right:0px;"  class="icofont icofont-delete-alt"></i></button>&nbsp;
-                                                                    <button class="btn btn-primary btn-icon"><i style="margin-right:0px;"  data-toggle="modal" data-target="#print-Modal"  class="icofont icofont-print"></i></button></td>
+                                                                    <button class="btn btn-primary btn-icon"><i style="margin-right:0px;"  data-toggle="modal" data-target="#print-Modal"  class="icofont icofont-print" onclick="OnPrint('${driver.id}');"></i></button></td>
                                                                 </tr>
                                                             </c:forEach>
                                                                                                                                 

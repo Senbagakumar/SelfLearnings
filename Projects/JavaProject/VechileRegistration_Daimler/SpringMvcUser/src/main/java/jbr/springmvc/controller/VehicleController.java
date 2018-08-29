@@ -120,11 +120,13 @@ public class VehicleController {
       json.append(Utility.constructJson("driver_Name", driver.getName())).append(",");
       json.append(Utility.constructJson("licence_validity", driver.getLicense_Validity())).append(",");
       json.append(Utility.constructJson("status_update", vehicle.getStatus_update())).append(",");
-      json.append(Utility.constructJson("vehicleslotted", isVehicleSlotted(vehicle_No))).append(",");;
+      json.append(Utility.constructJson("vehicleslotted", isVehicleSlotted(vehicle_No))).append(",");
       
       json.append(Utility.constructJson("vehicle_type", vehicle.getVehicle_Type())).append(",");
       json.append(Utility.constructJson("ReportingTime", vehicle.getReportingTime())).append(",");
-      json.append(Utility.constructJson("supplier_Name", vehicle.getSupplier_Name()));
+      json.append(Utility.constructJson("supplier_Name", vehicle.getSupplier_Name())).append(",");
+      json.append(Utility.constructJson("passType", vehicle.getPass_Type())).append(",");
+      json.append(Utility.constructJson("passTypeValidityDate", vehicle.getPass_Validity_Date()));
       
       if(json.toString().contains("danger")) {
         json.append(",").append(Utility.constructJson("alert", "true"));
@@ -158,7 +160,13 @@ public class VehicleController {
       json.append(Utility.constructJson("name",driver.getName())).append(",");
       json.append(Utility.constructJson("criticalPart",driver.getVehicle().getCriticalPart())).append(",");
       json.append(Utility.constructJson("supplier",driver.getVehicle().getSupplier())).append(",");
-      json.append(Utility.constructJson("licence",driver.getLicense_Validity()));
+      json.append(Utility.constructJson("licence",driver.getLicense_Validity())).append(",");;
+      
+      json.append(Utility.constructJson("contactno",driver.getContact_No())).append(",");;
+      json.append(Utility.constructJson("licenceno",driver.getLicense_No())).append(",");;
+      json.append(Utility.constructJson("passtype",driver.getPass_Type())).append(",");;
+      json.append(Utility.constructJson("passExpiryDate",driver.getPass_Expiry_Date()));
+
       json.append("}");
       
       return json.toString();

@@ -25,7 +25,7 @@ public class VehicleMappers implements RowMapper<VehicleVO> {
     vehicle.setTruck_No(rs.getString("truck_No"));
     vehicle.setVehicle_Type(rs.getString("vehicle_type")); 
     vehicle.setReportingTime(rs.getString("ReportingTime"));
-
+    vehicle.setPass_Validity_Date(rs.getDate("pass_Validity_Date"));
     return vehicle;
   }
 }
