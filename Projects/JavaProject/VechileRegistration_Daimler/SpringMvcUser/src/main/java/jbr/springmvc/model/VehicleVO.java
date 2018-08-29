@@ -84,9 +84,9 @@ public class VehicleVO {
   }
 
   public String getVehicle_No() {
-  //  if (vehicle_No==null) {
-   //   vehicle_No="";
-   // }
+    if (vehicle_No==null) {
+      vehicle_No="";
+    }
     return vehicle_No;
   }
 
