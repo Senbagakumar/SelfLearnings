@@ -1,4 +1,6 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,51 +15,79 @@ namespace SelfAssessment.Controllers
         public ActionResult Index()
         {
             var lmodel = new List<UISubSector>();
+            var subSector = new List<SubSector>();
+            var sector = new List<Sector>();
 
-            for (int i = 1; i <= 20; i++)
+            using (var repository = new Repository<SubSector>())
             {
-                var model = new UISubSector();
-                model.Id = i;
-                model.SubSectorName = "SubSectorName"+ i;
-                model.SectorName = "SectorName" + i;
-                lmodel.Add(model);
+                subSector = repository.All().ToList();
             }
+
+            using (var repository = new Repository<Sector>())
+            {
+                sector = repository.All().ToList();
+            }
+
+            var list = sector.Join(subSector, r => r.Id, t => t.SectorId, (r, t) => new UISubSector() { Id=t.Id, SectorId=t.SectorId, SectorName=r.SectorName, SubSectorName=t.SubSectorName }).ToList();
 
             var lmod = new List<SelectListItem>();
-            lmod.Add(new SelectListItem() { Text = "-- Select --", Value = "-- Select --", Selected = true });
-
-            for (int i=1; i <=20; i++)
-            {
-                var mod = new SelectListItem();
-                mod.Text = "SectorName" + i;
-                mod.Value = "SectorName" + i;
-                lmod.Add(mod);
-            }
+            lmod = sector.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+            lmod.Insert(0, new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true });
            
             ViewBag.SectorList = lmod;
-            return View(lmodel);
+            return View(list);
         }
 
         // POST: SubSector/Create
         [HttpPost]
-        public ActionResult Create(UISubSector uISubSector)
+        public JsonResult Create(UISubSector uISubSector)
         {
             try
             {
+                using (var repository = new Repository<SubSector>())
+                {
+                    if (uISubSector.Id != 0)
+                    {
+                        var subSector = repository.Filter(q => q.Id == uISubSector.Id).FirstOrDefault();
+                        if (subSector != null && !string.IsNullOrEmpty(subSector.SubSectorName))
+                        {
+                            subSector.SubSectorName = uISubSector.SubSectorName;
+                            subSector.SectorId = uISubSector.SectorId;
+                            subSector.UpdateDate = DateTime.Now;
+                            repository.Update(subSector);
+                        }
+                    }
+                    else
+                    {
+                        repository.Create(new SubSector() { SubSectorName = uISubSector.SubSectorName, SectorId=uISubSector.SectorId, CreateDate = DateTime.Now });
+                    }
+                    repository.SaveChanges();
+                }
+
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }       
 
         // GET: SubSector/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            return View();
+            using (var repository = new Repository<SubSector>())
+            {
+                var deleteSubSector = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (deleteSubSector != null && !string.IsNullOrEmpty(deleteSubSector.SubSectorName))
+                {
+                    repository.Delete(deleteSubSector);
+                }
+                repository.SaveChanges();
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }       
     }
 }

@@ -54,7 +54,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                <button type="button" id="btnPlus" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
                 &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
             </div>
             <div class="card-body">
@@ -113,6 +113,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#btnPlus').click(function () {
+            $('#SectorName').val(0);
+            $('#text-input').val('');
+        });    
         $('#btnSave').click(function () {
 
             var modle = {};
@@ -122,14 +126,15 @@
 
             if (id != '') {
                 model = {
-                    SectorName: $('#SectorName').val(),
+                    SectorName: '',
                     SubSectorName: $('#text-input').val(),
+                    SectorId: $('#SectorName').val(),
                     Id: id
                 };
             }
             else {
                 model = {
-                    SectorName: $('#SectorName').val(),
+                    SectorId: $('#SectorName').val(),
                     SubSectorName: $('#text-input').val()
                 };
             }
@@ -148,6 +153,8 @@
                 $('#SectorName').val('-- Select --');
                 $('#btnCancel').click();
                 $('#btnCancel').click();
+
+                location.href = "/SubSector/Index";
             });
 
         });
@@ -155,21 +162,25 @@
     });
 
     function DoAction(id) {
-        alert(id);
         var url = "/SubSector/Delete/" + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            alert("Saved");
+            location.href = "/SubSector/Index";
         });
     }
 
     function EditAction(id, name, subsectorName) {        
         $('#txtId').val(id);
         $('#text-input').val(subsectorName);  
-        $('#SectorName').val(name);        
+       // $('#SectorName').val(name);      
+        //$('#SectorName').val(name);  
+
+        $('#SectorName option').map(function () {
+            if ($(this).text() == name) return this;
+        }).attr('selected', 'selected');
     }
 
 

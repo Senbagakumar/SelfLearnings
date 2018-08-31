@@ -26,8 +26,10 @@ namespace SelfAssessment.Mapper
                 TypeId = Convert.ToInt16(uiOrganization.Type),
                 TypeOfServiceId = Convert.ToInt16(uiOrganization.TypeOfService),
                 UserId = uiOrganization.Name.Substring(0, 6),
-                StateId =Convert.ToInt16(uiOrganization.State)            
-                
+                StateId = Convert.ToInt16(uiOrganization.State),
+                CreateDate = DateTime.Now,
+                CurrentAssignmentStatus = "Pending",
+                CurrentAssignmentType = "Level 1"
             };
         }
     }

@@ -1,4 +1,6 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +16,9 @@ namespace SelfAssessment.Controllers
         {
             var lmodel = new List<Revenue>();
 
-            for (int i = 1; i <= 20; i++)
+            using (var repository = new Repository<Revenue>())
             {
-                var model = new Revenue();
-                model.Id = i;
-                model.Name = "Revenue" + i;
-                lmodel.Add(model);
+                lmodel = repository.All().ToList();
             }
             return View(lmodel);
         }
@@ -30,20 +29,50 @@ namespace SelfAssessment.Controllers
         {
             try
             {
+                using (var repository = new Repository<Revenue>())
+                {
+                    if (revenue.Id != 0)
+                    {
+                        var updateRevenue = repository.Filter(q => q.Id == revenue.Id).FirstOrDefault();
+                        if (updateRevenue != null && !string.IsNullOrEmpty(updateRevenue.Name))
+                        {
+                            updateRevenue.Name = revenue.Name;
+                            updateRevenue.UpdateDate = DateTime.Now;
+                            repository.Update(updateRevenue);
+                        }
+                    }
+                    else
+                    {
+                        repository.Create(new Revenue() { Name = revenue.Name, CreateDate = DateTime.Now });
+                    }
+                    repository.SaveChanges();
+                }
+
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
        // GET: Revenue/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            return View();
+
+            using (var repository = new Repository<Revenue>())
+            {
+                var deleteRevenue = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (deleteRevenue != null && !string.IsNullOrEmpty(deleteRevenue.Name))
+                {
+                    repository.Delete(deleteRevenue);
+                }
+                repository.SaveChanges();
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
     }
 }

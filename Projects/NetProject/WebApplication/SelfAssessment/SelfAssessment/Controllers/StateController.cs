@@ -1,4 +1,6 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,39 +14,64 @@ namespace SelfAssessment.Controllers
         // GET: State
         public ActionResult Index()
         {
-            var lmodel = new List<State>();
-
-            for (int i = 1; i <= 15; i++)
+            List<State> lstate = new List<State>();
+            using (Repository<State> repository = new Repository<State>())
             {
-                var model = new State();
-                model.Id = i;
-                model.StateName = "StateName" + i;
-                lmodel.Add(model);
+                lstate = repository.All().ToList();
             }
-            return View(lmodel);
-        }      
+            return View(lstate);
+        }
 
         // POST: State/Create
         [HttpPost]
-        public ActionResult Create(State state)
+        public JsonResult Create(State state)
         {
             try
             {
+                using (Repository<State> repository = new Repository<State>())
+                {
+                    if (state.Id != 0)
+                    {
+                        var updateState = repository.Filter(q => q.Id == state.Id).FirstOrDefault();
+                        if (updateState != null && !string.IsNullOrEmpty(updateState.StateName))
+                        {
+                            updateState.StateName = state.StateName;
+                            updateState.UpdateDate = DateTime.Now;
+                            repository.Update(updateState);
+                        }
+                    }
+                    else
+                    {
+                        repository.Create(new State() { StateName = state.StateName, CreateDate = DateTime.Now });
+                    }
+                    repository.SaveChanges();
+                }
+
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         // GET: State/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            return View();
-        }
+            using (Repository<State> repository = new Repository<State>())
+            {
+                var deleteState = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (deleteState != null && !string.IsNullOrEmpty(deleteState.StateName))
+                {
+                    repository.Delete(deleteState);
+                }
+                repository.SaveChanges();
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
 
+        }
     }
 }

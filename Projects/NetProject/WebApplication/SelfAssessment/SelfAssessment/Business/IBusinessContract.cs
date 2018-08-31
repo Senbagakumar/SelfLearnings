@@ -11,6 +11,11 @@ namespace SelfAssessment.Business
     public interface IBusinessContract
     {
         ValidationInformation UserCreation(UIOrganization uIOrganization);
-        void SendRegistrationMail(string userName,string passWord);
+        bool LoginVerfication(string userName, string password);
+        string GenerateTempPassword(int length, int numberOfNonAlphanumericCharacters);
+        string ForGetPassword(string email);
+        string SaveState(string stateName);
+        string UpdateState(int stateId, string stateName);
+        string DeleteState(int stateId);
     }
 }

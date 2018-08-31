@@ -1,4 +1,5 @@
-﻿using SelfAssessment.Models.DBModel;
+﻿using SelfAssessment.Models;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,7 +16,14 @@ namespace SelfAssessment.DataAccess
         public AssessmentContext() : base(connectionString)
         {
         }
-        public DbSet<Organization> UserInfo { get; set; }      
+        public DbSet<Organization> UserInfo { get; set; }  
+        public DbSet<Others> others { get; set; }
+        public DbSet<State> states { get; set; }
+        public DbSet<ServiceType> serviceTypes { get; set; }
+        public DbSet<City> cities { get; set; }
+        public DbSet<Revenue> revenues { get; set; }
+        public DbSet<Sector> sectors { get; set; }
+        public DbSet<SubSector> subSectors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

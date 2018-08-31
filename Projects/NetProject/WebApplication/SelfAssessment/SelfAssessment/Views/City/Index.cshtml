@@ -55,7 +55,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                <button id="btnPlus" type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
                 &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
             </div>
             <div class="card-body">
@@ -114,6 +114,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#btnPlus').click(function () {
+            $('#txtId').val('');
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
@@ -121,14 +125,15 @@
 
             if (id != '') {
                 model = {
-                    StateName: $('#StateName').val(),
+                    StateName: '',
                     CityName: $('#text-input').val(),
+                    StateId: $('#StateName').val(),
                     Id: id
                 };
             }
             else {
                 model = {
-                    StateName: $('#StateName').val(),
+                    StateId: $('#StateName').val(),
                     CityName: $('#text-input').val()
                 };
             }
@@ -147,6 +152,8 @@
                 $('#StateName').val('-- Select --');
                 $('#btnCancel').click();
                 $('#btnCancel').click();
+
+                location.href = "/City/Index";
             });
 
         });
@@ -154,21 +161,25 @@
     });
 
     function DoAction(id) {
-        alert(id);
         var url = "/City/Delete/" + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            alert("Saved");
+            location.href = "/City/Index";
         });
     }
 
     function EditAction(id, name, subsectorName) {
         $('#txtId').val(id);
         $('#text-input').val(subsectorName);
-        $('#StateName').val(name);
+        //$('#StateName').val(name);
+
+        $('#StateName option').map(function () {
+            if ($(this).text() == name) return this;
+        }).attr('selected', 'selected');
+
     }
 
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SelfAssessment.Models.Sector>
+﻿@model IEnumerable<SelfAssessment.Models.DBModel.Sector>
 @{
     ViewBag.Title = "Sector";
 }
@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                    <button id="btnPlus" type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
                     &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
                 </div>
                 <div class="card-body">
@@ -120,6 +120,11 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#btnPlus').click(function () {
+            $('#txtId').val('');
+            $('#text-input').val('');
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
@@ -150,8 +155,10 @@
                 $('#txtId').val('');
                 $('#btnCancel').click();
                 $('#btnCancel').click();
-                });
 
+                location.href = "/Sector/Index";
+
+                });
             });
     
     });
@@ -163,7 +170,7 @@
              url: url,
              contentType: "application/json"
          }).done(function (res) {
-             alert("Saved");
+             location.href = "/Sector/Index";
          });
     }
 

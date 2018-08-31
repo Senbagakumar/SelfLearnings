@@ -188,6 +188,9 @@
     <Compile Include="Business\IBusinessContract.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
+    <Compile Include="Models\DBModel\City.cs" />
+    <Compile Include="Models\DBModel\Group.cs" />
+    <Compile Include="Models\DBModel\SubSector.cs" />
     <Compile Include="Models\MailConfiguration.cs" />
     <Compile Include="Validation\IUserBValidation.cs" />
     <Compile Include="Validation\UserBValidation.cs" />
@@ -212,17 +215,17 @@
     <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\Assessment.cs" />
     <Compile Include="Models\AssignQuestionToAssignment.cs" />
-    <Compile Include="Models\City.cs" />
+    <Compile Include="Models\UICity.cs" />
     <Compile Include="DataAccess\AssessmentContext.cs" />
     <Compile Include="Models\DBModel\Organization.cs" />
-    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\UIGroup.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Questions.cs" />
-    <Compile Include="Models\Revenue.cs" />
-    <Compile Include="Models\Sector.cs" />
-    <Compile Include="Models\ServiceType.cs" />
-    <Compile Include="Models\State.cs" />
-    <Compile Include="Models\SubSector.cs" />
+    <Compile Include="Models\DBModel\Revenue.cs" />
+    <Compile Include="Models\DBModel\Sector.cs" />
+    <Compile Include="Models\DBModel\ServiceType.cs" />
+    <Compile Include="Models\DBModel\State.cs" />
+    <Compile Include="Models\UISubSector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2481,6 +2484,7 @@
     <Content Include="Views\Shared\_ManageLayout.cshtml" />
     <Content Include="Views\ManageUser\_ViewStart.cshtml" />
     <Content Include="Views\ManageUser\ChangePassword.cshtml" />
+    <Content Include="Views\User\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

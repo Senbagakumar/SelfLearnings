@@ -5,11 +5,12 @@ using System.Web;
 
 namespace SelfAssessment.Models
 {
-    public class State
+    public class UICity
     {
-        public int Id { get; set; }
+        public int Id { get; set; }     
+        public string CityName { get; set; }
+        public int StateId { get; set; }
         public string StateName { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+
     }
 }

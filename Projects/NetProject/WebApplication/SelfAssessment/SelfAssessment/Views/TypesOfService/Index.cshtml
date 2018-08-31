@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SelfAssessment.Models.ServiceType>
+﻿@model IEnumerable<SelfAssessment.Models.DBModel.ServiceType>
 @{
     ViewBag.Title = "Index";
 }
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                <button id="btnPlus" type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
                 &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
             </div>
             <div class="card-body">
@@ -103,12 +103,15 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#btnPlus').click(function () {
+            $('#text-input').val('');
+            $('#txtId').val('');
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
             var id = $('#txtId').val();
-            alert(id);
-            alert($('#text-input').val());
             if (id != '') {
                 model = {
                     Name: $('#text-input').val(),
@@ -134,6 +137,8 @@
                 $('#txtId').val('');
                 $('#btnCancel').click();
                 $('#btnCancel').click();
+
+                location.href = "/TypesOfService/Index";
             });
 
         });
@@ -147,7 +152,7 @@
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            alert("Saved");
+            location.href = "/TypesOfService/Index";
         });
     }
 

@@ -18,10 +18,10 @@
 
             <div id="sendmessage">Thank you!</div>
             <div id="errormessage"></div>
-            <form action="" method="post" role="form" class="">
+            <form id="validate-me" action="" method="post" role="form" class="">
                 <div class="form-row">
                     <div class="form-group col-md-12">
-                        <input type="text" name="name" class="form-control" id="txtName" placeholder="Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                        <input type="text" name="name" class="form-control" id="txtName" placeholder="Name" data-rule="minlen:6" data-msg="Please enter at least 6 chars">
                         <div class="validation"></div>
                     </div>
 
@@ -55,9 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="form-group col-md-6">
-                        @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
-                    </div>
+                       @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
                     <div class="validation"></div>
                 </div>
 
@@ -82,12 +80,12 @@
                         <div class="validation"></div>
                     </div>
                 </div>
-                <div class="form-row" style="display:none" id="divOthers">
-                    <div class="form-group col-md-6">
+                <div class="form-row">
+                    <div class="form-group col-md-6" style="display:none" id="divOthers">
                         <input type="text" name="txtSector" id="txtSector" class="form-control" placeholder="Enter New Sector " style="display:none" data-rule="required" data-msg="Please enter New Sector">
                         <div class="validation"></div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" style="display:none" id="divOthers1">
                         <input type="text" name="txtSubSector" id="txtSubSector" class="form-control" style="display:none" placeholder="Enter New Sub Sector " data-rule="required" data-msg="Please enter New Sub Sector">
                         <div class="validation"></div>
                     </div>
@@ -105,7 +103,7 @@
                 </div>
 
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>
                     <button type="reset" class="btn btn-primary btn-sm">Cancel</button>
                 </div>
             </form>
@@ -128,44 +126,54 @@
 
 </div>
 
+
+
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+
 <script type="text/javascript">
+   // $('#validate-me').validate();
+
     $(document).ready(function () {
 
         $('#Sector').on('change', function () {
-            if ($(this).val() == "OTHERS") {
-                alert('cmbsector');
+            if ($(this).val() == "1000") {
                 $('#divOthers').show();
                 $('#txtSector').show();
             } else {
-                alert('txtsector');
                 $('#divOthers').hide();
                 $('#txtSector').hide();
             }
         });
 
         $('#SubSector').on('change', function () {
-            if ($(this).val() == "OTHERS") {
-                alert('cmbsubsector');
-                $('#divOthers').show();
+            if ($(this).val() == "1000") {
+                $('#divOthers1').show();
                 $('#txtSubSector').show();
             } else {
-                alert('txtsubsector');
-                $('#divOthers').hide();
+                $('#divOthers1').hide();
                 $('#txtSubSector').hide();
             }
         });
 
         $('#btnLogin').click(function () {
 
+
             var modle = {};
 
             var sect = $('#txtSector').val();
+
             if (sect == '')
                 sect = $('#Sector').val();
+            else
+                sect = $('#Sector').val() +"-"+ $('#txtSector').val();
 
             var subSect = $('#txtSubSector').val();
+
             if (subSect == '')
                 subSect = $('#SubSector').val();
+            else
+                subSect = $('#SubSector').val() +"-"+ $('#txtSubSector').val();
 
             model = {
                 Name: $('#txtName').val(),
@@ -183,7 +191,7 @@
                 Type: $('#Type').val()
             };
 
-            var url = "/User/Register";
+            var url = "/User/CreateOrganization";
 
             //alert(subSect);
 
@@ -193,10 +201,13 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
+
                 $('#text-input').val('');
-                $('#txtId').val('');
-                $('#btnCancel').click();
-                $('#btnCancel').click();
+                $('#txtId').val('');              
+
+                if(res == "Success")
+                    location.href = "/User/Success";
+
             });
 
         });

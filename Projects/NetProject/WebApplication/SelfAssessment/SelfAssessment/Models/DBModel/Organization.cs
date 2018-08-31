@@ -30,7 +30,14 @@ namespace SelfAssessment.Models.DBModel
         public string Password { get; set; }
         public string CurrentAssignmentType { get; set; }
         public string CurrentAssignmentStatus { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+    }
+    public class Others
+    {
+        [Key]
+        public string OrganizationId { get; set; }
+        public string Sector { get; set; }
+        public string SubSector { get; set; }
     }
 }

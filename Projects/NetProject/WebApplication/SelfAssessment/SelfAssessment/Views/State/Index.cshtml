@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SelfAssessment.Models.State>
+﻿@model IEnumerable<SelfAssessment.Models.DBModel.State>
 @{
     ViewBag.Title = "Index";
 }
@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">SECTOR</strong>
+                <strong class="card-title">State</strong>
 
                 <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+                <button id="btnPlus" type="button" class="btn btn-success btn-sm " data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
                 &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
             </div>
             <div class="card-body">
@@ -106,6 +106,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#btnPlus').click(function () {
+            $('#txtId').val('');
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
@@ -131,10 +135,14 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
-                $('#text-input').val('');
-                $('#txtId').val('');
-                $('#btnCancel').click();
-                $('#btnCancel').click();
+                if (res == "Success") {
+                    $('#text-input').val('');
+                    $('#txtId').val('');
+                    $('#btnCancel').click();
+                    $('#btnCancel').click();
+
+                    location.href = "/State/Index";
+                }
             });
 
         });
@@ -148,7 +156,7 @@
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            alert("Saved");
+            location.href = "/State/Index";
         });
     }
 

@@ -1,10 +1,13 @@
 ﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
 using SelfAssessment.Models;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace SelfAssessment.Controllers
 {
@@ -32,7 +35,11 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult Login(UILogin login)
         {
-            return View();
+
+            if (this.businessContract.LoginVerfication(login.UserName, login.UserPwd))
+                return RedirectToAction("Index", "ManageUser");
+            else
+                return View();
         }
         public ActionResult Register()
         {
@@ -44,15 +51,31 @@ namespace SelfAssessment.Controllers
             var state = new List<SelectListItem>();
             var typeOfService = new List<SelectListItem>();
 
-            type.Add(new SelectListItem() { Text = "Small", Value = "0" });
-            type.Add(new SelectListItem() { Text = "Large", Value = "1" });
-            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "2" });
-
             var first = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
+            type.Add(first);
+            type.Add(new SelectListItem() { Text = "Small", Value = "1" });
+            type.Add(new SelectListItem() { Text = "Large", Value = "2" });
+            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
+
+            var subSector = new List<SubSector>();
+            var sector = new List<Sector>();
+
+            using (var repository = new Repository<SubSector>())
+            {
+                subSector = repository.All().ToList();
+            }
+
+            using (var repository = new Repository<Sector>())
+            {
+                sector = repository.All().ToList();
+            }
+
+
+
             sectorList.Add(first);
             subSectorList.Add(first);
             revenue.Add(first);
-            type.Add(first);
+           
             city.Add(first);
             state.Add(first);
             typeOfService.Add(first);
@@ -93,8 +116,8 @@ namespace SelfAssessment.Controllers
 
             }
 
-            sectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "100" });
-            subSectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "100" });
+            sectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "1000" });
+            subSectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "1000" });
 
             ViewBag.SectorList = sectorList;
             ViewBag.SubSectorList = subSectorList;
@@ -113,25 +136,34 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult ForGetPassword(string email)
         {
+            this.businessContract.ForGetPassword(email);
+            return View();
+        }
+
+        public ActionResult Success()
+        {
             return View();
         }
 
         // POST: User/Create
         [HttpPost]
-        public ActionResult Register(UIOrganization organization)
+        public JsonResult CreateOrganization(UIOrganization organization)
         {
             try
             {
 
                 this.businessContract.UserCreation(organization);
+                
+
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                //return RedirectToAction("Success");
             }
             catch
             {
-                return View();
+                //return View();
             }
+           return Json("Success", JsonRequestBehavior.AllowGet);
         }
       
     }

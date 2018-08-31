@@ -1,4 +1,6 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +16,10 @@ namespace SelfAssessment.Controllers
         {
             var lmodel = new List<Sector>();
 
-            for(int i=1; i<=20; i++)
+            using (Repository<Sector> repository = new Repository<Sector>())
             {
-                var model = new Sector();
-                model.Id = i;
-                model.SectorName = "SectorName" + i;                 
-                lmodel.Add(model);
-            }
+                lmodel = repository.All().ToList();
+            }           
             return View(lmodel);
         }
 
@@ -29,19 +28,48 @@ namespace SelfAssessment.Controllers
         {
             try
             {
+                using (var repository = new Repository<Sector>())
+                {
+                    if (sector.Id != 0)
+                    {
+                        var updateSector = repository.Filter(q => q.Id == sector.Id).FirstOrDefault();
+                        if (updateSector != null && !string.IsNullOrEmpty(updateSector.SectorName))
+                        {
+                            updateSector.SectorName = sector.SectorName;
+                            updateSector.UpdateDate = DateTime.Now;
+                            repository.Update(updateSector);
+                        }
+                    }
+                    else
+                    {
+                        repository.Create(new Sector() { SectorName = sector.SectorName, CreateDate = DateTime.Now });
+                    }
+                    repository.SaveChanges();
+                }
+
                 // TODO: Add insert logic here
 
-                return RedirectToAction("Index");
+                // return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
         
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            return RedirectToAction("Index");
+            using (Repository<Sector> repository = new Repository<Sector>())
+            {
+                var deleteSector = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (deleteSector != null && !string.IsNullOrEmpty(deleteSector.SectorName))
+                {
+                    repository.Delete(deleteSector);
+                }
+                repository.SaveChanges();
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
     }
 }
