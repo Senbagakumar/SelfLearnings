@@ -24,6 +24,10 @@ namespace SelfAssessment.DataAccess
         public DbSet<Revenue> revenues { get; set; }
         public DbSet<Sector> sectors { get; set; }
         public DbSet<SubSector> subSectors { get; set; }
+        public DbSet<Group> groups { get; set; }
+        public DbSet<Assessment> assessments { get; set; }
+        public DbSet<TempQuestions> tempQuestions { get; set; }
+        public DbSet<Questions> questions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

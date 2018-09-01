@@ -188,6 +188,7 @@
     <Compile Include="Business\IBusinessContract.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
+    <Compile Include="Models\DBModel\Assessment.cs" />
     <Compile Include="Models\DBModel\City.cs" />
     <Compile Include="Models\DBModel\Group.cs" />
     <Compile Include="Models\DBModel\SubSector.cs" />
@@ -213,7 +214,7 @@
     <Compile Include="Mapper\IOrganizationMapper.cs" />
     <Compile Include="Mapper\OrganizationMapper.cs" />
     <Compile Include="Models\Answers.cs" />
-    <Compile Include="Models\Assessment.cs" />
+    <Compile Include="Models\UIAssessment.cs" />
     <Compile Include="Models\AssignQuestionToAssignment.cs" />
     <Compile Include="Models\UICity.cs" />
     <Compile Include="DataAccess\AssessmentContext.cs" />

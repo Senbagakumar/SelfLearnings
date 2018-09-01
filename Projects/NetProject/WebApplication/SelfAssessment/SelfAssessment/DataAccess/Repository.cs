@@ -90,6 +90,11 @@ namespace SelfAssessment.DataAccess
             DbSet.Remove(TObject);
         }
 
+        public void DeleteRange(List<TObject> listTObject)
+        {
+            DbSet.RemoveRange(listTObject);
+        }
+
         public virtual int Update(TObject TObject)
         {
             var entry = Context.Entry(TObject);

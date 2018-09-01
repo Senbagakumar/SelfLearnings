@@ -1,4 +1,7 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,70 +12,115 @@ namespace SelfAssessment.Controllers
 {
     public class GroupController : Controller
     {
+        private readonly IBusinessContract businessContract;
+        public GroupController(IBusinessContract businessContract)
+        {
+            this.businessContract = businessContract;
+        }
         // GET: Group
         public ActionResult Index()
         {
             var lmodel = new List<UIGroup>();
+            var group = new List<Group>();
+            var question = new List<Questions>();
 
-            for (int i = 1; i <= 20; i++)
+            using (Repository<Group> repository = new Repository<Group>())
             {
-                var model = new UIGroup();
-                model.Id = i;
-                model.GroupName = "GroupName" + i;
-                model.NoOfQuestions = 10;
-                lmodel.Add(model);
+                group = repository.All().ToList();
             }
+
+            using (Repository<Questions> repository = new Repository<Questions>())
+            {
+                question = repository.All().ToList();
+            }
+
+            lmodel = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
+
+
+
+            //for (int i = 1; i <= 20; i++)
+            //{
+            //    var model = new UIGroup();
+            //    model.Id = i;
+            //    model.GroupName = "GroupName" + i;
+            //    model.NoOfQuestions = 10;
+            //    lmodel.Add(model);
+            //}
 
             return View(lmodel);
         }
 
-        public List<Questions> GetQuestions()
+        public List<Questions> GetQuestions(int groupId)
         {
             var lQuestion = new List<Questions>();
-            for(int i=1; i<5; i++)
+            using (var repository = new Repository<Questions>())
             {
-                var question = new Questions();
-                question.Id = i;
-                question.GroupId = i;
-                question.QuestionCode = "QC000" + i;
-                question.QuestionText = "QuestionText";
-                question.QHint = "Hint" + i;
-                question.TimerValue = "01:00 Hrs";
-                lQuestion.Add(question);
+                lQuestion = repository.Filter(q => q.GroupId == groupId).ToList(); 
             }
             return lQuestion;
         }
 
-        public Questions GetQById()
-        {
-            return new Questions(){ Id=1, GroupId=1, Mandatory=false, QuestionCode="QC0001", QuestionText="QuestionText", QHint="Question Hint", Option1="Opt1", Option2="Opt2", Option3="Opt3", Option4="Opt4", Option5="Opt5", Answer="Answer", TimerValue="05:00 Hrs" };
-        }
-
         public JsonResult GetQuestionById(string id)
         {
-            var question = GetQById();
+            var question = new Questions();
+            using (var repository = new Repository<Questions>())
+            {
+                question = repository.Filter(q => q.QuestionCode == id).FirstOrDefault();
+            }
             return Json(question, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetAllQByGroupId(int id)
         {
-            var questions = GetQuestions();
-            var uiGroup = new UIGroup() {Id=id, GroupName="MyGroupName", GroupDescription= "MyGroupDescription", questions= questions };
+            var questions = GetQuestions(id);
+            var group = new Group();
+
+            using (Repository<Group> repository = new Repository<Group>())
+            {
+                group = repository.Filter(q => q.Id == id).FirstOrDefault();
+            }
+            var uiGroup = new UIGroup() {Id=id, GroupName=group.Name, GroupDescription= group.Description, questions= questions };
             return Json(uiGroup, JsonRequestBehavior.AllowGet);
         }
        
         // POST: Group/Create
         [HttpPost]
-        public ActionResult SaveGroup(UIGroup uiGroup)
+        public JsonResult SaveGroup(UIGroup uiGroup)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (uiGroup.Id != 0)
+                {
+                    using (Repository<Group> repository = new Repository<Group>())
+                    {
+                        var group = repository.Filter(q => q.Id == uiGroup.Id).FirstOrDefault();
+                        if (group != null)
+                        {
+                            group.Name = uiGroup.GroupName;
+                            group.Description = uiGroup.GroupDescription;
+                            group.UpdateDate = DateTime.Now;
 
-                return RedirectToAction("Index");
+                            repository.Update(group);
+                            repository.SaveChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    using (Repository<Group> repository = new Repository<Group>())
+                    {
+                        var group = new Group() { Name = uiGroup.GroupName, Description = uiGroup.GroupDescription, CreateDate = DateTime.Now };
+                        repository.Create(group);
+                        repository.SaveChanges();
+                    }
+                }
+
+                // TODO: Add insert logic here
+                return Json("Success", JsonRequestBehavior.AllowGet);
+
             }
             catch
             {
-                return View();
+                return Json("Failure", JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -80,14 +128,64 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public JsonResult CreateQuestion(Questions question)
         {
-            var model = new Questions() { Id=6, QuestionCode="QC0006", QuestionText="NewQuestion", QHint="QHint", TimerValue="01:02 Hrs" };
-            return Json(model, JsonRequestBehavior.AllowGet);
+            int qCount = 0;
+            using (var repository = new Repository<Questions>())
+            {
+                qCount = repository.All().Count();
+            }
+
+            var qCode ="QCCode"+(qCount+1);
+            var first = new Questions();
+
+            var quest = new Questions() { QuestionCode= qCode, QuestionText=question.QuestionText, QHint=question.QHint, TimerValue=question.TimerValue,
+            Answer=question.Answer, Mandatory=question.Mandatory, Option1=question.Option1, Option2=question.Option2, Option3=question.Option3, Option4=question.Option4,
+            Option5=question.Option5, GroupId=question.GroupId, QType=question.QType};
+
+            using (var repository = new Repository<Questions>())
+            {                
+                repository.Create(quest);
+                repository.SaveChanges();
+                first = repository.Filter(q => q.QuestionCode == quest.QuestionCode).FirstOrDefault();
+            }
+
+            return Json(first, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Group/Delete/5
-        public ActionResult Delete(int id)
+        public JsonResult DeleteQuestionById(string id)
         {
-            return View();
-        }      
+            using (var repository = new Repository<Questions>())
+            {
+                var delQuestion = repository.Filter(q => q.QuestionCode == id).FirstOrDefault();
+                if (delQuestion != null)
+                {
+                    repository.Delete(delQuestion);
+                    repository.SaveChanges();
+                }
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteGroupById(int id)
+        {
+            using (var repository = new Repository<Questions>())
+            {
+                var delQuestions = repository.Filter(q => q.GroupId == id).ToList();
+                if (delQuestions != null)
+                {
+                    repository.DeleteRange(delQuestions);
+                    repository.SaveChanges();
+                }
+            }
+            using (var repository = new Repository<Group>())
+            {
+                var delGroup = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (delGroup != null)
+                {
+                    repository.Delete(delGroup);
+                    repository.SaveChanges();
+                }
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
     }
 }

@@ -6,6 +6,10 @@ using System.Web;
 
 namespace SelfAssessment.Models
 {
+    public class TempQuestions : Questions
+    {
+
+    }
     public class Questions
     {
         public int Id { get; set; }

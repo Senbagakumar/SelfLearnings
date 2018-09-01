@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SelfAssessment.Models
+namespace SelfAssessment.Models.DBModel
 {
     public class Assessment
     {
@@ -25,19 +25,7 @@ namespace SelfAssessment.Models
         public bool LineAssessmentPublically { get; set; }
         public bool AllowPublicRegistration { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
 
     }
-
-    public class UIAssessment
-    {
-        public string Type { get; set; }
-        public int NoOfParticipants { get; set; }
-        public int NoOfCompleted { get; set; }
-        public int NoOfPending { get; set; }
-        public int NoOfGroup { get; set; }
-        public int NoOfQuestion { get; set; }
-        public string AssignmentStatus { get; set; }
-    }
-
 }

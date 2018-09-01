@@ -56,7 +56,7 @@
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <select name="select" id="select" class="form-control">
-                                                <option value="1">5 Point Choice</option>
+                                                <option value="5 Choice">5 Point Choice</option>
                                             </select>
                                         </div>
                                     </div>
@@ -401,7 +401,7 @@
                                 <td>
                                     <a href="#" class="btn btn-warning btn-sm" onclick="GetQuestions(@item.Id,'Edit');"> <i class="fa fa-pencil"></i></a>
                                     &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnGroupViewForm" onclick="GetQuestions(@item.Id,'View');"><i class="fa fa-eye"></i></a>
-                                    &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                                    &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm" id="btnDeleteGroup" onclick="DeleteGroup(@item.Id);"> <i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                         }
@@ -437,16 +437,16 @@
           $('#bootstrap-data-table-export').DataTable();
 
 		  $("#btnAddGroup").click(function(){
-				$("#divGroupViewForm").hide();
-				$("#divGroupAddEditForm").show();
-            });
-
-            $("#btnGroupSave").click(function () {
-                alert('GroupSave');
+			  $("#divGroupViewForm").hide();
+              $("#divGroupAddEditForm").show();
+              $("#btnAddQuestion").hide();
+              $('#txt-GN-text-input').val('');
+              $('#txt-GD-text-input').val('');
+              $("#editQuestiontable > tbody").empty();
             });
 
             $("#btnGroupCancel").click(function () {
-                alert("GroupCancel");
+                $("#divGroupAddEditForm").hide();
             });
 
             $("#btnAddQuestion").click(function () {
@@ -469,13 +469,15 @@
                     data: JSON.stringify(model),
                     url: url,
                     contentType: "application/json"
-                }).done(function (res) {
-                    alert('Group Saved Successfully');
+                }).done(function (res) {                   
                     $('#txt-GN-text-input').val('');
                     $('#txt-GD-text-input').val('');
                     $('#btnGroupCancel').click();
                     $('#btnGroupCancel').click();
                     $("#divGroupAddEditForm").hide();
+
+                    $('#txt-GroupId-text-input').val(0);
+                    location.href = "/Group/Index";
                 });
 
             });
@@ -494,8 +496,9 @@
                     Option5: $("#txt-Opt5-text-input").val(),
                     Answer: $("#txt-QA-text-input").val(),
                     TimerValue: $("#txt-TL-text-input").val(),
-                    Mandatory: $("#chk-Mandatory").val(),
-                    GroupId: $('#txt-GroupId-text-input').val()
+                    Mandatory: $("#chk-Mandatory").prop('checked'),
+                    GroupId: $('#txt-GroupId-text-input').val(),
+                    QType: $('#select').val()
                 };
 
                 var url = "/Group/CreateQuestion";
@@ -525,6 +528,7 @@
             });
 
             $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
+                var groupId = $(this).parent().siblings("td:eq(1)").text();               
                 if (this.className == "btn btn-warning btn-sm") {
                     $("#divGroupViewForm").hide();
                     $("#divGroupAddEditForm").show();
@@ -532,6 +536,10 @@
                 if (this.className == "btn btn-info btn-sm") {
                     $("#divGroupViewForm").show();
                     $("#divGroupAddEditForm").hide();
+                }
+                if (this.className == "btn btn-danger btn-sm") {
+                    DeleteGroup(groupId);
+                    $(this).closest('tr').remove();
                 }
             });
 
@@ -541,7 +549,8 @@
                     GetQuestion(questionid,"Edit")
                 }
                 if (this.className == "btn btn-danger btn-sm") {
-
+                    DeleteQuestion(questionid);
+                    $(this).closest('tr').remove();
                 }
             });
 
@@ -555,9 +564,6 @@
 		  $("#frmAddEditClose").click(function(){
 				$("#divGroupAddEditForm").hide();
 		  });
-		  //$("#btnCancel").click(function(){
-				//$("#divGroupAddEditForm").hide();
-		  //});
 
 		  $("#frmViewClose").click(function(){
 				$("#divGroupViewForm").hide();
@@ -571,6 +577,28 @@
 				$("#divGroupViewForm").show();
             });           
     });
+
+    function DeleteQuestion(id) {
+        var url = "/Group/DeleteQuestionById/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) {
+            //$("#editQuestiontable tbody")
+        });
+    }
+
+    function DeleteGroup(id) {
+        var url = "/Group/DeleteGroupById/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) {
+            //location.href = "/Group/Index";
+        });
+    }
 
     function GetQuestion(id, type) {
         var url = "/Group/GetQuestionById/" + id;
@@ -641,7 +669,8 @@
                 $("#editQuestiontable").find("tr:not(:first)").remove();
                 $("#txt-GN-text-input").val(result.GroupName);
                 $("#txt-GD-text-input").val(result.GroupDescription);  
-                $("#txt-GroupId-text-input").val(id);               
+                $("#txt-GroupId-text-input").val(id);   
+                $("#btnAddQuestion").show();
             }
             else {
                 $("#questiontable").find("tr:not(:first)").remove();

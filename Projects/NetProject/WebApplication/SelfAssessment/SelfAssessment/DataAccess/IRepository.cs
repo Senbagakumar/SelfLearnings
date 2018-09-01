@@ -62,6 +62,11 @@ namespace SelfAssessment.DataAccess
         void Delete(T t);
 
         /// <summary>
+        /// Delete list of object from database.
+        /// </summary>
+        /// <param name="listTObject"></param>
+        void DeleteRange(List<T> listTObject);
+        /// <summary>
         /// Delete objects from database by specified filter expression.
         /// </summary>
         /// <param name="predicate"></param>

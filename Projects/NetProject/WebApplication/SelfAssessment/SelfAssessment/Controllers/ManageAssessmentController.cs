@@ -1,4 +1,6 @@
-﻿using SelfAssessment.Models;
+﻿using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
+using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,63 +60,69 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult AssignOrganization()
         {
-            var sectorList = new List<SelectListItem>();
-            var subSectorList = new List<SelectListItem>();
-            var revenue = new List<SelectListItem>();
             var type = new List<SelectListItem>();
-            var city = new List<SelectListItem>();
-            var state = new List<SelectListItem>();
+
+            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
+            type.Add(firstItem);
+
+            type.Add(new SelectListItem() { Text = "Small", Value = "1" });
+            type.Add(new SelectListItem() { Text = "Large", Value = "2" });
+            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
+
+            var subSector = new List<SelectListItem>();
+            var sector = new List<SelectListItem>();
+            var states = new List<SelectListItem>();
+            var cities = new List<SelectListItem>();
             var typeOfService = new List<SelectListItem>();
-
-            type.Add(new SelectListItem() { Text = "Small", Value = "Small" });
-            type.Add(new SelectListItem() { Text = "Large", Value = "Large" });
-            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "Operating Unit" });
-
-            var first = new SelectListItem() { Text = "-- Select --", Value = "-- Select --", Selected = true };
-            sectorList.Add(first);
+            var revenue = new List<SelectListItem>();
 
 
-            for (int i = 1; i <= 10; i++)
+            using (var repository = new Repository<SubSector>())
             {
-                var mod = new SelectListItem();
-                mod.Text = "SectorName" + i;
-                mod.Value = "SectorName" + i;
-                sectorList.Add(mod);
-
-                mod = new SelectListItem();
-                mod.Text = "SubSectorName" + i;
-                mod.Value = "SubSectorName" + i;
-                subSectorList.Add(mod);
-
-                mod = new SelectListItem();
-                mod.Text = "City" + i;
-                mod.Value = "City" + i;
-                city.Add(mod);
-
-                mod = new SelectListItem();
-                mod.Text = "State" + i;
-                mod.Value = "State" + i;
-                state.Add(mod);
-
-                mod = new SelectListItem();
-                mod.Text = "Revenue" + i;
-                mod.Value = "Revenue" + i;
-                revenue.Add(mod);
-
-                mod = new SelectListItem();
-                mod.Text = "TypesOfService" + i;
-                mod.Value = "TypesOfService" + i;
-                typeOfService.Add(mod);
-
+                subSector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
             }
 
-            sectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "OTHERS" });
-            subSectorList.Add(new SelectListItem() { Text = "OTHERS", Value = "OTHERS" });
+            using (var repository = new Repository<Sector>())
+            {
+                sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+            }
 
-            ViewBag.SectorList = sectorList;
-            ViewBag.SubSectorList = subSectorList;
-            ViewBag.City = city;
-            ViewBag.State = state;
+            using (var repository = new Repository<State>())
+            {
+                states = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
+            }
+
+            using (var repository = new Repository<Revenue>())
+            {
+                revenue = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+            }
+
+            using (var repository = new Repository<ServiceType>())
+            {
+                typeOfService = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+            }
+
+            using (var repository = new Repository<City>())
+            {
+                cities = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
+            }
+
+            var lastItem = new SelectListItem() { Text = "OTHERS", Value = "1000" };
+
+            sector.Insert(0, firstItem);
+            subSector.Insert(0, firstItem);
+            revenue.Insert(0, firstItem);
+            typeOfService.Insert(0, firstItem);
+            cities.Insert(0, firstItem);
+            states.Insert(0, firstItem);
+
+            sector.Add(lastItem);
+            subSector.Add(lastItem);
+
+            ViewBag.SectorList = sector;
+            ViewBag.SubSectorList = subSector;
+            ViewBag.City = cities;
+            ViewBag.State = states;
             ViewBag.Revenue = revenue;
             ViewBag.TypeOfService = typeOfService;
             ViewBag.Type = type;
