@@ -36,46 +36,16 @@
 
 
                     <hr>
-                    <div class="col-md-12" style="margin-bottom:15px;">
-                        <h5 class="text-info" style="text-transform:uppercase; margin-bottom:8px">Group 2 </h5>
-                        <div class="row">
-                            <ul class="list-group list-group-flush " style="text-indent:15px;">
-                                <li class="list-group-item" style="border:0px">
-                                    <b>1. Is the 3TG internationally added to your product ?</b>
-                                </li>
-                                <li class="list-group-item" style="border:0px">
-                                    <b>2. Do you any of the smartlers to your product</b>
-                                </li>
-
-                                <li class="list-group-item" style="border:0px">
-                                    <b>3. Is the 3TG internationally added to your product</b>
-                                </li>
-
-                            </ul>
+                    @*@foreach (var group in Model[0].uIAssignGroups)
+                    {*@
+                        <div class="col-md-12" style="margin-bottom:15px;">
+                           <div id="divViewForm">
+                              
+                           </div>
                         </div>
-                    </div>
-                    <div class="row">&nbsp;</div>
-                    <div class="col-md-12" style="margin-bottom:15px;">
-                        <h5 class="text-info" style="text-transform:uppercase; margin-bottom:8px">Group 1 </h5>
-                        <div class="row">
-                            <ul class="list-group list-group-flush" style="text-indent:15px;">
-                                <li class="list-group-item" style="border:0px">
-                                    <b>1. Is the 3TG internationally added to your product ?</b>
-                                </li>
-                                <li class="list-group-item" style="border:0px">
-                                    <b>2. Do you any of the smartlers to your product</b>
-                                </li>
-
-                                <li class="list-group-item" style="border:0px">
-                                    <b>3. Is the 3TG internationally added to your product</b>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-
+                    @*}*@
+                   <div class="row">&nbsp;</div>                      
+                  </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="btnViewClose">Close</button>
@@ -197,8 +167,8 @@
 
                             <td>
                                 <a href="#" class="btn btn-warning btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'Edit');"> <i class="fa fa-pencil"></i></a>
-                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm"><i class="fa fa-eye"></i></a>
-                                &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
+                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'View');"><i class="fa fa-eye"></i></a>
+                                @*&nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>*@
                             </td>
 
                         </tr>
@@ -237,21 +207,36 @@
     });
 
     function GetGroupQuestion(id, type) {
-       
+        $("#treeview").hummingbird("uncheckAll");
         var url = "/ManageAssessment/GetQuestionByAssignmentId/" + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (result) {
-            $("#txt-AssessmentId-text-input").val(id);     // Hidden value for AssignementId          
+            if (type == "Edit") {
+                $("#txt-AssessmentId-text-input").val(id);     // Hidden value for AssignementId      
 
-            $.each(result, function (key, value) {
-                //alert(value.GroupName);
-                $.each(value.uIAssignGroupQuestions, function (key, value) {                  
+                $.each(result, function (key, value) {
+                    $.each(value.uIAssignGroupQuestions, function (key, value) {
                         $("#treeview ul").find("#" + value.QuestionId).prop("checked", true);
+                    });
                 });
-            });          
+            }           
+            else {
+                var markup = "";
+                $.each(result, function (key, value) {
+                    markup += "<h5 class='text-info' style='text-transform:uppercase; margin-bottom:8px'>" + value.GroupName+"</h5>";
+                    markup += "<div class='row'>";
+                    markup += "<ul class='list-group list-group-flush' style='text-indent:15px;'>";
+                    $.each(value.uIAssignGroupQuestions, function (key, value) {                      
+                        markup += "<li class='list-group-item' style='border:0px'>" + value.QuestionName +"</li>";                      
+                    });
+                    markup += "</ul>";
+                    markup += "</div>";
+                });
+                $('#divViewForm').html(markup);
+            }
         });
     }
     $(document).ready(function () {
@@ -264,13 +249,12 @@
         });
 
         $("#btnSave").click(function () {
-
+           
             var questionId = [];
               $("#treeview input[type=checkbox]").each(function (idx, elem) {
                   var is_checked = $(this).prop("checked");
                   var quest = $(this).data("id");
-                  if (is_checked && quest == "custom-1") {
-                          //alert($(this).prop("id")); 
+                  if (is_checked && quest == "custom-1") {                   
                           questionId.push($(this).prop("id"));                      
                   }
             });

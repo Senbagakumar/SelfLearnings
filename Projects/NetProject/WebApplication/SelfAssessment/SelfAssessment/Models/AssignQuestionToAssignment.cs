@@ -38,13 +38,13 @@ namespace SelfAssessment.Models
     public class UIAssignGroupQuestion
     {
         public int GroupId { get; set; }
-        public int QuestionId { get; set; }
+        public string QuestionId { get; set; }
         public string QuestionName { get; set; }
     }
 
     public class UIQuest
     {
-        public List<int> QuestionId { get; set; }
+        public List<string> QuestionId { get; set; }
         public string Level { get; set; }
         public int AssignmentId { get; set; }
     }

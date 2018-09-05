@@ -13,6 +13,7 @@ namespace SelfAssessment.Models
     public class Questions
     {
         public int Id { get; set; }
+        public int AssignmentId { get; set; }
         public int GroupId { get; set; }
         public string QuestionCode { get; set; }
         public string QuestionText { get; set; }

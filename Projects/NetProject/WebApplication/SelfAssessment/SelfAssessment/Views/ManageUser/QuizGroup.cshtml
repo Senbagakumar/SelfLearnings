@@ -1,0 +1,113 @@
+﻿
+@model SelfAssessment.Business.GroupQuiz
+@{
+    ViewBag.Title = "QuizGroup";
+}
+
+<h2>QuizGroup</h2>
+
+<div class="content mt-3">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <strong>Assessment Name</strong>
+                <div class="user-area dropdown float-right">
+
+                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="ti-export"></span>&nbsp; Export
+                    </a>
+
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
+                        <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body card-block">
+                <form action="" method="post" class="form-horizontal">
+                    <div class="row form-group">
+                        <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                        <div class="col-12 col-md-4">
+                            <select class="form-control">
+                                <option value="0">-Select-</option>
+                                <option value="survey 1" selected>Level 1</option>
+                                <option value="survey 2">Level 2</option>
+                                <option value="survey 3">Level 3</option>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col ">
+                            <div class="col col-md-2">&nbsp;</div>
+                            <div class="col-12 col-md-4">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    <i class="fa fa-dot-circle-o"></i> Go
+                                </button>
+                                <button type="reset" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-ban"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <div>&nbsp;</div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <p>No Of Group : <b>9 &nbsp;</b> | &nbsp; No Of Question : <b>65 &nbsp;</b> | &nbsp;No Of Question Answered: <b>55</b> </p>
+                <hr>
+
+
+                <h4 class="mb-3 text-info">@Model.GroupText</h4>
+                @using (Html.BeginForm("QuizGroup", "ManageUser", FormMethod.Post))
+                {
+                    <div class="row">
+                        <ul class="list-group list-group-flush">
+                            @foreach (var quest in Model.listOfQuestions)
+                            {
+                                <li class="list-group-item" style="border:0px">
+                                    <b>@quest.Questions.QuestionText</b>
+                                    <div>
+                                        @*@Html.HiddenFor(x => x.GroupId)*@
+                                        @*@Html.HiddenFor(_=> quest.Questions.QuestionId)*@
+                                        <p>
+                                            <div class=" form-check">
+                                                @*@Html.RadioButtonFor(m => Model.AnswerChoices, false, htmlAttributes: new { @checked = "" }) test<br />*@
+                                                @foreach (var choice in quest.AnswerChoices)
+                                                {
+                                                    <label for="inline-radio1" class="form-check-label ">
+                                                        @Html.RadioButton(quest.Questions.QuestionCode, @choice.AnswerChoiceId + @choice.Choices, choice.IsChecked) @choice.Choices
+                                                    </label><br />
+                                                }
+                                            </div>
+                                        </p>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <div class="row col-md-12" style="margin-top:5px;">
+                            <span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input class="btn btn-success" id="submitButton" type="submit" value="<< PRV ">
+                            </span>
+                            <span class="ml-auto">
+                                <input id="btnSubmit" class="btn btn-success" type="submit" value="Next >>">
+                            </span>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>

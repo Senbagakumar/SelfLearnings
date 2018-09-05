@@ -40,4 +40,15 @@ namespace SelfAssessment.Models.DBModel
         public string Sector { get; set; }
         public string SubSector { get; set; }
     }
+
+    public class TempOrg
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int OrgId { get; set; }
+        public string Level { get; set; }
+        public string Status { get; set; }
+        public DateTime PromoteDate { get; set; }
+    }
 }

@@ -26,6 +26,7 @@ namespace SelfAssessment.Models.DBModel
         public bool AllowPublicRegistration { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public string AssessmentType { get; set; }
 
     }
 }

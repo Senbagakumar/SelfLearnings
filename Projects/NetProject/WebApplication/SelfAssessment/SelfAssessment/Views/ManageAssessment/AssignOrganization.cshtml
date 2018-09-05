@@ -59,7 +59,7 @@
                         </div>
                         <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type Of Services </label></div>
                         <div class="col-12 col-md-3">
-                            @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control" })
+                            @Html.DropDownList("TypeOfOrg", (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control" })
                         </div>
 
 
@@ -89,7 +89,7 @@
                 <div class="row form-group">
                     <div class="col col-md-9">&nbsp;</div>
                     <div class="col-12 col-md-3">
-                        <a href="#" class="btn btn-primary btn-sm"> Move To Next Level Assessment</a>
+                        <a href="#" id="btnMoveNextLevel" class="btn btn-primary btn-sm"> Move To Next Level Assessment</a>
                     </div>
                 </div>
 
@@ -137,16 +137,35 @@
 
 <script>
 
+    $("#btnMoveNextLevel").click(function () {
+
+        $("#bootstrap-data-table input[type=checkbox]").each(function (idx, elem) {
+            var is_checked = $(this).prop("checked");  
+            if (is_checked) {
+                var orgId = $(this).prop("id");
+
+                var url = "/ManageAssessment/MoveToNextLevel/" + orgId;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json"
+                }).done(function (result) {
+                    location.href = "/ManageAssessment/AssignOrganization";
+                });
+            }
+        });
+
+    });
 
     $("#btnGetOrganization").click(function () {
         model = {        
-            City: $('#City').val(),
-            State: $('#State').val(),
-            Sector: $('#Sector').val(),//txtSector, txtSubSector
-            SubSector: $('#SubSector').val(),
-            Revenue: $('#Revenue').val(),
-            TypeOfService: $('#TypeOfService').val(),
-            Type: $('#Type').val()
+            CityId: $('#City').val(),
+            StateId: $('#State').val(),
+            SectorId: $('#Sector').val(),//txtSector, txtSubSector
+            SubSectorId: $('#SubSector').val(),
+            RevenueId: $('#Revenue').val(),
+            TypeId: $('#TypeOfOrg').val(),
+            CurrentAssignmentType: $('#Type').val()
         };
 
         var url = "/ManageAssessment/AssignOrganizationByFilter";               
@@ -158,7 +177,7 @@
             contentType: "application/json"
         }).done(function (res) {
             $.each(res, function (key, value) {
-                var markup = "<tr><td>" + value.Id + "</td>" +"<td><input type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Type+"</td>";
+                var markup = "<tr><td>" + value.Id + "</td>" + "<td><input id=" + value.Id +" type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Type+"</td>";
                 $("#bootstrap-data-table tbody").append(markup);
                 //alert(markup);
             });

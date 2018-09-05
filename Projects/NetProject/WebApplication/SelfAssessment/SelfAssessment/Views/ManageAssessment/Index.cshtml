@@ -30,7 +30,8 @@
                             <label for="textarea-input" class=" form-control-label">Description</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <textarea name="textarea-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                            <input type="text" id="txt-ADes-input" name="text-input" placeholder="Text" class="form-control">
+                            @*<textarea name="textarea-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control"></textarea>*@
                         </div>
                     </div>
                     <div class="row form-group">
@@ -38,7 +39,8 @@
                             <label for="textarea-input" class=" form-control-label">Welcome Message</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <textarea name="textarea-input" id="txt-AWMsg-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                            <input type="text" id="txt-AWMsg-input" name="text-input" placeholder="Text" class="form-control">
+                            @*<textarea id="txt-AWMsg-input" rows="3" name="textarea-input" placeholder="Content..." class="form-control"></textarea>*@
                         </div>
                     </div>
                     <div class="row form-group">
@@ -46,7 +48,8 @@
                             <label for="textarea-input" class=" form-control-label">End Message</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <textarea name="textarea-input" id="txt-AEMsg-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+                            <input type="text" id="txt-AEMsg-input" name="text-input" placeholder="Text" class="form-control">
+                            @*<textarea name="textarea-input" id="txt-AEMsg-input" rows="3" placeholder="Content..." class="form-control"></textarea>*@
                         </div>
                     </div>
                     <div class="row form-group">
@@ -336,24 +339,24 @@
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tbody>                        
+                    <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@item.Id</td>
-                            <td><input type="checkbox" name="chk1"></td>
-                            <td>@item.Name</td>
-                            <td>@item.Description</td>
-                            <td>@item.AdminEmail</td>
-                            <td>@item.AssessmentFormat</td>
-                            <td>
-                                <a href="#" class="btn btn-warning btn-sm" onclick="GetAssessment(@item.Id, 'Edit');"> <i class="fa fa-pencil"></i></a>
-                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetAssessment(@item.Id, 'View');"><i class="fa fa-eye"></i></a>
-                                &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@item.Id</td>
+                                <td><input type="checkbox" name="chk1"></td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>@item.AdminEmail</td>
+                                <td>@item.AssessmentFormat</td>
+                                <td>
+                                    <a href="#" class="btn btn-warning btn-sm" onclick="GetAssessment(@item.Id, 'Edit');"> <i class="fa fa-pencil"></i></a>
+                                    &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetAssessment(@item.Id, 'View');"><i class="fa fa-eye"></i></a>
+                                    &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm" onclick="DeleteAssessment(@item.Id);"> <i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
                         }
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -387,7 +390,7 @@
 <script src="~/admin/assets/js/lib/wysiwyg-editor/js/tinymce.min.js"></script>
 <!-- Custom js -->
 <script src="~/admin/assets/js/lib/wysiwyg-editor/wysiwyg-editor.js"></script>
-
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>*@
 
 <script type="text/javascript">
     function clear() {
@@ -464,8 +467,8 @@
             $("#divAssessmentAddEditForm").show();
         });
 
-        $("#btnSaveAssessment").click(function () {           
-            alert($("#txt-id-input").text());
+        $("#btnSaveAssessment").click(function () {
+            //alert($("#txt-ADes-input").value);
             var model = {
                 Id: $("#txt-id-input").text(),
                 Name: $("#txt-AName-input").val(),
@@ -476,14 +479,14 @@
                 AssessmentFormat: $("#st-AFormat").val(),
                 StartDate: $("#txt-AStart-Date").val(),
                 EndDate: $("#txt-AEnd-date").val(),
-                ShowWelcomeScreen: $("#chk-SWScreen").val(),
-                ShowNextButton: $("#chk-SNButton").val(),
-                ShowQuestionIndex: $("#chk-SQIndex").val(),
-                ShowProgressBar: $('#chk-SPbar').val(),
-                ParticipantsMayPrintAnswer: $('#chk-PMPAnswer').val(),
-                PublicStatistics: $('#chk-Pstat').val(),
-                LineAssessmentPublically: $('#chk-LAPub').val(),
-                AllowPublicRegistration: $('#chk-APReg').val()
+                ShowWelcomeScreen: $("#chk-SWScreen").prop('checked'),
+                ShowNextButton: $("#chk-SNButton").prop('checked'),
+                ShowQuestionIndex: $("#chk-SQIndex").prop('checked'),
+                ShowProgressBar: $('#chk-SPbar').prop('checked'),
+                ParticipantsMayPrintAnswer: $('#chk-PMPAnswer').prop('checked'),
+                PublicStatistics: $('#chk-Pstat').prop('checked'),
+                LineAssessmentPublically: $('#chk-LAPub').prop('checked'),
+                AllowPublicRegistration: $('#chk-APReg').prop('checked')
             };
 
             var url = "/ManageAssessment/SaveAssessment";
@@ -496,50 +499,61 @@
                 $('#btnCancel').click();
                 $('#btnCancel').click();
                 clear();
+                location.href = "/ManageAssessment/Index";
             });
 
         });
 
         $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
-           
+
             if (this.className == "btn btn-warning btn-sm") {
                 $("#divAssessmentViewForm").hide();
-                $("#divAssessmentAddEditForm").show();               
-               
+                $("#divAssessmentAddEditForm").show();
+
             }
             if (this.className == "btn btn-info btn-sm") {
                 $("#divAssessmentViewForm").show();
-                $("#divAssessmentAddEditForm").hide();               
+                $("#divAssessmentAddEditForm").hide();
             }
         });
 
-       
 
 
-            //$("#btnAssessmentEditForm").click(function () {            
-            //    $("#divAssessmentViewForm").hide();
-            //    $("#divAssessmentAddEditForm").show();
-            //});
 
-            $("#frmAddEditClose").click(function () {
-                $("#divAssessmentAddEditForm").hide();
-            });
-            $("#btnCancel").click(function () {
-                $("#divAssessmentAddEditForm").hide();
-            });
+        //$("#btnAssessmentEditForm").click(function () {
+        //    $("#divAssessmentViewForm").hide();
+        //    $("#divAssessmentAddEditForm").show();
+        //});
 
-            $("#frmViewClose").click(function () {
-                $("#divAssessmentViewForm").hide();
-            });
-
-            $("#btnViewClose").click(function () {
-                $("#divAssessmentViewForm").hide();
-            });
-
-            //$("#btnAssessmentViewForm").click(function () {
-            //    $("#divAssessmentViewForm").show();
-            //});
+        $("#frmAddEditClose").click(function () {
+            $("#divAssessmentAddEditForm").hide();
         });
-    
+        $("#btnCancel").click(function () {
+            $("#divAssessmentAddEditForm").hide();
+        });
+
+        $("#frmViewClose").click(function () {
+            $("#divAssessmentViewForm").hide();
+        });
+
+        $("#btnViewClose").click(function () {
+            $("#divAssessmentViewForm").hide();
+        });
+
+        //$("#btnAssessmentViewForm").click(function () {
+        //    $("#divAssessmentViewForm").show();
+        //});
+    });
+
+    function DeleteAssessment(id) {
+        var url = "/ManageAssessment/DeleteAssessMentById/" + id;
+        $.ajax({
+            type: "GET",
+            url: url,
+            contentType: "application/json"
+        }).done(function (result) {
+            location.href = "/ManageAssessment/Index";
+        });
+    }
 
 </script>

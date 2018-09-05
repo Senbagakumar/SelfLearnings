@@ -8,6 +8,7 @@ namespace SelfAssessment.Models
     public class UIAssessment
     {
         public string Type { get; set; }
+        public int Id { get; set; }
         public int NoOfParticipants { get; set; }
         public int NoOfCompleted { get; set; }
         public int NoOfPending { get; set; }
