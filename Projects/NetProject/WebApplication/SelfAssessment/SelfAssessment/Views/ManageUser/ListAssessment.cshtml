@@ -10,43 +10,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header"> <strong>Assessment Name</strong> </div>
-            <div class="card-body card-block">
-                <div class="col-md-4">
-                    <aside class="profile-nav alt">
-                        <section class="card">
-                            <div class="card-header user-header alt bg-dark">
-                                <div class="media">
-                                    <a href="listAssessment1.html">
-                                        <div class="media-body">
-                                            <h2 class="text-light display-6">Level 1</h2>
-
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">10</span></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">10</span></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="#">
-                                        <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
-                                            <br>
-                                            pending<br>&nbsp;
-                                        </span>
-                                    </a>
-                                </li>
-
-
-                            </ul>
-                        </section>
-                    </aside>
-                </div>
+            <div class="card-body card-block">              
 
                 @foreach(var assessment in Model)
                 {
@@ -55,7 +19,7 @@
                         <section class="card">
                             <div class="card-header user-header alt bg-dark">
                                 <div class="media">
-                                    <a href="listAssessment1.html">
+                                    <a href="~/manageuser/QuizGroup">
                                         <div class="media-body">
                                             <h2 class="text-light display-6">@assessment.Type</h2>
 

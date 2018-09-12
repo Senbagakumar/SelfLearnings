@@ -28,4 +28,11 @@ namespace SelfAssessment.Models
         public string TimerValue { get; set; }
         public bool Mandatory { get; set; }
     }
+
+    public class QuestionGroup
+    {
+        public int QuestionId { get; set; }
+        public int GroupId { get; set; }
+        public int MapperId { get; set; }
+    }
 }

@@ -64,7 +64,7 @@
                 <hr>
 
 
-                <h4 class="mb-3 text-info">Group 1 </h4>
+                <h4 class="mb-3 text-info">@Model.Questions.GroupText</h4>
                 @using (Html.BeginForm("QuizOne", "ManageUser",FormMethod.Post,new { id="myForm" }))
                     {
                 <div class="row">
@@ -72,16 +72,16 @@
                         <div class="list-group-item" style="border:0px">
                             <b>@Model.Questions.QuestionText</b>
                             <div>
-                                @Html.HiddenFor(x => x.Questions.QuestionId)
+                                @*@Html.HiddenFor(x => x.Questions.QuestionId)*@
                                 <p>
                                     <div class=" form-check">
-                                        <input type="hidden" id="selectIndex" name="myValue" />
+                                        @*<input type="hidden" id="selectIndex" name="myValue" />*@
                                         @*@Html.RadioButtonFor(m => Model.AnswerChoices, false, htmlAttributes: new { @checked = "" }) test<br />*@
                                         @foreach (var choice in Model.AnswerChoices)
                                         {
-                                            <label for="inline-radio1" class="form-check-label ">
-                                                @Html.RadioButton("answer", @choice.AnswerChoiceId+@choice.Choices, choice.IsChecked) @choice.Choices
-                                            </label><br />
+                                            <label for="inline-radio1" class="form-check-label col-md-2 text-justify border p-3 align-top ">
+                                                @Html.RadioButton("answer", Model.Questions.GroupId + "~" + Model.Questions.QuestionId + "~" + choice.AnswerChoiceId + "~" + choice.Choices, choice.IsChecked) @choice.Choices
+                                            </label>
                                         }
                                     </div>
                                 </p>

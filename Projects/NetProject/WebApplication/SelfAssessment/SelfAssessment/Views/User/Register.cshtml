@@ -140,7 +140,23 @@
             if ($(this).val() == "1000") {
                 $('#divOthers').show();
                 $('#txtSector').show();
-            } else {
+            }
+            else {
+                var id = $(this).val();
+                alert(id);
+                var url = "/User/GetSubSector/" +id;
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    contentType: "application/json"
+                }).done(function (res) {
+                    $.each(res, function (key, value) {
+                        $('#SubSector')
+                            .append($("<option></option>")
+                                .attr("value", value.Value)
+                                .text(value.Text));
+                    });
+                });
                 $('#divOthers').hide();
                 $('#txtSector').hide();
             }

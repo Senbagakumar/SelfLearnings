@@ -25,7 +25,8 @@
 
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" class="form-horizontal">
+                @*@using (Html.BeginForm("QuizLevelGroup", "ManageUser", FormMethod.Post))
+                {*@
                     <div class="row form-group">
                         <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
                         <div class="col-12 col-md-4">
@@ -53,7 +54,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                @*}*@
             </div>
 
         </div>
@@ -83,9 +84,9 @@
                                                 @*@Html.RadioButtonFor(m => Model.AnswerChoices, false, htmlAttributes: new { @checked = "" }) test<br />*@
                                                 @foreach (var choice in quest.AnswerChoices)
                                                 {
-                                                    <label for="inline-radio1" class="form-check-label ">
-                                                        @Html.RadioButton(quest.Questions.QuestionCode, @choice.AnswerChoiceId + @choice.Choices, choice.IsChecked) @choice.Choices
-                                                    </label><br />
+                                                    <label for="inline-radio1" class="form-check-label col-md-2 text-justify border p-3 align-top">
+                                                        @Html.RadioButton(quest.Questions.QuestionCode, Model.GroupId +"~"+ quest.Questions.QuestionId +"~"+ choice.AnswerChoiceId +"~"+ choice.Choices, choice.IsChecked) @choice.Choices
+                                                    </label>
                                                 }
                                             </div>
                                         </p>

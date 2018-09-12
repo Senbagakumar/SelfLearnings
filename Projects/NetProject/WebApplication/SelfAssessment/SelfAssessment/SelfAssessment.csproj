@@ -163,6 +163,7 @@
     <Compile Include="Business\BusinessContract.cs" />
     <Compile Include="Business\IBusinessContract.cs" />
     <Compile Include="Business\GroupQuizManager.cs" />
+    <Compile Include="Business\LamdaComparer.cs" />
     <Compile Include="Business\QuizManager.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
@@ -2467,6 +2468,7 @@
     <Content Include="Views\ManageUser\QuizOne.cshtml" />
     <Content Include="Views\ManageUser\ShowResults.cshtml" />
     <Content Include="Views\ManageUser\QuizGroup.cshtml" />
+    <Content Include="Views\ManageUser\ShowGroupResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

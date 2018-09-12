@@ -32,6 +32,7 @@ namespace SelfAssessment.Models.DBModel
         public string CurrentAssignmentStatus { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public int AssessmentId { get; set; }
     }
     public class Others
     {

@@ -442,15 +442,17 @@
               $("#btnAddQuestion").hide();
               $('#txt-GN-text-input').val('');
               $('#txt-GD-text-input').val('');
+              $('#txt-GroupId-text-input').val(0);
               $("#editQuestiontable > tbody").empty();
             });
 
             $("#btnGroupCancel").click(function () {
                 $("#divGroupAddEditForm").hide();
+                location.href = "/Group/Index";
             });
 
             $("#btnAddQuestion").click(function () {
-                $("#txt-QC-text-input").text('');
+                Clear();
             });
 
             $("#btnGroupSave").click(function () {
@@ -485,6 +487,7 @@
             $("#btnSubmit").click(function () {    
 
                 var QCode = $("#txt-QC-text-input").text();
+
                 var model = {
                     QuestionCode: $("#txt-QC-text-input").text(),
                     QuestionText: $("#txt-QT-text-input").val(),
@@ -509,10 +512,14 @@
                     contentType: "application/json"
                 }).done(function (res) {
                     if (QCode != '') {  
-                        var rows = $("#editQuestiontable").find("tbody>tr");
+
+                        var rows = $('#editQuestiontable td:contains(' + QCode + ')').parent('tr');
+
                         $(rows).find("td").eq(2).text(model.QuestionText);
                         $(rows).find("td").eq(3).text(model.QHint);
                         $(rows).find("td").eq(4).text(model.TimerValue);
+
+                        $('#txt-QC-text-input').val(0);
                     }
                     else {
                         var markup = "<tr><td>" + res.Id + "</td><td>" + res.QuestionCode + "</td><td>" + res.QuestionText + "</td><td>" + res.QHint + "</td><td>" + res.TimerValue + "</td>";

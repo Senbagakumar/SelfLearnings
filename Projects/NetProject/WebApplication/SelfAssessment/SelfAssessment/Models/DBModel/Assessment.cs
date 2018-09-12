@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -27,6 +29,19 @@ namespace SelfAssessment.Models.DBModel
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public string AssessmentType { get; set; }
+        public int Sector { get; set; }
+        public int SubSector { get; set; }
 
+    }
+
+    public class AssessmentLevelMapping
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public int AssessmentId { get; set; }
+        public int QuestionId { get; set; }
+        public int GroupId { get; set; }
+        public string Level { get; set; }
     }
 }

@@ -19,7 +19,7 @@
                     <div class="row form-group">
                         <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
                         <div class="col-12 col-md-3">
-                            : Assessment Name
+                            @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
                         </div>
 
                         <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
@@ -165,7 +165,8 @@
             SubSectorId: $('#SubSector').val(),
             RevenueId: $('#Revenue').val(),
             TypeId: $('#TypeOfOrg').val(),
-            CurrentAssignmentType: $('#Type').val()
+            CurrentAssignmentType: $('#Type').val(),
+            AssessmentId: $('#Assessment').val()
         };
 
         var url = "/ManageAssessment/AssignOrganizationByFilter";               

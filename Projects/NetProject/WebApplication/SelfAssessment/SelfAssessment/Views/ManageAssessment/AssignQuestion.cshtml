@@ -18,10 +18,10 @@
                     <div class="row form-group" style="text-align:center;">
 
                         <div class="col col-md-2">
-                            <label for="text-input" class=" form-control-label">Assessment Name</label>
+                            <label for="text-input" class=" form-control-label">Assessment Name   </label>
                         </div>
                         <div class="col-12 col-md-3 fontweight700">
-                            : Assessment Name
+                            <label for="text-input" id="lblViewAssessmentName" class=" form-control-label"></label>
                             <input type="hidden" id="text-input" name="text-input" placeholder="Text" class="form-control">
                         </div>
                         <div class="col col-md-2">
@@ -67,9 +67,9 @@
 
                     <div class="row form-group" style="text-align:center">
 
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
+                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment   </label></div>
                         <div class="col-12 col-md-3">
-                            <label for="hf-password" class="fontweight700 form-control-label"> : Assessment Name</label>
+                            @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
                         </div>
 
                         <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
@@ -158,6 +158,10 @@
 
                         @foreach(var item in Model)
                         {
+                            if (item.Id == 0)
+                            {
+                                continue;
+                            }
                         <tr>
                             <td>@item.Id</td>
                             <td>@item.AssignMentName</td>
@@ -166,8 +170,8 @@
                             <td>@item.NoOfQuestions</td>
 
                             <td>
-                                <a href="#" class="btn btn-warning btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'Edit');"> <i class="fa fa-pencil"></i></a>
-                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'View');"><i class="fa fa-eye"></i></a>
+                                <a href="#" class="btn btn-warning btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'Edit','@item.AssignMentName','@item.Level');"> <i class="fa fa-pencil"></i></a>
+                                &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetGroupQuestion(@item.AssignmentId,'View','@item.AssignMentName','@item.Level');"><i class="fa fa-eye"></i></a>
                                 @*&nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm"> <i class="fa fa-trash-o"></i></a>*@
                             </td>
 
@@ -202,20 +206,23 @@
         $("#treeview").hummingbird("collapseAll");
     });
     $("#checkNode").click(function () {
-        alert('Node check');
         $("#treeview").hummingbird("checkNode", { attr: "id", name: "node-0-2-2", expandParents: false });
     });
 
-    function GetGroupQuestion(id, type) {
+    function GetGroupQuestion(id, type,assessmentName,level) {
         $("#treeview").hummingbird("uncheckAll");
-        var url = "/ManageAssessment/GetQuestionByAssignmentId/" + id;
+        var url = "/ManageAssessment/GetQuestionByAssignmentId/";
         $.ajax({
             type: "GET",
             url: url,
+            data: { id: id, level: level },
             contentType: "application/json"
         }).done(function (result) {
+            
             if (type == "Edit") {
-                $("#txt-AssessmentId-text-input").val(id);     // Hidden value for AssignementId      
+                //$("#txt-AssessmentId-text-input").val(id);     // Hidden value for AssignementId      
+                $("#Assessment").val(id);
+                $("#slLevel").val(level);
 
                 $.each(result, function (key, value) {
                     $.each(value.uIAssignGroupQuestions, function (key, value) {
@@ -224,6 +231,7 @@
                 });
             }           
             else {
+                $("#lblViewAssessmentName").text(":" + assessmentName);
                 var markup = "";
                 $.each(result, function (key, value) {
                     markup += "<h5 class='text-info' style='text-transform:uppercase; margin-bottom:8px'>" + value.GroupName+"</h5>";
@@ -243,7 +251,6 @@
         //$('#bootstrap-data-table-export').DataTable();
 
         $("#btnAddAssignQuestion").click(function () {
-            $("#btnSave").hide();
             $("#divAssignQuestionViewForm").hide();
             $("#divAssignQuestionAddEditForm").show();
         });
@@ -259,7 +266,8 @@
                   }
             });
             var model = {
-                AssignmentId: $("#txt-AssessmentId-text-input").val(),
+                //AssignmentId: $("#txt-AssessmentId-text-input").val(),
+                AssignmentId: $("#Assessment").val(),
                 QuestionId: questionId,
                 Level: $("#slLevel").val()
             };
@@ -270,11 +278,14 @@
                 url: url,
                 contentType: "application/json"
             }).done(function (res) {
-                $("#txt-AssessmentId-text-input").val('');
+                //$("#txt-AssessmentId-text-input").val('');
+                $("#Assessment").val(0);
                 $("#slLevel").val("Level 1");
                 $("#frmAddEditClose").click();
                 $("#frmAddEditClose").click();
                 $("#treeview").hummingbird("uncheckAll");
+
+                location.href = "/ManageAssessment/AssignQuestion";
             });
 
 
@@ -282,7 +293,6 @@
 
         $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
             if (this.className == "btn btn-warning btn-sm") {
-                $("#btnSave").show();
                 $("#divAssignQuestionViewForm").hide();
                 $("#divAssignQuestionAddEditForm").show();
 

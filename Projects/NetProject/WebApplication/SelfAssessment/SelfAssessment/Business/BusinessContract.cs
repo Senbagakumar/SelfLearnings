@@ -68,15 +68,15 @@ namespace SelfAssessment.Business
             return Membership.GeneratePassword(length, numberOfNonAlphanumericCharacters);
         }
 
-        public bool LoginVerfication(string userName, string password)
+        public int LoginVerfication(string userName, string password)
         {
             using (Repository<Organization> repository = new Repository<Organization>())
             {
-               var user=repository.Filter(q => q.UserId == userName && (q.TempPassword == password || q.Password == password)).FirstOrDefault();
+               var user=repository.Filter(q => q.Email == userName && (q.TempPassword == password || q.Password == password)).FirstOrDefault();
                 if (user != null && !string.IsNullOrEmpty(user.UserId))
-                    return true;
+                    return user.Id;
                 else
-                    return false;
+                    return 0;
             }
         }
 

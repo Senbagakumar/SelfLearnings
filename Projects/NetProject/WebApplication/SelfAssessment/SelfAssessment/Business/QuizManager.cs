@@ -20,6 +20,10 @@ namespace SelfAssessment.Business
         public int QuestionId { get; set; }
         public string QuestionCode { get; set; }
         public string QuestionText { get; set; }
+        public int  UserOptionId { get; set; }
+        public int GroupId { get; set; }
+        public string GroupText { get; set; }
+
         //public virtual List<AnswerChoice> AnswerChoices { get; set; }
     }
 
@@ -101,20 +105,14 @@ namespace SelfAssessment.Business
                 answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 4, Choices = t.Option4 });
                 answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 5, Choices = t.Option5 });
 
-                listOfQuestions.Add(new QuestionAnswer() { Questions = new QuestionQuiz() { QuestionId=i,  QuestionCode = t.QuestionCode, QuestionText = t.QuestionText}, AnswerChoices = answerChoice });
+                listOfQuestions.Add(new QuestionAnswer() { Questions = new QuestionQuiz() { QuestionId=i, GroupId=1, GroupText="MyGroup", QuestionCode = t.QuestionCode, QuestionText = t.QuestionText}, AnswerChoices = answerChoice });
                 i++;
             });
-
-            //listOfQuestions.Add(new QustionAnswer() { Questions = new QuestionQuiz() { QuestionId = 1, QuestionText = "What is your Name" }, AnswerChoices = new List<AnswerChoice>() { new AnswerChoice() { Choices = "FirstName", AnswerChoiceId = 1 }, new AnswerChoice() { Choices = "LastName", AnswerChoiceId = 2 } } });
-            //listOfQuestions.Add(new QustionAnswer() { Questions = new QuestionQuiz() { QuestionId = 2, QuestionText = "What is your Age" }, AnswerChoices = new List<AnswerChoice>() { new AnswerChoice() { Choices = "<18", AnswerChoiceId = 1 }, new AnswerChoice() { Choices = "<25>18", AnswerChoiceId = 2 } } });
-
             return listOfQuestions;
         }
 
         public QuestionAnswer LoadQuiz(int defaultQuestionId = 0)
         {
-            //var question = db.Questions.Find(questionId);
-            //return question;
             if (defaultQuestionId != 0)
             {
                 questionId = defaultQuestionId;

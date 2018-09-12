@@ -6,33 +6,37 @@ using System.Linq.Expressions;
 using System.Web;
 
 namespace SelfAssessment.DataAccess
-{
+{   
+
+
     public class Repository<TObject> : IRepository<TObject>  where TObject : class
     {
-        protected AssessmentContext Context= null;
+        protected AssessmentContext _context= null;
    
         public Repository()
         {
-            Context = new AssessmentContext();
+            _context = new AssessmentContext();
         }
 
         public Repository(AssessmentContext context)
         {
-            Context = context;            
+            _context = context;            
         }
+
+        public AssessmentContext AssessmentContext => _context;
 
         protected DbSet<TObject> DbSet
         {
             get
             {
-                return Context.Set<TObject>();
+                return _context.Set<TObject>();
             }
         }
 
         public void Dispose()
         {
-            if (Context != null)
-                Context.Dispose();
+            if (_context != null)
+                _context.Dispose();
         }
 
         public virtual IQueryable<TObject> All()
@@ -97,7 +101,7 @@ namespace SelfAssessment.DataAccess
 
         public virtual int Update(TObject TObject)
         {
-            var entry = Context.Entry(TObject);
+            var entry = _context.Entry(TObject);
             DbSet.Attach(TObject);
             entry.State = EntityState.Modified;
             return 0;
@@ -112,7 +116,7 @@ namespace SelfAssessment.DataAccess
 
         public void SaveChanges()
         {
-            Context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

@@ -29,6 +29,8 @@ namespace SelfAssessment.DataAccess
         public DbSet<TempQuestions> tempQuestions { get; set; }
         public DbSet<Questions> questions { get; set; }
         public DbSet<TempOrg> tempOrg { get; set; }
+        public DbSet<AssessmentLevelMapping> assessmentLevelMappings { get; set; }
+        public DbSet<Answer> answers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

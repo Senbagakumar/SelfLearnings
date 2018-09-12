@@ -128,24 +128,60 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public JsonResult CreateQuestion(Questions question)
         {
-            int qCount = 0;
-            using (var repository = new Repository<Questions>())
-            {
-                qCount = repository.All().Count();
-            }
-
-            var qCode ="QCCode"+(qCount+1);
             var first = new Questions();
 
-            var quest = new Questions() { QuestionCode= qCode, QuestionText=question.QuestionText, QHint=question.QHint, TimerValue=question.TimerValue,
-            Answer=question.Answer, Mandatory=question.Mandatory, Option1=question.Option1, Option2=question.Option2, Option3=question.Option3, Option4=question.Option4,
-            Option5=question.Option5, GroupId=question.GroupId, QType=question.QType};
+            if (!string.IsNullOrEmpty(question.QuestionCode))
+            {
+                using (var repository = new Repository<Questions>())
+                {
+                    first = repository.Filter(q => q.QuestionCode == question.QuestionCode).FirstOrDefault();
+                    if(first!=null)
+                    {
 
-            using (var repository = new Repository<Questions>())
-            {                
-                repository.Create(quest);
-                repository.SaveChanges();
-                first = repository.Filter(q => q.QuestionCode == quest.QuestionCode).FirstOrDefault();
+                        first.QuestionText = question.QuestionText;
+                        first.QHint = question.QHint;
+                        first.TimerValue = question.TimerValue;
+                        first.Answer = question.Answer;
+                        first.Mandatory = question.Mandatory;
+                        first.Option1 = question.Option1;
+                        first.Option2 = question.Option2;
+                        first.Option3 = question.Option3;
+                        first.Option4 = question.Option4;
+                        first.Option5 = question.Option5;
+                        first.QType = question.QType;
+                    }
+                    repository.Update(first);
+                    repository.SaveChanges();
+                }
+            }
+            else
+            {
+
+                var qCode = "QCCode" + Guid.NewGuid().ToString().Replace("-","");                
+
+                var quest = new Questions()
+                {
+                    QuestionCode = qCode,
+                    QuestionText = question.QuestionText,
+                    QHint = question.QHint,
+                    TimerValue = question.TimerValue,
+                    Answer = question.Answer,
+                    Mandatory = question.Mandatory,
+                    Option1 = question.Option1,
+                    Option2 = question.Option2,
+                    Option3 = question.Option3,
+                    Option4 = question.Option4,
+                    Option5 = question.Option5,
+                    GroupId = question.GroupId,
+                    QType = question.QType
+                };
+
+                using (var repository = new Repository<Questions>())
+                {
+                    repository.Create(quest);
+                    repository.SaveChanges();
+                    first = repository.Filter(q => q.QuestionCode == quest.QuestionCode).FirstOrDefault();
+                }
             }
 
             return Json(first, JsonRequestBehavior.AllowGet);

@@ -15,7 +15,6 @@
             </div>
             <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                 <div class="modal-body">
-
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="text-input" class=" form-control-label">Assessment Name</label>
@@ -85,6 +84,25 @@
                             <input type="text" id="txt-AEnd-date" class="form-control">
                         </div>
                     </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="select" class=" form-control-label">Sector</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="select" class=" form-control-label">Sub Sector</label>
+                        </div>
+                        <div class="col-12 col-md-9">
+                            @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
+                        </div>
+                    </div>
+
 
                     <div class="row form-group">
                         <div class="col col-md-3">
@@ -437,6 +455,30 @@
                 $('#chk-Pstat').prop('checked', result.PublicStatistics);
                 $('#chk-LAPub').prop('checked', result.LineAssessmentPublically);
                 $('#chk-APReg').prop('checked', result.AllowPublicRegistration);
+                $('#Sector').val(result.Sector);
+                $('#SubSector').val(result.SubSector);
+
+              //  $('#Sector').on('change', function () {
+                    var url = "/ManageAssessment/GetSubSector/" + result.Sector;
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        contentType: "application/json"
+                    }).done(function (res) {    
+                        if (res.length > 0) {
+                            $.each(res, function (key, value) {
+                                $('#SubSector')
+                                    .append($("<option></option>")
+                                        .attr("value", value.Value)
+                                        .text(value.Text));
+                            });
+                        }
+                        else {
+                            $('#SubSector').empty();        
+                        }
+                    });
+               // });
+
             }
             else {
                 $("#lbl-AName-input").text(result.Name);
@@ -462,6 +504,29 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $('#Sector').on('change', function () {
+            var id = $(this).val();
+            var url = "/ManageAssessment/GetSubSector/" + id;
+            $.ajax({
+                type: "GET",
+                url: url,
+                contentType: "application/json"
+            }).done(function (res) {
+                if (res.length > 0) {
+                    $.each(res, function (key, value) {
+                        $('#SubSector')
+                            .append($("<option></option>")
+                                .attr("value", value.Value)
+                                .text(value.Text));
+                    });
+                }
+                else {
+                    $('#SubSector').empty();                        
+                }
+            });
+        });
+
+
         $("#btnAddAssessment").click(function () {
             $("#divAssessmentViewForm").hide();
             $("#divAssessmentAddEditForm").show();
@@ -486,7 +551,9 @@
                 ParticipantsMayPrintAnswer: $('#chk-PMPAnswer').prop('checked'),
                 PublicStatistics: $('#chk-Pstat').prop('checked'),
                 LineAssessmentPublically: $('#chk-LAPub').prop('checked'),
-                AllowPublicRegistration: $('#chk-APReg').prop('checked')
+                AllowPublicRegistration: $('#chk-APReg').prop('checked'),
+                Sector: $('#Sector').val(),
+                SubSector: $('#SubSector').val()
             };
 
             var url = "/ManageAssessment/SaveAssessment";
@@ -505,11 +572,9 @@
         });
 
         $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
-
             if (this.className == "btn btn-warning btn-sm") {
                 $("#divAssessmentViewForm").hide();
                 $("#divAssessmentAddEditForm").show();
-
             }
             if (this.className == "btn btn-info btn-sm") {
                 $("#divAssessmentViewForm").show();

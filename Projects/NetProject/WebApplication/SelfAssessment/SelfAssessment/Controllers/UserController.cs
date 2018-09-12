@@ -33,13 +33,33 @@ namespace SelfAssessment.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(UILogin login)
+        public ActionResult Login(string email, string password)
         {
-
-            if (this.businessContract.LoginVerfication(login.UserName, login.UserPwd))
-                return RedirectToAction("Index", "ManageUser");
+            int UserId = 0;
+            UserId = this.businessContract.LoginVerfication(email, password);
+            if(UserId !=0)
+            {
+                Session["UserId"] = UserId;
+                Session["UserName"] = email;
+                return Redirect("/ManageUser/Index");
+                //return RedirectToAction("Index", "ManageUser");               
+            }
             else
                 return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetSubSector(int id)
+        {
+            var subSector = new List<SelectListItem>();
+            //var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };            
+           
+            using (var repository = new Repository<SubSector>())
+            {
+                subSector = repository.Filter(q=> q.SectorId == id).Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
+            }
+            //subSector.Insert(0, firstItem);
+            return Json(subSector,JsonRequestBehavior.AllowGet);
         }
         public ActionResult Register()
         {
@@ -53,18 +73,12 @@ namespace SelfAssessment.Controllers
             type.Add(new SelectListItem() { Text = "Large", Value = "2" });
             type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
 
-            var subSector = new List<SelectListItem>();
+           
             var sector = new List<SelectListItem>();
             var states = new List<SelectListItem>();
             var cities = new List<SelectListItem>();
             var typeOfService = new List<SelectListItem>();
             var revenue = new List<SelectListItem>();
-
-
-            using (var repository = new Repository<SubSector>())
-            {
-                subSector = repository.All().Select(q=> new SelectListItem() {Value = q.Id.ToString(), Text= q.SubSectorName }).ToList();
-            }
 
             using (var repository = new Repository<Sector>())
             {
@@ -93,18 +107,15 @@ namespace SelfAssessment.Controllers
 
             var lastItem = new SelectListItem() { Text = "OTHERS", Value = "1000" };
 
-            sector.Insert(0, firstItem);
-            subSector.Insert(0, firstItem);
+            sector.Insert(0, firstItem);           
             revenue.Insert(0, firstItem);
             typeOfService.Insert(0, firstItem);
             cities.Insert(0, firstItem);
             states.Insert(0, firstItem);
 
             sector.Add(lastItem);
-            subSector.Add(lastItem);
-
-            ViewBag.SectorList = sector;
-            ViewBag.SubSectorList = subSector;
+            ViewBag.SubSectorList = new List<SelectListItem>();
+            ViewBag.SectorList = sector;            
             ViewBag.City = cities;
             ViewBag.State = states;
             ViewBag.Revenue = revenue;
