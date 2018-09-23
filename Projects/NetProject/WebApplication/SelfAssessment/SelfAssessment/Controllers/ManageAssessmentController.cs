@@ -109,11 +109,11 @@ namespace SelfAssessment.Controllers
             var type = new List<SelectListItem>();
 
             var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
-            type.Add(firstItem);
+            //type.Add(firstItem);
 
-            type.Add(new SelectListItem() { Text = "Small", Value = "1" });
-            type.Add(new SelectListItem() { Text = "Large", Value = "2" });
-            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
+            //type.Add(new SelectListItem() { Text = "Small", Value = "1" });
+            //type.Add(new SelectListItem() { Text = "Large", Value = "2" });
+            //type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
 
             var subSector = new List<SelectListItem>();
             var sector = new List<SelectListItem>();
@@ -179,7 +179,7 @@ namespace SelfAssessment.Controllers
             ViewBag.State = states;
             ViewBag.Revenue = revenue;
             ViewBag.TypeOfService = typeOfService;
-            ViewBag.Type = type;
+            //ViewBag.Type = type;
             return View();
         }
 
@@ -197,6 +197,8 @@ namespace SelfAssessment.Controllers
                         org.CurrentAssignmentType = "Level 2";
                     else
                         org.CurrentAssignmentType = "Level 3";
+
+                    org.CurrentAssignmentStatus = "Pending";
                     repo.Update(org);
                     repo.SaveChanges();
                 }
@@ -215,66 +217,70 @@ namespace SelfAssessment.Controllers
         public JsonResult AssignOrganizationByFilter(Organization org)
         {
             var lmodel = new List<UIOrganization>();
+            var listOrganization = new List<Organization>();
             using (var repo = new Repository<Organization>())
             {
-                var listOrganization = new List<Organization>();                
-
-                string baseQuery = "Select * from Organization where AssessmentId=" +org.AssessmentId +" and CurrentAssignmentType='" + org.CurrentAssignmentType+"'";
-                string whereQuery = string.Empty;
-
-                if (org.CityId > 0)
-                    whereQuery = " CityId=" + org.CityId;
-                if (!string.IsNullOrEmpty(whereQuery) && org.StateId > 0)
-                    whereQuery += "and StateId=" + org.StateId;
-                if (!string.IsNullOrEmpty(whereQuery) && org.SectorId > 0)
-                    whereQuery += "and SectorId="+ org.SectorId;
-                if (!string.IsNullOrEmpty(whereQuery) && org.RevenueId > 0)
-                    whereQuery += "and RevenueId=" + org.RevenueId;
-                if (!string.IsNullOrEmpty(whereQuery) && org.SubSectorId > 0)
-                    whereQuery += "and SubSectorId" + org.SubSectorId;
-                if (!string.IsNullOrEmpty(whereQuery) && org.TypeId > 0)
-                    whereQuery += "and TypeId" + org.TypeId;
-
-                baseQuery += whereQuery ?? "";
-
-                try
-                {
-                    listOrganization = repo.AssessmentContext.UserInfo.SqlQuery(baseQuery).ToList();
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
-
-                var states = new Repository<State>();
-                var sector = new Repository<Sector>();
-                var city = new Repository<City>();
-                var subSector = new Repository<SubSector>();
-                var typeofservice = new Repository<ServiceType>();
-                var revenue = new Repository<Revenue>();
-
-                try
-                {
-                    listOrganization.ForEach(q =>
-                    {
-                        UIOrganization model = new UIOrganization();
-                        model.Id = q.Id;
-                        model.Name = q.Name;
-                        model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
-                        model.Revenue = revenue.Filter(r => r.Id == q.RevenueId).FirstOrDefault().Name;
-                        model.Sector = (org.SectorId == 0 || org.SectorId == 1000) ? "OTHERS" : sector.Filter(r => r.Id == q.SectorId).FirstOrDefault().SectorName;
-                        model.SubSector = (org.SectorId == 0 || org.SubSectorId == 1000 )? "OTHERS" : subSector.Filter(r => r.Id == q.SubSectorId).FirstOrDefault().SubSectorName;
-                        model.State = q.StateId > 0 ? states.Filter(s => s.Id == q.StateId).FirstOrDefault().StateName : "";
-                        model.TypeOfService = q.TypeOfServiceId > 0 ? typeofservice.Filter(ty => ty.Id == q.TypeOfServiceId).FirstOrDefault().Name : "";
-                        model.Type = "Level 1";
-                        lmodel.Add(model);
-                    });
-                }
-                catch (Exception ex)
-                {
-                    //throw;
-                }
+                listOrganization = repo.AssessmentContext.UserInfo.Join(repo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => u).Where(q=> q.CurrentAssignmentType == org.CurrentAssignmentType).ToList();
             }
+
+            if (org.CityId > 0)
+                listOrganization = listOrganization.Where(q => q.CityId == org.CityId).ToList();
+            if (org.StateId > 0)
+                listOrganization = listOrganization.Where(q => q.StateId == org.StateId).ToList();
+            if (org.SectorId > 0 && org.SectorId != 1000)
+                listOrganization = listOrganization.Where(q => q.SectorId == org.SectorId).ToList();
+            if (org.RevenueId > 0)
+                listOrganization = listOrganization.Where(q => q.RevenueId == org.RevenueId).ToList();
+            if (org.SubSectorId > 0 && org.SubSectorId != 1000)
+                listOrganization = listOrganization.Where(q => q.SubSectorId == org.SubSectorId).ToList();
+            if(org.TypeOfServiceId > 0)
+                listOrganization = listOrganization.Where(q => q.TypeOfServiceId == org.TypeOfServiceId).ToList();
+
+
+            //var model = listOrganization.Join(repo.AssessmentContext.cities, o => o.CityId, cy => cy.Id, (o, cy) => new { o, cy }).
+            //                            Join(repo.AssessmentContext.states, ocy => ocy.o.StateId, s => s.Id, (ocy, s) => new { ocy, s }).
+            //                            Join(repo.AssessmentContext.sectors, ocys => ocys.ocy.o.SectorId, st => st.Id, (ocys, st) => new { ocys, st }).
+            //                            Join(repo.AssessmentContext.subSectors, ocysst => ocysst.ocys.ocy.o.SubSectorId, sut => sut.Id, (ocysst, sut) => new { ocysst, sut }).
+            //                            Join(repo.AssessmentContext.revenues, ocysstsut => ocysstsut.ocysst.ocys.ocy.o.RevenueId, r => r.Id, (ocysstsut, r) => new { ocysstsut, r }).
+            //                            Join(repo.AssessmentContext.serviceTypes, ocysstsutr => ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.TypeOfServiceId, ts => ts.Id, (ocysstsutr,ts) => new { ocysstsutr,ts}).
+            //                            Select(q=> new UIOrganization()
+            //                            {
+            //                                Id = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.Id,
+            //                                Name = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.Name,
+            //                                City = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.cy.CityName,
+            //                                Revenue = q.ocysstsutr.r.Name,
+            //                                Sector = q.ocysstsutr.ocysstsut.ocysst.st.SectorName,
+            //                                SubSector = q.ocysstsutr.ocysstsut.sut.SubSectorName,
+            //                                State = q.ocysstsutr.ocysstsut.ocysst.ocys.s.StateName,
+            //                                TypeOfService = q.ts.Name,
+            //                                Type = org.CurrentAssignmentType
+            //                            }).ToList();
+
+
+            var city = new Repository<City>();
+
+            try
+            {
+                listOrganization.ForEach(q =>
+                {
+                    UIOrganization model = new UIOrganization();
+                    model.Id = q.Id;
+                    model.Name = q.Name;
+                    model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
+                    model.Revenue = city.AssessmentContext.revenues.FirstOrDefault(r => r.Id == q.RevenueId).Name;
+                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? "OTHERS" : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
+                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? "OTHERS" : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
+                    model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
+                    model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
+                    model.Type = org.CurrentAssignmentType;
+                    lmodel.Add(model);
+                });
+            }
+            catch (Exception ex)
+            {
+                //throw;
+            }
+
             return Json(lmodel, JsonRequestBehavior.AllowGet);
         }
 

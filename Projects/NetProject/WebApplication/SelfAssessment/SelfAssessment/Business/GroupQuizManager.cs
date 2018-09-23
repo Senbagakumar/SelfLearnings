@@ -16,17 +16,24 @@ namespace SelfAssessment.Business
         public List<QuestionAnswer> listOfQuestions { get; set; }
         public int UIGroupId { get; set; }
         public int GroupId { get; set; }
+        public int NoOfQuestions { get; set; }
+        public int NoOfGroups { get; set; }
+        public int NoOfCompletedQuestions { get; set; }
+
     }
 
     interface IGroupSaveQuiz
     {
-        void SaveAnswer(List<QuestionQuiz> answers, int userId);
-        bool MoveToNextGroup(int userId);
-        bool PreviosGroup(int userId);
+        void SaveAnswer(List<QuestionQuiz> answers);
+        void CompleteQuiz();
+        bool MoveToNextGroup(int groupId);
+        int CalculateScore();
+        //bool PreviosGroup(int groupId, int userid);
     }
     interface IGroupQuizManager : IGroupSaveQuiz
     {
-        GroupQuiz LoadQuiz(int defaultGroupId, int userid);
+        GroupQuiz LoadQuiz(int groupId);
+        List<GroupQuiz> GetAllQuestions();
 
     }
     public class GroupQuizModel
@@ -41,44 +48,24 @@ namespace SelfAssessment.Business
     }
     public class GroupQuizManager : IGroupQuizManager
     {
-        static GroupQuizManager instance;
-        static string Type="Level 1";
-        static List<QuestionAnswer> listOfQuestions = new List<QuestionAnswer>();
-        int groupId = 1;
-        public bool IsComplete = false;
-        public GroupQuizModel quiz;
-
-        private GroupQuizManager()
+        private readonly int UserId;
+        public List<GroupQuiz> AllQuestions { get; set; }
+        public GroupQuizManager(int userId)
         {
-            quiz = new GroupQuizModel();
-            quiz.StartTime = DateTime.Now;
-            quiz.QuizGroupId = 1;
-            quiz.Score = 0;
+            UserId = userId;
         }
 
-        public static GroupQuizManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new GroupQuizManager();              
-                return instance;
-            }
-        }
-
-
-        private static List<GroupQuiz> AllGroupQuestions(int userId)
+        public List<GroupQuiz> GetAllQuestions()
         {
             var listOfGroupQuestions = new List<GroupQuiz>();
             var uInfo = new Repository<Organization>();
-
-            var details=uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).FirstOrDefault();
+            var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q=> q.u.Id == UserId).FirstOrDefault();
 
             var questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
-            var lQuestions = uInfo.AssessmentContext.questions.Where(q=> questionIds.Contains(q.Id)).GroupBy(q=> q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
+            var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 
             int i = 1;
-            lQuestions.ForEach(t => 
+            lQuestions.ForEach(t =>
             {
                 var listOfGroupQuiz = new GroupQuiz();
                 listOfGroupQuiz.UIGroupId = i;
@@ -90,22 +77,15 @@ namespace SelfAssessment.Business
                 t.Questions.ForEach(v => {
 
                     var question = new QuestionAnswer();
-                    question.Questions = new QuestionQuiz() { QuestionCode= "Q"+ k, QuestionId=v.Id, QuestionText=v.QuestionText };                    
+                    question.Questions = new QuestionQuiz() { QuestionCode = "Q" + k, QuestionId = v.Id, QuestionText = v.QuestionText };
 
-                    var answerChoice = new List<AnswerChoice>();                    
+                    var answerChoice = new List<AnswerChoice>();
 
                     answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 1, Choices = v.Option1 });
                     answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 2, Choices = v.Option2 });
                     answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 3, Choices = v.Option3 });
                     answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 4, Choices = v.Option4 });
-                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 5, Choices = v.Option5 });                    
-
-                    var isAnswer=uInfo.AssessmentContext.answers.Where(q => q.QuestionId == v.Id && q.GroupId == t.Type && q.UserId == userId).FirstOrDefault();
-                    if(isAnswer!=null)
-                    {
-                        var selectedChoice=answerChoice.Where(q => q.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
-                        selectedChoice.IsChecked = true;
-                    }
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 5, Choices = v.Option5 });
 
                     question.AnswerChoices = answerChoice;
 
@@ -118,23 +98,56 @@ namespace SelfAssessment.Business
             return listOfGroupQuestions;
         }
 
-        public GroupQuiz LoadQuiz(int defaultGroupId = 0, int userId=0)
-        {
-            //var question = db.Questions.Find(questionId);
-            //return question;
-            if (defaultGroupId != 0)
-            {
-                groupId = defaultGroupId;
-                quiz.Score = 0;
-            }
 
-            var currentGroup= AllGroupQuestions(userId).Where(q => q.UIGroupId == groupId).First();
-            return currentGroup;
+        private List<GroupQuiz> AllGroupQuiz()
+        {
+            var uInfo = new Repository<Answer>();
+
+            AllQuestions.ForEach(v =>
+            {
+                v.listOfQuestions.ForEach(q =>
+                {
+                    var isAnswer = uInfo.Filter(a => a.QuestionId ==q.Questions.QuestionId  && a.GroupId == v.GroupId && a.UserId == UserId).FirstOrDefault();
+                    if (isAnswer != null)
+                    {
+                        var selectedChoice = q.AnswerChoices.Where(ans => ans.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
+                        selectedChoice.IsChecked = true;
+                    }
+                });
+            });
+            return AllQuestions;
+          
         }
 
-        public void SaveAnswer(List<QuestionQuiz> answers, int userId)//QueryWindowInMins
+        public GroupQuiz LoadQuiz(int groupId)
+        { 
+            var allGroup = AllGroupQuiz();
+            var currentGroup=allGroup.Where(q => q.UIGroupId == groupId).First();          
+            return GetCountDetails(allGroup, currentGroup);
+        }
+
+        private GroupQuiz GetCountDetails(List<GroupQuiz> allGroupQuiz, GroupQuiz currentQuiz)
         {
-            var dbAnswer = new List<Answer>();
+            int answeredCount = 0;
+            int noQuestions = 0;
+            allGroupQuiz.ForEach(q => noQuestions+= q.listOfQuestions.Count());
+            currentQuiz.NoOfQuestions = noQuestions;
+            currentQuiz.NoOfGroups = allGroupQuiz.Count();
+            allGroupQuiz.ForEach(v =>
+            {
+                v.listOfQuestions.ForEach(s =>
+                {
+                    if (s.AnswerChoices.Any(t => t.IsChecked))
+                        answeredCount++;
+                });
+
+            });
+            currentQuiz.NoOfCompletedQuestions = answeredCount;
+            return currentQuiz;
+        }
+
+        public void SaveAnswer(List<QuestionQuiz> answers)//QueryWindowInMins
+        {
             var ans = new Repository<Answer>();
             bool isSave = false;
             foreach(var questionQuiz in answers)
@@ -142,10 +155,10 @@ namespace SelfAssessment.Business
                 isSave = true;
                 //SaveLogic
 
-                var eAnswer = ans.Filter(q => q.UserId == userId && q.QuestionId == questionQuiz.QuestionId && q.GroupId == questionQuiz.GroupId).FirstOrDefault();
+                var eAnswer = ans.Filter(q => q.UserId == UserId && q.QuestionId == questionQuiz.QuestionId && q.GroupId == questionQuiz.GroupId).FirstOrDefault();
                 if (eAnswer == null)
                 {
-                    var aAnswer = new Answer() { GroupId = questionQuiz.GroupId, QuestionId = questionQuiz.QuestionId, UserId = userId, UserOptionId = questionQuiz.UserOptionId };
+                    var aAnswer = new Answer() { GroupId = questionQuiz.GroupId, QuestionId = questionQuiz.QuestionId, UserId = UserId, UserOptionId = questionQuiz.UserOptionId };
                     ans.Create(aAnswer);
                 }
                 else
@@ -153,13 +166,31 @@ namespace SelfAssessment.Business
                     eAnswer.UserOptionId = questionQuiz.UserOptionId;
                     ans.Update(eAnswer);
                 }
-                quiz.Score += CalculateScore(questionQuiz.UserOptionId);
+                //quiz.Score += CalculateScore(questionQuiz.UserOptionId);
             }
             if(isSave)
                 ans.SaveChanges();
         }
 
-        private int CalculateScore(int answerId)
+        public int CalculateScore()
+        {
+            int score = 0;
+            var uInfo = new Repository<Organization>();
+            AllQuestions.ForEach(v =>
+            {
+                v.listOfQuestions.ForEach(q =>
+                {
+                    var isAnswer = uInfo.AssessmentContext.answers.Where(a => a.QuestionId == q.Questions.QuestionId && a.GroupId == v.GroupId && a.UserId == UserId).FirstOrDefault();
+                    if (isAnswer != null)
+                    {
+                        score += CalculateScoreByAns(isAnswer.UserOptionId);
+                    }
+                });
+            });
+            return score;
+        }
+
+        private int CalculateScoreByAns(int answerId)
         {
             int score = 0;
             switch (answerId)
@@ -187,37 +218,20 @@ namespace SelfAssessment.Business
             return score;
         }
 
-        public bool MoveToNextGroup(int userId)
+        public bool MoveToNextGroup(int groupId)
         {
-            bool canMove = false;
-            if (AllGroupQuestions(userId).Count > groupId)
-            {
-                groupId++;
-                canMove = true;
-            }
-            else
-            {
-                var uInfo = new Repository<Organization>();
-                var organization = uInfo.Filter(q => q.Id == userId).FirstOrDefault();
-                if (organization != null)
-                    organization.CurrentAssignmentStatus = "Completed";
-                uInfo.Update(organization);
-                uInfo.SaveChanges();
-            }
-            return canMove;
+           return AllGroupQuiz().Count >= groupId ? true : false;  
         }
 
-        public bool PreviosGroup(int userId)
+        public void CompleteQuiz()
         {
-            bool canMove = false;
+            var uInfo = new Repository<Organization>();
+            var organization = uInfo.Filter(q => q.Id == UserId).FirstOrDefault();
+            if (organization != null)
+                organization.CurrentAssignmentStatus = "Completed";
 
-            if (groupId > 1)
-            {
-                groupId--;
-                canMove = true;
-            }
-
-            return canMove;
+            uInfo.Update(organization);
+            uInfo.SaveChanges();
         }
     }
 }

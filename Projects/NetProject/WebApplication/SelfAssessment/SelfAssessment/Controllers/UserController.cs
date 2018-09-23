@@ -35,17 +35,23 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
-            int UserId = 0;
-            UserId = this.businessContract.LoginVerfication(email, password);
-            if(UserId !=0)
+            if (email == "Admin@gmail.com" && password == "Admin")
             {
-                Session["UserId"] = UserId;
-                Session["UserName"] = email;
-                return Redirect("/ManageUser/Index");
-                //return RedirectToAction("Index", "ManageUser");               
+                return Redirect("/Admin/Index");
             }
             else
-                return View();
+            {
+                int UserId = 0;
+                UserId = this.businessContract.LoginVerfication(email, password);
+                if (UserId != 0)
+                {
+                    Session["UserId"] = UserId;
+                    Session["UserName"] = email;
+                    return Redirect("/ManageUser/Index");             
+                }
+                else
+                    return View();
+            }
         }
 
         [HttpGet]

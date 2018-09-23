@@ -166,6 +166,7 @@
     <Compile Include="Business\LamdaComparer.cs" />
     <Compile Include="Business\QuizManager.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
     <Compile Include="Models\DBModel\Assessment.cs" />
     <Compile Include="Models\DBModel\City.cs" />
@@ -192,7 +193,6 @@
     </Compile>
     <Compile Include="Mapper\IOrganizationMapper.cs" />
     <Compile Include="Mapper\OrganizationMapper.cs" />
-    <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\UIAssessment.cs" />
     <Compile Include="Models\AssignQuestionToAssignment.cs" />
     <Compile Include="Models\UICity.cs" />
@@ -2469,9 +2469,11 @@
     <Content Include="Views\ManageUser\ShowResults.cshtml" />
     <Content Include="Views\ManageUser\QuizGroup.cshtml" />
     <Content Include="Views\ManageUser\ShowGroupResults.cshtml" />
+    <Content Include="Views\ManageUser\QuizOnePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

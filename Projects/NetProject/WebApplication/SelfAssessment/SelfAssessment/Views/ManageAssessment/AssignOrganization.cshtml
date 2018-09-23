@@ -59,7 +59,7 @@
                         </div>
                         <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type Of Services </label></div>
                         <div class="col-12 col-md-3">
-                            @Html.DropDownList("TypeOfOrg", (IEnumerable<SelectListItem>)ViewBag.Type, new { @class = "form-control" })
+                            @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
                         </div>
 
 
@@ -166,7 +166,8 @@
             RevenueId: $('#Revenue').val(),
             TypeId: $('#TypeOfOrg').val(),
             CurrentAssignmentType: $('#Type').val(),
-            AssessmentId: $('#Assessment').val()
+            AssessmentId: $('#Assessment').val(),
+            TypeOfServiceId: $('#TypeOfService').val()
         };
 
         var url = "/ManageAssessment/AssignOrganizationByFilter";               
@@ -177,6 +178,7 @@
             url: url,
             contentType: "application/json"
         }).done(function (res) {
+            $("#bootstrap-data-table tbody").empty();
             $.each(res, function (key, value) {
                 var markup = "<tr><td>" + value.Id + "</td>" + "<td><input id=" + value.Id +" type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Type+"</td>";
                 $("#bootstrap-data-table tbody").append(markup);

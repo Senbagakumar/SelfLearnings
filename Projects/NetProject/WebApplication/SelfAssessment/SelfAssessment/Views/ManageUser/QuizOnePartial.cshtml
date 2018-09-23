@@ -1,0 +1,46 @@
+﻿
+@model SelfAssessment.Business.QuestionAnswer
+@{
+    ViewBag.Title = "QuizOne";
+}
+<div class="card">
+    <div class="card-body">
+        <p>No Of Group : <b>@Model.NoOfGroups &nbsp;</b> | &nbsp; No Of Question : <b>@Model.NoOfQuestions &nbsp;</b> | &nbsp;No Of Question Answered: <b>@Model.NoOfCompletedQuestions</b> </p>
+        <hr>
+        <h4 class="mb-3 text-info">@Model.Questions.GroupText</h4>
+        @using (Html.BeginForm("QuizOne", "ManageUser", FormMethod.Post, new { id = "myForm" }))
+        {
+            <input type="hidden" id="hdnaction" name="hdnaction" value="" />
+            
+            <div class="row">
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item" style="border:0px">
+                        <b>@Model.Questions.QuestionText</b>
+                        <div>
+                            <p>
+                                <div class=" form-check">
+                                    @foreach (var choice in Model.AnswerChoices)
+                                    {
+                                        <label for="inline-radio1" class="form-check-label col-md-2 text-justify border p-3 align-top ">
+                                            @Html.RadioButton(Model.Questions.QuestionCode, Model.Questions.GroupId + "~" + Model.Questions.QuestionId + "~" + choice.AnswerChoiceId + "~" + Model.Questions.UIQId, choice.IsChecked) @choice.Choices
+                                        </label>
+                                    }
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-md-12" style="margin-top:5px;">
+                    <span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="btn btn-success" id="submitButton" type="button" onclick="formSubmitWithAction('Previous');" value="<< PRV ">
+                    </span>
+                    <span class="ml-auto">
+                        <input id="btnSubmit" class="btn btn-success" type="button" onclick="formSubmitWithAction('Next');" value="Next >>">
+                    </span>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

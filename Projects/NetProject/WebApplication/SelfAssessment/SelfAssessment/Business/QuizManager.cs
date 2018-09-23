@@ -15,33 +15,45 @@ namespace SelfAssessment.Business
         public bool IsChecked { get; set; }
 
     }
+
+    public class QuestionOnePost
+    {
+        public string hdnaction { get; set; }
+        public string QInfo { get; set; }
+    }
     public class QuestionQuiz
     {
         public int QuestionId { get; set; }
+        public int UIQId { get; set; }
         public string QuestionCode { get; set; }
         public string QuestionText { get; set; }
         public int  UserOptionId { get; set; }
         public int GroupId { get; set; }
         public string GroupText { get; set; }
-
+        public int UIGroupId { get; set; }
         //public virtual List<AnswerChoice> AnswerChoices { get; set; }
     }
 
     public class QuestionAnswer
     {
         public virtual QuestionQuiz Questions { get; set; }
-        public virtual List<AnswerChoice> AnswerChoices { get; set; }       
+        public virtual List<AnswerChoice> AnswerChoices { get; set; }
+        public int NoOfQuestions { get; set; }
+        public int NoOfGroups { get; set; }
+        public int NoOfCompletedQuestions { get; set; }
 
     }
     interface ISaveQuiz
     {
-        void SaveAnswer(string answers);
-        bool MoveToNextQuestion();
-        bool PreviosQuestion();
+        void SaveAnswer(QuestionQuiz answers);
+        void CompleteQuiz();
+        bool MoveToNextQuestion(int questionId);
+        int CalculateScore();
     }
     interface IQuizManager : ISaveQuiz
     {
-        QuestionAnswer LoadQuiz(int defaultQuestionId);
+        QuestionAnswer LoadQuiz(int questionId);
+        List<QuestionAnswer> GetAllQuestions();
 
     }
     public class Quiz
@@ -56,80 +68,119 @@ namespace SelfAssessment.Business
     }
     public class QuizManager : IQuizManager
     {
-        static QuizManager instance;
-        //private QuizContext db = new QuizContext();
-        static string Type="Level 1";
-        static List<QuestionAnswer> listOfQuestions = new List<QuestionAnswer>();
-        int questionId = 1;
-        public bool IsComplete = false;
-        public Quiz quiz;
-
-        private QuizManager()
+        private readonly int UserId;
+        public List<QuestionAnswer> AllQuestions { get; set; }
+        public QuizManager(int userId)
         {
-            quiz = new Quiz();
-            quiz.StartTime = DateTime.Now;
-            quiz.QuizId = 1;
-            quiz.Score = 0;
+            UserId = userId;
         }
 
-        public static QuizManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                    instance = new QuizManager();
-                if (listOfQuestions == null)
-                    listOfQuestions = AllQuestions();
-                return instance;
-            }
-        }
-
-
-        private static List<QuestionAnswer> AllQuestions()
+        public List<QuestionAnswer> GetAllQuestions()
         {
             var listOfQuestions = new List<QuestionAnswer>();
+            var uInfo = new Repository<Organization>();
 
-            var qContext = new Repository<Questions>();
-            var qAssessment = new Repository<Assessment>();         
-            var levelType = qAssessment.Filter(q => q.AssessmentType == Type).FirstOrDefault().Id;
-            var lQuestions = qContext.Filter(q => q.AssignmentId == levelType).ToList();
+            var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id == UserId).FirstOrDefault();
+
+            var questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
+            var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 
             int i = 1;
-            lQuestions.ForEach(t => 
+            lQuestions.ForEach(t =>
             {
-                var answerChoice = new List<AnswerChoice>();
 
-                answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 1, Choices = t.Option1 });
-                answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 2, Choices = t.Option2 });
-                answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 3, Choices = t.Option3 });
-                answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 4, Choices = t.Option4 });
-                answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 5, Choices = t.Option5 });
+                t.Questions.ForEach(v =>
+                {
+                    var question = new QuestionAnswer();
+                    
+                    question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId };
 
-                listOfQuestions.Add(new QuestionAnswer() { Questions = new QuestionQuiz() { QuestionId=i, GroupId=1, GroupText="MyGroup", QuestionCode = t.QuestionCode, QuestionText = t.QuestionText}, AnswerChoices = answerChoice });
-                i++;
+                    question.Questions.GroupText = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
+
+                    var answerChoice = new List<AnswerChoice>();
+
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 1, Choices = v.Option1 });
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 2, Choices = v.Option2 });
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 3, Choices = v.Option3 });
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 4, Choices = v.Option4 });
+                    answerChoice.Add(new AnswerChoice() { AnswerChoiceId = 5, Choices = v.Option5 });
+
+                    question.AnswerChoices = answerChoice;
+
+                    listOfQuestions.Add(question);
+                    i++;
+                });
+              
             });
             return listOfQuestions;
         }
 
-        public QuestionAnswer LoadQuiz(int defaultQuestionId = 0)
+        private List<QuestionAnswer> PrePopulateAnswers()
         {
-            if (defaultQuestionId != 0)
+            var uInfo = new Repository<Answer>();
+            AllQuestions.ForEach(q=>
             {
-                questionId = defaultQuestionId;
-                quiz.Score = 0;
-            }
+                var isAnswer = uInfo.Filter(a => a.QuestionId == q.Questions.QuestionId &&  a.UserId == UserId).FirstOrDefault();
+                if (isAnswer != null)
+                {
+                    var selectedChoice = q.AnswerChoices.Where(ans => ans.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
+                    selectedChoice.IsChecked = true;
+                }
 
-            var currentQuesions= AllQuestions().Where(q => q.Questions.QuestionId == questionId).First();
-            return currentQuesions;
+            });
+            return AllQuestions;
         }
 
-        public void SaveAnswer(string answers)
+
+        public QuestionAnswer LoadQuiz(int questionId)
         {
-            int optionId = Convert.ToInt16(answers.Substring(0, 1));
-            quiz.Score += CalculateScore(optionId);
+            var currentQuesions= PrePopulateAnswers().Where(q => q.Questions.UIQId == questionId).First();
+            return GetCountDetails(AllQuestions,currentQuesions);
         }
 
-        private int CalculateScore(int answerId)
+        private QuestionAnswer GetCountDetails(List<QuestionAnswer> allQuestionAnswer, QuestionAnswer currentQuestion)
+        {            
+            currentQuestion.NoOfQuestions = allQuestionAnswer.Count();
+            currentQuestion.NoOfGroups = allQuestionAnswer.GroupBy(q => q.Questions.GroupId).Count();
+            currentQuestion.NoOfCompletedQuestions = allQuestionAnswer.Select(q => q.AnswerChoices.Any(t => t.IsChecked)).Count();
+            return currentQuestion;
+        }
+
+
+        public void SaveAnswer(QuestionQuiz questionQuiz)
+        {
+            var ans = new Repository<Answer>();
+            var eAnswer = ans.Filter(q => q.UserId == UserId && q.QuestionId == questionQuiz.QuestionId && q.GroupId == questionQuiz.GroupId).FirstOrDefault();
+            if (eAnswer == null)
+            {
+                var aAnswer = new Answer() { GroupId = questionQuiz.GroupId, QuestionId = questionQuiz.QuestionId, UserId = UserId, UserOptionId = questionQuiz.UserOptionId };
+                ans.Create(aAnswer);
+            }
+            else
+            {
+                eAnswer.UserOptionId = questionQuiz.UserOptionId;
+                ans.Update(eAnswer);
+            }
+            ans.SaveChanges();
+        }
+
+        public int CalculateScore()
+        {
+            int score = 0;
+            var uInfo = new Repository<Organization>();
+            AllQuestions.ForEach(v =>
+            {
+                var isAnswer = uInfo.AssessmentContext.answers.Where(a => a.QuestionId == v.Questions.QuestionId && a.GroupId == v.Questions.GroupId && a.UserId == UserId).FirstOrDefault();
+                if (isAnswer != null)
+                {
+                    score += CalculateScoreByAns(isAnswer.UserOptionId);
+                }
+                
+            });
+            return score;
+        }
+
+        private int CalculateScoreByAns(int answerId)
         {
             int score = 0;
             switch (answerId)
@@ -157,29 +208,20 @@ namespace SelfAssessment.Business
             return score;
         }
 
-        public bool MoveToNextQuestion()
+        public bool MoveToNextQuestion(int questionId)
         {
-            bool canMove = false;
-            if (AllQuestions().Count > questionId)
-            {
-                questionId++;
-                canMove = true;
-            }
-
-            return canMove;
+            return AllQuestions.Count >= questionId ? true : false;
         }
 
-        public bool PreviosQuestion()
+        public void CompleteQuiz()
         {
-            bool canMove = false;
+            var uInfo = new Repository<Organization>();
+            var organization = uInfo.Filter(q => q.Id == UserId).FirstOrDefault();
+            if (organization != null)
+                organization.CurrentAssignmentStatus = "Completed";
 
-            if (questionId > 1)
-            {
-                questionId--;
-                canMove = true;
-            }
-
-            return canMove;
+            uInfo.Update(organization);
+            uInfo.SaveChanges();
         }
     }
 }

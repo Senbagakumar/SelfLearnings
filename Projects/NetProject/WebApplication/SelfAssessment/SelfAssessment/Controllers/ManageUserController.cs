@@ -13,20 +13,15 @@ using System.Web.Routing;
 
 namespace SelfAssessment.Controllers
 {
-    public class BaseController : Controller
-    {
-        private int userId;
-        protected override void Initialize(RequestContext requestContext)
-        {
-            base.Initialize(requestContext);
-            userId = Convert.ToInt16(Session["UserId"].ToString());
-        }
-
-        public int UserId => userId;
-
-    }
     public class ManageUserController : BaseController
     {      
+        private GroupQuizManager groupQuizManager;
+        private QuizManager quizManager;
+
+        public ManageUserController()
+        {
+            //this.groupQuizManager = new GroupQuizManager(this.UserId);
+        }
         // GET: ManageUser
         public ActionResult Index()
         {
@@ -53,43 +48,47 @@ namespace SelfAssessment.Controllers
             return View(uiOrganization);
         }
 
+
+        private UIAssessment AssessmentMapping(string type,int noOfGroup,int noOfQuestion,string status)
+        {
+            return new UIAssessment()
+            {                
+                Type = type,
+                NoOfGroup = noOfGroup,
+                NoOfQuestion = noOfQuestion,
+                AssignmentStatus = status
+            };
+        }
+
         public ActionResult ListAssessment()
         {
             var lAssessment = new List<UIAssessment>();
- 
-            //if (!string.IsNullOrEmpty(UserId))
-            //{
-                var userInfo = new Repository<Organization>();
-                var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
-                if (user != null)
+            var userInfo = new Repository<Organization>();
+            var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+            if (user != null)
+            {
+                int assessmentId = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId).Id;
+                if (assessmentId != 0)
                 {
-                    var assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId);
-                    if(assessment !=null)
+                    //Completion Level details
+                    var compList = userInfo.AssessmentContext.tempOrg.Where(q => q.OrgId == this.UserId).ToList();
+                    if(compList !=null && compList.Count > 0)
                     {
-                        var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessment.Id && q.Level == user.CurrentAssignmentType).ToList();
-                        if(mappings !=null)
+                        compList.ForEach(q =>
                         {
-                            var assess = new UIAssessment();
-                            assess.Type = user.CurrentAssignmentType;
-                            assess.NoOfGroup = mappings.GroupBy(q=> q.GroupId).Count();
-                            assess.NoOfQuestion = mappings.Count();
-                            assess.AssignmentStatus = userInfo.AssessmentContext.UserInfo.Where(q => q.Id == this.UserId).FirstOrDefault()?.CurrentAssignmentStatus;
-                            lAssessment.Add(assess);
-                        }
+                            var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessmentId && q.Level == q.Level).ToList();
+                            lAssessment.Add(AssessmentMapping(q.Level, completedList.GroupBy(t => t.GroupId).Count(), completedList.Count(), q.Status));
+                        });                       
+                    }
+
+                    //Current Level details
+                    var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentId && q.Level == user.CurrentAssignmentType).ToList();
+                    if (mappings != null)
+                    {
+                        lAssessment.Add(AssessmentMapping(user.CurrentAssignmentType, mappings.GroupBy(q => q.GroupId).Count(), mappings.Count(), user.CurrentAssignmentStatus));                      
                     }
                 }
-            //}
-          
-
-            //for (int i = 1; i <= 3; i++)
-            //{
-            //    var assessment = new UIAssessment();
-            //    assessment.Type = "Level " + i;
-            //    assessment.NoOfGroup = 10;
-            //    assessment.NoOfQuestion = 10;
-            //    assessment.AssignmentStatus = "Pending";
-            //    lAssessment.Add(assessment);
-            //}
+            }
             return View(lAssessment);
         }
         public ActionResult CustomerAssessment()
@@ -113,72 +112,140 @@ namespace SelfAssessment.Controllers
 
         public ActionResult QuizOne()
         {
-            var question = QuizManager.Instance.LoadQuiz(1);
-            QuizManager.Instance.IsComplete = false;
-            return View(question);
+            return View();
+        }
+
+        public ActionResult GetFirstQuestion(string id)
+        {
+            this.quizManager = new QuizManager(this.UserId);
+            var listOfQuestions = this.quizManager.GetAllQuestions();
+            Session["AllQuestions"] = this.quizManager.AllQuestions = listOfQuestions;
+            var question = this.quizManager.LoadQuiz(1);
+            return PartialView("QuizOnePartial", question);
+
         }
 
         [HttpPost]
-        public ActionResult QuizOne(string answer)
+        public ActionResult QuizOne(QuestionOnePost questionCode)
         {
-            if (QuizManager.Instance.IsComplete) // Prevent score increase if backbutton is clicked and choice made
-                return RedirectToAction("ShowResults");
+            bool isAction = false;
+            var quiz = new QuestionQuiz();
+            //foreach (string user in questionCode.Keys)
+            //{
+            isAction = questionCode.hdnaction.Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
+            //if (questionCode.hdnaction == "hdnaction")
+            //    {
+            //        isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
+            //        continue;
+            //    }
 
-            QuizManager.Instance.SaveAnswer(answer);
-            if (QuizManager.Instance.MoveToNextQuestion())
+                string[] values = questionCode.QInfo.Split('~');
+                quiz.GroupId = Convert.ToInt16(values[0]);
+                quiz.QuestionId = Convert.ToInt16(values[1]);
+                quiz.UserOptionId = Convert.ToInt16(values[2]);
+                quiz.UIQId = Convert.ToInt16(values[3]);
+            //}
+
+            this.quizManager = new QuizManager(this.UserId);
+
+            int qId = 0;
+            if (!isAction)
             {
-                var question = QuizManager.Instance.LoadQuiz();
-                return View(question);
+                this.quizManager.SaveAnswer(quiz);
+                qId = quiz.UIQId;
             }
-            QuizManager.Instance.IsComplete = true;
-            return RedirectToAction("ShowResults");
+
+            if (!isAction)
+                qId = qId + 1;
+            else
+            {
+                qId = quiz.UIQId;
+                qId = qId - 1;
+            }
+
+            if (qId == 0)
+                qId = 1;
+
+            this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
+            if (this.quizManager.MoveToNextQuestion(qId))
+            {
+                var question = this.quizManager.LoadQuiz(qId);
+                return PartialView("QuizOnePartial", question);
+            }
+            return RedirectToAction("ShowResults", new { score = this.quizManager.CalculateScore() });
         }
-        public ActionResult ShowResults()
+        public ActionResult ShowResults(int score)
         {
-            return View(QuizManager.Instance.quiz);
+            ViewBag.Score = score;
+            return View();
         }
 
-        public ActionResult ShowGroupResults()
+        public ActionResult ShowGroupResults(int score)
         {
-            return View(GroupQuizManager.Instance.quiz);
+            ViewBag.Score = score;
+            return View();
         }
 
         public ActionResult QuizGroup()
         {
-            var group = GroupQuizManager.Instance.LoadQuiz(1, this.UserId);
-            GroupQuizManager.Instance.IsComplete = false;
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
+            var listOfGroup = this.groupQuizManager.GetAllQuestions();
+            Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
+            var group = this.groupQuizManager.LoadQuiz(1);
             return View(group);
-
-            //var group = new GroupQuiz();
-            //group.listOfQuestions = new List<QuestionAnswer>();            
-            //return View(group);
         }
 
         [HttpPost]
-        public ActionResult QuizGroup(FormCollection QuestionCode)
+        public ActionResult QuizGroup(FormCollection questionCode)
         {
+            bool isAction = false;
             var groupQuiz = new List<QuestionQuiz>();
-            foreach(string user in QuestionCode.Keys)
+            foreach(string user in questionCode.Keys)
             {
-                string[] values = QuestionCode[user].Split('~');
+                if (user == "hdnaction")
+                {
+                    isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
+                    continue;
+                }
+                if (user == "UIGroupId")
+                    continue;
+                
+                string[] values = questionCode[user].Split('~');
                 var quiz = new QuestionQuiz();
                 quiz.GroupId =Convert.ToInt16(values[0]);
                 quiz.QuestionId = Convert.ToInt16(values[1]);
                 quiz.UserOptionId = Convert.ToInt16(values[2]);
+                quiz.UIGroupId = Convert.ToInt16(values[3]);
                 groupQuiz.Add(quiz);
             }
 
-            if (GroupQuizManager.Instance.IsComplete) // Prevent score increase if backbutton is clicked and choice made
-                return RedirectToAction("ShowGroupResults");
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
 
-            GroupQuizManager.Instance.SaveAnswer(groupQuiz, this.UserId);
-            if (GroupQuizManager.Instance.MoveToNextGroup(this.UserId))
+            int groupId = 0;
+            if (!isAction)
             {
-                var question = GroupQuizManager.Instance.LoadQuiz(0,this.UserId);
-                return View(question);
+                this.groupQuizManager.SaveAnswer(groupQuiz);
+                groupId = groupQuiz.First().UIGroupId;
             }
-            GroupQuizManager.Instance.IsComplete = true;
-            return RedirectToAction("ShowGroupResults");
+
+            if (!isAction)
+                groupId = groupId + 1;
+            else
+            {
+                groupId = Convert.ToInt16(questionCode["UIGroupId"].ToString());
+                groupId = groupId - 1;
+            }
+
+            if (groupId == 0)
+                groupId = 1;
+
+            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
+            if (this.groupQuizManager.MoveToNextGroup(groupId))
+            {
+                var question = this.groupQuizManager.LoadQuiz(groupId);
+                return View(question);
+            }           
+            return RedirectToAction("ShowGroupResults", new { score=this.groupQuizManager.CalculateScore()});
         }
     }
    
