@@ -14,7 +14,7 @@ namespace SelfAssessment.Controllers
         {
             base.Initialize(requestContext);
             if (Session["UserId"] == null || string.IsNullOrEmpty(Session["UserId"].ToString()))
-                Response.Redirect("/User/Login");
+                Response.Redirect("~/User/Login");
             userId = Convert.ToInt16(Session["UserId"].ToString());
         }
 

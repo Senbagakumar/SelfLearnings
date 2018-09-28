@@ -37,7 +37,7 @@ namespace SelfAssessment.Controllers
         {
             if (email == "Admin@gmail.com" && password == "Admin")
             {
-                return Redirect("/Admin/Index");
+                return Redirect("~/Admin/Index");
             }
             else
             {
@@ -47,7 +47,7 @@ namespace SelfAssessment.Controllers
                 {
                     Session["UserId"] = UserId;
                     Session["UserName"] = email;
-                    return Redirect("/ManageUser/Index");             
+                    return Redirect("~/ManageUser/Index");             
                 }
                 else
                     return View();
