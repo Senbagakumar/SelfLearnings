@@ -210,11 +210,10 @@
     });
 
     function GetGroupQuestion(id, type,assessmentName,level) {
-        $("#treeview").hummingbird("uncheckAll");
-        var url = "/ManageAssessment/GetQuestionByAssignmentId/";
+        $("#treeview").hummingbird("uncheckAll");      
         $.ajax({
             type: "GET",
-            url: url,
+            url: API.AssignQuestionGet(),
             data: { id: id, level: level },
             contentType: "application/json"
         }).done(function (result) {
@@ -271,11 +270,11 @@
                 QuestionId: questionId,
                 Level: $("#slLevel").val()
             };
-            var url = "/ManageAssessment/SaveQuestion";
+
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.AssignQuestionSave(),
                 contentType: "application/json"
             }).done(function (res) {
                 //$("#txt-AssessmentId-text-input").val('');
@@ -285,7 +284,7 @@
                 $("#frmAddEditClose").click();
                 $("#treeview").hummingbird("uncheckAll");
 
-                location.href = "/ManageAssessment/AssignQuestion";
+                location.href = API.AssignQuestionHome();
             });
 
 

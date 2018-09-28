@@ -139,12 +139,10 @@
             }
 
 
-            var url = "/City/Create";
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.CitySave(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#text-input').val('');
@@ -153,7 +151,7 @@
                 $('#btnCancel').click();
                 $('#btnCancel').click();
 
-                location.href = "/City/Index";
+                location.href = API.CityHome();
             });
 
         });
@@ -161,13 +159,13 @@
     });
 
     function DoAction(id) {
-        var url = "/City/Delete/" + id;
+        var url = API.CityDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            location.href = "/City/Index";
+            location.href = API.CityHome();
         });
     }
 

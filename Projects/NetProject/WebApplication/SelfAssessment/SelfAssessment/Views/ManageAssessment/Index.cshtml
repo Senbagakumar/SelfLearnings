@@ -431,10 +431,9 @@
     }
 
     function GetAssessment(id, type) {
-        var url = "/ManageAssessment/GetAssessMentDetails/" + id;
         $.ajax({
             type: "GET",
-            url: url,
+            url: API.GetAssessmentDetails() + id,
             contentType: "application/json"
         }).done(function (result) {
             if (type == "Edit") {
@@ -459,7 +458,7 @@
                 $('#SubSector').val(result.SubSector);
 
               //  $('#Sector').on('change', function () {
-                    var url = "/ManageAssessment/GetSubSector/" + result.Sector;
+                var url = API.GetSubSectorForAssessment() + result.Sector;
                     $.ajax({
                         type: "GET",
                         url: url,
@@ -505,11 +504,9 @@
         $('#bootstrap-data-table-export').DataTable();
 
         $('#Sector').on('change', function () {
-            var id = $(this).val();
-            var url = "/ManageAssessment/GetSubSector/" + id;
             $.ajax({
                 type: "GET",
-                url: url,
+                url: API.GetSubSectorForAssessment() + $(this).val(),
                 contentType: "application/json"
             }).done(function (res) {
                 if (res.length > 0) {
@@ -556,17 +553,16 @@
                 SubSector: $('#SubSector').val()
             };
 
-            var url = "/ManageAssessment/SaveAssessment";
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.AssessmentSave(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#btnCancel').click();
                 $('#btnCancel').click();
                 clear();
-                location.href = "/ManageAssessment/Index";
+                location.href = API.AssessmentHome();
             });
 
         });
@@ -611,13 +607,13 @@
     });
 
     function DeleteAssessment(id) {
-        var url = "/ManageAssessment/DeleteAssessMentById/" + id;
+        var url = API.AssessmentDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (result) {
-            location.href = "/ManageAssessment/Index";
+            location.href = API.AssessmentHome();
         });
     }
 

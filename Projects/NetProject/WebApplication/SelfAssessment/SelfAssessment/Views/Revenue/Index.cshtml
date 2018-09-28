@@ -118,13 +118,10 @@
                 };
             }
 
-
-            var url = "/Revenue/Create";
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.RevenueCreate(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#text-input').val('');
@@ -132,7 +129,7 @@
                 $('#btnCancel').click();
                 $('#btnCancel').click();
 
-                location.href = "/Revenue/Index";
+                location.href = API.RevenueHome();
 
             });
 
@@ -147,7 +144,7 @@
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            location.href = "/Revenue/Index";
+            location.href = API.RevenueHome();
         });
     }
 

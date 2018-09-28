@@ -1220,6 +1220,7 @@
     <Content Include="img\testimonial-3.jpg" />
     <Content Include="img\testimonial-4.jpg" />
     <Content Include="img\testimonial-5.jpg" />
+    <Content Include="js\API.js" />
     <Content Include="js\main.js" />
     <Content Include="lib\animate\animate.css" />
     <Content Include="lib\animate\animate.min.css" />
@@ -2414,6 +2415,7 @@
     <Content Include="manageuser\assets\scss\_gauge.scss" />
     <Content Include="manageuser\assets\scss\_switches.scss" />
     <Content Include="manageuser\assets\scss\_widgets.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

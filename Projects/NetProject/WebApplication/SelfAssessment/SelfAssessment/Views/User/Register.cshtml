@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="form-group">
-                       @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
+                    @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
                     <div class="validation"></div>
                 </div>
 
@@ -131,8 +131,9 @@
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 
+
 <script type="text/javascript">
-   // $('#validate-me').validate();
+    // $('#validate-me').validate();
 
     $(document).ready(function () {
 
@@ -142,12 +143,9 @@
                 $('#txtSector').show();
             }
             else {
-                var id = $(this).val();
-                alert(id);
-                var url = "/User/GetSubSector/" +id;
                 $.ajax({
                     type: "GET",
-                    url: url,
+                    url: API.GetSectors() + $(this).val(),
                     contentType: "application/json"
                 }).done(function (res) {
                     $.each(res, function (key, value) {
@@ -182,14 +180,14 @@
             if (sect == '')
                 sect = $('#Sector').val();
             else
-                sect = $('#Sector').val() +"-"+ $('#txtSector').val();
+                sect = $('#Sector').val() + "-" + $('#txtSector').val();
 
             var subSect = $('#txtSubSector').val();
 
             if (subSect == '')
                 subSect = $('#SubSector').val();
             else
-                subSect = $('#SubSector').val() +"-"+ $('#txtSubSector').val();
+                subSect = $('#SubSector').val() + "-" + $('#txtSubSector').val();
 
             model = {
                 Name: $('#txtName').val(),
@@ -207,22 +205,19 @@
                 Type: $('#Type').val()
             };
 
-            var url = "/User/CreateOrganization";
-
-            //alert(subSect);
 
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.CreateUser(),
                 contentType: "application/json"
             }).done(function (res) {
 
                 $('#text-input').val('');
-                $('#txtId').val('');              
+                $('#txtId').val('');
 
-                if(res == "Success")
-                    location.href = "/User/Success";
+                if (res == "Success")
+                    location.href = API.LoginSuccess();
 
             });
 

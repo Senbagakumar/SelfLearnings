@@ -144,13 +144,13 @@
             if (is_checked) {
                 var orgId = $(this).prop("id");
 
-                var url = "/ManageAssessment/MoveToNextLevel/" + orgId;
+                var url = API.AssignOrganizationMoveNextLevel() + orgId;
                 $.ajax({
                     type: "GET",
                     url: url,
                     contentType: "application/json"
                 }).done(function (result) {
-                    location.href = "/ManageAssessment/AssignOrganization";
+                    location.href = API.AssignOrganizationHome();
                 });
             }
         });
@@ -168,14 +168,12 @@
             CurrentAssignmentType: $('#Type').val(),
             AssessmentId: $('#Assessment').val(),
             TypeOfServiceId: $('#TypeOfService').val()
-        };
-
-        var url = "/ManageAssessment/AssignOrganizationByFilter";               
+        };             
 
         $.ajax({
             type: "POST",
             data: JSON.stringify(model),
-            url: url,
+            url: API.AssignOrganizationGet(),
             contentType: "application/json"
         }).done(function (res) {
             $("#bootstrap-data-table tbody").empty();

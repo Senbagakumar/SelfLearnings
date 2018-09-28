@@ -448,7 +448,7 @@
 
             $("#btnGroupCancel").click(function () {
                 $("#divGroupAddEditForm").hide();
-                location.href = "/Group/Index";
+                location.href = API.GroupHome();
             });
 
             $("#btnAddQuestion").click(function () {
@@ -465,11 +465,11 @@
                     GroupName: groupName,
                     GroupDescription: groupDescription
                 };
-                var url = "/Group/SaveGroup";
+
                 $.ajax({
                     type: "POST",
                     data: JSON.stringify(model),
-                    url: url,
+                    url: API.GroupSave(),
                     contentType: "application/json"
                 }).done(function (res) {                   
                     $('#txt-GN-text-input').val('');
@@ -479,7 +479,7 @@
                     $("#divGroupAddEditForm").hide();
 
                     $('#txt-GroupId-text-input').val(0);
-                    location.href = "/Group/Index";
+                    location.href = API.GroupHome();
                 });
 
             });
@@ -504,11 +504,10 @@
                     QType: $('#select').val()
                 };
 
-                var url = "/Group/CreateQuestion";
                 $.ajax({
                     type: "POST",
                     data: JSON.stringify(model),
-                    url: url,
+                    url: API.QuestionSave(),
                     contentType: "application/json"
                 }).done(function (res) {
                     if (QCode != '') {  
@@ -586,7 +585,7 @@
     });
 
     function DeleteQuestion(id) {
-        var url = "/Group/DeleteQuestionById/" + id;
+        var url = API.QuestionDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
@@ -597,7 +596,7 @@
     }
 
     function DeleteGroup(id) {
-        var url = "/Group/DeleteGroupById/" + id;
+        var url = API.GroupDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
@@ -608,7 +607,7 @@
     }
 
     function GetQuestion(id, type) {
-        var url = "/Group/GetQuestionById/" + id;
+        var url = API.QuestionGet() + id;
         $.ajax({
             type: "GET",
             url: url,
@@ -665,7 +664,7 @@
     }
 
     function DoAction(id,type) {
-        var url = "/Group/GetAllQByGroupId/" + id;
+        var url = API.GroupGetQuestions() + id;
         $.ajax({
             type: "GET",
             url: url,

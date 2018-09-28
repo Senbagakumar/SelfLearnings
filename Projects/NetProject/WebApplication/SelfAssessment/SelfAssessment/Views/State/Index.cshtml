@@ -127,12 +127,10 @@
                 };
             }           
 
-            var url = "/State/Create";
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.StateCreate(),
                 contentType: "application/json"
             }).done(function (res) {
                 if (res == "Success") {
@@ -141,7 +139,7 @@
                     $('#btnCancel').click();
                     $('#btnCancel').click();
 
-                    location.href = "/State/Index";
+                    location.href =API.StateHome();
                 }
             });
 
@@ -150,13 +148,13 @@
     });
 
     function DoAction(id) {
-        var url = "/State/Delete/" + id;
+        var url = API.StateDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            location.href = "/State/Index";
+            location.href = API.StateHome();
         });
     }
 

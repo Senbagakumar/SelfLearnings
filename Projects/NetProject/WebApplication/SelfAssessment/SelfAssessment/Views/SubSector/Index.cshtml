@@ -139,13 +139,10 @@
                 };
             }
 
-
-            var url = "/SubSector/Create";
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.CreateSubSector(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#text-input').val('');
@@ -154,7 +151,7 @@
                 $('#btnCancel').click();
                 $('#btnCancel').click();
 
-                location.href = "/SubSector/Index";
+                location.href = API.SubSectorHome();
             });
 
         });
@@ -162,13 +159,12 @@
     });
 
     function DoAction(id) {
-        var url = "/SubSector/Delete/" + id;
         $.ajax({
             type: "GET",
-            url: url,
+            url: PI.SubSectorDelete() + id,
             contentType: "application/json"
         }).done(function (res) {
-            location.href = "/SubSector/Index";
+            location.href = API.SubSectorHome();
         });
     }
 

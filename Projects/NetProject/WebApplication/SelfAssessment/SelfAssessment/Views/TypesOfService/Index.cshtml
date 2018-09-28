@@ -124,13 +124,10 @@
                 };
             }
 
-
-            var url = "/TypesOfService/Create";
-
             $.ajax({
                 type: "POST",
                 data: JSON.stringify(model),
-                url: url,
+                url: API.TypesOfServiceCreation(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#text-input').val('');
@@ -138,7 +135,7 @@
                 $('#btnCancel').click();
                 $('#btnCancel').click();
 
-                location.href = "/TypesOfService/Index";
+                location.href = API.TypesOfServiceHome();
             });
 
         });
@@ -146,13 +143,13 @@
     });
 
     function DoAction(id) {
-        var url = "/TypesOfService/Delete/" + id;
+        var url = API.TypesOfServiceDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (res) {
-            location.href = "/TypesOfService/Index";
+            location.href = API.TypesOfServiceHome();
         });
     }
 

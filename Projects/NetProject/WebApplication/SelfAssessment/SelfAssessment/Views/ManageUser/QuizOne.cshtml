@@ -70,7 +70,7 @@
         };
 
         $.ajax({
-            url: '/ManageUser/QuizOne',
+            url: API.SaveQuestionByUserByOne(),
             type: "POST",
             data: JSON.stringify(model),
             contentType: 'application/json',
@@ -84,7 +84,7 @@
     $(document).ready(function () {
         $("#btnGo").click(function () {              
             var selectValue = $('#selectValue').val();
-            var url = "/ManageUser/GetFirstQuestion/"+ selectValue;           
+            var url = API.GetQuestionByOne() + selectValue;           
             $.get(url, function (data) {
                 $('#LoadQuestion').html(data);
             });
