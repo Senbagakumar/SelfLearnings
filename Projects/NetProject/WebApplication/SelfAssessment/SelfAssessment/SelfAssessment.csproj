@@ -163,10 +163,13 @@
     <Compile Include="Business\BusinessContract.cs" />
     <Compile Include="Business\IBusinessContract.cs" />
     <Compile Include="Business\GroupQuizManager.cs" />
+    <Compile Include="Business\IOrganizationComponentDetails.cs" />
     <Compile Include="Business\LamdaComparer.cs" />
+    <Compile Include="Business\OrganisationComponentDetails.cs" />
     <Compile Include="Business\QuizManager.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ManageOrgController.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
     <Compile Include="Models\DBModel\Assessment.cs" />
     <Compile Include="Models\DBModel\City.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="Models\DBModel\SubSector.cs" />
     <Compile Include="Models\MailConfiguration.cs" />
     <Compile Include="Validation\IUserBValidation.cs" />
+    <Compile Include="Validation\StringCipher.cs" />
     <Compile Include="Validation\UserBValidation.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CityController.cs" />
@@ -2472,6 +2476,7 @@
     <Content Include="Views\ManageUser\QuizGroup.cshtml" />
     <Content Include="Views\ManageUser\ShowGroupResults.cshtml" />
     <Content Include="Views\ManageUser\QuizOnePartial.cshtml" />
+    <Content Include="Views\ManageOrg\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

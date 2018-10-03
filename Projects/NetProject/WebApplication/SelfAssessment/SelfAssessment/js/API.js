@@ -1,7 +1,7 @@
 ﻿var API = {
     baseUrl: 'http://localhost:26578/',
 
-    GetSectors: function () {
+    GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
     },
 
@@ -132,6 +132,18 @@
         return this.baseUrl + "City/Create";
     },
     CityDelete: function () {
-        return this.baseUrl + "City/Delete/"
+        return this.baseUrl + "City/Delete/";
+    },
+    OrganizationGet: function () {
+        return this.baseUrl + "ManageOrg/AssignOrganizationByFilter";
+    },
+    OrganizationDelete: function () {
+        return this.baseUrl + "ManageOrg/DeleteOrganization/";
+    },
+    OrganizationView: function () {
+        return this.baseUrl + "ManageOrg/ViewOrganization";
+    },
+    OrganizationUpdate: function () {
+        return this.baseUrl + "ManageOrg/UpdateOrganization";
     }
 };

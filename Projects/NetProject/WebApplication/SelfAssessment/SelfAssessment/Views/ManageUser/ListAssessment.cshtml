@@ -10,46 +10,51 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header"> <strong>Assessment Name</strong> </div>
-            <div class="card-body card-block">              
-
-                @foreach(var assessment in Model)
-                {
-                     <div class="col-md-4">
-                    <aside class="profile-nav alt">
-                        <section class="card">
-                            <div class="card-header user-header alt bg-dark">
-                                <div class="media">
-                                    <a href="~/manageuser/QuizGroup">
-                                        <div class="media-body">
-                                            <h2 class="text-light display-6">@assessment.Type</h2>
-
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">@assessment.NoOfGroup</span></a>
-                                </li>
-                                <li class="list-group-item">
-                                    <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">@assessment.NoOfQuestion</span></a>
-                                </li>
-
-                                <li class="list-group-item">
-                                    <a href="#">
-                                        <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
-                                            <br>
-                                            @assessment.AssignmentStatus<br>&nbsp;
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </section>
-                    </aside>
+            <div class="card-body card-block">
+                <div class="alert alert-primary" role="alert">
+                    @ViewBag.WelComeMessage
                 </div>
+
+                <p class="pb-4 display-5 " align="justify">@ViewBag.Description</p>
+
+                @foreach (var assessment in Model)
+                {
+                    <div class="col-md-4">
+                        <aside class="profile-nav alt">
+                            <section class="card">
+                                <div class="card-header user-header alt bg-dark">
+                                    <div class="media">
+                                        <a href="~/manageuser/QuizGroup">
+                                            <div class="media-body">
+                                                <h2 class="text-light display-6">@assessment.Type</h2>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">@assessment.NoOfGroup</span></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">@assessment.NoOfQuestion</span></a>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <a href="#">
+                                            <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
+                                                <br>
+                                                @assessment.AssignmentStatus<br>&nbsp;
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </section>
+                        </aside>
+                    </div>
                 }
 
 

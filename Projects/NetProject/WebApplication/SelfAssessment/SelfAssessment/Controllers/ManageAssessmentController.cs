@@ -106,15 +106,7 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult AssignOrganization()
         {
-            var type = new List<SelectListItem>();
-
             var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
-            //type.Add(firstItem);
-
-            //type.Add(new SelectListItem() { Text = "Small", Value = "1" });
-            //type.Add(new SelectListItem() { Text = "Large", Value = "2" });
-            //type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
-
             var subSector = new List<SelectListItem>();
             var sector = new List<SelectListItem>();
             var states = new List<SelectListItem>();
@@ -167,11 +159,11 @@ namespace SelfAssessment.Controllers
             typeOfService.Insert(0, firstItem);
             cities.Insert(0, firstItem);
             states.Insert(0, firstItem);
-
             assessMent.Insert(0, firstItem);
 
             sector.Add(lastItem);
             subSector.Add(lastItem);
+
             ViewBag.AssessMent = assessMent;
             ViewBag.SectorList = sector;
             ViewBag.SubSectorList = subSector;
@@ -179,7 +171,6 @@ namespace SelfAssessment.Controllers
             ViewBag.State = states;
             ViewBag.Revenue = revenue;
             ViewBag.TypeOfService = typeOfService;
-            //ViewBag.Type = type;
             return View();
         }
 
@@ -235,27 +226,6 @@ namespace SelfAssessment.Controllers
                 listOrganization = listOrganization.Where(q => q.SubSectorId == org.SubSectorId).ToList();
             if(org.TypeOfServiceId > 0)
                 listOrganization = listOrganization.Where(q => q.TypeOfServiceId == org.TypeOfServiceId).ToList();
-
-
-            //var model = listOrganization.Join(repo.AssessmentContext.cities, o => o.CityId, cy => cy.Id, (o, cy) => new { o, cy }).
-            //                            Join(repo.AssessmentContext.states, ocy => ocy.o.StateId, s => s.Id, (ocy, s) => new { ocy, s }).
-            //                            Join(repo.AssessmentContext.sectors, ocys => ocys.ocy.o.SectorId, st => st.Id, (ocys, st) => new { ocys, st }).
-            //                            Join(repo.AssessmentContext.subSectors, ocysst => ocysst.ocys.ocy.o.SubSectorId, sut => sut.Id, (ocysst, sut) => new { ocysst, sut }).
-            //                            Join(repo.AssessmentContext.revenues, ocysstsut => ocysstsut.ocysst.ocys.ocy.o.RevenueId, r => r.Id, (ocysstsut, r) => new { ocysstsut, r }).
-            //                            Join(repo.AssessmentContext.serviceTypes, ocysstsutr => ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.TypeOfServiceId, ts => ts.Id, (ocysstsutr,ts) => new { ocysstsutr,ts}).
-            //                            Select(q=> new UIOrganization()
-            //                            {
-            //                                Id = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.Id,
-            //                                Name = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.o.Name,
-            //                                City = q.ocysstsutr.ocysstsut.ocysst.ocys.ocy.cy.CityName,
-            //                                Revenue = q.ocysstsutr.r.Name,
-            //                                Sector = q.ocysstsutr.ocysstsut.ocysst.st.SectorName,
-            //                                SubSector = q.ocysstsutr.ocysstsut.sut.SubSectorName,
-            //                                State = q.ocysstsutr.ocysstsut.ocysst.ocys.s.StateName,
-            //                                TypeOfService = q.ts.Name,
-            //                                Type = org.CurrentAssignmentType
-            //                            }).ToList();
-
 
             var city = new Repository<City>();
 

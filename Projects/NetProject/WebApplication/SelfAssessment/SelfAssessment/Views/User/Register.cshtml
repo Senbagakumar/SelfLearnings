@@ -145,7 +145,7 @@
             else {
                 $.ajax({
                     type: "GET",
-                    url: API.GetSectors() + $(this).val(),
+                    url: API.GetSubSectors() + $(this).val(),
                     contentType: "application/json"
                 }).done(function (res) {
                     $.each(res, function (key, value) {

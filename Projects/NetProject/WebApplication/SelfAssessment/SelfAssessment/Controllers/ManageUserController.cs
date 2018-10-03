@@ -2,6 +2,7 @@
 using SelfAssessment.DataAccess;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
+using SelfAssessment.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,8 +68,11 @@ namespace SelfAssessment.Controllers
             var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
             if (user != null)
             {
-                int assessmentId = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId).Id;
-                if (assessmentId != 0)
+                var assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId);
+                ViewBag.WelComeMessage = assessment.WelcomeMessage;
+                ViewBag.Description = assessment.Description;
+
+                if (assessment.Id != 0)
                 {
                     //Completion Level details
                     var compList = userInfo.AssessmentContext.tempOrg.Where(q => q.OrgId == this.UserId).ToList();
@@ -76,13 +80,13 @@ namespace SelfAssessment.Controllers
                     {
                         compList.ForEach(q =>
                         {
-                            var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessmentId && q.Level == q.Level).ToList();
+                            var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessment.Id && q.Level == q.Level).ToList();
                             lAssessment.Add(AssessmentMapping(q.Level, completedList.GroupBy(t => t.GroupId).Count(), completedList.Count(), q.Status));
                         });                       
                     }
 
                     //Current Level details
-                    var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentId && q.Level == user.CurrentAssignmentType).ToList();
+                    var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessment.Id && q.Level == user.CurrentAssignmentType).ToList();
                     if (mappings != null)
                     {
                         lAssessment.Add(AssessmentMapping(user.CurrentAssignmentType, mappings.GroupBy(q => q.GroupId).Count(), mappings.Count(), user.CurrentAssignmentStatus));                      
@@ -107,6 +111,19 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult ChangePassword(ChangePassword changePassword)
         {
+            string message = string.Empty;
+            var sc = new StringCipher();
+            var org = new Repository<Organization>();
+            var user = org.Filter(q => q.Id == this.UserId).FirstOrDefault();
+
+            if(user.TempPassword == changePassword.OldPassword || user.Password == sc.DecryptString(changePassword.OldPassword))
+            {
+                user.Password = changePassword.NewPassword;
+                org.Update(user);
+                org.SaveChanges();
+            }
+            ViewBag.Error = "Please Enter the Correct Details";          
+
             return View();
         }
 
