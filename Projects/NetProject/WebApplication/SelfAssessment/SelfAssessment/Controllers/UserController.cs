@@ -38,7 +38,7 @@ namespace SelfAssessment.Controllers
         {
             if (email == "Admin@gmail.com" && password == "Admin")
             {
-                return Redirect("~/Admin/Index");
+                return Redirect(Utilities.RedirectToAdmin);
             }
             else
             {
@@ -46,9 +46,9 @@ namespace SelfAssessment.Controllers
                 UserId = this.businessContract.LoginVerfication(email, password);
                 if (UserId != 0)
                 {
-                    Session["UserId"] = UserId;
-                    Session["UserName"] = email;
-                    return Redirect("~/ManageUser/Index");             
+                    Session[Utilities.UserId] = UserId;
+                    Session[Utilities.Usermail] = email;
+                    return Redirect(Utilities.RedirectToUser);             
                 }
                 else
                     return View();
@@ -73,12 +73,12 @@ namespace SelfAssessment.Controllers
          
             var type = new List<SelectListItem>();         
 
-            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             type.Add(firstItem);
 
-            type.Add(new SelectListItem() { Text = "Small", Value = "1" });
-            type.Add(new SelectListItem() { Text = "Large", Value = "2" });
-            type.Add(new SelectListItem() { Text = "Operating Unit", Value = "3" });
+            type.Add(new SelectListItem() { Text = Utilities.Small, Value = "1" });
+            type.Add(new SelectListItem() { Text = Utilities.Large, Value = "2" });
+            type.Add(new SelectListItem() { Text = Utilities.OperatingUnit, Value = "3" });
 
            
             var sector = new List<SelectListItem>();
@@ -90,29 +90,13 @@ namespace SelfAssessment.Controllers
             using (var repository = new Repository<Sector>())
             {
                 sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                states = repository.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
+                revenue = repository.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                typeOfService = repository.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                cities = repository.AssessmentContext.cities.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
             }
 
-            using (var repository = new Repository<State>())
-            {
-                states = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
-            }
-
-            using (var repository = new Repository<Revenue>())
-            {
-                revenue = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-            }
-
-            using (var repository = new Repository<ServiceType>())
-            {
-                typeOfService = repository.All().Select(q=> new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-            }
-
-            using (var repository = new Repository<City>())
-            {
-                cities = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
-            }
-
-            var lastItem = new SelectListItem() { Text = "OTHERS", Value = "1000" };
+            var lastItem = new SelectListItem() { Text = Utilities.Others, Value = "1000" };
 
             sector.Insert(0, firstItem);           
             revenue.Insert(0, firstItem);
@@ -165,7 +149,7 @@ namespace SelfAssessment.Controllers
             {
                 //return View();
             }
-           return Json("Success", JsonRequestBehavior.AllowGet);
+           return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
       
     }

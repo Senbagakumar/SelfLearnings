@@ -1,4 +1,5 @@
-﻿using SelfAssessment.DataAccess;
+﻿using SelfAssessment.Business;
+using SelfAssessment.DataAccess;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
@@ -21,18 +22,14 @@ namespace SelfAssessment.Controllers
             using (var repository = new Repository<SubSector>())
             {
                 subSector = repository.All().ToList();
-            }
-
-            using (var repository = new Repository<Sector>())
-            {
-                sector = repository.All().ToList();
+                sector = repository.AssessmentContext.sectors.ToList();
             }
 
             var list = sector.Join(subSector, r => r.Id, t => t.SectorId, (r, t) => new UISubSector() { Id=t.Id, SectorId=t.SectorId, SectorName=r.SectorName, SubSectorName=t.SubSectorName }).ToList();
 
             var lmod = new List<SelectListItem>();
             lmod = sector.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
-            lmod.Insert(0, new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true });
+            lmod.Insert(0, new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true });
            
             ViewBag.SectorList = lmod;
             return View(list);
@@ -59,7 +56,14 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new SubSector() { SubSectorName = uISubSector.SubSectorName, SectorId=uISubSector.SectorId, CreateDate = DateTime.Now });
+                        var subSector = new SubSector()
+                        {
+                            SubSectorName = uISubSector.SubSectorName,
+                            SectorId = uISubSector.SectorId,
+                            CreateDate = DateTime.Now,
+                            Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == uISubSector.SectorId)
+                        };
+                        repository.Create(subSector);
                     }
                     repository.SaveChanges();
                 }
@@ -70,9 +74,9 @@ namespace SelfAssessment.Controllers
             }
             catch
             {
-                return Json("Failiure", JsonRequestBehavior.AllowGet);
+                return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }       
 
         // GET: SubSector/Delete/5
@@ -87,7 +91,7 @@ namespace SelfAssessment.Controllers
                 }
                 repository.SaveChanges();
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }       
     }
 }

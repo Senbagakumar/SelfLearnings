@@ -21,26 +21,14 @@ namespace SelfAssessment.Controllers
             using (var repository = new Repository<City>())
             {
                 city = repository.All().ToList();
-            }
-            using (var repository = new Repository<State>())
-            {
-                state = repository.All().ToList();
+                state = repository.AssessmentContext.states.ToList();
             }
 
             var list = city.Join(state, r => r.StateId, t => t.Id, (r, t) => new UICity() { Id = r.Id, StateId = t.Id, CityName = r.CityName, StateName = t.StateName });
 
-            var lmod = new List<SelectListItem>();
-            
+            var lmod = new List<SelectListItem>();            
             lmod = state.Select(t => new SelectListItem() { Value = t.Id.ToString(), Text = t.StateName }).ToList();
             lmod.Insert(0, new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true });
-
-            //for (int i = 1; i <= 20; i++)
-            //{
-            //    var mod = new SelectListItem();
-            //    mod.Text = "StateName" + i;
-            //    mod.Value = "StateName" + i;
-            //    lmod.Add(mod);
-            //}
 
             ViewBag.StateList = lmod;
 
@@ -69,7 +57,14 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new City() {  CityName=uICity.CityName, StateId=uICity.StateId , CreateDate = DateTime.Now });
+                        var city = new City()
+                        {
+                            CityName = uICity.CityName,
+                            CreateDate = DateTime.Now,
+                            StateId = uICity.StateId,
+                            States = repository.AssessmentContext.states.FirstOrDefault(q => q.Id == uICity.StateId)
+                        };
+                        repository.Create(city);
                     }
                     repository.SaveChanges();
                 }
@@ -78,7 +73,7 @@ namespace SelfAssessment.Controllers
 
                 // return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return Json("Failiure", JsonRequestBehavior.AllowGet);
             }

@@ -18,32 +18,23 @@ namespace SelfAssessment.Controllers
         public ActionResult Index()
         {
             var lAssessment = new List<Assessment>();
-
             var sector = new List<SelectListItem>();
-
-            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
-
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             using (var repository = new Repository<Sector>())
             {
                 sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                lAssessment = repository.AssessmentContext.assessments.ToList();
             }
-
             sector.Insert(0, firstItem);
-
-            using (var assessmentRepo = new Repository<Assessment>())
-            {               
-                lAssessment = assessmentRepo.All().ToList();
-            }
             ViewBag.SectorList = sector;
             ViewBag.SubSectorList = new List<SelectListItem>();
-
             return View(lAssessment);
         }
 
         [HttpGet]
         public JsonResult GetSubSector(int id)
         {
-            var firstItem = new SelectListItem() { Text = "-- All --", Value = "0", Selected = true };
+            var firstItem = new SelectListItem() { Text = Utilities.All, Value = "0", Selected = true };
             var subSector = new List<SelectListItem>();                      
             using (var repository = new Repository<SubSector>())
             {
@@ -91,7 +82,7 @@ namespace SelfAssessment.Controllers
                 }                
                 assessmentRepo.SaveChanges();
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetAssessMentDetails(int id)
@@ -106,7 +97,7 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult AssignOrganization()
         {
-            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             var subSector = new List<SelectListItem>();
             var sector = new List<SelectListItem>();
             var states = new List<SelectListItem>();
@@ -116,42 +107,18 @@ namespace SelfAssessment.Controllers
 
             var assessMent = new List<SelectListItem>();
 
-            using (var assessment = new Repository<Assessment>())
+            using (var repo = new Repository<Assessment>())
             {
-                assessMent = assessment.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                subSector =  repo.AssessmentContext.subSectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
+                sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                states = repo.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
+                revenue = repo.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                typeOfService = repo.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                cities = repo.AssessmentContext.cities.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
             }
 
-            using (var repository = new Repository<SubSector>())
-            {
-                subSector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
-            }
-
-            using (var repository = new Repository<Sector>())
-            {
-                sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
-            }
-
-            using (var repository = new Repository<State>())
-            {
-                states = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
-            }
-
-            using (var repository = new Repository<Revenue>())
-            {
-                revenue = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-            }
-
-            using (var repository = new Repository<ServiceType>())
-            {
-                typeOfService = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-            }
-
-            using (var repository = new Repository<City>())
-            {
-                cities = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
-            }
-
-            var lastItem = new SelectListItem() { Text = "OTHERS", Value = "1000" };
+            var lastItem = new SelectListItem() { Text = Utilities.Others, Value = Utilities.OthersValue };
 
             sector.Insert(0, firstItem);
             subSector.Insert(0, firstItem);
@@ -177,31 +144,31 @@ namespace SelfAssessment.Controllers
         public JsonResult MoveToNextLevel(int id)
         {
 
-            TempOrg tempOrg = null;
+            OrganizationLevelHistory tempOrg = null;
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == id).FirstOrDefault();
-                tempOrg = new TempOrg() { Level = org.CurrentAssignmentType, OrgId = org.Id, Status = "Completed", PromoteDate = DateTime.Now };
+                tempOrg = new OrganizationLevelHistory() { Level = org.CurrentAssignmentType, OrgId = org.Id, Status = Utilities.AssessmentCompletedStatus, PromoteDate = DateTime.Now };
                 if (org != null)
                 {
-                    if (org.CurrentAssignmentType == "Level 1")
-                        org.CurrentAssignmentType = "Level 2";
+                    if (org.CurrentAssignmentType == Utilities.AssessmentTypeLevel1)
+                        org.CurrentAssignmentType = Utilities.AssessmentTypeLevel2;
                     else
-                        org.CurrentAssignmentType = "Level 3";
+                        org.CurrentAssignmentType = Utilities.AssessmentTypeLevel3;
 
-                    org.CurrentAssignmentStatus = "Pending";
+                    org.CurrentAssignmentStatus = Utilities.AssessmentPendingStatus;
                     repo.Update(org);
                     repo.SaveChanges();
                 }
             }
 
-            using (var rep = new Repository<TempOrg>())
+            using (var rep = new Repository<OrganizationLevelHistory>())
             {
                 rep.Create(tempOrg);
                 rep.SaveChanges();
             }
 
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -238,8 +205,8 @@ namespace SelfAssessment.Controllers
                     model.Name = q.Name;
                     model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
                     model.Revenue = city.AssessmentContext.revenues.FirstOrDefault(r => r.Id == q.RevenueId).Name;
-                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? "OTHERS" : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
-                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? "OTHERS" : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
+                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? Utilities.Others : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
+                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? Utilities.Others : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
                     model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
                     model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
                     model.Type = org.CurrentAssignmentType;
@@ -275,18 +242,18 @@ namespace SelfAssessment.Controllers
             {
                 var pendingCount = repo.All().ToList().GroupBy(q => q.CurrentAssignmentType).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
 
-                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == "Level 1")?.count??0;
-                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == "Level 2")?.count??0;
-                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == "Level 3")?.count??0;               
+                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
+                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
+                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;               
             }
 
-            using (var repo = new Repository<TempOrg>())
+            using (var repo = new Repository<OrganizationLevelHistory>())
             {
                 var completedCount = repo.All().ToList().GroupBy(q => q.Level).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
 
-                level1ComCount = completedCount.FirstOrDefault(t => t.Type == "Level 1")?.count??0;
-                level2ComCount = completedCount.FirstOrDefault(t => t.Type == "Level 2")?.count??0;
-                level3ComCount = completedCount.FirstOrDefault(t => t.Type == "Level 3")?.count??0;
+                level1ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
+                level2ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
+                level3ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;
             }
 
             var questionRepo = new Repository<Questions>();
@@ -297,19 +264,19 @@ namespace SelfAssessment.Controllers
             var groupMap = assessmentRepo.All().GroupBy(q => new { q.AssessmentId, q.Level }).ToList().Select(t => t).ToList();
             foreach (var grp in groupMap)
             {
-                if (grp.Key.Level == "Level 1")
+                if (grp.Key.Level == Utilities.AssessmentTypeLevel1)
                 {
                     level1QCount = grp.Count();
                     level1GCount = grp.GroupBy(q => q.GroupId).Count();
                 }
 
-                if (grp.Key.Level == "Level 2")
+                if (grp.Key.Level == Utilities.AssessmentTypeLevel2)
                 {
                     level2QCount = grp.Count();
                     level2GCount = grp.GroupBy(q => q.GroupId).Count();
                 }
 
-                if (grp.Key.Level == "Level 3")
+                if (grp.Key.Level == Utilities.AssessmentTypeLevel3)
                 {
                     level3QCount = grp.Count();
                     level3GCount = grp.GroupBy(q => q.GroupId).Count();
@@ -317,9 +284,9 @@ namespace SelfAssessment.Controllers
             }         
 
 
-            var level1AssignMent = new UIAssessment() { Type = "Level 1", NoOfPending = level1PenCount.Value, NoOfGroup = level1GCount, NoOfQuestion= level1QCount, NoOfCompleted = level1ComCount.Value, NoOfParticipants = (level1ComCount.Value + level1PenCount.Value) };
-            var level2AssignMent = new UIAssessment() { Type = "Level 2", NoOfPending = level2PenCount.Value, NoOfGroup = level2GCount, NoOfQuestion = level2QCount, NoOfCompleted = level2ComCount.Value, NoOfParticipants = (level2ComCount.Value + level2PenCount.Value) };
-            var level3AssignMent = new UIAssessment() { Type = "Level 3", NoOfPending = level3PenCount.Value, NoOfGroup = level3GCount, NoOfQuestion = level3QCount, NoOfCompleted = level3ComCount.Value, NoOfParticipants = (level3ComCount.Value + level3PenCount.Value) };
+            var level1AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel1, NoOfPending = level1PenCount.Value, NoOfGroup = level1GCount, NoOfQuestion= level1QCount, NoOfCompleted = level1ComCount.Value, NoOfParticipants = (level1ComCount.Value + level1PenCount.Value) };
+            var level2AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel2, NoOfPending = level2PenCount.Value, NoOfGroup = level2GCount, NoOfQuestion = level2QCount, NoOfCompleted = level2ComCount.Value, NoOfParticipants = (level2ComCount.Value + level2PenCount.Value) };
+            var level3AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel3, NoOfPending = level3PenCount.Value, NoOfGroup = level3GCount, NoOfQuestion = level3QCount, NoOfCompleted = level3ComCount.Value, NoOfParticipants = (level3ComCount.Value + level3PenCount.Value) };
 
 
 
@@ -334,7 +301,7 @@ namespace SelfAssessment.Controllers
 
         public ActionResult AssignQuestion()
         {
-            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             var assessMent = new List<SelectListItem>();
 
             using (var assessment = new Repository<Assessment>())
@@ -370,16 +337,14 @@ namespace SelfAssessment.Controllers
             using (var assessmentRepository = new Repository<Group>())
             {
                 lQroup = assessmentRepository.All().ToList().Select(q => new UIAssignGroup() { GroupId=q.Id, GroupName=q.Name }).ToList();
-            }
 
-            using (var assessmentRepo = new Repository<Questions>())
-            {
-                lQroup.ForEach(q => 
+                lQroup.ForEach(q =>
                 {
-                    q.uIAssignGroupQuestions = assessmentRepo.Filter(t => t.GroupId == q.GroupId).ToList().Select(s=> new UIAssignGroupQuestion() { GroupId=s.GroupId, QuestionId=s.QuestionCode, QuestionName=s.QuestionText }).ToList();
+                    q.uIAssignGroupQuestions = assessmentRepository.AssessmentContext.questions.Where(t => t.GroupId == q.GroupId).ToList().Select(s => new UIAssignGroupQuestion() { GroupId = s.GroupId, QuestionId = s.QuestionCode, QuestionName = s.QuestionText }).ToList();
 
-                });                   
+                });
             }
+
             if(lAssignment.Count ==0)
                 lAssignment.Add(new UIAssignQuestion());
             lAssignment[0].uIAssignGroups = new List<UIAssignGroup>();
@@ -406,15 +371,9 @@ namespace SelfAssessment.Controllers
                 {
                     if(lQroup.FirstOrDefault(t=> t.GroupId == q.GroupId)==null)
                         lQroup.AddRange(assessmentRepository.Filter(v => v.Id == q.GroupId).Select(t => new UIAssignGroup() { GroupId = q.GroupId, GroupName = t.Name }).ToList());
-                });                
-            }
 
-            using (var assessmentRepo = new Repository<Questions>())
-            {
-                lAssignment.ForEach(q =>
-                {
-                    lQuestions.Add(assessmentRepo.Filter(v => v.Id == q.QuestionId).First());
-                });
+                    lQuestions.Add(assessmentRepository.AssessmentContext.questions.FirstOrDefault(v => v.Id == q.QuestionId));
+                });                
             }
 
             lQroup.ForEach(q =>
@@ -439,7 +398,7 @@ namespace SelfAssessment.Controllers
 
                 var list = rep.Filter(q => uIQuest.QuestionId.Contains(q.QuestionCode)).Select(q => new QuestionGroup() { QuestionId=q.Id, GroupId=q.GroupId }).ToList();
 
-                var mappingList = mapping.Filter(q => q.AssessmentId == uIQuest.AssignmentId && q.Level == uIQuest.Level).Select(q => new QuestionGroup() { QuestionId=q.QuestionId, GroupId = q.GroupId, MapperId=q.Id }).ToList();
+                var mappingList = mapping.Filter(q => q.AssessmentId == uIQuest.AssessmentId && q.Level == uIQuest.Level).Select(q => new QuestionGroup() { QuestionId=q.QuestionId, GroupId = q.GroupId, MapperId=q.Id }).ToList();
 
                 var addingMapper = list.Except(mappingList, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
                 var removingMapper = mappingList.Except(list, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
@@ -448,7 +407,17 @@ namespace SelfAssessment.Controllers
                 {
                     if (mapping.Filter(t => t.QuestionId == q.QuestionId).FirstOrDefault() == null)
                     {
-                        mapping.Create(new AssessmentLevelMapping() { AssessmentId = uIQuest.AssignmentId, Level = uIQuest.Level, GroupId = q.GroupId, QuestionId = q.QuestionId });
+                        var assesmentLevel = new AssessmentLevelMapping()
+                        {
+                            AssessmentId = uIQuest.AssessmentId,
+                            Level = uIQuest.Level,
+                            GroupId = q.GroupId,
+                            QuestionId = q.QuestionId,
+                            Assessments = mapping.AssessmentContext.assessments.FirstOrDefault(v => v.Id == uIQuest.AssessmentId),
+                            Groups = mapping.AssessmentContext.groups.FirstOrDefault(v=> v.Id == q.GroupId),
+                            Questiones = mapping.AssessmentContext.questions.FirstOrDefault(v=> v.Id == q.QuestionId)                            
+                        };
+                        mapping.Create(assesmentLevel);
                     }
                 });
 
@@ -466,7 +435,7 @@ namespace SelfAssessment.Controllers
 
                 mapping.SaveChanges();
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteAssessMentById(int id)
@@ -480,7 +449,7 @@ namespace SelfAssessment.Controllers
                     assessmentRepo.SaveChanges();
                 }
             }
-            return Json("Deleted", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
     }
 }

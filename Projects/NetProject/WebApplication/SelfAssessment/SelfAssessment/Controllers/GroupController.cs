@@ -27,25 +27,10 @@ namespace SelfAssessment.Controllers
             using (Repository<Group> repository = new Repository<Group>())
             {
                 group = repository.All().ToList();
-            }
-
-            using (Repository<Questions> repository = new Repository<Questions>())
-            {
-                question = repository.All().ToList();
+                question = repository.AssessmentContext.questions.ToList();
             }
 
             lmodel = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
-
-
-
-            //for (int i = 1; i <= 20; i++)
-            //{
-            //    var model = new UIGroup();
-            //    model.Id = i;
-            //    model.GroupName = "GroupName" + i;
-            //    model.NoOfQuestions = 10;
-            //    lmodel.Add(model);
-            //}
 
             return View(lmodel);
         }
@@ -115,12 +100,12 @@ namespace SelfAssessment.Controllers
                 }
 
                 // TODO: Add insert logic here
-                return Json("Success", JsonRequestBehavior.AllowGet);
+                return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
 
             }
             catch
             {
-                return Json("Failure", JsonRequestBehavior.AllowGet);
+                return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -137,7 +122,7 @@ namespace SelfAssessment.Controllers
                     first = repository.Filter(q => q.QuestionCode == question.QuestionCode).FirstOrDefault();
                     if(first!=null)
                     {
-
+                        first.Groups = repository.AssessmentContext.groups.FirstOrDefault(q => q.Id == first.GroupId);
                         first.QuestionText = question.QuestionText;
                         first.QHint = question.QHint;
                         first.TimerValue = question.TimerValue;
@@ -157,7 +142,7 @@ namespace SelfAssessment.Controllers
             else
             {
 
-                var qCode = "QCCode" + Guid.NewGuid().ToString().Replace("-","");                
+                var qCode = Utilities.QuestionCode + Guid.NewGuid().ToString().Replace("-","");                
 
                 var quest = new Questions()
                 {
@@ -178,6 +163,7 @@ namespace SelfAssessment.Controllers
 
                 using (var repository = new Repository<Questions>())
                 {
+                    quest.Groups = repository.AssessmentContext.groups.FirstOrDefault(q => q.Id == quest.GroupId);
                     repository.Create(quest);
                     repository.SaveChanges();
                     first = repository.Filter(q => q.QuestionCode == quest.QuestionCode).FirstOrDefault();
@@ -198,7 +184,7 @@ namespace SelfAssessment.Controllers
                     repository.SaveChanges();
                 }
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult DeleteGroupById(int id)
@@ -221,7 +207,7 @@ namespace SelfAssessment.Controllers
                     repository.SaveChanges();
                 }
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
     }
 }

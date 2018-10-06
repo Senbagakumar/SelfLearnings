@@ -18,11 +18,6 @@ namespace SelfAssessment.DataAccess
             _context = new AssessmentContext();
         }
 
-        public Repository(AssessmentContext context)
-        {
-            _context = context;            
-        }
-
         public AssessmentContext AssessmentContext => _context;
 
         protected DbSet<TObject> DbSet

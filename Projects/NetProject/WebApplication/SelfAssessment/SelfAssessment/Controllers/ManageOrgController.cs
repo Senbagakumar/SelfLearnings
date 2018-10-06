@@ -21,8 +21,8 @@ namespace SelfAssessment.Controllers
         // GET: ManageOrg
         public ActionResult Index()
         {
-            var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };
-            var lastItem = new SelectListItem() { Text = "OTHERS", Value = "1000" };
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
+            var lastItem = new SelectListItem() { Text = Utilities.Others, Value = Utilities.OthersValue };
 
             var subSector = new List<SelectListItem>();
             var txtsubSector = new List<SelectListItem>();
@@ -73,7 +73,7 @@ namespace SelfAssessment.Controllers
             var org = repo.Filter(q => q.Id == id).FirstOrDefault();
             repo.Delete(org);
             repo.SaveChanges();
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -96,9 +96,18 @@ namespace SelfAssessment.Controllers
             org.SubSectorId = Convert.ToInt16(organization.SubSector);
             org.TypeOfServiceId = Convert.ToInt16(organization.TypeOfService);
 
+            org.Cities = repo.AssessmentContext.cities.FirstOrDefault(q => q.Id == org.CityId);
+            org.States = repo.AssessmentContext.states.FirstOrDefault(q => q.Id == org.StateId);
+            org.Revenues = repo.AssessmentContext.revenues.FirstOrDefault(q => q.Id == org.RevenueId);
+            org.TypesOfService = repo.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == org.Id);
+            org.Sectors = repo.AssessmentContext.sectors.FirstOrDefault(q => q.Id == org.SectorId);
+            org.SubSectors = repo.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == org.SubSectorId);
+            org.Assessments = repo.AssessmentContext.assessments.FirstOrDefault(q => q.Id == org.AssessmentId);
+
+
             repo.Update(org);
             repo.SaveChanges();
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -122,8 +131,8 @@ namespace SelfAssessment.Controllers
             {
                 model.City = repo.AssessmentContext.cities.FirstOrDefault(c => c.Id == org.CityId).CityName;
                 model.Revenue = repo.AssessmentContext.revenues.FirstOrDefault(r => r.Id == org.RevenueId).Name;
-                model.Sector = (org.SectorId == 0 || org.SectorId == 1000) ? "OTHERS" : repo.AssessmentContext.sectors.FirstOrDefault(r => r.Id == org.SectorId).SectorName;
-                model.SubSector = (org.SectorId == 0 || org.SubSectorId == 1000) ? "OTHERS" : repo.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == org.SubSectorId).SubSectorName;
+                model.Sector = (org.SectorId == 0 || org.SectorId == Convert.ToInt16(Utilities.OthersValue)) ? Utilities.Others : repo.AssessmentContext.sectors.FirstOrDefault(r => r.Id == org.SectorId).SectorName;
+                model.SubSector = (org.SectorId == 0 || org.SubSectorId == Convert.ToInt16(Utilities.OthersValue)) ? Utilities.Others : repo.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == org.SubSectorId).SubSectorName;
                 model.State = org.StateId > 0 ? repo.AssessmentContext.states.FirstOrDefault(s => s.Id == org.StateId).StateName : "";
                 model.TypeOfService = org.TypeOfServiceId > 0 ? repo.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == org.TypeOfServiceId).Name : "";
               
@@ -175,8 +184,8 @@ namespace SelfAssessment.Controllers
                     model.Name = q.Name;
                     model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
                     model.Revenue = city.AssessmentContext.revenues.FirstOrDefault(r => r.Id == q.RevenueId).Name;
-                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? "OTHERS" : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
-                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? "OTHERS" : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
+                    model.Sector = (q.SectorId == 0 || q.SectorId == Convert.ToInt16(Utilities.OthersValue)) ? Utilities.Others : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
+                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == Convert.ToInt16(Utilities.OthersValue)) ? Utilities.Others : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
                     model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
                     model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
                     

@@ -7,12 +7,13 @@ using System.Web;
 
 namespace SelfAssessment.Models.DBModel
 {
-    public class ServiceType
+    public class Others
     {
         [Key]
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public DateTime CreateDate { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public string OrganizationId { get; set; }
+        public string Sector { get; set; }
+        public string SubSector { get; set; }
+        [ForeignKey("Id")]
+        public virtual Organization Organizations { get; set; }
     }
 }

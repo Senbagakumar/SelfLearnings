@@ -5,47 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SelfAssessment.Business;
 
 namespace SelfAssessment.Business
 {
-
-
-    public class GroupQuiz
-    {
-        public string GroupText { get; set; }
-        public List<QuestionAnswer> listOfQuestions { get; set; }
-        public int UIGroupId { get; set; }
-        public int GroupId { get; set; }
-        public int NoOfQuestions { get; set; }
-        public int NoOfGroups { get; set; }
-        public int NoOfCompletedQuestions { get; set; }
-
-    }
-
-    interface IGroupSaveQuiz
-    {
-        void SaveAnswer(List<QuestionQuiz> answers);
-        void CompleteQuiz();
-        bool MoveToNextGroup(int groupId);
-        int CalculateScore();
-        //bool PreviosGroup(int groupId, int userid);
-    }
-    interface IGroupQuizManager : IGroupSaveQuiz
-    {
-        GroupQuiz LoadQuiz(int groupId);
-        List<GroupQuiz> GetAllQuestions();
-
-    }
-    public class GroupQuizModel
-    {
-        public int QuizGroupId { get; set; }
-        public virtual List<GroupQuiz> GroupQuestions { get; set; }
-        public DateTime? StartTime { get; set; }
-        public TimeSpan? Duration { get; set; }
-        public DateTime? EndTime { get; set; }
-        public int Score { get; set; }
-
-    }
     public class GroupQuizManager : IGroupQuizManager
     {
         private readonly int UserId;

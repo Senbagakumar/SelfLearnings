@@ -54,9 +54,9 @@ namespace SelfAssessment.Controllers
             }
             catch
             {
-                return Json("Failiure", JsonRequestBehavior.AllowGet);
+                return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
         // GET: TypesOfService/Delete/5
         public JsonResult Delete(int id)
@@ -70,7 +70,7 @@ namespace SelfAssessment.Controllers
                 }
                 repository.SaveChanges();
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
     }
 }

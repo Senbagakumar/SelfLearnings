@@ -8,64 +8,6 @@ using System.Web;
 
 namespace SelfAssessment.Business
 {
-    public class AnswerChoice
-    {
-        public int AnswerChoiceId { get; set; }
-        public string Choices { get; set; }
-        public bool IsChecked { get; set; }
-
-    }
-
-    public class QuestionOnePost
-    {
-        public string hdnaction { get; set; }
-        public string QInfo { get; set; }
-    }
-    public class QuestionQuiz
-    {
-        public int QuestionId { get; set; }
-        public int UIQId { get; set; }
-        public string QuestionCode { get; set; }
-        public string QuestionText { get; set; }
-        public int  UserOptionId { get; set; }
-        public int GroupId { get; set; }
-        public string GroupText { get; set; }
-        public int UIGroupId { get; set; }
-        //public virtual List<AnswerChoice> AnswerChoices { get; set; }
-    }
-
-    public class QuestionAnswer
-    {
-        public virtual QuestionQuiz Questions { get; set; }
-        public virtual List<AnswerChoice> AnswerChoices { get; set; }
-        public int NoOfQuestions { get; set; }
-        public int NoOfGroups { get; set; }
-        public int NoOfCompletedQuestions { get; set; }
-
-    }
-    interface ISaveQuiz
-    {
-        void SaveAnswer(QuestionQuiz answers);
-        void CompleteQuiz();
-        bool MoveToNextQuestion(int questionId);
-        int CalculateScore();
-    }
-    interface IQuizManager : ISaveQuiz
-    {
-        QuestionAnswer LoadQuiz(int questionId);
-        List<QuestionAnswer> GetAllQuestions();
-
-    }
-    public class Quiz
-    {
-        public int QuizId { get; set; }
-        public virtual List<QuestionQuiz> Questions { get; set; }
-        public DateTime? StartTime { get; set; }
-        public TimeSpan? Duration { get; set; }
-        public DateTime? EndTime { get; set; }
-        public int Score { get; set; }
-
-    }
     public class QuizManager : IQuizManager
     {
         private readonly int UserId;
@@ -154,13 +96,22 @@ namespace SelfAssessment.Business
             if (eAnswer == null)
             {
                 var aAnswer = new Answer() { GroupId = questionQuiz.GroupId, QuestionId = questionQuiz.QuestionId, UserId = UserId, UserOptionId = questionQuiz.UserOptionId };
+                aAnswer.Groups = ans.AssessmentContext.groups.FirstOrDefault(t => t.Id == aAnswer.GroupId);
+                aAnswer.Organization = ans.AssessmentContext.UserInfo.FirstOrDefault(t => t.Id == aAnswer.UserId);
+                aAnswer.Questiones = ans.AssessmentContext.questions.FirstOrDefault(t => t.Id == aAnswer.QuestionId);
+
                 ans.Create(aAnswer);
             }
             else
             {
+                eAnswer.Groups = ans.AssessmentContext.groups.FirstOrDefault(t => t.Id == eAnswer.GroupId);
+                eAnswer.Organization = ans.AssessmentContext.UserInfo.FirstOrDefault(t => t.Id == eAnswer.UserId);
+                eAnswer.Questiones = ans.AssessmentContext.questions.FirstOrDefault(t => t.Id == eAnswer.QuestionId);
+
                 eAnswer.UserOptionId = questionQuiz.UserOptionId;
                 ans.Update(eAnswer);
             }
+
             ans.SaveChanges();
         }
 
@@ -218,7 +169,7 @@ namespace SelfAssessment.Business
             var uInfo = new Repository<Organization>();
             var organization = uInfo.Filter(q => q.Id == UserId).FirstOrDefault();
             if (organization != null)
-                organization.CurrentAssignmentStatus = "Completed";
+                organization.CurrentAssignmentStatus = Utilities.AssessmentCompletedStatus;
 
             uInfo.Update(organization);
             uInfo.SaveChanges();

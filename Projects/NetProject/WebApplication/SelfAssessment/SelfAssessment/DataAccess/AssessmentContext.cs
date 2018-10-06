@@ -26,9 +26,8 @@ namespace SelfAssessment.DataAccess
         public DbSet<SubSector> subSectors { get; set; }
         public DbSet<Group> groups { get; set; }
         public DbSet<Assessment> assessments { get; set; }
-        public DbSet<TempQuestions> tempQuestions { get; set; }
         public DbSet<Questions> questions { get; set; }
-        public DbSet<TempOrg> tempOrg { get; set; }
+        public DbSet<OrganizationLevelHistory> organizationLevelHistories { get; set; }
         public DbSet<AssessmentLevelMapping> assessmentLevelMappings { get; set; }
         public DbSet<Answer> answers { get; set; }
 

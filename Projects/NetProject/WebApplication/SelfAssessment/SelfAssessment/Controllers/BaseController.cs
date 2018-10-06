@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SelfAssessment.Business;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,9 +14,9 @@ namespace SelfAssessment.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            if (Session["UserId"] == null || string.IsNullOrEmpty(Session["UserId"].ToString()))
-                Response.Redirect("~/User/Login");
-            userId = Convert.ToInt16(Session["UserId"].ToString());
+            if (Session[Utilities.UserId] == null || string.IsNullOrEmpty(Session[Utilities.UserId].ToString()))
+                Response.Redirect(Utilities.RedirectToLogin);
+            userId = Convert.ToInt16(Session[Utilities.UserId].ToString());
         }
 
         public int UserId => userId;

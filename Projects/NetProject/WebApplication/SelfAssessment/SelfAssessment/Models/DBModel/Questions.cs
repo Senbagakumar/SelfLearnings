@@ -1,20 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace SelfAssessment.Models
+namespace SelfAssessment.Models.DBModel
 {
-    public class TempQuestions : Questions
-    {
-
-    }
     public class Questions
     {
+        [Key]
         public int Id { get; set; }
-        public int AssignmentId { get; set; }
-        public int GroupId { get; set; }
+        public int GroupId { get; set; }  // ForeignKey
         public string QuestionCode { get; set; }
         public string QuestionText { get; set; }
         public string QType { get; set; }
@@ -27,12 +24,8 @@ namespace SelfAssessment.Models
         public string Answer { get; set; }
         public string TimerValue { get; set; }
         public bool Mandatory { get; set; }
-    }
+        [ForeignKey("Id")]
+        public virtual Group Groups { get; set; }
 
-    public class QuestionGroup
-    {
-        public int QuestionId { get; set; }
-        public int GroupId { get; set; }
-        public int MapperId { get; set; }
     }
 }

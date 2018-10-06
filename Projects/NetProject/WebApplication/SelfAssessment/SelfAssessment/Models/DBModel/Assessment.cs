@@ -9,6 +9,7 @@ namespace SelfAssessment.Models.DBModel
 {
     public class Assessment
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -32,16 +33,5 @@ namespace SelfAssessment.Models.DBModel
         public int Sector { get; set; }
         public int SubSector { get; set; }
 
-    }
-
-    public class AssessmentLevelMapping
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int AssessmentId { get; set; }
-        public int QuestionId { get; set; }
-        public int GroupId { get; set; }
-        public string Level { get; set; }
-    }
+    }   
 }

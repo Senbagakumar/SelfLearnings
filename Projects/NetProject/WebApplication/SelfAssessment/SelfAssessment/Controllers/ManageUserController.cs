@@ -75,7 +75,7 @@ namespace SelfAssessment.Controllers
                 if (assessment.Id != 0)
                 {
                     //Completion Level details
-                    var compList = userInfo.AssessmentContext.tempOrg.Where(q => q.OrgId == this.UserId).ToList();
+                    var compList = userInfo.AssessmentContext.organizationLevelHistories.Where(q => q.OrgId == this.UserId).ToList();
                     if(compList !=null && compList.Count > 0)
                     {
                         compList.ForEach(q =>

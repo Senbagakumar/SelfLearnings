@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace SelfAssessment.Models
-{  
+{ 
 
     public class UIOrganization
     {
@@ -23,18 +23,6 @@ namespace SelfAssessment.Models
         public string Revenue { get; set; }
         public string Type { get; set; }
         public string Password { get; set; }
-    }
-
-    public class UILogin
-    {
-        public string UserName { get; set; }
-        public string UserPwd { get; set; }
-    }
-    
-    public class ChangePassword
-    {
-        public string OldPassword { get; set; }
-        public string NewPassword { get; set; }
-        public string UserId { get; set; }
-    }
+    }   
+  
 }

@@ -42,7 +42,8 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new State() { StateName = state.StateName, CreateDate = DateTime.Now });
+                        var stateCount = repository.AssessmentContext.states.Count();
+                        repository.Create(new State() { StateName = state.StateName, Id=++stateCount, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
                 }
@@ -61,14 +62,21 @@ namespace SelfAssessment.Controllers
         // GET: State/Delete/5
         public JsonResult Delete(int id)
         {
-            using (Repository<State> repository = new Repository<State>())
+            try
             {
-                var deleteState = repository.Filter(q => q.Id == id).FirstOrDefault();
-                if (deleteState != null && !string.IsNullOrEmpty(deleteState.StateName))
+                using (Repository<State> repository = new Repository<State>())
                 {
-                    repository.Delete(deleteState);
+                    var deleteState = repository.Filter(q => q.Id == id).FirstOrDefault();
+                    if (deleteState != null && !string.IsNullOrEmpty(deleteState.StateName))
+                    {
+                        repository.Delete(deleteState);
+                    }
+                    repository.SaveChanges();
                 }
-                repository.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
             return Json("Success", JsonRequestBehavior.AllowGet);
 

@@ -26,7 +26,7 @@
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url" value="jdbc:sqlserver://localhost;databaseName=Daimler" />
 		<property name="username" value="Sainath" />
-		<property name="password" value="Sainath" />
+		<property name="password" value="sen_senba24" />
 	</bean>
 
 </beans>

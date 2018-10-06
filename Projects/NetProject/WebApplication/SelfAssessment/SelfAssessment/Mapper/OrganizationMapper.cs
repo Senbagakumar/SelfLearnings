@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SelfAssessment.Business;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 
@@ -28,8 +29,8 @@ namespace SelfAssessment.Mapper
                 UserId = uiOrganization.Name.Substring(0, 6),
                 StateId = Convert.ToInt16(uiOrganization.State),
                 CreateDate = DateTime.Now,
-                CurrentAssignmentStatus = "Pending",
-                CurrentAssignmentType = "Level 1"
+                CurrentAssignmentStatus = Utilities.AssessmentPendingStatus,
+                CurrentAssignmentType = Utilities.AssessmentTypeLevel1
             };
         }
     }

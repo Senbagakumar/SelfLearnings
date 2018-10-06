@@ -17,23 +17,13 @@ namespace SelfAssessment.Business
         private readonly IOrganizationMapper organizationMapper;
         private readonly IUserBValidation userBValidation;
         private readonly RegistrationSendMail registrationSendMail;
-        private readonly string host;
-        private readonly string networkUserName;
-        private readonly string networkUserPassword;
-        private readonly string fromId;
-        private readonly string toId;
+
 
         public BusinessContract(IOrganizationMapper organizationMapper, IUserBValidation userBValidation, RegistrationSendMail registrationSendMail)
         {
             this.organizationMapper = organizationMapper;
             this.userBValidation = userBValidation;
             this.registrationSendMail = registrationSendMail;
-
-            host = "";
-            networkUserName = "";
-            networkUserPassword = "";
-            fromId = "";
-            toId = "";
         }
 
         public string DeleteState(int stateId)
@@ -100,11 +90,11 @@ namespace SelfAssessment.Business
                 string[] subSector = new string[2];
                 Others other = new Others();
 
-                bool isOthers = false;
+                bool isOthers = false;               
 
-                if (uIOrganization.Sector.Contains("1000"))
+                if (uIOrganization.Sector.Contains(Utilities.OthersValue))
                 {
-                    sector = uIOrganization.Sector.Split('-');
+                    sector = uIOrganization.Sector.Split(Utilities.SplitValue);
                     uIOrganization.Sector = sector[0];
                     other.Sector = sector[1];
                     isOthers = true;
@@ -112,32 +102,46 @@ namespace SelfAssessment.Business
                 else
                     other.Sector = string.Empty;
 
-                if (uIOrganization.SubSector.Contains("1000"))
+                if (uIOrganization.SubSector.Contains(Utilities.OthersValue))
                 {
-                    subSector = uIOrganization.SubSector.Split('-');
+                    subSector = uIOrganization.SubSector.Split(Utilities.SplitValue);
                     uIOrganization.SubSector = subSector[0];
                     other.SubSector = subSector[1];
                     isOthers = true;
                 }
                 else
                     other.SubSector = string.Empty;
-                if(isOthers)
+
+
+                using (Repository<Organization> repository = new Repository<Organization>())
+                {
+                    Organization organization = this.organizationMapper.Registration(uIOrganization);
+
+                    organization.Cities = repository.AssessmentContext.cities.FirstOrDefault(q => q.Id == organization.CityId);
+                    organization.States = repository.AssessmentContext.states.FirstOrDefault(q => q.Id == organization.StateId);
+                    organization.Revenues = repository.AssessmentContext.revenues.FirstOrDefault(q => q.Id == organization.RevenueId);
+                    organization.TypesOfService = repository.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == organization.Id);
+                    organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
+                    organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
+                    organization.Assessments = repository.AssessmentContext.assessments.FirstOrDefault(q => q.Id == organization.AssessmentId);
+
+                    organization.TempPassword = password;
+                    repository.Create(organization);
+                    repository.SaveChanges();
+                }
+
+                if (isOthers)
                 {
                     other.OrganizationId = uIOrganization.Name.Substring(0, 6);
                     using (Repository<Others> repository = new Repository<Others>())
                     {
+                        other.Organizations = repository.AssessmentContext.UserInfo.FirstOrDefault(q => q.Name == other.OrganizationId);
                         repository.Create(other);
                         repository.SaveChanges();
                     }
                 }
 
-                using (Repository<Organization> repository = new Repository<Organization>())
-                {
-                    Organization organization = this.organizationMapper.Registration(uIOrganization);
-                    organization.TempPassword = password;
-                    repository.Create(organization);
-                    repository.SaveChanges();
-                }             
+                     
                 //this.registrationSendMail.Send(new MailConfiguration());
             }
 
