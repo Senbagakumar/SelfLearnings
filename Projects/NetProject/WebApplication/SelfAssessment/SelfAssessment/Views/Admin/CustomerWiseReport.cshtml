@@ -9,92 +9,69 @@
     <div class="card">
         <div class="card-header">
             <strong>Customer Wise Report</strong>
-            <!--  <div class="user-area dropdown float-right">
-
-                <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="ti-export"></span>&nbsp; Export
-                </a>
-
-                <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
-                        <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
-                </div>
-            </div>-->
-
         </div>
+
         <div class="card-body card-block">
-            <form action="" method="post" class="form-horizontal">
-                <div class="row form-group">
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
-                    <div class="col-12 col-md-3">
-                        : Assessment Name
-                    </div>
-
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0">-Select-</option>
-                            <option value="survey 1" selected>Level 1</option>
-                            <option value="survey 2">Level 2</option>
-                            <option value="survey 3">Level 3</option>
-                        </select>
-                    </div>
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">State</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
-
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Revenue</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
+            @*<form action="" method="post" class="form-horizontal">*@
+            <div class="row form-group">
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
                 </div>
 
-                <div class="row form-group">
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type Of Services</label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
-                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type </label></div>
-                    <div class="col-12 col-md-3">
-                        <select class="form-control">
-                            <option value="0" selected>-Select-</option>
-                        </select>
-                    </div>
-
-
-                    <div class="col-12 col-md-3">
-                        &nbsp;&nbsp;
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            <i class="fa fa-dot-circle-o"></i> Go
-                        </button>
-                        <button type="reset" class="btn btn-danger btn-sm">
-                            <i class="fa fa-ban"></i> Reset
-                        </button>
-                    </div>
-
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                <div class="col-12 col-md-3">
+                    <select id="Type" class="form-control">
+                        <option value="0">-Select-</option>
+                        <option value="Level 1" selected>Level 1</option>
+                        <option value="Level 2">Level 2</option>
+                        <option value="Level 3">Level 3</option>
+                    </select>
                 </div>
-            </form>
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">State</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("State", (IEnumerable<SelectListItem>)ViewBag.State, new { @class = "form-control" })
+                </div>
+
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">City</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("City", (IEnumerable<SelectListItem>)ViewBag.City, new { @class = "form-control" })
+                </div>
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
+                </div>
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Revenue</label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("Revenue", (IEnumerable<SelectListItem>)ViewBag.Revenue, new { @class = "form-control" })
+                </div>
+                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type Of Services </label></div>
+                <div class="col-12 col-md-3">
+                    @Html.DropDownList("TypeOfService", (IEnumerable<SelectListItem>)ViewBag.TypeOfService, new { @class = "form-control" })
+                </div>
+
+
+                <div class="col-12 col-md-3">
+                    &nbsp;&nbsp;
+                    <button id="btnGetOrganization" type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Go
+                    </button>
+                    <button type="reset" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Reset
+                    </button>
+                </div>
+
+            </div>
+            @*</form>*@
         </div>
 
     </div>
@@ -121,20 +98,7 @@
                             <th>Option</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><a href="customerDetails.html">Name</a></td>
-                            <td>Madurai</td>
-                            <td>Tamilnadu</td>
-                            <td>Services</td>
-                            <td>Sector</td>
-                            <td>sub Sector</td>
-                            <td>Revenue</td>
-                            <td><a href="/Admin/customerDetails" class="btn btn-info btn-sm"> <i class="fa fa-eye"></i></a>
-                        </tr>
-
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -149,9 +113,36 @@
 <script src="~/manageuser/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/manageuser/assets/js/popper.min.js"></script>
 <script src="~/manageuser/assets/js/plugins.js"></script>
-<script src="~/manageuser/assets/js/main.js"></script>
 
 
-<!--  Chart js -->
-<script src="~/manageuser/assets/js/lib/chart-js/Chart.bundle.js"></script>
-<script src="~/manageuser/assets/js/lib/chart-js/chartjs-init.js"></script>
+<script>
+    $("#btnGetOrganization").click(function () {
+
+        var level = $('#Type').val();
+        model = {
+            CityId: $('#City').val(),
+            StateId: $('#State').val(),
+            SectorId: $('#Sector').val(),//txtSector, txtSubSector
+            SubSectorId: $('#SubSector').val(),
+            RevenueId: $('#Revenue').val(),
+            TypeId: $('#TypeOfOrg').val(),
+            CurrentAssignmentType: level,
+            AssessmentId: $('#Assessment').val(),
+            TypeOfServiceId: $('#TypeOfService').val()
+        };
+
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(model),
+            url: API.AssignOrganizationGet(),
+            contentType: "application/json"
+        }).done(function (res) {
+            $("#bootstrap-data-table tbody").empty();
+            $.each(res, function (key, value) {
+                var markup = "<tr><td>" + value.Id + "</td>" + "<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue + "</td><td><a class='btn btn-info btn-sm' href='CustomerDetails/?id=" + value.Id + "&level=" + level +"'> <i class='fa fa-eye'></i></a></td></tr>";
+                $("#bootstrap-data-table tbody").append(markup);
+            });
+        });
+
+    });
+</script>

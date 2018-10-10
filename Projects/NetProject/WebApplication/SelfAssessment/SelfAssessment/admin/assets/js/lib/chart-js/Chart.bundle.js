@@ -8232,7 +8232,7 @@ module.exports = function(Chart) {
     function acquireContext(item, config) {
         if (typeof item === 'string') {
             item = document.getElementById(item);
-        } else if (item.length) {
+        } else if (item!=null && item.length) {
             // Support for array based queries (such as jQuery)
             item = item[0];
         }

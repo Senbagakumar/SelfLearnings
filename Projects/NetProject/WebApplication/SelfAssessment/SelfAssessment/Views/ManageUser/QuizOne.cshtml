@@ -18,33 +18,33 @@
             </div>
             <div class="card-body card-block">
                 @*<form action="" method="post" class="form-horizontal">*@
-                    <div class="row form-group">
-                        <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control" id="selectValue">
+                            <option value="0">-Select-</option>
+                            <option value="Level 1" selected>Level 1</option>
+                            <option value="Level 2">Level 2</option>
+                            <option value="Level 3">Level 3</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row form-group">
+                    <div class="col ">
+                        <div class="col col-md-2">&nbsp;</div>
                         <div class="col-12 col-md-4">
-                            <select class="form-control" id="selectValue">
-                                <option value="0">-Select-</option>
-                                <option value="Level 1" selected>Level 1</option>
-                                <option value="Level 2">Level 2</option>
-                                <option value="Level 3">Level 3</option>
-
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="row form-group">
-                        <div class="col ">
-                            <div class="col col-md-2">&nbsp;</div>
-                            <div class="col-12 col-md-4">
-                                <button id="btnGo" type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Go
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                            </div>
+                            <button id="btnGo" type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Go
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
                         </div>
                     </div>
+                </div>
                 @*</form>*@
             </div>
 
@@ -56,6 +56,7 @@
 </div>
 
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<!--  Chart js -->
 
 
 <script type="text/javascript">
@@ -63,7 +64,7 @@
     function formSubmitWithAction(action) {
         document.getElementById("hdnaction").value = action;
         var s = $('#myForm').serializeArray()
-       
+
         var model = {
             hdnaction: action,
             QInfo: s[1]['value']
@@ -78,13 +79,13 @@
                 $('#LoadQuestion').html(response);
             },
             error: function (er) { }
-        });     
+        });
     }
 
     $(document).ready(function () {
-        $("#btnGo").click(function () {              
+        $("#btnGo").click(function () {
             var selectValue = $('#selectValue').val();
-            var url = API.GetQuestionByOne() + selectValue;           
+            var url = API.GetQuestionByOne() + selectValue;
             $.get(url, function (data) {
                 $('#LoadQuestion').html(data);
             });

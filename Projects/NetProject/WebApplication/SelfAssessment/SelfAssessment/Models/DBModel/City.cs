@@ -15,7 +15,7 @@ namespace SelfAssessment.Models.DBModel
         public string CityName { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("StateId")]
         public virtual State States { get; set; }
     } 
 }

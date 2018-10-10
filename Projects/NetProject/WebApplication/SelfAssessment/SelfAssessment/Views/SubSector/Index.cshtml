@@ -161,7 +161,7 @@
     function DoAction(id) {
         $.ajax({
             type: "GET",
-            url: PI.SubSectorDelete() + id,
+            url: API.SubSectorDelete() + id,
             contentType: "application/json"
         }).done(function (res) {
             location.href = API.SubSectorHome();

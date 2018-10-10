@@ -24,8 +24,8 @@ namespace SelfAssessment.Models.DBModel
         public string Answer { get; set; }
         public string TimerValue { get; set; }
         public bool Mandatory { get; set; }
-        [ForeignKey("Id")]
-        public virtual Group Groups { get; set; }
+        [ForeignKey("GroupId")]
+        public Group Groups { get; set; }
 
     }
 }

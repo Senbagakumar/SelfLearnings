@@ -172,9 +172,11 @@
     <Compile Include="Business\OrganisationComponentDetails.cs" />
     <Compile Include="Business\QuizManager.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
+    <Compile Include="Business\ScoreReport.cs" />
     <Compile Include="Business\Utilities.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ManageOrgController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="ExceptionHandler\UserException.cs" />
     <Compile Include="Models\AnswerChoice.cs" />
     <Compile Include="Models\DBModel\Answer.cs" />
@@ -272,8 +274,10 @@
     <Content Include="admin\assets\js\index.html" />
     <Content Include="admin\assets\js\less.min.js" />
     <Content Include="admin\assets\js\lib\chart-js\Chart.bundle.js" />
+    <Content Include="admin\assets\js\lib\chart-js\chartjs-init2.js" />
     <Content Include="admin\assets\js\lib\chart-js\chartjs-init.js" />
-    <Content Include="admin\assets\js\lib\chart-js\chartjs-init1.js" />
+    <Content Include="admin\assets\js\lib\chart-js\chartjs-init3.js" />
+    <Content Include="admin\assets\js\lib\chart-js\SectorReport.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.jquery.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.jquery.min.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.proto.js" />
@@ -2498,10 +2502,15 @@
     <Content Include="Views\ManageUser\ShowGroupResults.cshtml" />
     <Content Include="Views\ManageUser\QuizOnePartial.cshtml" />
     <Content Include="Views\ManageOrg\Index.cshtml" />
+    <Content Include="Views\ManageUser\QuizGroupPartial.cshtml" />
+    <Content Include="Views\ManageUser\LoadLevel1GraphPartial.cshtml" />
+    <Content Include="Views\ManageUser\LoadLevel2GraphPartial.cshtml" />
+    <Content Include="Views\ManageUser\LoadLevel3GraphPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -16,11 +16,11 @@ namespace SelfAssessment.Models.DBModel
         public int QuestionId { get; set; } // ForeignKey
         public int GroupId { get; set; } //ForeignKey
         public string Level { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("GroupId")]
         public virtual Group Groups { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("QuestionId")]
         public virtual Questions Questiones { get; set; }
-        [ForeignKey("Id")]
-        public virtual Assessment Assessments { get; set; }
+        [ForeignKey("AssessmentId")]
+        public Assessment Assessments { get; set; }
     }
 }

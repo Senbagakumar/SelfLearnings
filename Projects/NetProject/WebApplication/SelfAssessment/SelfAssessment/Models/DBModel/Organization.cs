@@ -33,20 +33,18 @@ namespace SelfAssessment.Models.DBModel
         public int SectorId { get; set; } //ForeignKey
         public int SubSectorId { get; set; } // ForeignKey
         public int RevenueId { get; set; } // ForeignKey
-        [ForeignKey("Id")]
+        [ForeignKey("StateId")]
         public virtual State States { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("CityId")]
         public virtual City Cities { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("SectorId")]
         public virtual Sector Sectors { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("SubSectorId")]
         public virtual SubSector SubSectors { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("RevenueId")]
         public virtual Revenue Revenues { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("TypeOfServiceId")]
         public virtual ServiceType TypesOfService { get; set; }
-        [ForeignKey("Id")]
-        public virtual Assessment Assessments { get; set; }
 
     }   
 }

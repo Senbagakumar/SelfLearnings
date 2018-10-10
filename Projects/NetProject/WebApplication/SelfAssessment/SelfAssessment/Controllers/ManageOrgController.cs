@@ -102,7 +102,7 @@ namespace SelfAssessment.Controllers
             org.TypesOfService = repo.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == org.Id);
             org.Sectors = repo.AssessmentContext.sectors.FirstOrDefault(q => q.Id == org.SectorId);
             org.SubSectors = repo.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == org.SubSectorId);
-            org.Assessments = repo.AssessmentContext.assessments.FirstOrDefault(q => q.Id == org.AssessmentId);
+            
 
 
             repo.Update(org);

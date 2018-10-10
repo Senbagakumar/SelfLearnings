@@ -264,9 +264,10 @@
                           questionId.push($(this).prop("id"));                      
                   }
             });
+
             var model = {
                 //AssignmentId: $("#txt-AssessmentId-text-input").val(),
-                AssignmentId: $("#Assessment").val(),
+                AssessmentId: $("#Assessment").val(),
                 QuestionId: questionId,
                 Level: $("#slLevel").val()
             };

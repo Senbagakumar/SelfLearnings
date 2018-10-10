@@ -123,7 +123,7 @@ namespace SelfAssessment.Business
                     organization.TypesOfService = repository.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == organization.Id);
                     organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
                     organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
-                    organization.Assessments = repository.AssessmentContext.assessments.FirstOrDefault(q => q.Id == organization.AssessmentId);
+                    
 
                     organization.TempPassword = password;
                     repository.Create(organization);
@@ -135,7 +135,7 @@ namespace SelfAssessment.Business
                     other.OrganizationId = uIOrganization.Name.Substring(0, 6);
                     using (Repository<Others> repository = new Repository<Others>())
                     {
-                        other.Organizations = repository.AssessmentContext.UserInfo.FirstOrDefault(q => q.Name == other.OrganizationId);
+                        //other.Organizations = repository.AssessmentContext.UserInfo.FirstOrDefault(q => q.Name == other.OrganizationId);
                         repository.Create(other);
                         repository.SaveChanges();
                     }

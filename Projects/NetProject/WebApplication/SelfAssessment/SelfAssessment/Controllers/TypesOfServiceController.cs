@@ -43,7 +43,8 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new ServiceType() { Name = serviceType.Name, CreateDate = DateTime.Now });
+                        var id = repository.All().Count();
+                        repository.Create(new ServiceType() {Id=++id, Name = serviceType.Name, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
                 }

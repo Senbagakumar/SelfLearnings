@@ -180,11 +180,7 @@
             $.each(res, function (key, value) {
                 var markup = "<tr><td>" + value.Id + "</td>" + "<td><input id=" + value.Id +" type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Type+"</td>";
                 $("#bootstrap-data-table tbody").append(markup);
-                //alert(markup);
-            });
-            
-            //alert(res.length);
-            //$("#bootstrap-data-table").DataTable({ data: res });
+            });            
         });
 
     });

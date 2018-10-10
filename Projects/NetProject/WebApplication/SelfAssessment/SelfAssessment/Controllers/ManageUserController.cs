@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
@@ -99,6 +100,33 @@ namespace SelfAssessment.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult CustomerAssessment(QuestionOnePost question)
+        {
+            GroupQuiz groupQuiz=null;
+            int groupId = int.Parse(question.QInfo);
+            if(question.hdnaction== "Previous")
+            {
+                if (groupId == 1)
+                    groupId = 1;
+                else
+                    groupId = groupId + 1;
+            }
+            if (this.groupQuizManager.MoveToNextGroup(groupId))
+            {
+                groupQuiz = this.groupQuizManager.LoadQuiz(groupId);
+            }
+            else
+            {
+                groupQuiz = this.groupQuizManager.LoadQuiz(--groupId);
+            }
+            return PartialView("QuizGroupPartial", groupQuiz);
+        }
+
+        public ActionResult GetFirstGroup(string id)
+        {
+            return PartialView("QuizGroupPartial", GetGroupQuiz());
+        }
         public ActionResult AssessmentReport()
         {
             return View();
@@ -106,7 +134,7 @@ namespace SelfAssessment.Controllers
         public ActionResult ChangePassword()
         {
             return View();
-        }
+        }            
 
         [HttpPost]
         public ActionResult ChangePassword(ChangePassword changePassword)
@@ -204,12 +232,8 @@ namespace SelfAssessment.Controllers
         }
 
         public ActionResult QuizGroup()
-        {
-            this.groupQuizManager = new GroupQuizManager(this.UserId);
-            var listOfGroup = this.groupQuizManager.GetAllQuestions();
-            Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
-            var group = this.groupQuizManager.LoadQuiz(1);
-            return View(group);
+        {           
+            return View(GetGroupQuiz());
         }
 
         [HttpPost]
@@ -263,6 +287,14 @@ namespace SelfAssessment.Controllers
                 return View(question);
             }           
             return RedirectToAction("ShowGroupResults", new { score=this.groupQuizManager.CalculateScore()});
+        }
+
+        private GroupQuiz GetGroupQuiz()
+        {
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
+            var listOfGroup = this.groupQuizManager.GetAllQuestions();
+            Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
+            return this.groupQuizManager.LoadQuiz(1);
         }
     }
    

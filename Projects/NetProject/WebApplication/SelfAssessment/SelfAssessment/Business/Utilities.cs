@@ -28,5 +28,35 @@ namespace SelfAssessment.Business
         public const char SplitValue = '-';
         public const string QuestionCode = "QCCode";
         public const string All = "-- All --";
+        public const string Group6 = "Group6";
+        public const string Group9 = "Group9";
+
+        public static int CalculateScoreByAns(int answerId)
+        {
+            int score = 0;
+            switch (answerId)
+            {
+                case 1:
+                    score = 5;
+                    break;
+                case 2:
+                    score = 25;
+                    break;
+                case 3:
+                    score = 50;
+                    break;
+                case 4:
+                    score = 75;
+                    break;
+                case 5:
+                    score = 95;
+                    break;
+                default:
+                    score = 5;
+                    break;
+
+            }
+            return score;
+        }
     }
 }

@@ -146,40 +146,12 @@ namespace SelfAssessment.Business
                     var isAnswer = uInfo.AssessmentContext.answers.Where(a => a.QuestionId == q.Questions.QuestionId && a.GroupId == v.GroupId && a.UserId == UserId).FirstOrDefault();
                     if (isAnswer != null)
                     {
-                        score += CalculateScoreByAns(isAnswer.UserOptionId);
+                        score += Utilities.CalculateScoreByAns(isAnswer.UserOptionId);
                     }
                 });
             });
             return score;
-        }
-
-        private int CalculateScoreByAns(int answerId)
-        {
-            int score = 0;
-            switch (answerId)
-            {
-                case 1:
-                    score = 5;
-                    break;
-                case 2:
-                    score = 25;
-                    break;
-                case 3:
-                    score = 50;
-                    break;
-                case 4:
-                    score = 75;
-                    break;
-                case 5:
-                    score = 95;
-                    break;
-                default:
-                    score = 5;
-                    break;
-
-            }
-            return score;
-        }
+        }      
 
         public bool MoveToNextGroup(int groupId)
         {

@@ -391,49 +391,57 @@ namespace SelfAssessment.Controllers
         {      
             var removelist = new List<AssessmentLevelMapping>();
 
-            using (var rep = new Repository<Questions>())
+            try
+            {
+                using (var rep = new Repository<Questions>())
+                {
+
+                    var mapping = new Repository<AssessmentLevelMapping>();
+
+                    var list = rep.Filter(q => uIQuest.QuestionId.Contains(q.QuestionCode)).Select(q => new QuestionGroup() { QuestionId = q.Id, GroupId = q.GroupId }).ToList();
+
+                    var mappingList = mapping.Filter(q => q.AssessmentId == uIQuest.AssessmentId && q.Level == uIQuest.Level).Select(q => new QuestionGroup() { QuestionId = q.QuestionId, GroupId = q.GroupId, MapperId = q.Id }).ToList();
+
+                    var addingMapper = list.Except(mappingList, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
+                    var removingMapper = mappingList.Except(list, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
+
+                    addingMapper.ForEach(q =>
+                    {
+                        if (mapping.Filter(t => t.QuestionId == q.QuestionId && t.AssessmentId == uIQuest.AssessmentId).FirstOrDefault() == null)
+                        {
+                            var assesmentLevel = new AssessmentLevelMapping()
+                            {
+                                AssessmentId = uIQuest.AssessmentId,
+                                Level = uIQuest.Level,
+                                GroupId = q.GroupId,
+                                QuestionId = q.QuestionId,
+                                Assessments = mapping.AssessmentContext.assessments.FirstOrDefault(v => v.Id == uIQuest.AssessmentId),
+                                Groups = mapping.AssessmentContext.groups.FirstOrDefault(v => v.Id == q.GroupId),
+                                Questiones = mapping.AssessmentContext.questions.FirstOrDefault(v => v.Id == q.QuestionId)
+                            };
+                            mapping.Create(assesmentLevel);
+                        }
+                    });
+
+                    removingMapper.ForEach(q =>
+                    {
+                        var removeMapper = mapping.Filter(t => t.Id == q.MapperId).FirstOrDefault();
+                        if (removeMapper != null)
+                        {
+                            removelist.Add(removeMapper);
+                        }
+                    });
+
+                    if (removelist.Count > 0)
+                        mapping.DeleteRange(removelist);
+
+                    mapping.SaveChanges();
+                }
+            }
+            catch (Exception ex)
             {
 
-                var mapping = new Repository<AssessmentLevelMapping>();
-
-                var list = rep.Filter(q => uIQuest.QuestionId.Contains(q.QuestionCode)).Select(q => new QuestionGroup() { QuestionId=q.Id, GroupId=q.GroupId }).ToList();
-
-                var mappingList = mapping.Filter(q => q.AssessmentId == uIQuest.AssessmentId && q.Level == uIQuest.Level).Select(q => new QuestionGroup() { QuestionId=q.QuestionId, GroupId = q.GroupId, MapperId=q.Id }).ToList();
-
-                var addingMapper = list.Except(mappingList, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
-                var removingMapper = mappingList.Except(list, (t, t1) => t.QuestionId == t1.QuestionId).ToList();
-
-                addingMapper.ForEach(q =>
-                {
-                    if (mapping.Filter(t => t.QuestionId == q.QuestionId).FirstOrDefault() == null)
-                    {
-                        var assesmentLevel = new AssessmentLevelMapping()
-                        {
-                            AssessmentId = uIQuest.AssessmentId,
-                            Level = uIQuest.Level,
-                            GroupId = q.GroupId,
-                            QuestionId = q.QuestionId,
-                            Assessments = mapping.AssessmentContext.assessments.FirstOrDefault(v => v.Id == uIQuest.AssessmentId),
-                            Groups = mapping.AssessmentContext.groups.FirstOrDefault(v=> v.Id == q.GroupId),
-                            Questiones = mapping.AssessmentContext.questions.FirstOrDefault(v=> v.Id == q.QuestionId)                            
-                        };
-                        mapping.Create(assesmentLevel);
-                    }
-                });
-
-                removingMapper.ForEach(q =>
-                {
-                    var removeMapper = mapping.Filter(t => t.Id == q.MapperId).FirstOrDefault();
-                    if (removeMapper != null)
-                    {
-                        removelist.Add(removeMapper);
-                    }
-                });
-
-                if(removelist.Count > 0)
-                    mapping.DeleteRange(removelist);
-
-                mapping.SaveChanges();
+                throw;
             }
             return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }

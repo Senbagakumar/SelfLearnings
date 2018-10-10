@@ -613,6 +613,9 @@
             url: url,
             contentType: "application/json"
         }).done(function (result) {
+            //alert("Hi");
+            //alert(result);
+            //console.log(result);
             if (type == "Edit") {
                 $("#smallEditmodalLabel").text("Edit Question");
                 $("#txt-QC-text-input").text(result.QuestionCode);
@@ -670,7 +673,7 @@
             url: url,
             contentType: "application/json"
         }).done(function (result) { 
-          
+
             if (type == "Edit") {
                 $("#editQuestiontable").find("tr:not(:first)").remove();
                 $("#txt-GN-text-input").val(result.GroupName);

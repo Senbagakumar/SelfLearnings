@@ -1,5 +1,5 @@
 ﻿
-@model SelfAssessment.Business.GroupQuiz
+@model SelfAssessment.Models.GroupQuiz
 @{
     ViewBag.Title = "QuizGroup";
 }
@@ -26,34 +26,34 @@
             </div>
             <div class="card-body card-block" hidden="hidden">
                 @*@using (Html.BeginForm("QuizLevelGroup", "ManageUser", FormMethod.Post))
-                {*@
-                    <div class="row form-group">
-                        <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    {*@
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control">
+                            <option value="0">-Select-</option>
+                            <option value="survey 1" selected>Level 1</option>
+                            <option value="survey 2">Level 2</option>
+                            <option value="survey 3">Level 3</option>
+
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="row form-group">
+                    <div class="col ">
+                        <div class="col col-md-2">&nbsp;</div>
                         <div class="col-12 col-md-4">
-                            <select class="form-control">
-                                <option value="0">-Select-</option>
-                                <option value="survey 1" selected>Level 1</option>
-                                <option value="survey 2">Level 2</option>
-                                <option value="survey 3">Level 3</option>
-
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <div class="row form-group">
-                        <div class="col ">
-                            <div class="col col-md-2">&nbsp;</div>
-                            <div class="col-12 col-md-4">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Go
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Go
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
                         </div>
                     </div>
+                </div>
                 @*}*@
             </div>
 
@@ -113,6 +113,9 @@
 </div>
 
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/Admin/assets/js/popper.min.js"></script>
+<script src="~/Admin/assets/js/plugins.js"></script>
+<script src="~/Admin/assets/js/main.js"></script>
 
 <script type="text/javascript">
     function formSubmitWithAction(action) {

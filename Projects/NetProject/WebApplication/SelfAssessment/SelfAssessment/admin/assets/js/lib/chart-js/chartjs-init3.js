@@ -1,38 +1,38 @@
 (function ($) {
     "use strict";
 
-    var bC1OrgScore = [];
-    var bC1OtherOrgScore = [];
+    var bC31OrgScore = [];
+    var bC31OtherOrgScore = [];
 
     $.ajax({
         type: "GET",
-        url: API.OrganizationLevel1Report,
+        url: API.OrganizationLevel3Report,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
-        success: OnSuccess_,
-        error: OnErrorCall_
+        success: OnSuccess31_,
+        error: OnErrorCall31_
     });
 
-    function OnSuccess_(response) {
+    function OnSuccess31_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
 
         for (var i = 0; i < oo.length; i++) {
-            bC1OtherOrgScore.push(oo[i]);
+            bC31OtherOrgScore.push(oo[i]);
         }
 
         for (var i = 0; i < og.length; i++) {
-            bC1OrgScore.push(og[i]);
+            bC31OrgScore.push(og[i]);
         }
     }
 
-    function OnErrorCall_(response) {
+    function OnErrorCall31_(response) {
         alert("Whoops something went wrong!");
     }
 
     //bar chart
-    var ctx1 = document.getElementById("barChart1");
+    var ctx1 = document.getElementById("barChart31");
     // ctx1.height = 100;
     var myChart1 = new Chart(ctx1, {
         type: 'bar',
@@ -43,14 +43,14 @@
                 {
 
                     label: "organization Score",
-                    data: bC1OrgScore,
+                    data: bC31OrgScore,
                     borderColor: "rgba(0, 123, 255, 0.9)",
                     borderWidth: "0",
                     backgroundColor: "rgba(0, 123, 255, 0.5)"
                 },
                 {
                     label: "other organization Score",
-                    data: bC1OtherOrgScore,
+                    data: bC31OtherOrgScore,
                     borderColor: "rgba(0,0,0,0.09)",
                     borderWidth: "0",
                     backgroundColor: "green"
@@ -77,38 +77,38 @@
     });
 
 
-    var bC3OrgScore = [];
-    var bC3OtherOrgScore = [];
+    var bC33OrgScore = [];
+    var bC33OtherOrgScore = [];
 
     $.ajax({
         type: "GET",
-        url: API.OrganizationLevel1FinalReport,
+        url: API.OrganizationLevel3FinalReport,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
-        success: OnSuccess3_,
-        error: OnErrorCall3_
+        success: OnSuccess33_,
+        error: OnErrorCall33_
     });
 
-    function OnSuccess3_(response) {
+    function OnSuccess33_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
 
         for (var i = 0; i < oo.length; i++) {
-            bC3OtherOrgScore.push(oo[i]);
+            bC33OtherOrgScore.push(oo[i]);
         }
 
         for (var i = 0; i < og.length; i++) {
-            bC3OrgScore.push(og[i]);
+            bC33OrgScore.push(og[i]);
         }
     }
 
-    function OnErrorCall3_(response) {
+    function OnErrorCall33_(response) {
         alert("Whoops something went wrong!");
     }
 
     //bar chart
-    var ctx3 = document.getElementById("barChart3");
+    var ctx3 = document.getElementById("barChart33");
     //    ctx.height = 200;
     var myChart3 = new Chart(ctx3, {
         type: 'bar',
@@ -118,14 +118,14 @@
                 {
 
                     label: "organization Score",
-                    data: bC3OrgScore,
+                    data: bC33OrgScore,
                     borderColor: "rgba(0, 123, 255, 0.9)",
                     borderWidth: "0",
                     backgroundColor: "rgba(0, 123, 255, 0.5)"
                 },
                 {
                     label: "other organization Score",
-                    data: bC3OtherOrgScore,
+                    data: bC33OtherOrgScore,
                     borderColor: "rgba(0,0,0,0.09)",
                     borderWidth: "0",
                     backgroundColor: "green"
@@ -145,38 +145,38 @@
         }
     });
 
-    var bC4OrgScore = [];
-    var bC4OtherOrgScore = [];
+    var bC34OrgScore = [];
+    var bC34OtherOrgScore = [];
 
     $.ajax({
         type: "GET",
-        url: API.SectorLevel1Report,
+        url: API.SectorLevel3Report,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
-        success: OnSuccess4_,
-        error: OnErrorCall4_
+        success: OnSuccess34_,
+        error: OnErrorCall34_
     });
 
-    function OnSuccess4_(response) {
+    function OnSuccess34_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
 
         for (var i = 0; i < oo.length; i++) {
-            bC4OtherOrgScore.push(oo[i]);
+            bC34OtherOrgScore.push(oo[i]);
         }
 
         for (var i = 0; i < og.length; i++) {
-            bC4OrgScore.push(og[i]);
+            bC34OrgScore.push(og[i]);
         }
     }
 
-    function OnErrorCall4_(response) {
+    function OnErrorCall34_(response) {
         alert("Whoops something went wrong!");
     }
 
     //bar chart
-    var ctx4 = document.getElementById("barChart4");
+    var ctx4 = document.getElementById("barChart34");
     // ctx4.height = 100;
     var myChart4 = new Chart(ctx4, {
         type: 'bar',
@@ -185,14 +185,14 @@
             datasets: [
                 {
                     label: "organization individual Score",
-                    data: bC4OrgScore,
+                    data: bC34OrgScore,
                     borderColor: "rgba(0, 123, 255, 0.9)",
                     borderWidth: "0",
                     backgroundColor: "rgba(0, 123, 255, 0.5)"
                 },
                 {
                     label: "manufacure individual Score",
-                    data: bC4OtherOrgScore,
+                    data: bC34OtherOrgScore,
                     borderColor: "rgba(0,0,0,0.09)",
                     borderWidth: "0",
                     backgroundColor: "green"
@@ -213,38 +213,38 @@
         }
     });
 
-    var bC5OrgScore = [];
-    var bC5OtherOrgScore = [];
+    var bC35OrgScore = [];
+    var bC35OtherOrgScore = [];
 
     $.ajax({
         type: "GET",
-        url: API.SectorLevel1FinalReport,
+        url: API.SectorLevel3FinalReport,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
-        success: OnSuccess5_,
-        error: OnErrorCall5_
+        success: OnSuccess35_,
+        error: OnErrorCall35_
     });
 
-    function OnSuccess5_(response) {
+    function OnSuccess35_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
 
         for (var i = 0; i < oo.length; i++) {
-            bC5OtherOrgScore.push(oo[i]);
+            bC35OtherOrgScore.push(oo[i]);
         }
 
         for (var i = 0; i < og.length; i++) {
-            bC5OrgScore.push(og[i]);
+            bC35OrgScore.push(og[i]);
         }
     }
 
-    function OnErrorCall5_(response) {
+    function OnErrorCall35_(response) {
         alert("Whoops something went wrong!");
     }
 
     //bar chart
-    var ctx5 = document.getElementById("barChart5");
+    var ctx5 = document.getElementById("barChart35");
     //    ctx.height = 200;
     var myChart5 = new Chart(ctx5, {
         type: 'bar',
@@ -254,14 +254,14 @@
                 {
 
                     label: "organization individual Score",
-                    data: bC5OrgScore,
+                    data: bC35OrgScore,
                     borderColor: "rgba(0, 123, 255, 0.9)",
                     borderWidth: "0",
                     backgroundColor: "rgba(0, 123, 255, 0.5)"
                 },
                 {
                     label: "manufacture individual Score",
-                    data: bC5OtherOrgScore,
+                    data: bC35OtherOrgScore,
                     borderColor: "rgba(0,0,0,0.09)",
                     borderWidth: "0",
                     backgroundColor: "green"

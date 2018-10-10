@@ -33,6 +33,10 @@ namespace SelfAssessment.DataAccess
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+           // modelBuilder.Entity<SubSector>()
+           //.HasRequired<Sector>(s => s.SelectedSector)
+           //.WithMany(s => s.SubSectors);
+
             Database.SetInitializer<AssessmentContext>(new MigrateDatabaseToLatestVersion<AssessmentContext, MyConfiguration>());
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

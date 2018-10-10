@@ -148,6 +148,7 @@
                     url: API.GetSubSectors() + $(this).val(),
                     contentType: "application/json"
                 }).done(function (res) {
+                    $('#SubSector').empty();
                     $.each(res, function (key, value) {
                         $('#SubSector')
                             .append($("<option></option>")

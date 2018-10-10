@@ -1,9 +1,4 @@
 ﻿
-@{
-    ViewBag.Title = "CustomerAssessment";
-}
-
-<h2>CustomerAssessment</h2>
 
 <div class="content mt-3">
     <div class="col-sm-12">
@@ -24,145 +19,79 @@
 
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" class="form-horizontal">
-                    <div class="row form-group">
-                        <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
-                        <div class="col-12 col-md-4">
-                            <select class="form-control">
-                                <option value="0">-Select-</option>
-                                <option value="survey 1" selected>Level 1</option>
-                                <option value="survey 2">Level 2</option>
-                                <option value="survey 3">Level 3</option>
+                @*<form action="" method="post" class="form-horizontal">*@
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control" id="selectValue">
+                            <option value="0">-Select-</option>
+                            <option value="Level 1" selected>Level 1</option>
+                            <option value="Level 2">Level 2</option>
+                            <option value="Level 3">Level 3</option>
 
-                            </select>
-                        </div>
-
+                        </select>
                     </div>
-           
-                        <div class="row form-group">
-                            <div class="col ">
-                                <div class="col col-md-2">&nbsp;</div>
-                                <div class="col-12 col-md-4">
-                                    <button type="submit" class="btn btn-primary btn-sm">
-                                        <i class="fa fa-dot-circle-o"></i> Go
-                                    </button>
-                                    <button type="reset" class="btn btn-danger btn-sm">
-                                        <i class="fa fa-ban"></i> Reset
-                                    </button>
-                                </div>
-                            </div>
+
+                </div>
+
+                <div class="row form-group">
+                    <div class="col ">
+                        <div class="col col-md-2">&nbsp;</div>
+                        <div class="col-12 col-md-4">
+                            <button id="btnGo" type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Go
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
                         </div>
-                </form>
+                    </div>
+                </div>
+                @*</form>*@
             </div>
 
         </div>
     </div>
     <div>&nbsp;</div>
-<div class="col-lg-12">
-    <div class="card">
-        <div class="card-body">
-            <p>No Of Group : <b>9 &nbsp;</b> | &nbsp; No Of Question : <b>65 &nbsp;</b> | &nbsp;No Of Question Answered: <b>55</b> </p>
-            <hr>
-            <h4 class="mb-3 text-info">Group 1 </h4>
-
-            <div class="row">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item" style="border:0px">
-                        <b>1. Is the 3TG internationally added to your product</b>
-                        <div>
-                            <p>
-                                <div class=" form-check">
-                                    <label for="inline-radio1" class="form-check-label ">
-                                        <input type="radio" id="inline-radio1" name="inline-radios2" disabled value="option1" class="form-check-input">One Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;                                   
-
-                                    <label for="inline-radio2" class="form-check-label ">
-                                        <input type="radio" id="inline-radio2" name="inline-radios2" disabled checked value="option2" class="form-check-input">Two Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio3" name="inline-radios2" disabled value="option3" class="form-check-input">Three Is the 3TG internationally added to your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio3" name="inline-radios2" disabled value="option3" class="form-check-input">Four your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio3" name="inline-radios2" disabled value="option3" class="form-check-input">Five your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                </div>
-                            </p>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <b>2. Do you any of the smartlers to your product</b>
-                        <div>
-                            <p>
-                                <div class=" form-check">
-                                    <label for="inline-radio1" class="form-check-label ">
-                                        <input type="radio" id="inline-radio1" name="inline-radios1" disabled value="option1" class="form-check-input">One Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio2" class="form-check-label ">
-                                        <input type="radio" id="inline-radio2" name="inline-radios1" disabled value="option2" class="form-check-input">Two Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio3" name="inline-radios1" disabled checked value="option3" class="form-check-input">Three Is the 3TG internationally added to your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio4" name="inline-radios1" disabled value="option3" class="form-check-input">Four your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio5" name="inline-radios1" disabled value="option3" class="form-check-input">Five your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                </div>
-                            </p>
-                        </div>
-                    </li>
-
-                    <li class="list-group-item">
-                        <b>3. Is the 3TG internationally added to your product</b>
-                        <div>
-                            <p>
-                                <div class=" form-check">
-                                    <label for="inline-radio1" class="form-check-label ">
-                                        <input type="radio" id="inline-radio1" name="inline-radios" disabled checked value="option1" class="form-check-input">One Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio2" class="form-check-label ">
-                                        <input type="radio" id="inline-radio2" name="inline-radios" disabled value="option2" class="form-check-input">Two Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio3" name="inline-radios" disabled value="option3" class="form-check-input">Three Is the 3TG internationally added to your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio4" name="inline-radios" disabled value="option3" class="form-check-input">Four your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <label for="inline-radio3" class="form-check-label ">
-                                        <input type="radio" id="inline-radio5" name="inline-radios" disabled value="option3" class="form-check-input">Five your product Is the 3TG internationally added to your productIs the 3TG internationally added to your productIs the 3TG internationally added to your product Is the 3TG internationally added to your product
-                                    </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                                </div>
-                            </p>
-                        </div>
-                    </li>
-
-                </ul>
-                <div class="row col-md-12" style="margin-top:5px;">
-                    <span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="btn btn-success" type="button" value="<< PRV ">
-                    </span>
-                    <span class="ml-auto"><input class="btn btn-success" type="button" value="Next >>"></span>
-                </div>
-
-            </div>
-        </div>
+    <div id="LoadGroup">
     </div>
 </div>
-</div>
+
+
 
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
-<script src="~/Admin/assets/js/main.js"></script>
 
 
-<!--  Chart js -->
-<script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
-<script src="~/Admin/assets/js/lib/chart-js/chartjs-init.js"></script>
+<script type="text/javascript">
+    function formSubmitWithAction(action) {
+        document.getElementById("hdnaction").value = action;
+        var s = $('#myForm').serializeArray()
+
+        var model = {
+            hdnaction: action,
+            QInfo: s[1]['value']
+        };
+
+        $.ajax({
+            url: API.CustomerReport,
+            type: "POST",
+            data: JSON.stringify(model),
+            contentType: 'application/json',
+            success: function (response) {
+                $('#LoadGroup').html(response);
+            },
+            error: function (er) { }
+        });
+    }
+    $(document).ready(function () {
+        $("#btnGo").click(function () {
+            var selectValue = $('#selectValue').val();
+            var url = API.UserGetGroupDetails + selectValue;
+            $.get(url, function (data) {
+                $('#LoadGroup').html(data);
+            });
+        });
+    });
+</script>

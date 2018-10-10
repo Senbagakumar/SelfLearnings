@@ -42,7 +42,8 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new Sector() { SectorName = sector.SectorName, CreateDate = DateTime.Now });
+                        var count = repository.All().Count();
+                        repository.Create(new Sector() { Id=++count, SectorName = sector.SectorName, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
                 }
@@ -51,7 +52,7 @@ namespace SelfAssessment.Controllers
 
                 // return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return Json("Failiure", JsonRequestBehavior.AllowGet);
             }

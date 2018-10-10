@@ -15,7 +15,7 @@ namespace SelfAssessment.Models.DBModel
         public string SubSectorName { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        [ForeignKey("Id")]
+        [ForeignKey("SectorId")]
         public virtual Sector Sectors { get; set; }
     }
 }

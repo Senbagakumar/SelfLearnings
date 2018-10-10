@@ -43,7 +43,13 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        repository.Create(new Revenue() { Name = revenue.Name, CreateDate = DateTime.Now });
+                        int? intIdt = repository.All().Max(u => (int?)u.Id);
+                        if (intIdt == null || intIdt == 0)
+                            intIdt = 1;
+                        else
+                            intIdt = ++intIdt;
+
+                        repository.Create(new Revenue() { Id=intIdt.Value, Name = revenue.Name, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
                 }

@@ -56,8 +56,10 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
+                        var count = repository.All().Count();
                         var subSector = new SubSector()
                         {
+                            Id = ++count,
                             SubSectorName = uISubSector.SubSectorName,
                             SectorId = uISubSector.SectorId,
                             CreateDate = DateTime.Now,
@@ -72,7 +74,7 @@ namespace SelfAssessment.Controllers
 
                 // return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
             }

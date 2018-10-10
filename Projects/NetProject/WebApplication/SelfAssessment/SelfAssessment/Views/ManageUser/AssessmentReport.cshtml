@@ -23,34 +23,34 @@
                 </div>
             </div>
             <div class="card-body card-block">
-                <form action="" method="post" class="form-horizontal">
+                @*<form action="" method="post" class="form-horizontal">*@
+                <div class="row form-group">
+                    <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-4">
+                        <select class="form-control" id="selectValue">
+                            <option value="0">-Select-</option>
+                            <option value="1" selected>Level 1</option>
+                            <option value="2">Level 2</option>
+                            <option value="3">Level 3</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <div>
                     <div class="row form-group">
-                        <div class="col col-md-2"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                        <div class="col col-md-2">&nbsp;</div>
                         <div class="col-12 col-md-4">
-                            <select class="form-control">
-                                <option value="0">-Select-</option>
-                                <option value="survey 1" selected>Level 1</option>
-                                <option value="survey 2">Level 2</option>
-                                <option value="survey 3">Level 3</option>
-
-                            </select>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="row form-group">
-                            <div class="col col-md-2">&nbsp;</div>
-                            <div class="col-12 col-md-4">
-                                <button type="submit" class="btn btn-primary btn-sm">
-                                    <i class="fa fa-dot-circle-o"></i> Go
-                                </button>
-                                <button type="reset" class="btn btn-danger btn-sm">
-                                    <i class="fa fa-ban"></i> Reset
-                                </button>
-                            </div>
+                            <button id="btnGo" type="button" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Go
+                            </button>
+                            <button type="reset" class="btn btn-danger btn-sm">
+                                <i class="fa fa-ban"></i> Reset
+                            </button>
                         </div>
                     </div>
-                </form>
+                </div>
+                @*</form>*@
             </div>
 
         </div>
@@ -58,55 +58,55 @@
     </div>
     <!--/.col-->
 
-    <div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="mb-3">Organization Score (%) Result </h4>
-                    <canvas id="barChart1"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="mb-3">Final Score (%) Result </h4>
-                    <canvas id="barChart3"></canvas>
-                </div>
-            </div>
-        </div>
-
-
-
+    <div id="LoadLevel1Graph">
+        @{ Html.RenderPartial("LoadLevel1GraphPartial"); }
     </div>
-    <div class="col-lg-12">  &nbsp;</div>
-    <div>
 
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="mb-3">Manufacture Score (%) Result </h4>
-                    <canvas id="barChart4"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="mb-3">Manufacture Final Score (%) Result </h4>
-                    <canvas id="barChart5"></canvas>
-                </div>
-            </div>
-        </div>
+    <div id="LoadLevel2Graph">
+        @{ Html.RenderPartial("LoadLevel2GraphPartial"); }
+    </div>
+
+    <div id="LoadLevel3Graph">
+        @{ Html.RenderPartial("LoadLevel3GraphPartial"); }
     </div>
 </div>
 
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
-<script src="~/Admin/assets/js/popper.min.js"></script>
-<script src="~/Admin/assets/js/plugins.js"></script>
-<script src="~/Admin/assets/js/main.js"></script>
-
-
-<!--  Chart js -->
 <script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
 <script src="~/Admin/assets/js/lib/chart-js/chartjs-init.js"></script>
+<script src="~/Admin/assets/js/lib/chart-js/chartjs-init2.js"></script>
+<script src="~/Admin/assets/js/lib/chart-js/chartjs-init3.js"></script>
+<script src="~/Admin/assets/js/popper.min.js"></script>
+<script src="~/Admin/assets/js/plugins.js"></script>
+
+<!--  Chart js -->
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#LoadLevel1Graph").hide(); 
+        $("#LoadLevel2Graph").hide();       
+        $("#LoadLevel3Graph").hide();       
+
+        $("#btnGo").click(function () {
+            var selectValue = $('#selectValue').val();           
+            if (selectValue == 1) {
+                $("#LoadLevel1Graph").show();
+                $("#LoadLevel3Graph").hide();
+                $("#LoadLevel2Graph").hide();
+            }
+            if (selectValue == 2) {
+                $("#LoadLevel2Graph").show();
+                $("#LoadLevel1Graph").hide();
+                $("#LoadLevel3Graph").hide();
+            }
+            if (selectValue == 3) {
+                $("#LoadLevel3Graph").show();
+                $("#LoadLevel2Graph").hide();
+                $("#LoadLevel1Graph").hide();
+            }
+                
+        });
+    });
+</script>

@@ -13,7 +13,7 @@ namespace SelfAssessment.Models.DBModel
         public string OrganizationId { get; set; }
         public string Sector { get; set; }
         public string SubSector { get; set; }
-        [ForeignKey("Id")]
-        public virtual Organization Organizations { get; set; }
+        //[ForeignKey("Id")]
+        //public virtual Organization Organizations { get; set; }
     }
 }

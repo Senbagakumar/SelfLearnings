@@ -57,8 +57,10 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
+                        var cId = repository.All().Count();
                         var city = new City()
                         {
+                            Id = ++cId,
                             CityName = uICity.CityName,
                             CreateDate = DateTime.Now,
                             StateId = uICity.StateId,

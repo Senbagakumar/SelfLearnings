@@ -145,7 +145,7 @@ namespace SelfAssessment.Controllers
 
                 //return RedirectToAction("Success");
             }
-            catch
+            catch(Exception ex)
             {
                 //return View();
             }

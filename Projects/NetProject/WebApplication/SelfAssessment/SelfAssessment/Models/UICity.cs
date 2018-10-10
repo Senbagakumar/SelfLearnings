@@ -13,4 +13,22 @@ namespace SelfAssessment.Models
         public string StateName { get; set; }
 
     }
+
+    public class Graph
+    {
+        public int[] OtherOrg { get; set; }
+        public int[] Org { get; set; }
+    }
+
+    public class ScoreCalc
+    {
+        public int UserId { get; set; }
+        public List<GraphDynam> Scores {get; set;}
+    }
+
+    public class GraphDynam
+    {
+        public string GroupName { get; set; }
+        public int MyScore { get; set; }
+    }
 }

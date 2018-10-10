@@ -81,7 +81,7 @@
         return this.baseUrl + "ManageAssessment/SaveAssessment";
     },
     AssessmentHome: function () {
-        return this.baseUrl + "ManageAssessment/Home";
+        return this.baseUrl + "ManageAssessment/Index";
     },
     AssessmentDelete: function () {
         return this.baseUrl + "ManageAssessment/DeleteAssessMentById/";
@@ -145,5 +145,56 @@
     },
     OrganizationUpdate: function () {
         return this.baseUrl + "ManageOrg/UpdateOrganization";
+    },
+    CustomerAssessmentReadOnly: function () {
+        return this.baseUrl + "ManageUser/CustomerAssessment";
+    },
+    CustomerDetailReport: function () {
+        return this.baseUrl + "/Admin/CustomerAssessmentReport";
+    },
+    AdminGetGroupDetailsByFilter: function () {
+        return this.baseUrl + "/Admin/GetFirstGroup/";
+    },
+    CustomerReport: function () {
+        return this.baseUrl + "/ManageUser/CustomerAssessment";
+    },
+    UserGetGroupDetails: function () {
+        return this.baseUrl + "/ManageUser/GetFirstGroup/";
+    },
+    OrganizationLevel1Report: function () {
+        return this.baseUrl + "/Report/GetOrganizationalScoreLevel1";
+    },
+    OrganizationLevel1FinalReport: function () {
+        return this.baseUrl + "/Report/GetFinalScoreLevel1";
+    },
+    SectorLevel1Report: function () {
+        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel1";
+    },
+    SectorLevel1FinalReport: function () {
+        return this.baseUrl + "/Report/GetSectorFinalScoreLevel1";
+    },
+    OrganizationLevel2Report: function () {
+        return this.baseUrl + "/Report/GetOrganizationalScoreLevel2";
+    },
+    OrganizationLevel2FinalReport: function () {
+        return this.baseUrl + "/Report/GetFinalScoreLevel2";
+    },
+    SectorLevel2Report: function () {
+        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel2";
+    },
+    SectorLevel2FinalReport: function () {
+        return this.baseUrl + "/Report/GetSectorFinalScoreLevel2";
+    },
+    OrganizationLevel3Report: function () {
+        return this.baseUrl + "/Report/GetOrganizationalScoreLevel3";
+    },
+    OrganizationLevel3FinalReport: function () {
+        return this.baseUrl + "/Report/GetFinalScoreLevel3";
+    },
+    SectorLevel3Report: function () {
+        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel3";
+    },
+    SectorLevel3FinalReport: function () {
+        return this.baseUrl + "/Report/GetSectorFinalScoreLevel3";
     }
 };

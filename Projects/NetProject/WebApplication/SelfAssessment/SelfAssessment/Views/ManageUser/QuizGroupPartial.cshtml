@@ -1,0 +1,55 @@
+﻿@model SelfAssessment.Models.GroupQuiz
+@{
+    ViewBag.Title = "QuizGroup";
+}
+
+<div class="card">
+    <div class="card-body">
+        <p>No Of Group : <b>@Model.NoOfGroups &nbsp;</b> | &nbsp; No Of Question : <b>@Model.NoOfQuestions &nbsp;</b> | &nbsp;No Of Question Answered: <b>@Model.NoOfCompletedQuestions</b> </p>
+        <hr>
+
+
+        <h4 class="mb-3 text-info">@Model.GroupText</h4>
+        @using (Html.BeginForm("QuizGroup", "ManageUser", FormMethod.Post, new { id = "myForm" }))
+        {
+            <input type="hidden" id="hdnaction" name="hdnaction" value="" />
+
+            @Html.HiddenFor(x=> Model.UserId)   // // only for admin Report
+            @Html.HiddenFor(x => Model.UIGroupId)
+            <div class="row">
+                <ul class="list-group list-group-flush">
+                    @foreach (var quest in Model.listOfQuestions)
+                    {
+                        <li class="list-group-item" style="border:0px">
+                            <b>@quest.Questions.QuestionText</b>
+                            <div>
+                                @*@Html.HiddenFor(_=> quest.Questions.QuestionId)*@
+                                <p>
+                                    <div class=" form-check">
+                                        @*@Html.RadioButtonFor(m => Model.AnswerChoices, false, htmlAttributes: new { @checked = "" }) test<br />*@
+                                        @foreach (var choice in quest.AnswerChoices)
+                                        {
+                                            <label for="inline-radio1" class="form-check-label">
+                                                @Html.RadioButton(quest.Questions.QuestionCode, Model.GroupId + "~" + quest.Questions.QuestionId + "~" + choice.AnswerChoiceId + "~" + Model.UIGroupId, choice.IsChecked, new { disabled = "disabled" }) @choice.Choices
+                                            </label>
+                                        }
+                                    </div>
+                                </p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+                <div class="row col-md-12" style="margin-top:5px;">
+                    <span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="btn btn-success" id="submitButton" onclick="formSubmitWithAction('Previous');" type="button" value="<< PRV ">
+                    </span>
+                    <span class="ml-auto">
+                        <input id="btnSubmit" class="btn btn-success" type="button" onclick="formSubmitWithAction('Next');" value="Next >>">
+                    </span>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
