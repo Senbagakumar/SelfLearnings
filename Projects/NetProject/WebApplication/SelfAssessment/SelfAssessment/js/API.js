@@ -1,8 +1,14 @@
 ﻿var API = {
     baseUrl: 'http://localhost:26578/',
 
+
+
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
+    },
+
+    GetBaseUrl: function () {
+        return this.baseUrl;
     },
 
     CreateUser: function () {
@@ -150,51 +156,57 @@
         return this.baseUrl + "ManageUser/CustomerAssessment";
     },
     CustomerDetailReport: function () {
-        return this.baseUrl + "/Admin/CustomerAssessmentReport";
+        return this.baseUrl + "Admin/CustomerAssessmentReport";
     },
     AdminGetGroupDetailsByFilter: function () {
-        return this.baseUrl + "/Admin/GetFirstGroup/";
+        return this.baseUrl + "Admin/GetFirstGroup/";
     },
     CustomerReport: function () {
-        return this.baseUrl + "/ManageUser/CustomerAssessment";
+        return this.baseUrl + "ManageUser/CustomerAssessment";
     },
     UserGetGroupDetails: function () {
-        return this.baseUrl + "/ManageUser/GetFirstGroup/";
+        return this.baseUrl + "ManageUser/GetFirstGroup/";
     },
     OrganizationLevel1Report: function () {
-        return this.baseUrl + "/Report/GetOrganizationalScoreLevel1";
+        return this.baseUrl + "Report/GetOrganizationalScoreLevel1";
     },
     OrganizationLevel1FinalReport: function () {
-        return this.baseUrl + "/Report/GetFinalScoreLevel1";
+        return this.baseUrl + "Report/GetFinalScoreLevel1";
     },
     SectorLevel1Report: function () {
-        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel1";
+        return this.baseUrl + "Report/GetSectorOrganizationalScoreLevel1";
     },
     SectorLevel1FinalReport: function () {
-        return this.baseUrl + "/Report/GetSectorFinalScoreLevel1";
+        return this.baseUrl + "Report/GetSectorFinalScoreLevel1";
     },
     OrganizationLevel2Report: function () {
-        return this.baseUrl + "/Report/GetOrganizationalScoreLevel2";
+        return this.baseUrl + "Report/GetOrganizationalScoreLevel2";
     },
     OrganizationLevel2FinalReport: function () {
-        return this.baseUrl + "/Report/GetFinalScoreLevel2";
+        return this.baseUrl + "Report/GetFinalScoreLevel2";
     },
     SectorLevel2Report: function () {
-        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel2";
+        return this.baseUrl + "Report/GetSectorOrganizationalScoreLevel2";
     },
     SectorLevel2FinalReport: function () {
-        return this.baseUrl + "/Report/GetSectorFinalScoreLevel2";
+        return this.baseUrl + "Report/GetSectorFinalScoreLevel2";
     },
     OrganizationLevel3Report: function () {
-        return this.baseUrl + "/Report/GetOrganizationalScoreLevel3";
+        return this.baseUrl + "Report/GetOrganizationalScoreLevel3";
     },
     OrganizationLevel3FinalReport: function () {
-        return this.baseUrl + "/Report/GetFinalScoreLevel3";
+        return this.baseUrl + "Report/GetFinalScoreLevel3";
     },
     SectorLevel3Report: function () {
-        return this.baseUrl + "/Report/GetSectorOrganizationalScoreLevel3";
+        return this.baseUrl + "Report/GetSectorOrganizationalScoreLevel3";
     },
     SectorLevel3FinalReport: function () {
-        return this.baseUrl + "/Report/GetSectorFinalScoreLevel3";
+        return this.baseUrl + "Report/GetSectorFinalScoreLevel3";
+    },
+    SectorAloneOrganizationReport: function () {
+        return this.baseUrl + "Report/SectorOrganizationScore";
+    },
+    SectorAloneFinalReport: function () {
+        return this.baseUrl + "Report/SectorOrganizationFinalScore";
     }
 };

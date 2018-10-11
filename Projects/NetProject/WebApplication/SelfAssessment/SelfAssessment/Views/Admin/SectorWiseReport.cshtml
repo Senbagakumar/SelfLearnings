@@ -26,43 +26,43 @@
             </div>
             <div class="card-body card-block">
                 @*<form action="" method="post" class="form-horizontal">*@
-                    <div class="row form-group">
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment </label></div>
-                        <div class="col-12 col-md-3">
-                            @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
-                        </div>
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
-                        <div class="col-12 col-md-3">
-                            <select id="Type" class="form-control">
-                                <option value="0">-Select-</option>
-                                <option value="Level 1" selected>Level 1</option>
-                                <option value="Level 2">Level 2</option>
-                                <option value="Level 3">Level 3</option>
-                            </select>
-                        </div>
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector</label></div>
-                        <div class="col-12 col-md-3">
-                            @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
-                        </div>
-
+                <div class="row form-group">
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment </label></div>
+                    <div class="col-12 col-md-3">
+                        @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
+                    </div>
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                    <div class="col-12 col-md-3">
+                        <select id="Type" class="form-control">
+                            <option value="0">-Select-</option>
+                            <option value="Level 1" selected>Level 1</option>
+                            <option value="Level 2">Level 2</option>
+                            <option value="Level 3">Level 3</option>
+                        </select>
+                    </div>
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector</label></div>
+                    <div class="col-12 col-md-3">
+                        @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
                     </div>
 
-                    <div class="row form-group">
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector </label></div>
-                        <div class="col-12 col-md-3">
-                            @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
-                        </div>
+                </div>
 
-
-                        <div class="col-12 col-md-4">
-                            <button id="btnGetOrganization" type="submit" class="btn btn-primary btn-sm">
-                                <i class="fa fa-dot-circle-o"></i> Go
-                            </button>
-                            <button type="reset" class="btn btn-danger btn-sm">
-                                <i class="fa fa-ban"></i> Reset
-                            </button>
-                        </div>
+                <div class="row form-group">
+                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector </label></div>
+                    <div class="col-12 col-md-3">
+                        @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
                     </div>
+
+
+                    <div class="col-12 col-md-4">
+                        <button id="btnGetOrganization" type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Go
+                        </button>
+                        <button type="reset" class="btn btn-danger btn-sm">
+                            <i class="fa fa-ban"></i> Reset
+                        </button>
+                    </div>
+                </div>
             </div>
             @*</form>*@
         </div>
@@ -162,13 +162,19 @@
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
-@*<script src="~/Admin/assets/js/main.js"></script>*@
+<script src="~/js/API.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 
 <!--  Chart js -->
 <script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
-<script src="~/admin/assets/js/lib/chart-js/SectorReport.js"></script>
+@*<script src="~/admin/assets/js/lib/chart-js/SectorReport.js"></script>*@
 
+<script src="~/admin/assets/js/lib/chart-js/TestChart.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -181,6 +187,12 @@
                 contentType: "application/json"
             }).done(function (res) {
                 $('#SubSector').empty();
+
+                $('#SubSector')
+                    .append($("<option></option>")
+                        .attr("value", "0")
+                        .text("ALL"));
+
                 $.each(res, function (key, value) {
                     $('#SubSector')
                         .append($("<option></option>")
@@ -232,7 +244,6 @@
         $("#btnGetOrganization").click(function () {
 
             clear();
-
             var level = $('#Type').val();
             model = {
                 SectorId: $('#Sector').val(),//txtSector, txtSubSector
@@ -240,6 +251,9 @@
                 CurrentAssignmentType: level,
                 AssessmentId: $('#Assessment').val()
             };
+
+
+            BarChart(model.SectorId, model.SubSectorId, level, model.AssessmentId);
 
             $.ajax({
                 type: "POST",

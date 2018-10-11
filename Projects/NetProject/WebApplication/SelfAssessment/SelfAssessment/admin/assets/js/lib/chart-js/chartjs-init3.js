@@ -4,9 +4,12 @@
     var bC31OrgScore = [];
     var bC31OtherOrgScore = [];
 
+    var uid = 0;
+    uid = $("#lblUserId").val();
+
     $.ajax({
         type: "GET",
-        url: API.OrganizationLevel3Report,
+        url: API.OrganizationLevel3Report() + "/" + uid,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
@@ -82,7 +85,7 @@
 
     $.ajax({
         type: "GET",
-        url: API.OrganizationLevel3FinalReport,
+        url: API.OrganizationLevel3FinalReport() + "/" + uid,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
@@ -150,7 +153,7 @@
 
     $.ajax({
         type: "GET",
-        url: API.SectorLevel3Report,
+        url: API.SectorLevel3Report() + "/" + uid,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
@@ -218,7 +221,7 @@
 
     $.ajax({
         type: "GET",
-        url: API.SectorLevel3FinalReport,
+        url: API.SectorLevel3FinalReport() + "/" + uid,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,

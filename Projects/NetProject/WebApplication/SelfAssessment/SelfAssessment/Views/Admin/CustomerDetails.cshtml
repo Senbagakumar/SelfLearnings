@@ -22,8 +22,8 @@
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-question" role="tab" aria-controls="nav-level1" aria-selected="true">Assessment Questions</a>
                             <a class="nav-item nav-link" id="nav-profile-tab-Level1" data-toggle="tab" href="#Level1-nav-graph" role="tab" aria-controls="nav-level2" aria-selected="false">Assessment Graph Level1</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab-Level2" data-toggle="tab" href="#Level2-nav-graph" role="tab" aria-controls="nav-level3" aria-selected="false">Assessment Graph Level2</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab-Level3" data-toggle="tab" href="#Level3-nav-graph" role="tab" aria-controls="nav-level4" aria-selected="false">Assessment Graph Level3</a>
+                            @*<a class="nav-item nav-link" id="nav-profile-tab-Level2" data-toggle="tab" href="#Level2-nav-graph" role="tab" aria-controls="nav-level3" aria-selected="false">Assessment Graph Level2</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab-Level3" data-toggle="tab" href="#Level3-nav-graph" role="tab" aria-controls="nav-level4" aria-selected="false">Assessment Graph Level3</a>*@
 
                         </div>
                     </nav>
@@ -90,12 +90,12 @@
                         <div class="tab-pane fade" id="Level1-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level1">
                             @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel1GraphPartial.cshtml"); }
                         </div>
-                        <div class="tab-pane fade" id="Level2-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level2">
+                        @*<div class="tab-pane fade" id="Level2-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level2">
                             @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel2GraphPartial.cshtml"); }
                         </div>
                         <div class="tab-pane fade" id="Level3-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level3">
                             @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel3GraphPartial.cshtml"); }
-                        </div>
+                        </div>*@
 
                     </div>
 
@@ -117,12 +117,12 @@
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
-
-
+<script src="~/js/API.js"></script>
 <!--  Chart js -->
 <script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
+<script src="~/admin/assets/js/lib/chart-js/SectorReport.js"></script>
 
-@if (Model.SelectLevel == "Level 1")
+@*@if (Model.SelectLevel == "Level 1")
     {
         <script src="~/Admin/assets/js/lib/chart-js/chartjs-init.js"></script>
     }
@@ -133,7 +133,7 @@
     else
     {
         <script src="~/Admin/assets/js/lib/chart-js/chartjs-init3.js"></script>
-    }
+    }*@
 
 <script type="text/javascript">
 
@@ -148,7 +148,7 @@
         };
 
         $.ajax({
-            url: API.CustomerDetailReport,
+            url: API.CustomerDetailReport(),
             type: "POST",
             data: JSON.stringify(model),
             contentType: 'application/json',
@@ -161,36 +161,37 @@
     $(document).ready(function () {
         //$("#btnGo").click(function () {
         var selectValue = $('#lblSelectLevel').val();
-
-        if (selectValue == "Level 1") {
-            $("#Level2-nav-graph").hide();
-            $("#Level3-nav-graph").hide();
-            $("#Level1-nav-graph").show();
-            $("#nav-profile-tab-Level1").show();
-            $("#nav-profile-tab-Level2").hide();
-            $("#nav-profile-tab-Level3").hide();
-        }
-        if (selectValue == "Level 2") {
-            $("#Level2-nav-graph").show();
-            $("#Level3-nav-graph").hide();
-            $("#Level1-nav-graph").hide();
-
-            $("#nav-profile-tab-Level1").hide();
-            $("#nav-profile-tab-Level2").show();
-            $("#nav-profile-tab-Level3").hide();
-        }
-        if (selectValue == "Level 3") {
-            $("#Level1-nav-graph").hide();
-            $("#Level3-nav-graph").show();
-            $("#Level2-nav-graph").hide();
-
-            $("#nav-profile-tab-Level1").hide();
-            $("#nav-profile-tab-Level2").hide();
-            $("#nav-profile-tab-Level3").show();
-
-        }
         var id = $('#lblUserId').val();
-        var url = API.AdminGetGroupDetailsByFilter+"?id=" + id + "&level=" + selectValue;
+        GetUserReport(id, selectValue);
+        //if (selectValue == "Level 1") {
+        //    $("#Level2-nav-graph").hide();
+        //    $("#Level3-nav-graph").hide();
+        //    $("#Level1-nav-graph").show();
+        //    $("#nav-profile-tab-Level1").show();
+        //    $("#nav-profile-tab-Level2").hide();
+        //    $("#nav-profile-tab-Level3").hide();
+        //}
+        //if (selectValue == "Level 2") {
+        //    $("#Level2-nav-graph").show();
+        //    $("#Level3-nav-graph").hide();
+        //    $("#Level1-nav-graph").hide();
+
+        //    $("#nav-profile-tab-Level1").hide();
+        //    $("#nav-profile-tab-Level2").show();
+        //    $("#nav-profile-tab-Level3").hide();
+        //}
+        //if (selectValue == "Level 3") {
+        //    $("#Level1-nav-graph").hide();
+        //    $("#Level3-nav-graph").show();
+        //    $("#Level2-nav-graph").hide();
+
+        //    $("#nav-profile-tab-Level1").hide();
+        //    $("#nav-profile-tab-Level2").hide();
+        //    $("#nav-profile-tab-Level3").show();
+
+        //}
+        
+        var url = API.AdminGetGroupDetailsByFilter()+"?id=" + id + "&level=" + selectValue;
         $.get(url, function (data) {
             $('#LoadGroup').html(data);
         });

@@ -278,6 +278,7 @@
     <Content Include="admin\assets\js\lib\chart-js\chartjs-init.js" />
     <Content Include="admin\assets\js\lib\chart-js\chartjs-init3.js" />
     <Content Include="admin\assets\js\lib\chart-js\SectorReport.js" />
+    <Content Include="admin\assets\js\lib\chart-js\TestChart.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.jquery.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.jquery.min.js" />
     <Content Include="admin\assets\js\lib\chosen\chosen.proto.js" />

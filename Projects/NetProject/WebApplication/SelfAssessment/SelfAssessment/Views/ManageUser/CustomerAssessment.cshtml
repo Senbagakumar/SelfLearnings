@@ -75,7 +75,7 @@
         };
 
         $.ajax({
-            url: API.CustomerReport,
+            url: API.CustomerReport(),
             type: "POST",
             data: JSON.stringify(model),
             contentType: 'application/json',
@@ -88,7 +88,7 @@
     $(document).ready(function () {
         $("#btnGo").click(function () {
             var selectValue = $('#selectValue').val();
-            var url = API.UserGetGroupDetails + selectValue;
+            var url = API.UserGetGroupDetails() + selectValue;
             $.get(url, function (data) {
                 $('#LoadGroup').html(data);
             });

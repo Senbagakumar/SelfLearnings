@@ -16,6 +16,7 @@ namespace SelfAssessment.Models
 
     public class Graph
     {
+        public string[] Groups { get; set; }
         public int[] OtherOrg { get; set; }
         public int[] Org { get; set; }
     }

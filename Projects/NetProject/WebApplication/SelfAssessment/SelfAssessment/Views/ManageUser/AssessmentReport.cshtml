@@ -11,7 +11,7 @@
             <div class="card-header">
                 <strong>Assessment Name</strong>
                 <div class="user-area dropdown float-right">
-
+                    @*<input type="hidden" id="lblUserId" value="0" />*@
                     <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="ti-export"></span>&nbsp; Export
                     </a>
@@ -29,9 +29,9 @@
                     <div class="col-12 col-md-4">
                         <select class="form-control" id="selectValue">
                             <option value="0">-Select-</option>
-                            <option value="1" selected>Level 1</option>
-                            <option value="2">Level 2</option>
-                            <option value="3">Level 3</option>
+                            <option value="Level 1" selected>Level 1</option>
+                            <option value="Level 2">Level 2</option>
+                            <option value="Level 3">Level 3</option>
 
                         </select>
                     </div>
@@ -62,20 +62,25 @@
         @{ Html.RenderPartial("LoadLevel1GraphPartial"); }
     </div>
 
-    <div id="LoadLevel2Graph">
+    @*<div id="LoadLevel2Graph">
         @{ Html.RenderPartial("LoadLevel2GraphPartial"); }
     </div>
 
     <div id="LoadLevel3Graph">
         @{ Html.RenderPartial("LoadLevel3GraphPartial"); }
-    </div>
+    </div>*@
 </div>
 
+<script src="~/js/API.js"></script>
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
-<script src="~/Admin/assets/js/lib/chart-js/chartjs-init.js"></script>
+
+<script src="~/admin/assets/js/lib/chart-js/SectorReport.js"></script>
+
+@*<script src="~/Admin/assets/js/lib/chart-js/chartjs-init.js"></script>
 <script src="~/Admin/assets/js/lib/chart-js/chartjs-init2.js"></script>
-<script src="~/Admin/assets/js/lib/chart-js/chartjs-init3.js"></script>
+<script src="~/Admin/assets/js/lib/chart-js/chartjs-init3.js"></script>*@
+
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
 
@@ -85,27 +90,28 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#LoadLevel1Graph").hide(); 
-        $("#LoadLevel2Graph").hide();       
-        $("#LoadLevel3Graph").hide();       
+        //$("#LoadLevel1Graph").hide(); 
+        //$("#LoadLevel2Graph").hide();       
+        //$("#LoadLevel3Graph").hide();       
 
         $("#btnGo").click(function () {
-            var selectValue = $('#selectValue').val();           
-            if (selectValue == 1) {
-                $("#LoadLevel1Graph").show();
-                $("#LoadLevel3Graph").hide();
-                $("#LoadLevel2Graph").hide();
-            }
-            if (selectValue == 2) {
-                $("#LoadLevel2Graph").show();
-                $("#LoadLevel1Graph").hide();
-                $("#LoadLevel3Graph").hide();
-            }
-            if (selectValue == 3) {
-                $("#LoadLevel3Graph").show();
-                $("#LoadLevel2Graph").hide();
-                $("#LoadLevel1Graph").hide();
-            }
+            var selectValue = $('#selectValue').val();  
+            GetUserReport(0, selectValue);
+            //if (selectValue == 1) {
+            //    $("#LoadLevel1Graph").show();
+            //    $("#LoadLevel3Graph").hide();
+            //    $("#LoadLevel2Graph").hide();
+            //}
+            //if (selectValue == 2) {
+            //    $("#LoadLevel2Graph").show();
+            //    $("#LoadLevel1Graph").hide();
+            //    $("#LoadLevel3Graph").hide();
+            //}
+            //if (selectValue == 3) {
+            //    $("#LoadLevel3Graph").show();
+            //    $("#LoadLevel2Graph").hide();
+            //    $("#LoadLevel1Graph").hide();
+            //}
                 
         });
     });
