@@ -32,6 +32,12 @@ namespace SelfAssessment.Controllers
         {
             return View();
         }
+        public ActionResult LogOut()
+        {
+            Session[Utilities.UserId] = string.Empty;
+            Session[Utilities.Usermail] = string.Empty;
+            return View();
+        }
 
         [HttpPost]
         public ActionResult Login(string email, string password)

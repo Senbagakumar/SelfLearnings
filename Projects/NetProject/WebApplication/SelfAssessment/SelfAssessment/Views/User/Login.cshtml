@@ -1,5 +1,4 @@
-﻿@*@model SelfAssessment.Models.UILogin*@
-@{
+﻿@{
     ViewBag.Title = "Login";
 }
 
@@ -48,34 +47,3 @@
 </div>
 
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
-
-@*<script type="text/javascript">
-    $(document).ready(function () {
-
-        $('#btnLogin').click(function () {
-
-            var modle = {};
-
-            model = {
-                UserName: $('#email').val(),
-                UserPwd: $('#password').val()
-            };
-          
-            var url = "/User/Login";
-
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify(model),
-                url: url,
-                contentType: "application/json"
-            }).done(function (res) {
-                $('#email').val('');
-                $('#password').val('');              
-            });
-
-        });
-
-    });
-
-</script>*@
-

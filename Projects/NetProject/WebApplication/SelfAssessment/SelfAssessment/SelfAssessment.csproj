@@ -2507,6 +2507,7 @@
     <Content Include="Views\ManageUser\LoadLevel1GraphPartial.cshtml" />
     <Content Include="Views\ManageUser\LoadLevel2GraphPartial.cshtml" />
     <Content Include="Views\ManageUser\LoadLevel3GraphPartial.cshtml" />
+    <Content Include="Views\User\LogOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
