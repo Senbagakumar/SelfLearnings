@@ -60,15 +60,18 @@ namespace SelfAssessment.Business
         private List<QuestionAnswer> PrePopulateAnswers()
         {
             var uInfo = new Repository<Answer>();
-            AllQuestions.ForEach(q=>
+            AllQuestions.ForEach(q =>
             {
-                var isAnswer = uInfo.Filter(a => a.QuestionId == q.Questions.QuestionId &&  a.UserId == UserId).FirstOrDefault();
+                var isAnswer = uInfo.Filter(a => a.QuestionId == q.Questions.QuestionId && a.UserId == UserId).FirstOrDefault();
                 if (isAnswer != null)
                 {
+                    q.AnswerChoices.ForEach(t =>
+                    {
+                        t.IsChecked = false;
+                    });
                     var selectedChoice = q.AnswerChoices.Where(ans => ans.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
                     selectedChoice.IsChecked = true;
                 }
-
             });
             return AllQuestions;
         }

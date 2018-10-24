@@ -73,6 +73,7 @@ namespace SelfAssessment.Business
                     var isAnswer = uInfo.Filter(a => a.QuestionId ==q.Questions.QuestionId  && a.GroupId == v.GroupId && a.UserId == UserId).FirstOrDefault();
                     if (isAnswer != null)
                     {
+                        q.AnswerChoices.ForEach(s => { s.IsChecked = false; });
                         var selectedChoice = q.AnswerChoices.Where(ans => ans.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
                         selectedChoice.IsChecked = true;
                     }
@@ -99,7 +100,7 @@ namespace SelfAssessment.Business
             allGroupQuiz.ForEach(v =>
             {
                 v.listOfQuestions.ForEach(s =>
-                {
+                {                   
                     if (s.AnswerChoices.Any(t => t.IsChecked))
                         answeredCount++;
                 });

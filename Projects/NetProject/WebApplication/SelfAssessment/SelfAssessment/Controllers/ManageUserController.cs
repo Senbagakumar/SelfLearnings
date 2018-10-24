@@ -72,7 +72,7 @@ namespace SelfAssessment.Controllers
                 var assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId);
                 ViewBag.WelComeMessage = assessment.WelcomeMessage;
                 ViewBag.Description = assessment.Description;
-
+                ViewBag.Url = assessment.AssessmentFormat == "2" ? "/manageuser/QuizGroup" : assessment.AssessmentFormat == "1" ? "/manageuser/QuizOne" : "/manageuser/QuizGroup";
                 if (assessment.Id != 0)
                 {
                     //Completion Level details
@@ -175,30 +175,20 @@ namespace SelfAssessment.Controllers
         {
             bool isAction = false;
             var quiz = new QuestionQuiz();
-            //foreach (string user in questionCode.Keys)
-            //{
             isAction = questionCode.hdnaction.Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
-            //if (questionCode.hdnaction == "hdnaction")
-            //    {
-            //        isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
-            //        continue;
-            //    }
 
-                string[] values = questionCode.QInfo.Split('~');
-                quiz.GroupId = Convert.ToInt16(values[0]);
-                quiz.QuestionId = Convert.ToInt16(values[1]);
-                quiz.UserOptionId = Convert.ToInt16(values[2]);
-                quiz.UIQId = Convert.ToInt16(values[3]);
-            //}
+            string[] values = questionCode.QInfo.Split('~');
+            quiz.GroupId = Convert.ToInt16(values[0]);
+            quiz.QuestionId = Convert.ToInt16(values[1]);
+            quiz.UserOptionId = Convert.ToInt16(values[2]);
+            quiz.UIQId = Convert.ToInt16(values[3]);
 
             this.quizManager = new QuizManager(this.UserId);
 
             int qId = 0;
-            if (!isAction)
-            {
-                this.quizManager.SaveAnswer(quiz);
-                qId = quiz.UIQId;
-            }
+
+            this.quizManager.SaveAnswer(quiz);
+            qId = quiz.UIQId;            
 
             if (!isAction)
                 qId = qId + 1;
@@ -221,12 +211,14 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult ShowResults(int score)
         {
+            CompleteAssignment();
             ViewBag.Score = score;
             return View();
         }
 
         public ActionResult ShowGroupResults(int score)
         {
+            CompleteAssignment();
             ViewBag.Score = score;
             return View();
         }
@@ -263,11 +255,9 @@ namespace SelfAssessment.Controllers
             this.groupQuizManager = new GroupQuizManager(this.UserId);
 
             int groupId = 0;
-            if (!isAction)
-            {
-                this.groupQuizManager.SaveAnswer(groupQuiz);
-                groupId = groupQuiz.First().UIGroupId;
-            }
+
+            this.groupQuizManager.SaveAnswer(groupQuiz);
+            groupId = groupQuiz.First().UIGroupId;            
 
             if (!isAction)
                 groupId = groupId + 1;
@@ -289,6 +279,16 @@ namespace SelfAssessment.Controllers
             return RedirectToAction("ShowGroupResults", new { score=this.groupQuizManager.CalculateScore()});
         }
 
+        private void CompleteAssignment()
+        {
+            using (var repo = new Repository<Organization>())
+            {
+                var org = repo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+                org.CurrentAssignmentStatus = Utilities.AssessmentCompletedStatus;
+                repo.Update(org);
+                repo.SaveChanges();
+            }
+        }
         private GroupQuiz GetGroupQuiz()
         {
             this.groupQuizManager = new GroupQuizManager(this.UserId);

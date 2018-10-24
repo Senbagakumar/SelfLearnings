@@ -1,386 +1,391 @@
 ﻿@model IEnumerable<SelfAssessment.Models.DBModel.Assessment>
 @{
-    ViewBag.Title = "Index";
+	ViewBag.Title = "Index";
 }
-
-<h2>ManageAssessment</h2>
 
 
 <div class="content mt-3">
-    <div class="col-md-12" id="divAssessmentAddEditForm" style="display:none;">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title">ASSESSMENT</strong>
-                <button type="button" class="close text-danger" id="frmAddEditClose"><span aria-hidden="true">×</span></button>
-            </div>
-            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
-                <div class="modal-body">
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">Assessment Name</label>
-                            <input type="hidden" id="txt-id-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AName-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">Description</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="txt-ADes-input" name="text-input" placeholder="Text" class="form-control">
-                            @*<textarea name="textarea-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control"></textarea>*@
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">Welcome Message</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AWMsg-input" name="text-input" placeholder="Text" class="form-control">
-                            @*<textarea id="txt-AWMsg-input" rows="3" name="textarea-input" placeholder="Content..." class="form-control"></textarea>*@
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">End Message</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AEMsg-input" name="text-input" placeholder="Text" class="form-control">
-                            @*<textarea name="textarea-input" id="txt-AEMsg-input" rows="3" placeholder="Content..." class="form-control"></textarea>*@
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">Admin Email</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AEmail-input" name="text-input" placeholder="Text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Assessment Format</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <select name="select" id="st-AFormat" class="form-control">
-                                <option value="0">Select Format</option>
-                                <option value="1">Question By Question</option>
-                                <option value="2">Group By Group</option>
-                                <option value="3">All in one</option>
-                            </select>
-                        </div>
-                    </div>
+	<div class="col-md-12" id="divAssessmentAddEditForm" style="display:none;">
+		<div class="card">
+			<div class="card-header">
+				<strong class="card-title">ASSESSMENT</strong>
+				<button type="button" class="close text-danger" id="frmAddEditClose"><span aria-hidden="true">×</span></button>
+			</div>
+			<form action="/ManageAssessment/SaveAssessment" method="post" enctype="multipart/form-data" class="form-horizontal">
+				<div class="modal-body">
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="text-input" class=" form-control-label">Assessment Name</label>
+							<input type="hidden" id="txt-id-input" name="text-id-input" placeholder="Text" class="form-control">
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="txt-AName-input" name="text-AName-input" placeholder="Text" class="form-control">
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="textarea-input" class=" form-control-label">Description</label>
+						</div>
+						<div class="col-12 col-md-9">
+							@*<input type="text" id="txt-ADes-input" name="text-input" placeholder="Text" class="form-control">*@
+							<textarea name="txt-ADes-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control"></textarea>
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="textarea-input" class=" form-control-label">Welcome Message</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="txt-AWMsg-input" name="txt-AWMsg-input" placeholder="Text" class="form-control">
+							@*<textarea id="txt-AWMsg-input" rows="3" name="textarea-input" placeholder="Content..." class="form-control"></textarea>*@
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="textarea-input" class=" form-control-label">End Message</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="txt-AEMsg-input" name="txt-AEMsg-input" placeholder="Text" class="form-control">
+							@*<textarea name="textarea-input" id="txt-AEMsg-input" rows="3" placeholder="Content..." class="form-control"></textarea>*@
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="text-input" class=" form-control-label">Admin Email</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<input type="text" id="txt-AEmail-input" name="txt-AEmail-input" placeholder="Text" class="form-control">
+						</div>
+					</div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="select" class=" form-control-label">Assessment Format</label>
+						</div>
+						<div class="col-12 col-md-9">
+							<select name="st-AFormat" id="st-AFormat" class="form-control">
+								<option value="0">Select Format</option>
+								<option value="1">Question By Question</option>
+								<option value="2">Group By Group</option>
+								<option value="3">All in one</option>
+							</select>
+						</div>
+					</div>
 
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Start & End Date</label>
-                        </div>
-                        <div class="col-5 col-md-3">
-                            <input type="text" id="txt-AStart-Date" class="form-control">
-                        </div>
-                        <div class="col-5 col-md-3">
-                            <input type="text" id="txt-AEnd-date" class="form-control">
-                        </div>
-                    </div>
+					@*<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="select" class="form-control-label">Start & End Date</label>
+						</div>
+						<div class="col-5 col-md-3">
+							<input type="text" name="txt-AStart-Date" id="txt-AStart-Date" class="form-control">
+						</div>
+						<div class="col-5 col-md-3">
+							<input type="text" name="txt-AEnd-date" id="txt-AEnd-date" class="form-control">
+						</div>
+					</div>*@
 
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Sector</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
-                        </div>
-                    </div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="select" class=" form-control-label">Sector</label>
+						</div>
+						<div class="col-12 col-md-9">
+							@Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control;", })
+						</div>
+					</div>
 
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Sub Sector</label>
-                        </div>
-                        <div class="col-12 col-md-9">
-                            @Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
-                        </div>
-                    </div>
-
-
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="selectLg" class=" form-control-label"></label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Show Welcome Screen</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-SWScreen" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Show [>>Next] Button</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-SNButton" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Show Question Index</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-SQIndex" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="selectLg" class=" form-control-label"></label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Show Progress Bar</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-SPbar" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Participants May Print Answer</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-PMPAnswer" type="checkbox" class="switch-input">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Public Statistics</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-Pstat" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col col-md-3">
-                            <label for="selectLg" class=" form-control-label"></label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">List Assessment Publically</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-LAPub" type="checkbox" class="switch-input">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-3 col-md-3">
-                            <label class="help-block form-text">Allow Public Registration</label>
-                            <label class="switch switch-text switch-success">
-                                <input id="chk-APReg" type="checkbox" class="switch-input" checked="checked">
-                                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                    </div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="select" class=" form-control-label">Sub Sector</label>
+						</div>
+						<div class="col-12 col-md-9">
+							@Html.DropDownList("SubSector", (IEnumerable<SelectListItem>)ViewBag.SubSectorList, new { @class = "form-control" })
+						</div>
+					</div>
 
 
-                    <div class="modal-footer">
-                        <button id="btnSaveAssessment" type="button" class="btn btn-primary">Save</button>
-                        <button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+					<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="selectLg" class=" form-control-label"></label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Show Welcome Screen</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-SWScreen" name="chk-SWScreen" type="checkbox" class="switch-input" checked="checked">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Show Progress Bar</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-SPbar" name="chk-SPbar" type="checkbox" class="switch-input" checked="checked">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+						@*<div class="col-3 col-md-3">
+			                <label class="help-block form-text">Show [>>Next] Button</label>
+			                <label class="switch switch-text switch-success">
+				                <input id="chk-SNButton" name="chk-SNButton" type="checkbox" class="switch-input" checked="checked">
+				                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+			                </label>
+		                </div>*@
+						@*<div class="col-3 col-md-3">
+			                <label class="help-block form-text">Show Question Index</label>
+			                <label class="switch switch-text switch-success">
+				                <input id="chk-SQIndex" name="chk-SQIndex" type="checkbox" class="switch-input" checked="checked">
+				                <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+			                </label>
+		                </div>*@
+					</div>
+					@*<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="selectLg" class=" form-control-label"></label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Show Progress Bar</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-SPbar" name="chk-SPbar" type="checkbox" class="switch-input" checked="checked">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Participants May Print Answer</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-PMPAnswer" name="chk-PMPAnswer" type="checkbox" class="switch-input">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Public Statistics</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-Pstat" name="chk-Pstat" type="checkbox" class="switch-input" checked="checked">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+					</div>*@
+					@*<div class="row form-group">
+						<div class="col col-md-3">
+							<label for="selectLg" class=" form-control-label"></label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">List Assessment Publically</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-LAPub" name="chk-LAPub" type="checkbox" class="switch-input">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+						<div class="col-3 col-md-3">
+							<label class="help-block form-text">Allow Public Registration</label>
+							<label class="switch switch-text switch-success">
+								<input id="chk-APReg" name="chk-APReg" type="checkbox" class="switch-input" checked="checked">
+								<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+							</label>
+						</div>
+					</div>*@
 
-    </div>
+
+					<div class="modal-footer">
+						<button id="btnSaveAssessment" type="submit" class="btn btn-primary">Save</button>
+						<button type="button" class="btn btn-secondary" id="btnCancel">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
 
 
-    <div class="col-md-12" id="divAssessmentViewForm" style="display:none;">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title">ASSESSMENT</strong>
-                <button type="button" class="close text-danger" id="frmViewClose"><span aria-hidden="true">×</span></button>
-            </div>
-            <div class="modal-body">
+	<div class="col-md-12" id="divAssessmentViewForm" style="display:none;">
+		<div class="card">
+			<div class="card-header">
+				<strong class="card-title">ASSESSMENT</strong>
+				<button type="button" class="close text-danger" id="frmViewClose"><span aria-hidden="true">×</span></button>
+			</div>
+			<div class="modal-body">
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="text-input" class=" form-control-label">Assessment Name</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-AName-input">
-                        : Display Assessment Name
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="textarea-input" class=" form-control-label">Description</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-ADes-input">
-                        : Display Assessment Description
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="textarea-input" class=" form-control-label">Welcome Message</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-AWMsg-input">
-                        : Display Welcome Message
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="textarea-input" class=" form-control-label">End Message</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-AEMsg-input">
-                        : Display End Message
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="text-input" class=" form-control-label">Admin Email</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-AEmail-input">
-                        : Display Admin Email
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="select" class=" form-control-label">Assessment Format</label>
-                    </div>
-                    <div class="col-12 col-md-9" id="lbl-st-AFormat">
-                        : Display Assessment Format
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="text-input" class=" form-control-label">Assessment Name</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-AName-input">
+						: Display Assessment Name
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="textarea-input" class=" form-control-label">Description</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-ADes-input">
+						: Display Assessment Description
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="textarea-input" class=" form-control-label">Welcome Message</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-AWMsg-input">
+						: Display Welcome Message
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="textarea-input" class=" form-control-label">End Message</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-AEMsg-input">
+						: Display End Message
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="text-input" class=" form-control-label">Admin Email</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-AEmail-input">
+						: Display Admin Email
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="select" class=" form-control-label">Assessment Format</label>
+					</div>
+					<div class="col-12 col-md-9" id="lbl-st-AFormat">
+						: Display Assessment Format
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="select" class=" form-control-label">Start & End Date</label>
-                    </div>
-                    <div class="col-5 col-md-3" id="lbl-AStart-Date">
-                        : 2018-05-25 &
-                    </div>
-                    <div class="col-5 col-md-3" id="lbl-AEnd-date">
-                        2018-07-30
-                    </div>
-                </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="select" class=" form-control-label">Start & End Date</label>
+					</div>
+					<div class="col-5 col-md-3" id="lbl-AStart-Date">
+						: 2018-05-25 &
+					</div>
+					<div class="col-5 col-md-3" id="lbl-AEnd-date">
+						2018-07-30
+					</div>
+				</div>
 
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="selectLg" class=" form-control-label"></label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Show Welcome Screen</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SWScreen">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Show [>>Next] Button</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SNButton">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Show Question Index</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SQIndex">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="selectLg" class=" form-control-label"></label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Show Progress Bar</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SPbar">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Participants May Print Answer</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-PMPAnswer">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Public Statistics</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-Pstat">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col col-md-3">
-                        <label for="selectLg" class=" form-control-label"></label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">List Assessment Publically</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-LAPub">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                    <div class="col-3 col-md-3">
-                        <label class="help-block form-text">Allow Public Registration</label>
-                        <label class="switch switch-text switch-success">
-                            <input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-APReg">
-                            <span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="btnViewClose">Close</button>
-                </div>
-            </div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="selectLg" class=" form-control-label"></label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Show Welcome Screen</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SWScreen">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Show [>>Next] Button</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SNButton">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Show Question Index</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SQIndex">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="selectLg" class=" form-control-label"></label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Show Progress Bar</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-SPbar">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Participants May Print Answer</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-PMPAnswer">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Public Statistics</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-Pstat">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col col-md-3">
+						<label for="selectLg" class=" form-control-label"></label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">List Assessment Publically</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-LAPub">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+					<div class="col-3 col-md-3">
+						<label class="help-block form-text">Allow Public Registration</label>
+						<label class="switch switch-text switch-success">
+							<input type="checkbox" class="switch-input" checked="checked" id="lbl-chk-APReg">
+							<span data-on="On" data-off="Off" class="switch-label"></span> <span class="switch-handle"></span>
+						</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" id="btnViewClose">Close</button>
+				</div>
+			</div>
 
-        </div>
-    </div>
+		</div>
+	</div>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title">Assessment</strong>
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<strong class="card-title">Assessment</strong>
 
-                <button type="button" class="btn btn-success btn-sm " id="btnAddAssessment" data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
-                &nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
-            </div>
-            <div class="card-body">
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><input type="checkbox" name="chk1"></th>
-                            <th>Assessment Name</th>
-                            <th>Description</th>
-                            <th>Admin Email</th>
-                            <th>Assessment Format</th>
-                            <th>Options</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>@item.Id</td>
-                                <td><input type="checkbox" name="chk1"></td>
-                                <td>@item.Name</td>
-                                <td>@item.Description</td>
-                                <td>@item.AdminEmail</td>
-                                <td>@item.AssessmentFormat</td>
-                                <td>
-                                    <a href="#" class="btn btn-warning btn-sm" onclick="GetAssessment(@item.Id, 'Edit');"> <i class="fa fa-pencil"></i></a>
-                                    &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetAssessment(@item.Id, 'View');"><i class="fa fa-eye"></i></a>
-                                    &nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm" onclick="DeleteAssessment(@item.Id);"> <i class="fa fa-trash-o"></i></a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+				<button type="button" class="btn btn-success btn-sm " id="btnAddAssessment" data-toggle="modal" data-target="#mediumModal" style="float:right; margin-right:15px"> <i class="fa fa-plus-square-o"></i></button>
+				&nbsp;&nbsp;<button type="button" class="btn btn-danger btn-sm" style="float:right;margin-right:3px"> <i class="fa fa-trash-o"></i></button>
+			</div>
+			<div class="card-body">
+				<table id="bootstrap-data-table" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th><input type="checkbox" name="chk1"></th>
+							<th>Assessment Name</th>
+							<th>Description</th>
+							<th>Admin Email</th>
+							<th>Assessment Format</th>
+							<th>Options</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach (var item in Model)
+						{
+							<tr>
+								<td>@item.Id</td>
+								<td><input type="checkbox" name="chk1"></td>
+								<td>@item.Name</td>
+								<td>@item.Description</td>
+								<td>@item.AdminEmail</td>
+								<td>@item.AssessmentFormat</td>
+								<td>
+									<a href="#" class="btn btn-warning btn-sm" onclick="GetAssessment(@item.Id, 'Edit');"> <i class="fa fa-pencil"></i></a>
+									&nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" onclick="GetAssessment(@item.Id, 'View');"><i class="fa fa-eye"></i></a>
+									&nbsp;&nbsp;<a href="#" class="btn btn-danger btn-sm" onclick="DeleteAssessment(@item.Id);"> <i class="fa fa-trash-o"></i></a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 
-    <!-- .animated -->
+	<!-- .animated -->
 </div><!-- .content -->
 
 
@@ -411,210 +416,210 @@
 @*<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>*@
 
 <script type="text/javascript">
-    function clear() {
-        $("#txt-AName-input").val('');
-        $("#txt-ADes-input").val('');
-        $("#txt-AWMsg-input").val('');
-        $("#txt-AEMsg-input").val('');
-        $("#txt-AEmail-input").val('');
-        $("#st-AFormat").val('');
-        $("#txt-AStart-Date").val('');
-        $("#txt-AEnd-date").val('');
-        $("#chk-SWScreen").val('');
-        $("#chk-SNButton").val('');
-        $("#chk-SQIndex").val('');
-        $('#chk-SPbar').val('');
-        $('#chk-PMPAnswer').val('');
-        $('#chk-Pstat').val('');
-        $('#chk-LAPub').val('');
-        $('#chk-APReg').val('');
-    }
+	function clear() {
+		$("#txt-AName-input").val('');
+		$("#txt-ADes-input").val('');
+		$("#txt-AWMsg-input").val('');
+		$("#txt-AEMsg-input").val('');
+		$("#txt-AEmail-input").val('');
+		$("#st-AFormat").val('');
+		//$("#txt-AStart-Date").val('');
+		//$("#txt-AEnd-date").val('');
+		$("#chk-SWScreen").val('');
+		//$("#chk-SNButton").val('');
+		//$("#chk-SQIndex").val('');
+		$('#chk-SPbar').val('');
+		//$('#chk-PMPAnswer').val('');
+		//$('#chk-Pstat').val('');
+		//$('#chk-LAPub').val('');
+		//$('#chk-APReg').val('');
+	}
 
-    function GetAssessment(id, type) {
-        $.ajax({
-            type: "GET",
-            url: API.GetAssessmentDetails() + id,
-            contentType: "application/json"
-        }).done(function (result) {
-            if (type == "Edit") {
-                $("#txt-id-input").text(id);
-                $("#txt-AName-input").val(result.Name);
-                $("#txt-ADes-input").val(result.Description);
-                $("#txt-AWMsg-input").val(result.WelcomeMessage);
-                $("#txt-AEMsg-input").val(result.EndMessage);
-                $("#txt-AEmail-input").val(result.AdminEmail);
-                $("#st-AFormat").val(result.AssessmentFormat);
-                $("#txt-AStart-Date").val(result.StartDate);
-                $("#txt-AEnd-date").val(result.EndDate);
-                $("#chk-SWScreen").prop('checked', result.ShowWelcomeScreen);
-                $("#chk-SNButton").prop('checked', result.ShowNextButton);
-                $("#chk-SQIndex").prop('checked', result.ShowQuestionIndex);
-                $('#chk-SPbar').prop('checked', result.ShowProgressBar);
-                $('#chk-PMPAnswer').prop('checked', result.ParticipantsMayPrintAnswer);
-                $('#chk-Pstat').prop('checked', result.PublicStatistics);
-                $('#chk-LAPub').prop('checked', result.LineAssessmentPublically);
-                $('#chk-APReg').prop('checked', result.AllowPublicRegistration);
-                $('#Sector').val(result.Sector);
-                $('#SubSector').val(result.SubSector);
+	function GetAssessment(id, type) {
+		$.ajax({
+			type: "GET",
+			url: API.GetAssessmentDetails() + id,
+			contentType: "application/json"
+		}).done(function (result) {
+			if (type == "Edit") {
+				$("#txt-id-input").text(id);
+				$("#txt-AName-input").val(result.Name);
+				$("#txt-ADes-input").val(result.Description);
+				$("#txt-AWMsg-input").val(result.WelcomeMessage);
+				$("#txt-AEMsg-input").val(result.EndMessage);
+				$("#txt-AEmail-input").val(result.AdminEmail);
+				$("#st-AFormat").val(result.AssessmentFormat);
+				//$("#txt-AStart-Date").val(result.StartDate);
+				//$("#txt-AEnd-date").val(result.EndDate);
+				$("#chk-SWScreen").prop('checked', result.ShowWelcomeScreen);
+				//$("#chk-SNButton").prop('checked', result.ShowNextButton);
+				//$("#chk-SQIndex").prop('checked', result.ShowQuestionIndex);
+				$('#chk-SPbar').prop('checked', result.ShowProgressBar);
+				//$('#chk-PMPAnswer').prop('checked', result.ParticipantsMayPrintAnswer);
+				//$('#chk-Pstat').prop('checked', result.PublicStatistics);
+				//$('#chk-LAPub').prop('checked', result.LineAssessmentPublically);
+				//$('#chk-APReg').prop('checked', result.AllowPublicRegistration);
+				$('#Sector').val(result.Sector);
+				$('#SubSector').val(result.SubSector);
 
-              //  $('#Sector').on('change', function () {
-                var url = API.GetSubSectorForAssessment() + result.Sector;
-                    $.ajax({
-                        type: "GET",
-                        url: url,
-                        contentType: "application/json"
-                    }).done(function (res) {    
-                        if (res.length > 0) {
-                            $.each(res, function (key, value) {
-                                $('#SubSector')
-                                    .append($("<option></option>")
-                                        .attr("value", value.Value)
-                                        .text(value.Text));
-                            });
-                        }
-                        else {
-                            $('#SubSector').empty();        
-                        }
-                    });
-               // });
+			  //  $('#Sector').on('change', function () {
+				var url = API.GetSubSectorForAssessment() + result.Sector;
+					$.ajax({
+						type: "GET",
+						url: url,
+						contentType: "application/json"
+					}).done(function (res) {    
+						if (res.length > 0) {
+							$.each(res, function (key, value) {
+								$('#SubSector')
+									.append($("<option></option>")
+										.attr("value", value.Value)
+										.text(value.Text));
+							});
+						}
+						else {
+							$('#SubSector').empty();        
+						}
+					});
+			   // });
 
-            }
-            else {
-                $("#lbl-AName-input").text(result.Name);
-                $("#lbl-ADes-input").text(result.Description);
-                $("#lbl-AWMsg-input").text(result.WelcomeMessage);
-                $("#lbl-AEMsg-input").text(result.EndMessage);
-                $("#lbl-AEmail-input").val(result.AdminEmail);
-                $("#lbl-st-AFormat").text(result.AssessmentFormat);
-                $("#lbl-AStart-Date").text(result.StartDate);
-                $("#lbl-AEnd-date").text(result.EndDate);
-                $("#lbl-chk-SWScreen").prop('checked', result.ShowWelcomeScreen);
-                $("#lbl-chk-SNButton").prop('checked', result.ShowNextButton);
-                $("#lbl-chk-SQIndex").prop('checked', result.ShowQuestionIndex);
-                $('#lbl-chk-SPbar').prop('checked', result.ShowProgressBar);
-                $('#lbl-chk-PMPAnswer').prop('checked', result.ParticipantsMayPrintAnswer);
-                $('#lbl-chk-Pstat').prop('checked', result.PublicStatistics);
-                $('#lbl-chk-LAPub').prop('checked', result.LineAssessmentPublically);
-                $('#lbl-chk-APReg').prop('checked', result.AllowPublicRegistration);
-            }
-        });
-    }
+			}
+			else {
+				$("#lbl-AName-input").text(result.Name);
+				$("#lbl-ADes-input").text(result.Description);
+				$("#lbl-AWMsg-input").text(result.WelcomeMessage);
+				$("#lbl-AEMsg-input").text(result.EndMessage);
+				$("#lbl-AEmail-input").val(result.AdminEmail);
+				$("#lbl-st-AFormat").text(result.AssessmentFormat);
+				//$("#lbl-AStart-Date").text(result.StartDate);
+				//$("#lbl-AEnd-date").text(result.EndDate);
+				$("#lbl-chk-SWScreen").prop('checked', result.ShowWelcomeScreen);
+				//$("#lbl-chk-SNButton").prop('checked', result.ShowNextButton);
+				//$("#lbl-chk-SQIndex").prop('checked', result.ShowQuestionIndex);
+				$('#lbl-chk-SPbar').prop('checked', result.ShowProgressBar);
+				//$('#lbl-chk-PMPAnswer').prop('checked', result.ParticipantsMayPrintAnswer);
+				//$('#lbl-chk-Pstat').prop('checked', result.PublicStatistics);
+				//$('#lbl-chk-LAPub').prop('checked', result.LineAssessmentPublically);
+				//$('#lbl-chk-APReg').prop('checked', result.AllowPublicRegistration);
+			}
+		});
+	}
 
-    $(document).ready(function () {
-        $('#bootstrap-data-table-export').DataTable();
+	$(document).ready(function () {
+		$('#bootstrap-data-table-export').DataTable();
 
-        $('#Sector').on('change', function () {
-            $.ajax({
-                type: "GET",
-                url: API.GetSubSectorForAssessment() + $(this).val(),
-                contentType: "application/json"
-            }).done(function (res) {
-                if (res.length > 0) {
-                    $.each(res, function (key, value) {
-                        $('#SubSector')
-                            .append($("<option></option>")
-                                .attr("value", value.Value)
-                                .text(value.Text));
-                    });
-                }
-                else {
-                    $('#SubSector').empty();                        
-                }
-            });
-        });
-
-
-        $("#btnAddAssessment").click(function () {
-            $("#divAssessmentViewForm").hide();
-            $("#divAssessmentAddEditForm").show();
-        });
-
-        $("#btnSaveAssessment").click(function () {
-            //alert($("#txt-ADes-input").value);
-            var model = {
-                Id: $("#txt-id-input").text(),
-                Name: $("#txt-AName-input").val(),
-                Description: $("#txt-ADes-input").val(),
-                WelcomeMessage: $("#txt-AWMsg-input").val(),
-                EndMessage: $("#txt-AEMsg-input").val(),
-                AdminEmail: $("#txt-AEmail-input").val(),
-                AssessmentFormat: $("#st-AFormat").val(),
-                StartDate: $("#txt-AStart-Date").val(),
-                EndDate: $("#txt-AEnd-date").val(),
-                ShowWelcomeScreen: $("#chk-SWScreen").prop('checked'),
-                ShowNextButton: $("#chk-SNButton").prop('checked'),
-                ShowQuestionIndex: $("#chk-SQIndex").prop('checked'),
-                ShowProgressBar: $('#chk-SPbar').prop('checked'),
-                ParticipantsMayPrintAnswer: $('#chk-PMPAnswer').prop('checked'),
-                PublicStatistics: $('#chk-Pstat').prop('checked'),
-                LineAssessmentPublically: $('#chk-LAPub').prop('checked'),
-                AllowPublicRegistration: $('#chk-APReg').prop('checked'),
-                Sector: $('#Sector').val(),
-                SubSector: $('#SubSector').val()
-            };
-
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify(model),
-                url: API.AssessmentSave(),
-                contentType: "application/json"
-            }).done(function (res) {
-                $('#btnCancel').click();
-                $('#btnCancel').click();
-                clear();
-                location.href = API.AssessmentHome();
-            });
-
-        });
-
-        $(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
-            if (this.className == "btn btn-warning btn-sm") {
-                $("#divAssessmentViewForm").hide();
-                $("#divAssessmentAddEditForm").show();
-            }
-            if (this.className == "btn btn-info btn-sm") {
-                $("#divAssessmentViewForm").show();
-                $("#divAssessmentAddEditForm").hide();
-            }
-        });
+		$('#Sector').on('change', function () {
+			$.ajax({
+				type: "GET",
+				url: API.GetSubSectorForAssessment() + $(this).val(),
+				contentType: "application/json"
+			}).done(function (res) {
+				if (res.length > 0) {
+					$.each(res, function (key, value) {
+						$('#SubSector')
+							.append($("<option></option>")
+								.attr("value", value.Value)
+								.text(value.Text));
+					});
+				}
+				else {
+					$('#SubSector').empty();                        
+				}
+			});
+		});
 
 
+		$("#btnAddAssessment").click(function () {
+			$("#divAssessmentViewForm").hide();
+			$("#divAssessmentAddEditForm").show();
+		});
+
+		//$("#btnSaveAssessment").click(function () {
+		//    //alert($("#txt-ADes-input").value);
+		//    var model = {
+		//        Id: $("#txt-id-input").text(),
+		//        Name: $("#txt-AName-input").val(),
+		//        Description: $("#txt-ADes-input").val(),
+		//        WelcomeMessage: $("#txt-AWMsg-input").val(),
+		//        EndMessage: $("#txt-AEMsg-input").val(),
+		//        AdminEmail: $("#txt-AEmail-input").val(),
+		//        AssessmentFormat: $("#st-AFormat").val(),
+		//        StartDate: $("#txt-AStart-Date").val(),
+		//        EndDate: $("#txt-AEnd-date").val(),
+		//        ShowWelcomeScreen: $("#chk-SWScreen").prop('checked'),
+		//        ShowNextButton: $("#chk-SNButton").prop('checked'),
+		//        ShowQuestionIndex: $("#chk-SQIndex").prop('checked'),
+		//        ShowProgressBar: $('#chk-SPbar').prop('checked'),
+		//        ParticipantsMayPrintAnswer: $('#chk-PMPAnswer').prop('checked'),
+		//        PublicStatistics: $('#chk-Pstat').prop('checked'),
+		//        LineAssessmentPublically: $('#chk-LAPub').prop('checked'),
+		//        AllowPublicRegistration: $('#chk-APReg').prop('checked'),
+		//        Sector: $('#Sector').val(),
+		//        SubSector: $('#SubSector').val()
+		//    };
+
+		//    $.ajax({
+		//        type: "POST",
+		//        data: JSON.stringify(model),
+		//        url: API.AssessmentSave(),
+		//        contentType: "application/json"
+		//    }).done(function (res) {
+		//        $('#btnCancel').click();
+		//        $('#btnCancel').click();
+		//        clear();
+		//        location.href = API.AssessmentHome();
+		//    });
+
+		//});
+
+		$(document).on("click", "#bootstrap-data-table tbody tr td a", function () {
+			if (this.className == "btn btn-warning btn-sm") {
+				$("#divAssessmentViewForm").hide();
+				$("#divAssessmentAddEditForm").show();
+			}
+			if (this.className == "btn btn-info btn-sm") {
+				$("#divAssessmentViewForm").show();
+				$("#divAssessmentAddEditForm").hide();
+			}
+		});
 
 
-        //$("#btnAssessmentEditForm").click(function () {
-        //    $("#divAssessmentViewForm").hide();
-        //    $("#divAssessmentAddEditForm").show();
-        //});
 
-        $("#frmAddEditClose").click(function () {
-            $("#divAssessmentAddEditForm").hide();
-        });
-        $("#btnCancel").click(function () {
-            $("#divAssessmentAddEditForm").hide();
-        });
 
-        $("#frmViewClose").click(function () {
-            $("#divAssessmentViewForm").hide();
-        });
+		//$("#btnAssessmentEditForm").click(function () {
+		//    $("#divAssessmentViewForm").hide();
+		//    $("#divAssessmentAddEditForm").show();
+		//});
 
-        $("#btnViewClose").click(function () {
-            $("#divAssessmentViewForm").hide();
-        });
+		$("#frmAddEditClose").click(function () {
+			$("#divAssessmentAddEditForm").hide();
+		});
+		$("#btnCancel").click(function () {
+			$("#divAssessmentAddEditForm").hide();
+		});
 
-        //$("#btnAssessmentViewForm").click(function () {
-        //    $("#divAssessmentViewForm").show();
-        //});
-    });
+		$("#frmViewClose").click(function () {
+			$("#divAssessmentViewForm").hide();
+		});
 
-    function DeleteAssessment(id) {
-        var url = API.AssessmentDelete() + id;
-        $.ajax({
-            type: "GET",
-            url: url,
-            contentType: "application/json"
-        }).done(function (result) {
-            location.href = API.AssessmentHome();
-        });
-    }
+		$("#btnViewClose").click(function () {
+			$("#divAssessmentViewForm").hide();
+		});
+
+		//$("#btnAssessmentViewForm").click(function () {
+		//    $("#divAssessmentViewForm").show();
+		//});
+	});
+
+	function DeleteAssessment(id) {
+		var url = API.AssessmentDelete() + id;
+		$.ajax({
+			type: "GET",
+			url: url,
+			contentType: "application/json"
+		}).done(function (result) {
+			location.href = API.AssessmentHome();
+		});
+	}
 
 </script>

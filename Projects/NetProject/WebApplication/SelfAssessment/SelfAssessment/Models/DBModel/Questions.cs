@@ -22,7 +22,7 @@ namespace SelfAssessment.Models.DBModel
         public string Option4 { get; set; }
         public string Option5 { get; set; }
         public string Answer { get; set; }
-        public string TimerValue { get; set; }
+        //public string TimerValue { get; set; }
         public bool Mandatory { get; set; }
         [ForeignKey("GroupId")]
         public Group Groups { get; set; }

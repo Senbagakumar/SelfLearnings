@@ -3,8 +3,6 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <div class="content mt-3">
     <div class="col-md-12" id="divGroupAddEditForm" style="display:none">
         <div class="card">
@@ -117,13 +115,13 @@
                                     </div>
 
                                     <div class="row form-group">
-                                        <div class="col col-md-2">
+                                        @*<div class="col col-md-2">
                                             <label for="text-input" class=" form-control-label">Timer Limit</label>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <input type="text" name="text-input" id="txt-TL-text-input" placeholder="Text" class="form-control">
                                         </div>
-                                        <div class="col col-md-1">&nbsp;</div>
+                                        <div class="col col-md-1">&nbsp;</div>*@
                                         <div class="col col-md-2">
                                             <label for="selectLg" class=" form-control-label">Mandatory</label>
                                         </div>
@@ -175,7 +173,7 @@
                                 <th>Question Code</th>
                                 <th>Question</th>
                                 <th>User Hint</th>
-                                <th>Timer Limit</th>
+                                @*<th>Timer Limit</th>*@
                                 <th>Options</th>
                             </tr>
                         </thead>
@@ -300,13 +298,13 @@
                         </div>
 
                         <div class="row form-group">
-                            <div class="col col-md-2">
+                            @*<div class="col col-md-2">
                                 <label for="text-input" class=" form-control-label">Timer Limit</label>
                             </div>
                             <div class="col-12 col-md-3" id="lbl-TL-text-input">
                                 : 01.00 Hrs
                             </div>
-                            <div class="col col-md-1">&nbsp;</div>
+                            <div class="col col-md-1">&nbsp;</div>*@
                             <div class="col col-md-2">
                                 <label for="selectLg" class=" form-control-label">Mandatory</label>
                             </div>
@@ -357,7 +355,7 @@
                             <th>Question Code</th>
                             <th>Question</th>
                             <th>User Hint</th>
-                            <th>Timer Limit</th>
+                            @*<th>Timer Limit</th>*@
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -498,7 +496,7 @@
                     Option4: $("#txt-Opt4-text-input").val(),
                     Option5: $("#txt-Opt5-text-input").val(),
                     Answer: $("#txt-QA-text-input").val(),
-                    TimerValue: $("#txt-TL-text-input").val(),
+                    //TimerValue: $("#txt-TL-text-input").val(),
                     Mandatory: $("#chk-Mandatory").prop('checked'),
                     GroupId: $('#txt-GroupId-text-input').val(),
                     QType: $('#select').val()
@@ -521,7 +519,7 @@
                         $('#txt-QC-text-input').val(0);
                     }
                     else {
-                        var markup = "<tr><td>" + res.Id + "</td><td>" + res.QuestionCode + "</td><td>" + res.QuestionText + "</td><td>" + res.QHint + "</td><td>" + res.TimerValue + "</td>";
+                        var markup = "<tr><td>" + res.Id + "</td><td>" + res.QuestionCode + "</td><td>" + res.QuestionText + "</td><td>" + res.QHint + "</td>";//<td>" + res.TimerValue + "</td>";
                         markup += "<td><a href='#' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#questionModal'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a href='#' class='btn btn-danger btn-sm'> <i class='fa fa-trash-o'></i></a></td></tr>";
                         $("#editQuestiontable tbody").append(markup); 
 
@@ -627,7 +625,7 @@
                 $("#txt-Opt4-text-input").val(result.Option4);
                 $("#txt-Opt5-text-input").val(result.Option5);
                 $("#txt-QA-text-input").val(result.Answer);
-                $("#txt-TL-text-input").val(result.TimerValue);                
+                //$("#txt-TL-text-input").val(result.TimerValue);                
                 $("#chk-Mandatory").prop('checked', result.Mandatory);                
             }
             else {
@@ -641,7 +639,7 @@
                 $("#lbl-Opt4-text-input").text(result.Option4);
                 $("#lbl-Opt5-text-input").text(result.Option5);
                 $("#lbl-QA-text-input").text(result.Answer);
-                $("#lbl-TL-text-input").text(result.TimerValue);
+                //$("#lbl-TL-text-input").text(result.TimerValue);
                 $('#lbl-chk-Mandatory').prop('checked', result.Mandatory);
             }
         });
@@ -662,7 +660,7 @@
         $("#txt-Opt4-text-input").val('');
         $("#txt-Opt5-text-input").val('');
         $("#txt-QA-text-input").val('');
-        $("#txt-TL-text-input").val('');
+        //$("#txt-TL-text-input").val('');
         $("#chk-Mandatory").val();      
     }
 
@@ -688,7 +686,7 @@
             }
 
             $.each(result.questions, function (key, value) {               
-                var markup = "<tr><td>" + value.Id + "</td><td>" + value.QuestionCode + "</td><td>" + value.QuestionText + "</td><td>" + value.QHint + "</td><td>" + value.TimerValue + "</td>";
+                var markup = "<tr><td>" + value.Id + "</td><td>" + value.QuestionCode + "</td><td>" + value.QuestionText + "</td><td>" + value.QHint + "</td>";//<td>" + value.TimerValue + "</td>";
 
                 if (type == "Edit") {
                     markup += "<td><a href='#' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#questionModal'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a href='#' class='btn btn-danger btn-sm'> <i class='fa fa-trash-o'></i></a></td></tr>";

@@ -45,28 +45,29 @@ namespace SelfAssessment.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public JsonResult SaveAssessment(Assessment assessment)
-        {          
+        {
             using (var assessmentRepo = new Repository<Assessment>())
             {
-                if(assessment.Id!=0)
+                if (assessment.Id != 0)
                 {
                     var updateAssessment = assessmentRepo.Filter(q => q.Id == assessment.Id).FirstOrDefault();
                     if (updateAssessment != null)
                     {
                         updateAssessment.AdminEmail = assessment.AdminEmail;
-                        updateAssessment.AllowPublicRegistration = assessment.AllowPublicRegistration;
+                        //updateAssessment.AllowPublicRegistration = assessment.AllowPublicRegistration;
                         updateAssessment.AssessmentFormat = assessment.AssessmentFormat;
                         updateAssessment.Description = assessment.Description;
                         //updateAssessment.EndDate = assessment.EndDate;
                         updateAssessment.EndMessage = assessment.EndMessage;
-                        updateAssessment.LineAssessmentPublically = assessment.LineAssessmentPublically;
+                        //updateAssessment.LineAssessmentPublically = assessment.LineAssessmentPublically;
                         updateAssessment.Name = assessment.Name;
-                        updateAssessment.ParticipantsMayPrintAnswer = assessment.ParticipantsMayPrintAnswer;
-                        updateAssessment.PublicStatistics = assessment.PublicStatistics;
-                        updateAssessment.ShowNextButton = assessment.ShowNextButton;
+                        //updateAssessment.ParticipantsMayPrintAnswer = assessment.ParticipantsMayPrintAnswer;
+                        //updateAssessment.PublicStatistics = assessment.PublicStatistics;
+                        //updateAssessment.ShowNextButton = assessment.ShowNextButton;
                         updateAssessment.ShowProgressBar = assessment.ShowProgressBar;
-                        updateAssessment.ShowQuestionIndex = assessment.ShowQuestionIndex;
+                        //updateAssessment.ShowQuestionIndex = assessment.ShowQuestionIndex;
                         updateAssessment.ShowWelcomeScreen = assessment.ShowWelcomeScreen;
                         updateAssessment.WelcomeMessage = assessment.WelcomeMessage;
                         updateAssessment.Sector = assessment.Sector;
@@ -79,7 +80,7 @@ namespace SelfAssessment.Controllers
                 {
                     assessment.CreateDate = DateTime.Now;
                     assessmentRepo.Create(assessment);
-                }                
+                }
                 assessmentRepo.SaveChanges();
             }
             return Json(Utilities.Success, JsonRequestBehavior.AllowGet);

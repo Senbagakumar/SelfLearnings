@@ -125,7 +125,7 @@ namespace SelfAssessment.Controllers
                         first.Groups = repository.AssessmentContext.groups.FirstOrDefault(q => q.Id == first.GroupId);
                         first.QuestionText = question.QuestionText;
                         first.QHint = question.QHint;
-                        first.TimerValue = question.TimerValue;
+                        //first.TimerValue = question.TimerValue;
                         first.Answer = question.Answer;
                         first.Mandatory = question.Mandatory;
                         first.Option1 = question.Option1;
@@ -149,7 +149,7 @@ namespace SelfAssessment.Controllers
                     QuestionCode = qCode,
                     QuestionText = question.QuestionText,
                     QHint = question.QHint,
-                    TimerValue = question.TimerValue,
+                    //TimerValue = question.TimerValue,
                     Answer = question.Answer,
                     Mandatory = question.Mandatory,
                     Option1 = question.Option1,
