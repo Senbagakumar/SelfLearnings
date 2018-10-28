@@ -19,6 +19,7 @@ namespace SelfAssessment.Controllers
         public ActionResult Index()
         {
             var lAssessment = new List<Assessment>();
+            var ulAssessment = new List<UAssessment>();
             var sector = new List<SelectListItem>();
             var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             using (var repository = new Repository<Sector>())
@@ -26,10 +27,18 @@ namespace SelfAssessment.Controllers
                 sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
                 lAssessment = repository.AssessmentContext.assessments.ToList();
             }
+            int i = 1;
+            lAssessment.ForEach(t =>
+            {
+                ulAssessment.Add(new UAssessment() { AdminEmail=t.AdminEmail, AssessmentFormat=t.AssessmentFormat, AssessmentType=t.AssessmentType,CreateDate=t.CreateDate
+                , Description=t.Description, EndMessage=t.EndMessage, Id=t.Id, Name=t.Name,Sector=t.Sector, SubSector=t.SubSector, ShowProgressBar=t.ShowProgressBar,
+                ShowWelcomeScreen=t.ShowWelcomeScreen, WelcomeMessage=t.WelcomeMessage, OrderId=i});
+                i = i + 1;
+            });
             sector.Insert(0, firstItem);
             ViewBag.SectorList = sector;
             ViewBag.SubSectorList = new List<SelectListItem>();
-            return View(lAssessment);
+            return View(ulAssessment);
         }
 
         [HttpGet]
@@ -100,7 +109,7 @@ namespace SelfAssessment.Controllers
                 assessmentRepo.SaveChanges();
             }
             //return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
-            return View();
+            return RedirectToAction("Index");
         }
 
         public JsonResult GetAssessMentDetails(int id)

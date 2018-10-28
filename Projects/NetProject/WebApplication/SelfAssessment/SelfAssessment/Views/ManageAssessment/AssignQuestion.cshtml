@@ -303,6 +303,10 @@
 
         $("#frmAddEditClose").click(function () {
             $("#divAssignQuestionAddEditForm").hide();
+            $("#treeview").hummingbird("uncheckAll");
+            $("#Assessment").val(0);
+            $("#slLevel").val(0);
+
         });
         $("#btnCancel").click(function () {
             $("#divQuestionAddEditForm").hide();

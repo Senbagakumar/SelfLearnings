@@ -149,7 +149,7 @@
                             <label for="text-input" class=" form-control-label">Group Name</label>
                         </div>
                         <div class="col-12 col-md-10">
-                            <input type="text" id="txt-GN-text-input" name="text-input" placeholder="Text" class="form-control">
+                            <input type="text" id="txt-GN-text-input" name="text-input" placeholder="GroupName" class="form-control">
                         </div>
                     </div>
                     <div class="row form-group">
@@ -157,7 +157,15 @@
                             <label for="text-input" class=" form-control-label">Group Description</label>
                         </div>
                         <div class="col-12 col-md-10">
-                            <textarea id="txt-GD-text-input" name="text-input" class="form-control"></textarea>
+                            <textarea id="txt-GD-text-input" name="text-input" class="form-control" placeholder="GroupDescription"></textarea>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col col-md-2">
+                            <label for="text-input" class=" form-control-label">Group Weight</label>
+                        </div>
+                        <div class="col-12 col-md-10">
+                            <input type="text" id="txt-GW-text-input" name="text-input" class="form-control" placeholder="weight">
                         </div>
                     </div>
                     <div class="row">
@@ -177,9 +185,7 @@
                                 <th>Options</th>
                             </tr>
                         </thead>
-                        <tbody>
-                           
-                        </tbody>
+                        <tbody></tbody>
                     </table>
 
                 </form>
@@ -346,6 +352,14 @@
                         :  <label id="lbl-GD-text-input" />
                     </div>
                 </div>
+                <div class="row form-group">
+                    <div class="col col-md-2">
+                        <label for="text-input" class=" form-control-label">Group Weight</label>
+                    </div>
+                    <div class="col-12 col-md-10">
+                        :  <label id="lbl-GW-text-input" />
+                    </div>
+                </div>
                 <div class="row">&nbsp;</div>
 
                 <table id="questiontable" class="table table-striped table-bordered">
@@ -359,9 +373,7 @@
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tbody>
-                       
-                    </tbody>
+                    <tbody></tbody>
                 </table>
 
 
@@ -385,6 +397,7 @@
                             <th><input type="checkbox" name="chk1"></th>
                             <th>Group Name</th>
                             <th>No Of Questions</th>
+                            <th>Weight</th>
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -396,6 +409,7 @@
                                 <td><input type="checkbox" name="chk1" /></td>
                                 <td>@item.GroupName</td>
                                 <td>@item.NoOfQuestions</td>
+                                <td>@item.Weight</td>
                                 <td>
                                     <a href="#" class="btn btn-warning btn-sm" onclick="GetQuestions(@item.Id,'Edit');"> <i class="fa fa-pencil"></i></a>
                                     &nbsp;&nbsp;<a href="#" class="btn btn-info btn-sm" id="btnGroupViewForm" onclick="GetQuestions(@item.Id,'View');"><i class="fa fa-eye"></i></a>
@@ -457,11 +471,13 @@
                 var groupId = $('#txt-GroupId-text-input').val();
                 var groupName = $('#txt-GN-text-input').val();
                 var groupDescription = $('#txt-GD-text-input').val();
+                var weight = $('#txt-GW-text-input').val();
 
                 var model = {
                     Id: groupId,
                     GroupName: groupName,
-                    GroupDescription: groupDescription
+                    GroupDescription: groupDescription,
+                    Weight: weight
                 };
 
                 $.ajax({
@@ -680,6 +696,7 @@
                 $("#editQuestiontable").find("tr:not(:first)").remove();
                 $("#txt-GN-text-input").val(result.GroupName);
                 $("#txt-GD-text-input").val(result.GroupDescription);  
+                $("#txt-GW-text-input").val(result.Weight);  
                 $("#txt-GroupId-text-input").val(id);   
                 $("#btnAddQuestion").show();
             }
@@ -687,10 +704,11 @@
                 $("#questiontable").find("tr:not(:first)").remove();
                 $("#lbl-GN-text-input").text(result.GroupName);
                 $("#lbl-GD-text-input").text(result.GroupDescription);
+                $("#lbl-GW-text-input").text(result.Weight);  
             }
 
             $.each(result.questions, function (key, value) {               
-                var markup = "<tr><td>" + value.Id + "</td><td>" + value.QuestionCode + "</td><td>" + value.QuestionText + "</td><td>" + value.QHint + "</td>";//<td>" + value.TimerValue + "</td>";
+                var markup = "<tr><td>" + value.OrderId + "</td><td>" + value.QuestionCode + "</td><td>" + value.QuestionText + "</td><td>" + value.QHint + "</td>";//<td>" + value.TimerValue + "</td>";
 
                 if (type == "Edit") {
                     markup += "<td><a href='#' class='btn btn-warning btn-sm' data-toggle='modal' data-target='#questionModal'><i class='fa fa-pencil'></i></a>&nbsp;&nbsp;<a href='#' class='btn btn-danger btn-sm'> <i class='fa fa-trash-o'></i></a></td></tr>";

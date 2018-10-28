@@ -14,6 +14,7 @@ namespace SelfAssessment.Models.DBModel
         public string Description { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public int Weight { get; set; }
 
     }
 }

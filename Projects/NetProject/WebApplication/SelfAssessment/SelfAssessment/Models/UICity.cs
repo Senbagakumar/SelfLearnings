@@ -67,9 +67,10 @@ namespace SelfAssessment.Models
         public DateTime? UpdateDate { get; set; }
     }
 
-    public class UIQuestion
+    public class UIQuestions
     {
         public int Id { get; set; }
+        public int OrderId { get; set; }
         public int GroupId { get; set; }  // ForeignKey
         public string QuestionCode { get; set; }
         public string QuestionText { get; set; }

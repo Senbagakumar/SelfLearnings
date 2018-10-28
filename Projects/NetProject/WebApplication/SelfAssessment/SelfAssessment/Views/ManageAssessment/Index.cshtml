@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SelfAssessment.Models.DBModel.Assessment>
+﻿@model IEnumerable<SelfAssessment.Models.UAssessment>
 @{
 	ViewBag.Title = "Index";
 }
@@ -11,7 +11,7 @@
 				<strong class="card-title">ASSESSMENT</strong>
 				<button type="button" class="close text-danger" id="frmAddEditClose"><span aria-hidden="true">×</span></button>
 			</div>
-            <form action="/ManageAssessment/SaveAssessment" method="post" enctype="multipart/form-data" class="form-horizontal">
+            <form action="/ManageAssessment/Index" method="post" enctype="multipart/form-data" class="form-horizontal">
                 <!--/ManageAssessment/SaveAssessment-->
                 <div class="modal-body">
                     <div class="row form-group">
@@ -30,7 +30,6 @@
                         <div class="col-12 col-md-9">
                             @*<input type="text" id="txt-ADes-input" name="text-input" placeholder="Text" class="form-control">*@
                             <textarea name="txt-ADes-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control">
-                                <label id="adesinput"></label>
                             </textarea>
                         </div>
                     </div>
@@ -91,7 +90,7 @@
                             <label for="select" class=" form-control-label">Sector</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control;", })
+                            @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
                         </div>
                     </div>
 
@@ -376,7 +375,7 @@
 						@foreach (var item in Model)
 						{
 							<tr>
-								<td>@item.Id</td>
+								<td>@item.OrderId</td>
 								<td><input type="checkbox" name="chk1"></td>
 								<td>@item.Name</td>
 								<td>@item.Description</td>
@@ -542,7 +541,8 @@
 
 		$("#btnAddAssessment").click(function () {
 			$("#divAssessmentViewForm").hide();
-			$("#divAssessmentAddEditForm").show();
+            $("#divAssessmentAddEditForm").show();
+            clear();
 		});
 
 		//$("#btnSaveAssessment").click(function () {

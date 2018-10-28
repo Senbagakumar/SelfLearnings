@@ -17,4 +17,23 @@ namespace SelfAssessment.Models
         public string AssignmentStatus { get; set; }
     }
 
+    public class UAssessment
+    {
+        public int Id { get; set; }
+        public int OrderId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string WelcomeMessage { get; set; }
+        public string EndMessage { get; set; }
+        public string AdminEmail { get; set; }
+        public string AssessmentFormat { get; set; }
+        public bool ShowWelcomeScreen { get; set; }    
+        public bool ShowProgressBar { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
+        public string AssessmentType { get; set; }
+        public int Sector { get; set; }
+        public int SubSector { get; set; }
+    }
+
 }

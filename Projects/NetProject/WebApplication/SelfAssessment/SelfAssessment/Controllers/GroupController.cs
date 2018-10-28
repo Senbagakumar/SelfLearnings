@@ -31,24 +31,33 @@ namespace SelfAssessment.Controllers
                 question = repository.AssessmentContext.questions.ToList();
             }
 
-            var model = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
+            var model = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, Weight=q.Weight, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
             int i = 1;
             model.ForEach(t =>
             {
-                lmodel.Add(new UIGroup() { Id=t.Id, GroupName=t.GroupName, OrderId=i, NoOfQuestions=t.NoOfQuestions, GroupDescription=t.GroupDescription, questions=t.questions });
+                lmodel.Add(new UIGroup() { Id=t.Id, GroupName=t.GroupName, OrderId=i, NoOfQuestions=t.NoOfQuestions, Weight=t.Weight, GroupDescription=t.GroupDescription, questions=t.questions });
                 i = i + 1;
             });
             return View(lmodel);
         }
 
-        public List<Questions> GetQuestions(int groupId)
+        public List<UIQuestions> GetQuestions(int groupId)
         {
             var lQuestion = new List<Questions>();
+            var luiQuestion = new List<UIQuestions>();
+
             using (var repository = new Repository<Questions>())
             {
                 lQuestion = repository.Filter(q => q.GroupId == groupId).ToList(); 
             }
-            return lQuestion;
+            int i = 1;
+            lQuestion.ForEach(q =>
+            {
+                luiQuestion.Add(new UIQuestions() { Id=q.Id, OrderId=i, Answer=q.Answer, GroupId=q.GroupId, Mandatory=q.Mandatory, Option1=q.Option1, Option2=q.Option2, Option3=q.Option3, Option4=q.Option4, Option5=q.Option5, QHint=q.QHint, QType=q.QType, QuestionCode=q.QuestionCode, QuestionText=q.QuestionText });
+                i = i + 1;
+            });
+
+            return luiQuestion;
         }
 
         public JsonResult GetQuestionById(string id)
@@ -69,7 +78,7 @@ namespace SelfAssessment.Controllers
             {
                 group = repository.Filter(q => q.Id == id).FirstOrDefault();
             }
-            var uiGroup = new UIGroup() {Id=id, GroupName=group.Name, GroupDescription= group.Description, questions= questions };
+            var uiGroup = new UIGroup() {Id=id, GroupName=group.Name, Weight=group.Weight, GroupDescription= group.Description, questions= questions };
             return Json(uiGroup, JsonRequestBehavior.AllowGet);
         }
        
@@ -89,6 +98,7 @@ namespace SelfAssessment.Controllers
                             group.Name = uiGroup.GroupName;
                             group.Description = uiGroup.GroupDescription;
                             group.UpdateDate = DateTime.Now;
+                            group.Weight = uiGroup.Weight;
 
                             repository.Update(group);
                             repository.SaveChanges();
@@ -99,7 +109,7 @@ namespace SelfAssessment.Controllers
                 {
                     using (Repository<Group> repository = new Repository<Group>())
                     {
-                        var group = new Group() { Name = uiGroup.GroupName, Description = uiGroup.GroupDescription, CreateDate = DateTime.Now };
+                        var group = new Group() { Name = uiGroup.GroupName, Description = uiGroup.GroupDescription, CreateDate = DateTime.Now , Weight=uiGroup.Weight};
                         repository.Create(group);
                         repository.SaveChanges();
                     }
@@ -173,6 +183,8 @@ namespace SelfAssessment.Controllers
                     repository.Create(quest);
                     repository.SaveChanges();
                     first = repository.Filter(q => q.QuestionCode == quest.QuestionCode).FirstOrDefault();
+                    var count = repository.Filter(q => q.GroupId == quest.GroupId).ToList().Count();
+                    first.Id = count; // to override the id value for Slno
                 }
             }
 

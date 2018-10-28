@@ -13,7 +13,8 @@ namespace SelfAssessment.Models
         public string GroupName { get; set; }
         public string GroupDescription { get; set; }
         public int NoOfQuestions { get; set; }
-        public List<Questions> questions { get; set; }
+        public List<UIQuestions> questions { get; set; }
+        public int Weight { get; set; }
 
     }
 }
