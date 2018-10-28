@@ -71,7 +71,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@item.OrderNo</td>
                                 <td><input type="checkbox" name="chk1" /></td>
                                 <td>@item.StateName</td>
                                 <td>@item.CityName</td>
@@ -111,6 +111,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
+
+        //$('td:nth-child(2)').hide();
 
         $('#btnPlus').click(function () {
             $('#txtId').val('');

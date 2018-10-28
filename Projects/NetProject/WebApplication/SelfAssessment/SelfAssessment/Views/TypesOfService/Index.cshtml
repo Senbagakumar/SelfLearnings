@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SelfAssessment.Models.DBModel.ServiceType>
+﻿@model IEnumerable<SelfAssessment.Models.UIServiceType>
 @{
     ViewBag.Title = "Index";
 }
@@ -60,7 +60,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@item.OrderId</td>
                                 <td><input type="checkbox" name="chk1" /></td>
                                 <td>@item.Name</td>
                                 <td>

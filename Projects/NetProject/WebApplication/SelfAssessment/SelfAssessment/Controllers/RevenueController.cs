@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,27 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class RevenueController : Controller
     {
         // GET: Revenue
         public ActionResult Index()
         {
             var lmodel = new List<Revenue>();
+            var uiModel = new List<UIRevenue>();
 
             using (var repository = new Repository<Revenue>())
             {
                 lmodel = repository.All().ToList();
             }
-            return View(lmodel);
+            int i = 1;
+            foreach(var ui in lmodel)
+            {
+                var uim = new UIRevenue() { Id=ui.Id, Name=ui.Name, OrderId = i, CreateDate=ui.CreateDate};
+                uiModel.Add(uim);
+                i = i + 1;
+            }
+            return View(uiModel);
         }
 
         // POST: Revenue/Create

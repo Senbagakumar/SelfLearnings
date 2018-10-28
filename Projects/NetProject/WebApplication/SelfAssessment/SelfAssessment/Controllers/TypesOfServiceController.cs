@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,27 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class TypesOfServiceController : Controller
     {
         // GET: TypesOfService
         public ActionResult Index()
         {
             var lmodel = new List<ServiceType>();
+            var uiModel = new List<UIServiceType>();
 
             using (var repository = new Repository<ServiceType>())
             {
                 lmodel = repository.All().ToList();
             }
-            return View(lmodel);
+
+            int i = 1;
+            foreach(var uim in lmodel)
+            {
+                uiModel.Add(new UIServiceType() { Id=uim.Id, CreateDate=uim.CreateDate, Name=uim.Name, OrderId=i  });
+                i = i + 1;
+            }
+            return View(uiModel);
         }
 
         // POST: TypesOfService/Create

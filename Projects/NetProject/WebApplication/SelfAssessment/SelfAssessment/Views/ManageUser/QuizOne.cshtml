@@ -83,6 +83,7 @@
     }
 
     $(document).ready(function () {
+        $('#alertDiv').hide();
         $("#btnGo").click(function () {
             var selectValue = $('#selectValue').val();
             var url = API.GetQuestionByOne() + selectValue;
@@ -90,6 +91,13 @@
                 $('#LoadQuestion').html(data);
             });
         });
+        
+        var errorMsg = '@ViewBag.Msg';
+        if (errorMsg != null) {
+            $('#alertDiv').show();
+            $('#msg').text(errorMsg);
+        }
+
     });
 
 </script>

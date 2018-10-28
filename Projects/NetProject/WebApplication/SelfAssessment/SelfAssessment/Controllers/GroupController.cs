@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class GroupController : Controller
     {
         private readonly IBusinessContract businessContract;
@@ -30,8 +31,13 @@ namespace SelfAssessment.Controllers
                 question = repository.AssessmentContext.questions.ToList();
             }
 
-            lmodel = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
-
+            var model = group.Select(q => new UIGroup() { GroupName = q.Name, GroupDescription = q.Description, Id = q.Id, NoOfQuestions = question.Where(t => t.GroupId == q.Id).Count() }).ToList();
+            int i = 1;
+            model.ForEach(t =>
+            {
+                lmodel.Add(new UIGroup() { Id=t.Id, GroupName=t.GroupName, OrderId=i, NoOfQuestions=t.NoOfQuestions, GroupDescription=t.GroupDescription, questions=t.questions });
+                i = i + 1;
+            });
             return View(lmodel);
         }
 

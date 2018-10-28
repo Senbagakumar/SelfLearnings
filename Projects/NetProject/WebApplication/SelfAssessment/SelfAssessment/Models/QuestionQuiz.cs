@@ -15,5 +15,6 @@ namespace SelfAssessment.Models
         public int GroupId { get; set; }
         public string GroupText { get; set; }
         public int UIGroupId { get; set; }
+        public bool Mandatory { get; set; }
     }
 }

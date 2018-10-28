@@ -35,7 +35,7 @@ namespace SelfAssessment.Business
                 {
                     var question = new QuestionAnswer();
                     
-                    question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId };
+                    question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId, Mandatory=v.Mandatory };
 
                     question.Questions.GroupText = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
 
@@ -76,6 +76,10 @@ namespace SelfAssessment.Business
             return AllQuestions;
         }
 
+        public bool IsMandatoryQuestion(int questionId)
+        {
+            return AllQuestions.FirstOrDefault(q => q.Questions.QuestionId == questionId).Questions.Mandatory;
+        }
 
         public QuestionAnswer LoadQuiz(int questionId)
         {

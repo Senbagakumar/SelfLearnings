@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,25 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class StateController : Controller
     {
         // GET: State
         public ActionResult Index()
         {
             List<State> lstate = new List<State>();
+            var uilstate = new List<UIState>();
             using (Repository<State> repository = new Repository<State>())
             {
                 lstate = repository.All().ToList();
             }
-            return View(lstate);
+            int i = 1;
+            foreach(var uis in lstate)
+            {
+                uilstate.Add(new UIState() { Id = uis.Id, StateName = uis.StateName, CreateDate = uis.CreateDate, OrderId = i });
+                i = i + 1;
+            }
+            return View(uilstate);
         }
 
         // POST: State/Create

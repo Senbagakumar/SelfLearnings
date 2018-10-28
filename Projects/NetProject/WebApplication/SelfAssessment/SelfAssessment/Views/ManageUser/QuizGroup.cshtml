@@ -64,6 +64,17 @@
                 <p>No Of Group : <b>@Model.NoOfGroups &nbsp;</b> | &nbsp; No Of Question : <b>@Model.NoOfQuestions &nbsp;</b> | &nbsp;No Of Question Answered: <b>@Model.NoOfCompletedQuestions</b> </p>
                 <hr>
 
+                @if(ViewBag.Msg !=null && ViewBag.Msg !=string.Empty)
+                {
+                    <div class="col-sm-12" id="alertDiv">
+                        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+                            <span class="badge badge-pill badge-success">Success</span>@ViewBag.Msg
+                            @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>*@
+                        </div>
+                    </div>
+                }
 
                 <h4 class="mb-3 text-info">@Model.GroupText</h4>
                 @using (Html.BeginForm("QuizGroup", "ManageUser", FormMethod.Post))
@@ -110,15 +121,26 @@
     </div>
 </div>
 
-<script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
-<script src="~/Admin/assets/js/main.js"></script>
+
 
 <script type="text/javascript">
+
+    @*$(document).ready(function () {
+       // $('#alertDiv').css('display', 'none')
+        var errorMsg = '@ViewBag.Msg';
+        if (errorMsg != null) {
+          //  $('#alertDiv').css('visibility', 'visible')
+        }
+    });*@
+
     function formSubmitWithAction(action) {
         document.getElementById("hdnaction").value = action;
         document.getElementById("QuizGroup").submit()
     }
+
+    
 
 </script>

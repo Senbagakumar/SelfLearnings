@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,27 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class SectorController : Controller
     {
         // GET: Sector
         public ActionResult Index()
         {
             var lmodel = new List<Sector>();
+            var uilmodel = new List<UISector>();
 
             using (Repository<Sector> repository = new Repository<Sector>())
             {
                 lmodel = repository.All().ToList();
-            }           
-            return View(lmodel);
+            }
+
+            int i = 1;
+            lmodel.ForEach(q =>
+            {
+                uilmodel.Add(new UISector() { Id = q.Id, CreateDate = q.CreateDate, SectorName = q.SectorName, OrderId = i });
+                i = i + 1;
+            });
+            return View(uilmodel);
         }
 
         [HttpPost]

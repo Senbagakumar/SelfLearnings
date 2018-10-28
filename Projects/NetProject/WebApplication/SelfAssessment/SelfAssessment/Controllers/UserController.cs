@@ -12,6 +12,7 @@ using System.Web.Security;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class UserController : Controller
     {
         private readonly IBusinessContract businessContract;
@@ -34,8 +35,13 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult LogOut()
         {
-            Session[Utilities.UserId] = string.Empty;
-            Session[Utilities.Usermail] = string.Empty;
+            Session[Utilities.UserId] = null;
+            Session[Utilities.Usermail] = null;
+            Session["AllGroupQuestions"] = null;
+            Session["AllQuestions"] = null;
+            Session.Clear();
+            Session.Abandon();
+
             return View();
         }
 
@@ -74,6 +80,21 @@ namespace SelfAssessment.Controllers
             //subSector.Insert(0, firstItem);
             return Json(subSector,JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GetCities(int id)
+        {
+            var cities = new List<SelectListItem>();
+            //var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };            
+
+            using (var repository = new Repository<City>())
+            {
+                cities = repository.Filter(q => q.StateId == id).Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
+            }
+            //subSector.Insert(0, firstItem);
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Register()
         {
          
@@ -98,8 +119,7 @@ namespace SelfAssessment.Controllers
                 sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
                 states = repository.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
                 revenue = repository.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                typeOfService = repository.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                cities = repository.AssessmentContext.cities.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
+                typeOfService = repository.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();                
             }
 
             var lastItem = new SelectListItem() { Text = Utilities.Others, Value = "1000" };
@@ -113,7 +133,7 @@ namespace SelfAssessment.Controllers
             sector.Add(lastItem);
             ViewBag.SubSectorList = new List<SelectListItem>();
             ViewBag.SectorList = sector;            
-            ViewBag.City = cities;
+            ViewBag.City = new List<SelectListItem>();
             ViewBag.State = states;
             ViewBag.Revenue = revenue;
             ViewBag.TypeOfService = typeOfService;

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class SubSectorController : Controller
     {
         // GET: SubSector
@@ -30,9 +31,16 @@ namespace SelfAssessment.Controllers
             var lmod = new List<SelectListItem>();
             lmod = sector.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
             lmod.Insert(0, new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true });
-           
+
+            int i = 1;
+            list.ForEach(q =>
+            {
+                lmodel.Add(new UISubSector() { Id = q.Id, OrderId = i, SectorId = q.SectorId, SectorName = q.SectorName, SubSectorName = q.SubSectorName });
+                i = i + 1;
+            });
+
             ViewBag.SectorList = lmod;
-            return View(list);
+            return View(lmodel);
         }
 
         // POST: SubSector/Create

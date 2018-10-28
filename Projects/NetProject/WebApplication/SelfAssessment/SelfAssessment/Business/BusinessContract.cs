@@ -60,10 +60,12 @@ namespace SelfAssessment.Business
 
         public int LoginVerfication(string userName, string password)
         {
+            
             using (Repository<Organization> repository = new Repository<Organization>())
             {
-               var user=repository.Filter(q => q.Email == userName && (q.TempPassword == password || q.Password == password)).FirstOrDefault();
-                if (user != null && !string.IsNullOrEmpty(user.UserId))
+                var user = repository.Filter(q => q.Email == userName).FirstOrDefault();
+                var tpwd = !string.IsNullOrEmpty(user.Password) ? StringCipher.Decrypt(user.Password) : string.Empty;
+                if (user != null && !string.IsNullOrEmpty(user.UserId) && (tpwd == password || user.TempPassword == password))
                     return user.Id;
                 else
                     return 0;

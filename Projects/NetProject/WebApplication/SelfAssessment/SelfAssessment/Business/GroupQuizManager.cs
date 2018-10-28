@@ -40,7 +40,7 @@ namespace SelfAssessment.Business
                 t.Questions.ForEach(v => {
 
                     var question = new QuestionAnswer();
-                    question.Questions = new QuestionQuiz() { QuestionCode = "Q" + k, QuestionId = v.Id, QuestionText = v.QuestionText };
+                    question.Questions = new QuestionQuiz() { QuestionCode = "Q" + k, QuestionId = v.Id, QuestionText = v.QuestionText, Mandatory=v.Mandatory };
 
                     var answerChoice = new List<AnswerChoice>();
 
@@ -81,6 +81,11 @@ namespace SelfAssessment.Business
             });
             return AllQuestions;
           
+        }
+
+        public List<QuestionAnswer> GetMandatoryQuestion(int groupId)
+        {
+           return AllQuestions.FirstOrDefault(q => q.GroupId == groupId).listOfQuestions.Where(t=> t.Questions.Mandatory==true).ToList();
         }
 
         public GroupQuiz LoadQuiz(int groupId)

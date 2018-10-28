@@ -1,10 +1,14 @@
 ﻿var API = {
-    baseUrl: 'http://localhost:26578/',
+    baseUrl: 'http://localhost:26579/',
 
 
 
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
+    },
+
+    GetCities: function () {
+        return this.baseUrl + "User/GetCities/"
     },
 
     GetBaseUrl: function () {
@@ -54,7 +58,7 @@
         return this.baseUrl + "Sector/Index";
     },
     SectorDelete: function () {
-        return this.baseUrl + "Sector/Delete";
+        return this.baseUrl + "Sector/Delete/";
     },
     SectorCreate: function () {
         return this.baseUrl + "Sector/Create";
@@ -63,7 +67,7 @@
         return this.baseUrl + "Revenue/Index";
     },
     RevenueDelete: function () {
-        return this.baseUrl + "Revenue/Delete";
+        return this.baseUrl + "Revenue/Delete/";
     },
     RevenueCreate: function () {
         return this.baseUrl + "Revenue/Create";
@@ -82,6 +86,9 @@
     },
     GetSubSectorForAssessment: function () {
         return this.baseUrl + "ManageAssessment/GetSubSector/";
+    },
+    GetCitiesForAssessment: function () {
+        return this.baseUrl + "ManageAssessment/GetCities/";
     },
     AssessmentSave: function () {
         return this.baseUrl + "ManageAssessment/SaveAssessment";

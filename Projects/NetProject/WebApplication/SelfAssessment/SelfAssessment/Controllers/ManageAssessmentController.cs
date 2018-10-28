@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class ManageAssessmentController : Controller
     {
         // GET: ManageAssessment
@@ -46,8 +47,23 @@ namespace SelfAssessment.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public JsonResult SaveAssessment(Assessment assessment)
+        public ActionResult Index(FormCollection userValues)
         {
+            var assessment = new Assessment();
+
+            assessment.Id = Convert.ToInt16(userValues["txt-id-input"]);
+            assessment.AdminEmail = userValues["txt-AEmail-input"];
+            assessment.AssessmentFormat = userValues["st-AFormat"];
+            assessment.Description = userValues["txt-ADes-input"];
+            assessment.WelcomeMessage = userValues["txt-AWMsg-input"];
+            assessment.EndMessage = userValues["txt-AEMsg-input"];
+            assessment.Name = userValues["txt-AName-input"];
+            assessment.ShowProgressBar = userValues["chk-SWScreen"] == "on" ? true : false;
+            assessment.ShowWelcomeScreen = userValues["chk-SPbar"] == "on" ? true : false;
+            assessment.Sector = Convert.ToInt16(userValues["Sector"]);
+            assessment.SubSector = Convert.ToInt16(userValues["SubSector"]);
+                
+            
             using (var assessmentRepo = new Repository<Assessment>())
             {
                 if (assessment.Id != 0)
@@ -83,7 +99,8 @@ namespace SelfAssessment.Controllers
                 }
                 assessmentRepo.SaveChanges();
             }
-            return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
+            //return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
+            return View();
         }
 
         public JsonResult GetAssessMentDetails(int id)
@@ -99,10 +116,9 @@ namespace SelfAssessment.Controllers
         public ActionResult AssignOrganization()
         {
             var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
-            var subSector = new List<SelectListItem>();
             var sector = new List<SelectListItem>();
             var states = new List<SelectListItem>();
-            var cities = new List<SelectListItem>();
+           
             var typeOfService = new List<SelectListItem>();
             var revenue = new List<SelectListItem>();
 
@@ -111,31 +127,26 @@ namespace SelfAssessment.Controllers
             using (var repo = new Repository<Assessment>())
             {
                 assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                subSector =  repo.AssessmentContext.subSectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
                 sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
                 states = repo.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
                 revenue = repo.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
                 typeOfService = repo.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                cities = repo.AssessmentContext.cities.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
             }
 
             var lastItem = new SelectListItem() { Text = Utilities.Others, Value = Utilities.OthersValue };
 
-            sector.Insert(0, firstItem);
-            subSector.Insert(0, firstItem);
+            sector.Insert(0, firstItem);           
             revenue.Insert(0, firstItem);
             typeOfService.Insert(0, firstItem);
-            cities.Insert(0, firstItem);
             states.Insert(0, firstItem);
             assessMent.Insert(0, firstItem);
 
             sector.Add(lastItem);
-            subSector.Add(lastItem);
 
             ViewBag.AssessMent = assessMent;
             ViewBag.SectorList = sector;
-            ViewBag.SubSectorList = subSector;
-            ViewBag.City = cities;
+            ViewBag.SubSectorList = new List<SelectListItem>();
+            ViewBag.City = new List<SelectListItem>();
             ViewBag.State = states;
             ViewBag.Revenue = revenue;
             ViewBag.TypeOfService = typeOfService;
@@ -144,12 +155,12 @@ namespace SelfAssessment.Controllers
 
         public JsonResult MoveToNextLevel(int id)
         {
-
-            OrganizationLevelHistory tempOrg = null;
+            OrganizationLevelHistory torg = null;
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == id).FirstOrDefault();
-                tempOrg = new OrganizationLevelHistory() { Level = org.CurrentAssignmentType, OrgId = org.Id, Status = Utilities.AssessmentCompletedStatus, PromoteDate = DateTime.Now };
+                var tempOrg = new OrganizationLevelHistory() { Level = org.CurrentAssignmentType, OrgId = org.Id, Status = Utilities.AssessmentCompletedStatus, PromoteDate = DateTime.Now };
+                torg = tempOrg;
                 if (org != null)
                 {
                     if (org.CurrentAssignmentType == Utilities.AssessmentTypeLevel1)
@@ -159,16 +170,12 @@ namespace SelfAssessment.Controllers
 
                     org.CurrentAssignmentStatus = Utilities.AssessmentPendingStatus;
                     repo.Update(org);
+
+                    repo.AssessmentContext.organizationLevelHistories.Add(new OrganizationLevelHistory() { Level = torg.Level, OrgId = torg.OrgId, PromoteDate = torg.PromoteDate, Status = torg.Status, Id = id });
                     repo.SaveChanges();
+
                 }
             }
-
-            using (var rep = new Repository<OrganizationLevelHistory>())
-            {
-                rep.Create(tempOrg);
-                rep.SaveChanges();
-            }
-
             return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
@@ -441,12 +448,24 @@ namespace SelfAssessment.Controllers
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public JsonResult GetCities(int id)
+        {
+            var cities = new List<SelectListItem>();
+            //var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };            
+
+            using (var repository = new Repository<City>())
+            {
+                cities = repository.Filter(q => q.StateId == id).Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.CityName }).ToList();
+            }
+            //subSector.Insert(0, firstItem);
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult DeleteAssessMentById(int id)
         {
             using (var assessmentRepo = new Repository<Assessment>())

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class ManageOrgController : Controller
     {
         private readonly IOrganizationComponentDetails organizationComponentDetails;

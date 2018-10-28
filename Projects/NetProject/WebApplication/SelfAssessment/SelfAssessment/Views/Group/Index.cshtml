@@ -392,7 +392,7 @@
                         @foreach(var item in Model)
                         {
                             <tr>
-                                <td>@item.Id</td>
+                                <td>@item.OrderId</td>
                                 <td><input type="checkbox" name="chk1" /></td>
                                 <td>@item.GroupName</td>
                                 <td>@item.NoOfQuestions</td>
@@ -542,8 +542,9 @@
                     $("#divGroupAddEditForm").hide();
                 }
                 if (this.className == "btn btn-danger btn-sm") {
-                    DeleteGroup(groupId);
-                    $(this).closest('tr').remove();
+                    if (DeleteGroup(groupId)) {
+                        $(this).closest('tr').remove();
+                    }
                 }
             });
 
@@ -554,7 +555,7 @@
                 }
                 if (this.className == "btn btn-danger btn-sm") {
                     DeleteQuestion(questionid);
-                    $(this).closest('tr').remove();
+                    $(this).closest('tr').remove();                    
                 }
             });
 
@@ -594,14 +595,17 @@
     }
 
     function DeleteGroup(id) {
+        var val = false;
         var url = API.GroupDelete() + id;
         $.ajax({
             type: "GET",
             url: url,
             contentType: "application/json"
         }).done(function (result) {
+            val = true;
             //location.href = "/Group/Index";
-        });
+            });
+        return val;
     }
 
     function GetQuestion(id, type) {

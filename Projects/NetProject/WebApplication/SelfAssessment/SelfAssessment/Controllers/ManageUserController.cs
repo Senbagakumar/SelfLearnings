@@ -15,6 +15,7 @@ using System.Web.Routing;
 
 namespace SelfAssessment.Controllers
 {
+    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class ManageUserController : BaseController
     {      
         private GroupQuizManager groupQuizManager;
@@ -133,26 +134,31 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult ChangePassword()
         {
+            ViewBag.Error = string.Empty;
             return View();
         }            
 
         [HttpPost]
-        public ActionResult ChangePassword(ChangePassword changePassword)
+        public JsonResult ChangePassword(ChangePassword changePassword)
         {
             string message = string.Empty;
             var sc = new StringCipher();
             var org = new Repository<Organization>();
             var user = org.Filter(q => q.Id == this.UserId).FirstOrDefault();
 
-            if(user.TempPassword == changePassword.OldPassword || user.Password == sc.DecryptString(changePassword.OldPassword))
+            if(user!=null && user.TempPassword == changePassword.OldPassword || StringCipher.Decrypt(user.Password) == changePassword.OldPassword)
             {
-                user.Password = changePassword.NewPassword;
+                user.Password = StringCipher.Encrypt(changePassword.NewPassword);
+                user.TempPassword = string.Empty;
                 org.Update(user);
                 org.SaveChanges();
+                message = "Successfully Updated";
             }
-            ViewBag.Error = "Please Enter the Correct Details";          
-
-            return View();
+            else
+            {
+                message = "Please Enter Correct Details";
+            }
+            return Json(message, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult QuizOne()
@@ -184,22 +190,35 @@ namespace SelfAssessment.Controllers
             quiz.UIQId = Convert.ToInt16(values[3]);
 
             this.quizManager = new QuizManager(this.UserId);
+            bool isAnswered = false;
+            if(this.quizManager.IsMandatoryQuestion(quiz.QuestionId))
+            {
+                isAnswered = quiz.UserOptionId > 0 ? true : false;
+            }          
 
             int qId = 0;
 
-            this.quizManager.SaveAnswer(quiz);
-            qId = quiz.UIQId;            
+            if (isAnswered)
+            {
+                this.quizManager.SaveAnswer(quiz);
+                qId = quiz.UIQId;
 
-            if (!isAction)
-                qId = qId + 1;
+                if (!isAction)
+                    qId = qId + 1;
+                else
+                {
+                    qId = quiz.UIQId;
+                    qId = qId - 1;
+                }
+
+                if (qId == 0)
+                    qId = 1;
+            }
             else
             {
                 qId = quiz.UIQId;
-                qId = qId - 1;
+                ViewBag.Msg = "Please Fill the Mandatroy Questions";
             }
-
-            if (qId == 0)
-                qId = 1;
 
             this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
             if (this.quizManager.MoveToNextQuestion(qId))
@@ -252,23 +271,47 @@ namespace SelfAssessment.Controllers
                 groupQuiz.Add(quiz);
             }
 
-            this.groupQuizManager = new GroupQuizManager(this.UserId);
-
             int groupId = 0;
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
+            if (groupQuiz.Count == 0)
+                groupId = int.Parse(questionCode[1]);
+            else
+                groupId = groupQuiz[0].GroupId;
 
-            this.groupQuizManager.SaveAnswer(groupQuiz);
-            groupId = groupQuiz.First().UIGroupId;            
+            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
+            var lQuestions=this.groupQuizManager.GetMandatoryQuestion(groupId);
 
-            if (!isAction)
-                groupId = groupId + 1;
+            bool isMandatoryAnswerd = false;
+            lQuestions.ForEach(q =>
+            {
+                if (groupQuiz == null || groupQuiz.Count ==0 || groupQuiz.Any(t => t.QuestionId == q.Questions.QuestionId && t.UserOptionId == 0))
+                    isMandatoryAnswerd = false;
+                else
+                    isMandatoryAnswerd = true;
+            });
+            
+
+            if (isMandatoryAnswerd)
+            {
+                this.groupQuizManager.SaveAnswer(groupQuiz);
+                groupId = groupQuiz.First().UIGroupId;
+
+                if (!isAction)
+                    groupId = groupId + 1;
+                else
+                {
+                    groupId = Convert.ToInt16(questionCode["UIGroupId"].ToString());
+                    groupId = groupId - 1;
+                }
+
+                if (groupId == 0)
+                    groupId = 1;
+            }
             else
             {
-                groupId = Convert.ToInt16(questionCode["UIGroupId"].ToString());
-                groupId = groupId - 1;
+                groupId = groupQuiz.Count > 0 ? groupQuiz.First().UIGroupId : groupId;
+                ViewBag.Msg = "Please Fill the Mandatroy Questions";
             }
-
-            if (groupId == 0)
-                groupId = 1;
 
             this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
             if (this.groupQuizManager.MoveToNextGroup(groupId))
