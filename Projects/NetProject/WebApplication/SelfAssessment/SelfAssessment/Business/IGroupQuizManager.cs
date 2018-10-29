@@ -10,7 +10,7 @@ namespace SelfAssessment.Business
     public interface IGroupQuizManager : IGroupSaveQuiz
     {
         GroupQuiz LoadQuiz(int groupId);
-        List<GroupQuiz> GetAllQuestions();
+        List<GroupQuiz> GetAllQuestions(string level = null);
 
     }
 }

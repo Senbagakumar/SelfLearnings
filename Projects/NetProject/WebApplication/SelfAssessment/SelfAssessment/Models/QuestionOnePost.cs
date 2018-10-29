@@ -10,5 +10,6 @@ namespace SelfAssessment.Models
         public string hdnaction { get; set; }
         public string QInfo { get; set; }
         public int UserId { get; set; }
+        public string Level { get; set; }
     }
 }

@@ -18,13 +18,18 @@ namespace SelfAssessment.Business
             UserId = userId;
         }
 
-        public List<GroupQuiz> GetAllQuestions()
+        public List<GroupQuiz> GetAllQuestions(string level=null)
         {
             var listOfGroupQuestions = new List<GroupQuiz>();
             var uInfo = new Repository<Organization>();
             var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q=> q.u.Id == UserId).FirstOrDefault();
+            var questionIds = new List<int>();
 
-            var questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
+            if(level==null)
+                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
+            else
+                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == level).Select(q => q.QuestionId).ToList();
+
             var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 
             int i = 1;

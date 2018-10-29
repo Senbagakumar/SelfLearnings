@@ -34,7 +34,9 @@ namespace SelfAssessment.Business
             lQuestions.ForEach(t =>
             {
                 var dynamicScore = new GraphDynam();
-                dynamicScore.GroupName = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
+                var group = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault();
+                dynamicScore.GroupName = group.Name;
+                double weight = group.Weight > 0 ? Convert.ToDouble(group.Weight) : 1;
                 double score = 0;
 
                 t.Questions.ForEach(v => 
@@ -43,8 +45,8 @@ namespace SelfAssessment.Business
                     if (isAnswer != null)
                     {
                         score += Utilities.CalculateScoreByAns(isAnswer.UserOptionId);
-                        if (isFinalScore && (dynamicScore.GroupName == Utilities.Group6 || dynamicScore.GroupName == Utilities.Group9))
-                            score = score * 1.5;
+                        if (isFinalScore)
+                            score = score * weight;
                     }
 
                 });
@@ -87,14 +89,14 @@ namespace SelfAssessment.Business
 
         public static Graph OrganizationFinalScore(int currentUserId,string level)
         {
-            ScoreCalc myScore = CalculateScore(currentUserId, false, level);
+            ScoreCalc myScore = CalculateScore(currentUserId, true, level);
             var uInfo = new Repository<Organization>();
             var lorgs = uInfo.Filter(t => t.Id != currentUserId).Select(q => q.Id).ToList();
 
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in lorgs)
             {
-                var scores = CalculateScore(id, false, level);
+                var scores = CalculateScore(id, true, level);
                 otherOrg.Add(scores);
             }
 
@@ -141,14 +143,14 @@ namespace SelfAssessment.Business
 
         public static Graph OrganizationManufacturingFinalScore(int currentUserId,string level)
         {
-            ScoreCalc myScore = CalculateScore(currentUserId, false, level);
+            ScoreCalc myScore = CalculateScore(currentUserId, true, level);
             var uInfo = new Repository<Organization>();
             var lorgs = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id != currentUserId).Select(q => q.u.Id).ToList();
 
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in lorgs)
             {
-                var scores = CalculateScore(id, false,level);
+                var scores = CalculateScore(id, true,level);
                 otherOrg.Add(scores);
             }
 
@@ -233,7 +235,7 @@ namespace SelfAssessment.Business
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in uids)
             {
-                var scores = CalculateScore(id, false, level,assementId);
+                var scores = CalculateScore(id, true, level,assementId);
                 otherOrg.Add(scores);
             }
 

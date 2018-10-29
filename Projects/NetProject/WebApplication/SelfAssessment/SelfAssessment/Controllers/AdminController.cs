@@ -127,12 +127,12 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult GetFirstGroup(int id,string level)
         {
-            return PartialView("~/Views/ManageUser/QuizGroupPartial.cshtml", GetGroupQuiz(id));
+            return PartialView("~/Views/ManageUser/QuizGroupPartial.cshtml", GetGroupQuiz(id,level));
         }
-        private GroupQuiz GetGroupQuiz(int id)
+        private GroupQuiz GetGroupQuiz(int id,string level)
         {
             var groupQuizManager = new GroupQuizManager(id);
-            var listOfGroup = groupQuizManager.GetAllQuestions();
+            var listOfGroup = groupQuizManager.GetAllQuestions(level);
             groupQuizManager.AllQuestions = listOfGroup;
             var groupQuiz= groupQuizManager.LoadQuiz(1);
             groupQuiz.UserId = id;
@@ -143,23 +143,25 @@ namespace SelfAssessment.Controllers
         public ActionResult CustomerAssessmentReport(QuestionOnePost question)
         {
             var groupQuizManager = new GroupQuizManager(question.UserId);
+            var listOfGroup = groupQuizManager.GetAllQuestions(question.Level);
+            groupQuizManager.AllQuestions = listOfGroup;
+
             GroupQuiz groupQuiz = null;
             int groupId = int.Parse(question.QInfo);
             if (question.hdnaction == "Previous")
             {
-                if (groupId == 1)
+                groupId = groupId - 1;
+                if (groupId <= 0)
                     groupId = 1;
-                else
-                    groupId = groupId + 1;
+               
             }
+            else
+                groupId = groupId + 1;
+
             if (groupQuizManager.MoveToNextGroup(groupId))
             {
                 groupQuiz = groupQuizManager.LoadQuiz(groupId);
-            }
-            else
-            {
-                groupQuiz = groupQuizManager.LoadQuiz(--groupId);
-            }
+            }           
             groupQuiz.UserId = question.UserId;
             return PartialView("~/Views/ManageUser/QuizGroupPartial.cshtml", groupQuiz);
         }

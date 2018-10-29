@@ -68,10 +68,9 @@
     function formSubmitWithAction(action) {
         document.getElementById("hdnaction").value = action;
         var s = $('#myForm').serializeArray()
-
         var model = {
             hdnaction: action,
-            QInfo: s[1]['value']
+            QInfo: s[2]['value']
         };
 
         $.ajax({

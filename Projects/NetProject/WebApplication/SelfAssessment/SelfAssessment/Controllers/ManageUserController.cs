@@ -108,25 +108,26 @@ namespace SelfAssessment.Controllers
             int groupId = int.Parse(question.QInfo);
             if(question.hdnaction== "Previous")
             {
-                if (groupId == 1)
+                groupId = groupId - 1;
+                if (groupId <= 0)
                     groupId = 1;
-                else
-                    groupId = groupId + 1;
             }
+            else
+            {                
+               groupId = groupId + 1;
+            }
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
+            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
             if (this.groupQuizManager.MoveToNextGroup(groupId))
             {
                 groupQuiz = this.groupQuizManager.LoadQuiz(groupId);
-            }
-            else
-            {
-                groupQuiz = this.groupQuizManager.LoadQuiz(--groupId);
-            }
+            }           
             return PartialView("QuizGroupPartial", groupQuiz);
         }
 
         public ActionResult GetFirstGroup(string id)
         {
-            return PartialView("QuizGroupPartial", GetGroupQuiz());
+            return PartialView("QuizGroupPartial", GetGroupQuiz(id));
         }
         public ActionResult AssessmentReport()
         {
@@ -332,10 +333,10 @@ namespace SelfAssessment.Controllers
                 repo.SaveChanges();
             }
         }
-        private GroupQuiz GetGroupQuiz()
+        private GroupQuiz GetGroupQuiz(string level=null)
         {
             this.groupQuizManager = new GroupQuizManager(this.UserId);
-            var listOfGroup = this.groupQuizManager.GetAllQuestions();
+            var listOfGroup = this.groupQuizManager.GetAllQuestions(level);
             Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
             return this.groupQuizManager.LoadQuiz(1);
         }

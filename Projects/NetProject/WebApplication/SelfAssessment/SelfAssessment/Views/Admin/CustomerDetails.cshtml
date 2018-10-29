@@ -138,11 +138,12 @@
     function formSubmitWithAction(action) {
         document.getElementById("hdnaction").value = action;
         var s = $('#myForm').serializeArray()
-
+        var selectValue = $('#lblSelectLevel').val();
         var model = {
             hdnaction: action,
             QInfo: s[1]['value'],
-            UserId: document.getElementById("UserId").value
+            UserId: document.getElementById("UserId").value,
+            Level: selectValue
         };
 
         $.ajax({

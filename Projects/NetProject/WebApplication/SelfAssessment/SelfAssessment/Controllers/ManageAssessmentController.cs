@@ -164,12 +164,10 @@ namespace SelfAssessment.Controllers
 
         public JsonResult MoveToNextLevel(int id)
         {
-            OrganizationLevelHistory torg = null;
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == id).FirstOrDefault();
-                var tempOrg = new OrganizationLevelHistory() { Level = org.CurrentAssignmentType, OrgId = org.Id, Status = Utilities.AssessmentCompletedStatus, PromoteDate = DateTime.Now };
-                torg = tempOrg;
+                string type = org.CurrentAssignmentType;
                 if (org != null)
                 {
                     if (org.CurrentAssignmentType == Utilities.AssessmentTypeLevel1)
@@ -180,7 +178,12 @@ namespace SelfAssessment.Controllers
                     org.CurrentAssignmentStatus = Utilities.AssessmentPendingStatus;
                     repo.Update(org);
 
-                    repo.AssessmentContext.organizationLevelHistories.Add(new OrganizationLevelHistory() { Level = torg.Level, OrgId = torg.OrgId, PromoteDate = torg.PromoteDate, Status = torg.Status, Id = id });
+                    repo.AssessmentContext.organizationLevelHistories.Add(new OrganizationLevelHistory()
+                    {
+                        Level = type, OrgId = id, PromoteDate = DateTime.Now, Status = Utilities.AssessmentCompletedStatus, Id = id,
+                        AssessmentId=org.AssessmentId, CityId=org.CityId, RevenueId=org.RevenueId, SectorId=org.SectorId,
+                        StateId=org.StateId, SubSectorId=org.SubSectorId, TypeId=org.TypeId, TypeOfServiceId=org.TypeOfServiceId
+                    });
                     repo.SaveChanges();
 
                 }
@@ -192,49 +195,14 @@ namespace SelfAssessment.Controllers
         public JsonResult AssignOrganizationByFilter(Organization org)
         {
             var lmodel = new List<UIOrganization>();
-            var listOrganization = new List<Organization>();
-            using (var repo = new Repository<Organization>())
-            {
-                listOrganization = repo.AssessmentContext.UserInfo.Join(repo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => u).Where(q=> q.CurrentAssignmentType == org.CurrentAssignmentType).ToList();
-            }
-
-            if (org.CityId > 0)
-                listOrganization = listOrganization.Where(q => q.CityId == org.CityId).ToList();
-            if (org.StateId > 0)
-                listOrganization = listOrganization.Where(q => q.StateId == org.StateId).ToList();
-            if (org.SectorId > 0 && org.SectorId != 1000)
-                listOrganization = listOrganization.Where(q => q.SectorId == org.SectorId).ToList();
-            if (org.RevenueId > 0)
-                listOrganization = listOrganization.Where(q => q.RevenueId == org.RevenueId).ToList();
-            if (org.SubSectorId > 0 && org.SubSectorId != 1000)
-                listOrganization = listOrganization.Where(q => q.SubSectorId == org.SubSectorId).ToList();
-            if(org.TypeOfServiceId > 0)
-                listOrganization = listOrganization.Where(q => q.TypeOfServiceId == org.TypeOfServiceId).ToList();
-
-            var city = new Repository<City>();
-
             try
             {
-                listOrganization.ForEach(q =>
-                {
-                    UIOrganization model = new UIOrganization();
-                    model.Id = q.Id;
-                    model.Name = q.Name;
-                    model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
-                    model.Revenue = city.AssessmentContext.revenues.FirstOrDefault(r => r.Id == q.RevenueId).Name;
-                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? Utilities.Others : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
-                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? Utilities.Others : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
-                    model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
-                    model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
-                    model.Type = org.CurrentAssignmentType;
-                    lmodel.Add(model);
-                });
+                lmodel = Helper.AssignOrganizationByFilter(org);
             }
             catch (Exception ex)
             {
                 //throw;
             }
-
             return Json(lmodel, JsonRequestBehavior.AllowGet);
         }
 
