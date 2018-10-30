@@ -8,7 +8,7 @@
         <p>No Of Group : <b>@Model.NoOfGroups &nbsp;</b> | &nbsp; No Of Question : <b>@Model.NoOfQuestions &nbsp;</b> | &nbsp;No Of Question Answered: <b>@Model.NoOfCompletedQuestions</b> </p>
         <hr>
 
-        <div class="col-sm-12" id="alertDiv">
+        <div class="col-sm-12" id="alertDiv" style="display:none">
             <div class="alert  alert-success alert-dismissible fade show" role="alert">
                 <span class="badge badge-pill badge-success">Success</span><label id="msg" />
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -21,6 +21,7 @@
         @using (Html.BeginForm("QuizOne", "ManageUser", FormMethod.Post, new { id = "myForm" }))
         {
             <input type="hidden" id="hdnaction" name="hdnaction" value="" />
+            <input type="hidden" id="questId" name="hdnaction" value=@Model.Questions.QuestionId />
 
             <div class="row">
                 <div class="list-group list-group-flush">

@@ -164,40 +164,49 @@ namespace SelfAssessment.Controllers
 
         public ActionResult QuizOne()
         {
-            return View();
-        }
-
-        public ActionResult GetFirstQuestion(string id)
-        {
             this.quizManager = new QuizManager(this.UserId);
             var listOfQuestions = this.quizManager.GetAllQuestions();
             Session["AllQuestions"] = this.quizManager.AllQuestions = listOfQuestions;
             var question = this.quizManager.LoadQuiz(1);
-            return PartialView("QuizOnePartial", question);
-
+            return View(question);
         }
 
         [HttpPost]
-        public ActionResult QuizOne(QuestionOnePost questionCode)
+        public ActionResult QuizOne(FormCollection questionCode)
         {
             bool isAction = false;
             var quiz = new QuestionQuiz();
-            isAction = questionCode.hdnaction.Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
 
-            string[] values = questionCode.QInfo.Split('~');
-            quiz.GroupId = Convert.ToInt16(values[0]);
-            quiz.QuestionId = Convert.ToInt16(values[1]);
-            quiz.UserOptionId = Convert.ToInt16(values[2]);
-            quiz.UIQId = Convert.ToInt16(values[3]);
+            foreach (string user in questionCode.Keys)
+            {
+                if (user == "hdnaction")
+                {
+                    isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
+                    continue;
+                }
+                if (user == "UIQId")
+                {
+                    quiz.UIQId = Convert.ToInt16(questionCode["UIQId"]);
+                    continue;
+                }
+
+                string[] values = questionCode[user].Split('~');
+                quiz.GroupId = Convert.ToInt16(values[0]);
+                quiz.QuestionId = Convert.ToInt16(values[1]);
+                quiz.UserOptionId = Convert.ToInt16(values[2]);
+                quiz.UIQId = Convert.ToInt16(values[3]);
+
+            }
+
+            int qId = 0;
 
             this.quizManager = new QuizManager(this.UserId);
+            this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
             bool isAnswered = false;
             if(this.quizManager.IsMandatoryQuestion(quiz.QuestionId))
             {
                 isAnswered = quiz.UserOptionId > 0 ? true : false;
-            }          
-
-            int qId = 0;
+            }
 
             if (isAnswered)
             {
@@ -207,10 +216,7 @@ namespace SelfAssessment.Controllers
                 if (!isAction)
                     qId = qId + 1;
                 else
-                {
-                    qId = quiz.UIQId;
                     qId = qId - 1;
-                }
 
                 if (qId == 0)
                     qId = 1;
@@ -220,12 +226,10 @@ namespace SelfAssessment.Controllers
                 qId = quiz.UIQId;
                 ViewBag.Msg = "Please Fill the Mandatroy Questions";
             }
-
-            this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
             if (this.quizManager.MoveToNextQuestion(qId))
             {
                 var question = this.quizManager.LoadQuiz(qId);
-                return PartialView("QuizOnePartial", question);
+                return View(question);
             }
             return RedirectToAction("ShowResults", new { score = this.quizManager.CalculateScore() });
         }
