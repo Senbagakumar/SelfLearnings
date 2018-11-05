@@ -22,4 +22,15 @@ namespace SelfAssessment.Controllers
         public int UserId => userId;
 
     }
+
+    public class AdminBaseController : Controller
+    {
+        protected override void Initialize(RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+            if (Session["Admin"] == null || string.IsNullOrEmpty(Session["Admin"].ToString()))
+                Response.Redirect(Utilities.RedirectToLogin);            
+        }
+
+    }
 }

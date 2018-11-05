@@ -114,6 +114,23 @@
 <script src="~/js/API.js"></script>
 
 <script>
+
+    $('#Sector').on('change', function () {
+        $.ajax({
+            type: "GET",
+            url: API.GetSubSectorForAssessment() + $(this).val(),
+            contentType: "application/json"
+        }).done(function (res) {
+            $('#SubSector').empty();
+            $.each(res, function (key, value) {
+                $('#SubSector')
+                    .append($("<option></option>")
+                        .attr("value", value.Value)
+                        .text(value.Text));
+            });
+        });
+    });
+
     $("#btnGetOrganization").click(function () {
 
         var level = $('#Type').val();

@@ -1,2 +1,31 @@
-﻿<h2>ShowResults</h2>
-<h4>your total score is @ViewBag.Score</h4>
+﻿<h2>Completed</h2>
+<p>You answered the all the questions.</p>
+<p>Do you want to complete this Level</p>
+
+<button id="btnYes" type="button" class="btn btn-primary">Yes</button>
+<button id="btnNo" type="button" class="btn btn-secondary">No</button>
+
+
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>    
+<script src="~/admin/assets/js/popper.min.js"></script>
+<script src="~/admin/assets/js/plugins.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#btnYes').click(function () {
+
+
+            $.ajax({
+                type: "GET",
+                url: API.CompleteLevel(),
+                contentType: "application/json"
+            }).done(function (res) {
+                location.href = API.UserIndex();
+            });
+        });
+
+        $('#btnNo').click(function () {
+            location.href = API.UserIndex();
+        });
+    });
+</script>

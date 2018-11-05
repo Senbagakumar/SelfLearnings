@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class TypesOfServiceController : Controller
+    public class TypesOfServiceController : AdminBaseController
     {
         // GET: TypesOfService
         public ActionResult Index()

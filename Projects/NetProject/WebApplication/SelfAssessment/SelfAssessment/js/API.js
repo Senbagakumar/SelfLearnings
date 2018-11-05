@@ -215,5 +215,11 @@
     },
     SectorAloneFinalReport: function () {
         return this.baseUrl + "Report/SectorOrganizationFinalScore";
+    },
+    CompleteLevel: function () {
+        return this.baseUrl + "ManageUser/Complete";
+    },
+    UserIndex: function () {
+        return this.baseUrl + "ManageUser/Index";
     }
 };

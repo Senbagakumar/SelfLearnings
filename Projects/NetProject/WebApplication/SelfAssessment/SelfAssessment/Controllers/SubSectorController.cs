@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class SubSectorController : Controller
+    public class SubSectorController : AdminBaseController
     {
         // GET: SubSector
         public ActionResult Index()

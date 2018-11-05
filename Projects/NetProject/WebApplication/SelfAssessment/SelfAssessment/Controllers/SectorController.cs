@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class SectorController : Controller
+    public class SectorController : AdminBaseController
     {
         // GET: Sector
         public ActionResult Index()

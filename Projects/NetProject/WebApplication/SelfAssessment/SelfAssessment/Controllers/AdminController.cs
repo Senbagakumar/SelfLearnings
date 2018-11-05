@@ -11,7 +11,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class AdminController : Controller
+    public class AdminController : AdminBaseController
     {
         // GET: Admin
         public ActionResult Index()
@@ -34,8 +34,8 @@ namespace SelfAssessment.Controllers
             using (var repo = new Repository<Assessment>())
             {
                 assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                subSector = repo.AssessmentContext.subSectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
-                sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                //subSector = repo.AssessmentContext.subSectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
+                sector = BaseHelper.GetSectorValues();
                 states = repo.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
                 revenue = repo.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
                 typeOfService = repo.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
@@ -44,16 +44,16 @@ namespace SelfAssessment.Controllers
 
             var lastItem = new SelectListItem() { Text = Utilities.Others, Value = Utilities.OthersValue };
 
-            sector.Insert(0, firstItem);
-            subSector.Insert(0, firstItem);
+            //sector.Insert(0, firstItem);
+            //subSector.Insert(0, firstItem);
             revenue.Insert(0, firstItem);
             typeOfService.Insert(0, firstItem);
             cities.Insert(0, firstItem);
             states.Insert(0, firstItem);
             assessMent.Insert(0, firstItem);
 
-            sector.Add(lastItem);
-            subSector.Add(lastItem);
+            //sector.Add(lastItem);
+            //subSector.Add(lastItem);
 
             ViewBag.AssessMent = assessMent;
             ViewBag.SectorList = sector;
@@ -77,11 +77,11 @@ namespace SelfAssessment.Controllers
 
             using (var repo = new Repository<Assessment>())
             {
-                assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();                
-                sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+                sector = BaseHelper.GetSectorValues();
             }
 
-            sector.Insert(0, firstItem);
+            //sector.Insert(0, firstItem);
             subSector.Insert(0, firstItem);
             assessMent.Insert(0, firstItem);
 

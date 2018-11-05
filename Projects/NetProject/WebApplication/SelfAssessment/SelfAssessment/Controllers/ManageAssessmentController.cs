@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class ManageAssessmentController : Controller
+    public class ManageAssessmentController : AdminBaseController
     {
         // GET: ManageAssessment
         public ActionResult Index()
@@ -21,10 +21,10 @@ namespace SelfAssessment.Controllers
             var lAssessment = new List<Assessment>();
             var ulAssessment = new List<UAssessment>();
             var sector = new List<SelectListItem>();
-            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
+            //var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
             using (var repository = new Repository<Sector>())
             {
-                sector = repository.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                sector = BaseHelper.GetSectorValues();
                 lAssessment = repository.AssessmentContext.assessments.ToList();
             }
             int i = 1;
@@ -35,7 +35,7 @@ namespace SelfAssessment.Controllers
                 ShowWelcomeScreen=t.ShowWelcomeScreen, WelcomeMessage=t.WelcomeMessage, OrderId=i});
                 i = i + 1;
             });
-            sector.Insert(0, firstItem);
+            //sector.Insert(0, firstItem);
             ViewBag.SectorList = sector;
             ViewBag.SubSectorList = new List<SelectListItem>();
             return View(ulAssessment);
@@ -44,13 +44,7 @@ namespace SelfAssessment.Controllers
         [HttpGet]
         public JsonResult GetSubSector(int id)
         {
-            var firstItem = new SelectListItem() { Text = Utilities.All, Value = "0", Selected = true };
-            var subSector = new List<SelectListItem>();                      
-            using (var repository = new Repository<SubSector>())
-            {
-                subSector = repository.Filter(q => q.SectorId == id).Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
-            }
-            subSector.Insert(0, firstItem);
+            var subSector = BaseHelper.GetSubSectorValues(id);
             return Json(subSector, JsonRequestBehavior.AllowGet);
         }
 
@@ -136,7 +130,8 @@ namespace SelfAssessment.Controllers
             using (var repo = new Repository<Assessment>())
             {
                 assessMent = repo.All().Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
-                sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                //sector = repo.AssessmentContext.sectors.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SectorName }).ToList();
+                sector = BaseHelper.GetSectorValues();
                 states = repo.AssessmentContext.states.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.StateName }).ToList();
                 revenue = repo.AssessmentContext.revenues.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
                 typeOfService = repo.AssessmentContext.serviceTypes.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
@@ -144,13 +139,13 @@ namespace SelfAssessment.Controllers
 
             var lastItem = new SelectListItem() { Text = Utilities.Others, Value = Utilities.OthersValue };
 
-            sector.Insert(0, firstItem);           
+            //sector.Insert(0, firstItem);           
             revenue.Insert(0, firstItem);
             typeOfService.Insert(0, firstItem);
             states.Insert(0, firstItem);
             assessMent.Insert(0, firstItem);
 
-            sector.Add(lastItem);
+            //sector.Add(lastItem);
 
             ViewBag.AssessMent = assessMent;
             ViewBag.SectorList = sector;

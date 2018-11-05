@@ -39,11 +39,11 @@ namespace SelfAssessment.Business
                 listOrganization = listOrganization.Where(q => q.CityId == org.CityId).ToList();
             if (org.StateId > 0)
                 listOrganization = listOrganization.Where(q => q.StateId == org.StateId).ToList();
-            if (org.SectorId > 0 && org.SectorId != 1000)
+            if (org.SectorId > 0 && org.SectorId != 1000 && org.SectorId != 1001) // Skip for others and All
                 listOrganization = listOrganization.Where(q => q.SectorId == org.SectorId).ToList();
             if (org.RevenueId > 0)
                 listOrganization = listOrganization.Where(q => q.RevenueId == org.RevenueId).ToList();
-            if (org.SubSectorId > 0 && org.SubSectorId != 1000)
+            if (org.SubSectorId > 0 && org.SubSectorId != 1000 && org.SubSectorId != 1001)
                 listOrganization = listOrganization.Where(q => q.SubSectorId == org.SubSectorId).ToList();
             if (org.TypeOfServiceId > 0)
                 listOrganization = listOrganization.Where(q => q.TypeOfServiceId == org.TypeOfServiceId).ToList();

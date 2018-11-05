@@ -22,13 +22,21 @@ namespace SelfAssessment.Business
         {
             var listOfGroupQuestions = new List<GroupQuiz>();
             var uInfo = new Repository<Organization>();
-            var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q=> q.u.Id == UserId).FirstOrDefault();
+            int sectorValue= int.Parse(Utilities.SectorValue);
+
+            var userSectorId = uInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+
+            var assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == userSectorId.SectorId).FirstOrDefault();
+            if (assessmentDetails == null || assessmentDetails.Sector == 0)
+                assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == sectorValue).FirstOrDefault();
+
+            //var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q=> q.u.Id == UserId).FirstOrDefault();
             var questionIds = new List<int>();
 
             if(level==null)
-                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
+                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentDetails.Id && q.Level == userSectorId.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
             else
-                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == level).Select(q => q.QuestionId).ToList();
+                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentDetails.Id && q.Level == level).Select(q => q.QuestionId).ToList();
 
             var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 

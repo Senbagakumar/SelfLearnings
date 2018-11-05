@@ -30,6 +30,8 @@ namespace SelfAssessment.Business
         public const string All = "-- All --";
         public const string Group6 = "Group6";
         public const string Group9 = "Group9";
+        public const string SectorAll = "ALL";
+        public const string SectorValue = "1001";
 
         public static int CalculateScoreByAns(int answerId)
         {

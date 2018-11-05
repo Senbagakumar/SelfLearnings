@@ -50,6 +50,7 @@ namespace SelfAssessment.Controllers
         {
             if (email == "Admin@gmail.com" && password == "Admin")
             {
+                Session["Admin"] = "Admin";
                 return Redirect(Utilities.RedirectToAdmin);
             }
             else

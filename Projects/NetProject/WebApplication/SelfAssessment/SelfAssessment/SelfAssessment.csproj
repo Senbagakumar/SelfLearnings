@@ -160,6 +160,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Business\BaseHelper.cs" />
     <Compile Include="Business\BusinessContract.cs" />
     <Compile Include="Business\Helper.cs" />
     <Compile Include="Business\IBusinessContract.cs" />

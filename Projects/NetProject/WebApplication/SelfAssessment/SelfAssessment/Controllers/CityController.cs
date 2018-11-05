@@ -10,7 +10,7 @@ using System.Web.Mvc;
 namespace SelfAssessment.Controllers
 {
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-    public class CityController : Controller
+    public class CityController : AdminBaseController
     {
         // GET: City
         public ActionResult Index()

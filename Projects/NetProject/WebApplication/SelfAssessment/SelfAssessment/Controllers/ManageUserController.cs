@@ -67,10 +67,14 @@ namespace SelfAssessment.Controllers
         {
             var lAssessment = new List<UIAssessment>();
             var userInfo = new Repository<Organization>();
+            int sectorValue = int.Parse(Utilities.SectorValue);
             var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
             if (user != null)
             {
                 var assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId);
+                if (assessment == null)
+                    assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(t => t.Sector == sectorValue);
+
                 ViewBag.WelComeMessage = assessment.WelcomeMessage;
                 ViewBag.Description = assessment.Description;
                 ViewBag.Url = assessment.AssessmentFormat == "2" ? "/manageuser/QuizGroup" : assessment.AssessmentFormat == "1" ? "/manageuser/QuizOne" : "/manageuser/QuizGroup";
@@ -184,9 +188,9 @@ namespace SelfAssessment.Controllers
                     isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
                     continue;
                 }
-                if (user == "UIQId")
+                if (user == "Questions.UIQId")
                 {
-                    quiz.UIQId = Convert.ToInt16(questionCode["UIQId"]);
+                    quiz.UIQId = Convert.ToInt16(questionCode["Questions.UIQId"]);
                     continue;
                 }
 
@@ -203,7 +207,7 @@ namespace SelfAssessment.Controllers
             this.quizManager = new QuizManager(this.UserId);
             this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
             bool isAnswered = false;
-            if(this.quizManager.IsMandatoryQuestion(quiz.QuestionId))
+            if(this.quizManager.IsMandatoryQuestion(quiz.UIQId))
             {
                 isAnswered = quiz.UserOptionId > 0 ? true : false;
             }
@@ -231,20 +235,17 @@ namespace SelfAssessment.Controllers
                 var question = this.quizManager.LoadQuiz(qId);
                 return View(question);
             }
-            return RedirectToAction("ShowResults", new { score = this.quizManager.CalculateScore() });
+            return RedirectToAction("ShowResults");
         }
-        public ActionResult ShowResults(int score)
+        public ActionResult ShowResults()
         {
-            CompleteAssignment();
-            ViewBag.Score = score;
             return View();
         }
 
-        public ActionResult ShowGroupResults(int score)
+        public JsonResult Complete()
         {
             CompleteAssignment();
-            ViewBag.Score = score;
-            return View();
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult QuizGroup()
@@ -324,7 +325,7 @@ namespace SelfAssessment.Controllers
                 var question = this.groupQuizManager.LoadQuiz(groupId);
                 return View(question);
             }           
-            return RedirectToAction("ShowGroupResults", new { score=this.groupQuizManager.CalculateScore()});
+            return RedirectToAction("ShowResults");
         }
 
         private void CompleteAssignment()

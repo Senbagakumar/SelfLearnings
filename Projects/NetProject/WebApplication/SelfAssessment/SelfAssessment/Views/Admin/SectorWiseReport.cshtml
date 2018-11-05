@@ -179,16 +179,10 @@
         $('#Sector').on('change', function () {
             $.ajax({
                 type: "GET",
-                url: API.GetSubSectors() + $(this).val(),
+                url: API.GetSubSectorForAssessment() + $(this).val(),
                 contentType: "application/json"
             }).done(function (res) {
                 $('#SubSector').empty();
-
-                $('#SubSector')
-                    .append($("<option></option>")
-                        .attr("value", "0")
-                        .text("ALL"));
-
                 $.each(res, function (key, value) {
                     $('#SubSector')
                         .append($("<option></option>")
@@ -196,7 +190,6 @@
                             .text(value.Text));
                 });
             });
-
         });
 
         function clear() {

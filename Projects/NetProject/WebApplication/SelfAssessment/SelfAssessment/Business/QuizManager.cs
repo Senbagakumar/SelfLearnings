@@ -22,9 +22,18 @@ namespace SelfAssessment.Business
             var listOfQuestions = new List<QuestionAnswer>();
             var uInfo = new Repository<Organization>();
 
-            var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id == UserId).FirstOrDefault();
 
-            var questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == details.u.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
+            int sectorValue = int.Parse(Utilities.SectorValue);
+
+            var userSectorId = uInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+
+            var assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == userSectorId.SectorId).FirstOrDefault();
+            if (assessmentDetails == null || assessmentDetails.Sector == 0)
+                assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == sectorValue).FirstOrDefault();
+
+            //var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id == UserId).FirstOrDefault();
+
+            var questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentDetails.Id && q.Level == userSectorId.CurrentAssignmentType).Select(q => q.QuestionId).ToList();
             var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 
             int i = 1;
@@ -78,7 +87,7 @@ namespace SelfAssessment.Business
 
         public bool IsMandatoryQuestion(int questionId)
         {
-            return AllQuestions.FirstOrDefault(q => q.Questions.QuestionId == questionId).Questions.Mandatory;
+            return AllQuestions.FirstOrDefault(q => q.Questions.UIQId == questionId).Questions.Mandatory;
         }
 
         public QuestionAnswer LoadQuiz(int questionId)

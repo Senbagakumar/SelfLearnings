@@ -4,6 +4,7 @@
 
     var bC1OrgScore = [];
     var bC1OtherOrgScore = [];
+    var bc10groups = [];
 
     $.ajax({
         type: "GET",
@@ -18,6 +19,7 @@
     function OnSuccess_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
+        var groups = response.Groups;
 
         for (var i = 0; i < oo.length; i++) {
             bC1OtherOrgScore.push(oo[i]);
@@ -25,6 +27,9 @@
 
         for (var i = 0; i < og.length; i++) {
             bC1OrgScore.push(og[i]);
+        }
+        for (var i = 0; i < groups.length; i++) {
+            bc10groups.push(groups[i]);
         }
     }
 
@@ -39,7 +44,7 @@
         type: 'bar',
 
         data: {
-            labels: ["group1", "group2", "group3", "group4", "group5", "group6", "group7", "group8", "group9"],
+            labels: bc10groups,
             datasets: [
                 {
 
@@ -148,6 +153,7 @@
 
     var bC4OrgScore = [];
     var bC4OtherOrgScore = [];
+    var bc4groups = [];
 
     $.ajax({
         type: "GET",
@@ -162,6 +168,7 @@
     function OnSuccess4_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
+        var groups = response.Groups;
 
         for (var i = 0; i < oo.length; i++) {
             bC4OtherOrgScore.push(oo[i]);
@@ -169,6 +176,10 @@
 
         for (var i = 0; i < og.length; i++) {
             bC4OrgScore.push(og[i]);
+        }
+
+        for (var i = 0; i < groups.length; i++) {
+            bc4groups.push(groups[i]);
         }
     }
 
@@ -182,7 +193,7 @@
     var myChart4 = new Chart(ctx4, {
         type: 'bar',
         data: {
-            labels: ["group1", "group2", "group3", "group4", "group5", "group6", "group7", "group8", "group9"],
+            labels: bc4groups,
             datasets: [
                 {
                     label: "organization individual Score",

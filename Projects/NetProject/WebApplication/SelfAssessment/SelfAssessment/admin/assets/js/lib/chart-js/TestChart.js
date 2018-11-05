@@ -1,6 +1,7 @@
 ﻿function BarChart(sector,subsector,level,assementId) {
 
     var bC1OrgScore = [];
+    var bc4groups = [];
     $.ajax({
         type: "GET",
         url: API.SectorAloneOrganizationReport() + "/?sectorId=" + sector + "&subsectorId=" + subsector + "&level=" + level +"&assessementId="+assementId,
@@ -13,10 +14,16 @@
 
     function OnSuccess_(response) {
         var oo = response.OtherOrg;
+        var groups = response.Groups;
 
         for (var i = 0; i < oo.length; i++) {
             bC1OrgScore.push(oo[i]);
         }
+
+        for (var i = 0; i < groups.length; i++) {
+            bc4groups.push(groups[i]);
+        }
+
     }
 
     function OnErrorCall_(response) {
@@ -30,7 +37,7 @@
         type: 'bar',
 
         data: {
-            labels: ["group1", "group2", "group3", "group4", "group5", "group6", "group7", "group8", "group9"],
+            labels: bc4groups,
             datasets: [
                 {
 

@@ -15,12 +15,19 @@ namespace SelfAssessment.Business
             var scoreCalc = new ScoreCalc();
             var listOfGroupQuestions = new List<GroupQuiz>();
             var uInfo = new Repository<Organization>();
+            int sectorValue = int.Parse(Utilities.SectorValue);
 
             var questionIds = new List<int>();
             if (assessmentId == 0)
             {
-                var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id == userId).FirstOrDefault();
-                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == details.a.Id && q.Level == level).Select(q => q.QuestionId).ToList();
+                var userSectorId = uInfo.Filter(q => q.Id == userId).FirstOrDefault();
+
+                var assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == userSectorId.SectorId).FirstOrDefault();
+                if (assessmentDetails == null || assessmentDetails.Sector == 0)
+                    assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == sectorValue).FirstOrDefault();
+
+                //var details = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id == userId).FirstOrDefault();
+                questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentDetails.Id && q.Level == level).Select(q => q.QuestionId).ToList();
             }
             else
                 questionIds = uInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessmentId && q.Level == level).Select(q => q.QuestionId).ToList();
@@ -70,9 +77,9 @@ namespace SelfAssessment.Business
             }
 
             var graph = new Graph();
-            graph.OtherOrg = new int[9];
-            graph.Org = new int[9];
-            graph.Groups = new string[9];
+            graph.OtherOrg = new int[myScore.Scores.Count];
+            graph.Org = new int[myScore.Scores.Count];
+            graph.Groups = new string[myScore.Scores.Count];
             int i = 0;
             foreach (var grp in myScore.Scores)
             {                
@@ -116,6 +123,8 @@ namespace SelfAssessment.Business
             ScoreCalc myScore = CalculateScore(currentUserId, false, level);
             var uInfo = new Repository<Organization>();
             var lorgs = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q=> q.u.Id != currentUserId).Select(q=> q.u.Id).ToList();
+            if (lorgs.Count == 0)
+                lorgs = uInfo.AssessmentContext.UserInfo.Where(q => q.Id != currentUserId).Select(q => q.Id).ToList();
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in lorgs)
             {
@@ -124,9 +133,9 @@ namespace SelfAssessment.Business
             }
 
             var graph = new Graph();
-            graph.OtherOrg = new int[9];
-            graph.Org = new int[9];
-            graph.Groups = new string[9];
+            graph.OtherOrg = new int[myScore.Scores.Count];
+            graph.Org = new int[myScore.Scores.Count];
+            graph.Groups = new string[myScore.Scores.Count];
             int i = 0;
             foreach (var grp in myScore.Scores)
             {
@@ -146,7 +155,8 @@ namespace SelfAssessment.Business
             ScoreCalc myScore = CalculateScore(currentUserId, true, level);
             var uInfo = new Repository<Organization>();
             var lorgs = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).Where(q => q.u.Id != currentUserId).Select(q => q.u.Id).ToList();
-
+            if (lorgs.Count == 0)
+                lorgs = uInfo.AssessmentContext.UserInfo.Where(q => q.Id != currentUserId).Select(q => q.Id).ToList();
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in lorgs)
             {
@@ -165,32 +175,43 @@ namespace SelfAssessment.Business
 
         
         public static Graph SectorOrganizationScore(int sectorId,int subSectorId, string level, int assementId)
-        {
-            List<string> groups = new List<string>() { "Group1", "Group2", "Group 3", "Group4", "Group5", "Group6", "Group7", "Group8", "Group9" };
+        {            
+            var uids = new List<int>();
 
             var uInfo = new Repository<Organization>();
             var lorgs = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).ToList();
-            
-            if (sectorId > 0)
-                lorgs = lorgs.Where(q => q.u.SectorId == sectorId).ToList();
-            if (subSectorId > 0)
-                lorgs = lorgs.Where(q => q.u.SubSectorId == subSectorId).ToList();
+            if (lorgs.Count == 0)
+            {
+                uids = uInfo.AssessmentContext.UserInfo.Select(q => q.Id).ToList();
+            }
+            else
+            {
+                if (sectorId > 0 && sectorId != 1001)
+                    lorgs = lorgs.Where(q => q.u.SectorId == sectorId).ToList();
+                if (subSectorId > 0 && subSectorId != 1001)
+                    lorgs = lorgs.Where(q => q.u.SubSectorId == subSectorId).ToList();
 
-           var uids = lorgs.Select(q => q.u.Id).ToList();
-               
+                uids = lorgs.Select(q => q.u.Id).ToList();
+            }
 
             var otherOrg = new List<ScoreCalc>();
+            var scores = new ScoreCalc();
             foreach (var id in uids)
             {
-                var scores = CalculateScore(id, false, level, assementId);
+                scores = CalculateScore(id, false, level, assementId);
                 otherOrg.Add(scores);
             }
 
+            var groups = new List<string>();
+            otherOrg[0].Scores.ForEach(t => 
+            {
+                groups.Add(t.GroupName);
+            });
 
             var graph = new Graph();
-            graph.OtherOrg = new int[9];
-            graph.Org = new int[9];
-            graph.Groups = new string[9];
+            graph.OtherOrg = new int[scores.Scores.Count];
+            graph.Org = new int[scores.Scores.Count];
+            graph.Groups = new string[scores.Scores.Count];
             int i = 0;
             foreach (var grp in groups)
             {
@@ -223,14 +244,21 @@ namespace SelfAssessment.Business
         public static Graph SectorOrganizationFinalScore(int sectorId, int subSectorId, string level, int assementId)
         {
             var uInfo = new Repository<Organization>();
+            var uids = new List<int>();
             var lorgs = uInfo.AssessmentContext.UserInfo.Join(uInfo.AssessmentContext.assessments, u => u.SectorId, a => a.Sector, (u, a) => new { u, a }).ToList();
+            if (lorgs.Count == 0)
+            {
+                uids = uInfo.AssessmentContext.UserInfo.Select(q => q.Id).ToList();
+            }
+            else
+            {
+                if (sectorId > 0 && sectorId != 1001)
+                    lorgs = lorgs.Where(q => q.u.SectorId == sectorId).ToList();
+                if (subSectorId > 0 && subSectorId != 1001)
+                    lorgs = lorgs.Where(q => q.u.SubSectorId == subSectorId).ToList();
 
-            if (sectorId > 0)
-                lorgs = lorgs.Where(q => q.u.SectorId == sectorId).ToList();
-            if (subSectorId > 0)
-                lorgs = lorgs.Where(q => q.u.SubSectorId == subSectorId).ToList();
-
-            var uids = lorgs.Select(q => q.u.Id).ToList();
+                uids = lorgs.Select(q => q.u.Id).ToList();
+            }
 
             var otherOrg = new List<ScoreCalc>();
             foreach (var id in uids)

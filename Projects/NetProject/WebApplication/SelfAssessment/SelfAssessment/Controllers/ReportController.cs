@@ -24,125 +24,125 @@ namespace SelfAssessment.Controllers
             return id;
         }
         // GET: Report
-        public async Task<JsonResult> GetOrganizationalScoreLevel1(int id = 0,string level=null)
+        public JsonResult GetOrganizationalScoreLevel1(int id = 0,string level=null)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 28, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 25, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), level));
+            var graph = Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), level)).Result;
             return  Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetFinalScoreLevel1(int id = 0, string level = null)
+        public JsonResult GetFinalScoreLevel1(int id = 0, string level = null)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), level));
+            var graph = Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), level)).Result;
             return  Json(graph, JsonRequestBehavior.AllowGet);
             
         }
 
-        public async Task<JsonResult> GetSectorOrganizationalScoreLevel1(int id = 0, string level = null)
+        public JsonResult GetSectorOrganizationalScoreLevel1(int id = 0, string level = null)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 28, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 25, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), level));
+            var graph = Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), level)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetSectorFinalScoreLevel1(int id = 0, string level = null)
+        public JsonResult GetSectorFinalScoreLevel1(int id = 0, string level = null)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationManufacturingFinalScore(GetUserIdIfIdIsEmpty(id), level));
+            var graph = Task.Run(() => ScoreReport.OrganizationManufacturingFinalScore(GetUserIdIfIdIsEmpty(id), level)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetOrganizationalScoreLevel2(int id = 0)
+        public JsonResult GetOrganizationalScoreLevel2(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 50, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 50, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2));
+            var graph = Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetFinalScoreLevel2(int id = 0)
+        public JsonResult GetFinalScoreLevel2(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2));
+            var graph = Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetSectorOrganizationalScoreLevel2(int id = 0)
+        public JsonResult GetSectorOrganizationalScoreLevel2(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 28, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 25, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2));
+            var graph = Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2)).Result;
             return  Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetSectorFinalScoreLevel2(int id = 0)
+        public JsonResult GetSectorFinalScoreLevel2(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationManufacturingFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2));
+            var graph = Task.Run(() => ScoreReport.OrganizationManufacturingFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel2)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetOrganizationalScoreLevel3(int id = 0)
+        public JsonResult GetOrganizationalScoreLevel3(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 75, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 75, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3));
+            var graph = Task.Run(() => ScoreReport.OrganizationScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetFinalScoreLevel3(int id = 0)
+        public JsonResult GetFinalScoreLevel3(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3));
-            return await Task.Run(() => Json(graph, JsonRequestBehavior.AllowGet));
+            var graph = Task.Run(() => ScoreReport.OrganizationFinalScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3)).Result;
+            return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> GetSectorOrganizationalScoreLevel3(int id = 0)
+        public JsonResult GetSectorOrganizationalScoreLevel3(int id = 0)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 28, 48, 40, 19, 86, 27, 90, 10, 25 },
             //    Org = new int[] { 25, 90, 50, 56, 22, 36, 85, 20, 10 }
             //};
-            var graph = await Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3));
+            var graph = Task.Run(() => ScoreReport.OrganizationManufacturingScore(GetUserIdIfIdIsEmpty(id), Utilities.AssessmentTypeLevel3)).Result;
             return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
@@ -159,7 +159,7 @@ namespace SelfAssessment.Controllers
 
 
 
-        public async Task<JsonResult> SectorOrganizationScore(int sectorId, int subsectorId,string level,int assessementId)
+        public JsonResult SectorOrganizationScore(int sectorId, int subsectorId,string level,int assessementId)
         {
 
             //    var graph = new Graph()
@@ -167,19 +167,19 @@ namespace SelfAssessment.Controllers
             //        OtherOrg = new int[] { 28, 48, 40, 19, 86, 27, 90, 10, 25 },
             //        Org = new int[] { 25, 90, 50, 56, 22, 36, 85, 20, 10 }
             //    };
-            var graph = await Task.Run(() => ScoreReport.SectorOrganizationScore(sectorId,subsectorId,level,assessementId));
-            return await Task.Run(() => Json(graph, JsonRequestBehavior.AllowGet));
+            var graph = Task.Run(() => ScoreReport.SectorOrganizationScore(sectorId,subsectorId,level,assessementId)).Result;
+            return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
-        public async Task<JsonResult> SectorOrganizationFinalScore(int sectorId, int subsectorId, string level, int assessementId)
+        public JsonResult SectorOrganizationFinalScore(int sectorId, int subsectorId, string level, int assessementId)
         {
             //var graph = new Graph()
             //{
             //    OtherOrg = new int[] { 700 },
             //    Org = new int[] { 500 }
             //};
-            var graph = await Task.Run(() => ScoreReport.SectorOrganizationFinalScore(sectorId, subsectorId, level, assessementId));
-            return await Task.Run(() => Json(graph, JsonRequestBehavior.AllowGet));
+            var graph = Task.Run(() => ScoreReport.SectorOrganizationFinalScore(sectorId, subsectorId, level, assessementId)).Result;
+            return Json(graph, JsonRequestBehavior.AllowGet);
         }
 
     }
