@@ -56,6 +56,26 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.32.3885.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering, Version=1.32.3885.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering, Version=1.32.3885.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
+    <Reference Include="pdfsharp, Version=1.32.2608.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\pdfsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="pdfsharp.charting, Version=1.32.2608.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\pdfsharp.charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Configuration.ConfigurationManager.4.4.1\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
@@ -172,6 +192,7 @@
     <Compile Include="Business\ISaveQuiz.cs" />
     <Compile Include="Business\LamdaComparer.cs" />
     <Compile Include="Business\OrganisationComponentDetails.cs" />
+    <Compile Include="Business\PDFform.cs" />
     <Compile Include="Business\QuizManager.cs" />
     <Compile Include="Business\RegistrationSendMail.cs" />
     <Compile Include="Business\ScoreReport.cs" />
@@ -1204,6 +1225,12 @@
     <Content Include="css\hummingbird-treeview.css" />
     <Content Include="css\scss-files.txt" />
     <Content Include="css\style.css" />
+    <Content Include="Dlls\MigraDoc.DocumentObjectModel.dll" />
+    <Content Include="Dlls\MigraDoc.Rendering.dll" />
+    <Content Include="Dlls\MigraDoc.RtfRendering.dll" />
+    <Content Include="Dlls\pdfsharp.charting.dll" />
+    <Content Include="Dlls\pdfsharp.dll" />
+    <Content Include="Downloads\Req.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2448,6 +2475,7 @@
     <Content Include="manageuser\assets\scss\_switches.scss" />
     <Content Include="manageuser\assets\scss\_widgets.scss" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2504,7 +2532,7 @@
     <Content Include="Views\ManageUser\QuizOne.cshtml" />
     <Content Include="Views\ManageUser\ShowResults.cshtml" />
     <Content Include="Views\ManageUser\QuizGroup.cshtml" />
-    <Content Include="Views\ManageUser\ShowGroupResults.cshtml" />
+    <Content Include="Views\ManageUser\EndMsg.cshtml" />
     <Content Include="Views\ManageUser\QuizOnePartial.cshtml" />
     <Content Include="Views\ManageOrg\Index.cshtml" />
     <Content Include="Views\ManageUser\QuizGroupPartial.cshtml" />

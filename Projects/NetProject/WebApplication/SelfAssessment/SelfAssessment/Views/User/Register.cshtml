@@ -101,7 +101,7 @@
                 </div>
 
                 <div class="text-right">
-                    <button type="submit" id="btnLogin" class="btn btn-primary">Submit</button>
+                    <button type="button" id="btnLogin" class="btn btn-primary">Submit</button>
                     <button type="reset" class="btn btn-primary btn-sm">Cancel</button>
                 </div>
             </form>
@@ -232,10 +232,10 @@
 
                 $('#text-input').val('');
                 $('#txtId').val('');
-
-                if (res == "Success")
+                alert(res);
+                if (res == "Success") {
                     location.href = API.LoginSuccess();
-
+                }
             });
 
         });

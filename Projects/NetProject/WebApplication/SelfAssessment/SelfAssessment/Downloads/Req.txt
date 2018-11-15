@@ -1,0 +1,40 @@
+Organization Login:
+	After Login : send the mail -> ListAssessment
+	Change Password : done
+
+Slno -> should be order
+user complete-> status should be changed . (currently we will change by next level)   -- done
+Previous -> Save   -- done
+
+ListAssessment-> didn't show the level 1 after move the next level
+
+LogOut- done
+
+Admin :
+
+Group -> weightage calculation
+
+Add question form:
+Timier Limit -> Remove   -- done
+
+Question Mandatory -> Based on the Mandatory we have to validate question 
+
+Create Assessment:
+Question Index, MayPrintAnwer, Statistics, ListAssessmentPublically,AllowPublicRegistration, Next Button, startdate and enddate -> Remove ( done )
+	
+Manage Organization filter is not working properly  
+
+Based on the mandatory question -> we have to validate while clicking the Next button
+
+
+Formula have to change -> group calculation
+Mandatory Validation is done
+
+
+-> after registration -> form design  --> done
+-> after submit -> end msg show   -> done
+-> Admin enable -> password send  -> //smtp configuration is required.
+-> Export
+
+
+

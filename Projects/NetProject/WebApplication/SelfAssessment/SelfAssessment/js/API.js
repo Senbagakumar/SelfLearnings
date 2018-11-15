@@ -159,6 +159,9 @@
     OrganizationUpdate: function () {
         return this.baseUrl + "ManageOrg/UpdateOrganization";
     },
+    OrganizationEnable: function () {
+        return this.baseUrl + "ManageOrg/EnableUsers/";
+    },
     CustomerAssessmentReadOnly: function () {
         return this.baseUrl + "ManageUser/CustomerAssessment";
     },
@@ -221,5 +224,11 @@
     },
     UserIndex: function () {
         return this.baseUrl + "ManageUser/Index";
-    }
+    },
+    UserEndScreen: function () {
+        return this.baseUrl + "ManageUser/EndMsg";
+    },
+    ExportPdf: function () {
+        return this.baseUrl + "ManageUser/PdfExport";
+    },
 };

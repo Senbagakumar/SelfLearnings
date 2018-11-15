@@ -1,16 +1,58 @@
-﻿<h2>Completed</h2>
-<p>You answered the all the questions.</p>
-<p>Do you want to complete this Level</p>
+﻿
+<div class="content mt-3">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h2>Completed</h2>
+                <p>You answered the all the questions.</p>
+                <p>Do you want to complete this Level</p>
+            </div>
+            <div class="row col-md-12" style="margin-top:5px;">
+                <span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button id="btnYes" type="button" class="btn btn-primary">Yes</button>
+                </span>
+                <span class="ml-auto">
+                    <button id="btnNo" type="button" class="btn btn-secondary">No</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="user-area dropdown float-right">
+                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="ti-export"></span>&nbsp; Export
+                    </a>
 
-<button id="btnYes" type="button" class="btn btn-primary">Yes</button>
-<button id="btnNo" type="button" class="btn btn-secondary">No</button>
+                    <div class="user-menu dropdown-menu">
+                        <a class="nav-link" href="~/ManageUser/PdfExport"><i class="ti-file"></i> Export AS PDF</a>
+                        <a class="nav-link" href="~/ManageUser/CsvExport"><i class="ti-microsoft"></i> Export AS Excel</a>
+                    </div>
+                </div>
+            </div>           
+        </div>
+     </div>
+</div>
 
-
-<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>    
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
 
 <script type="text/javascript">
+
+    //function Export(type) {
+    //    alert(type);
+
+    //    $.ajax({
+    //        type: "GET",
+    //        url: API.ExportPdf(),
+    //        contentType: "application/json"
+    //    }).done(function (res) {
+    //    });
+    //}
+
     $(document).ready(function () {
         $('#btnYes').click(function () {
 
@@ -20,7 +62,7 @@
                 url: API.CompleteLevel(),
                 contentType: "application/json"
             }).done(function (res) {
-                location.href = API.UserIndex();
+                location.href = API.UserEndScreen();
             });
         });
 

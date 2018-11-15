@@ -162,21 +162,25 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public JsonResult CreateOrganization(UIOrganization organization)
         {
+            string errorMsg = string.Empty;
             try
             {
 
-                this.businessContract.UserCreation(organization);
-                
+               var validation=this.businessContract.UserCreation(organization);
+                if (validation.IsSuccess)
+                    errorMsg = Utilities.Success;
+                else
+                    errorMsg = Utilities.Failiure;
 
                 // TODO: Add insert logic here
 
-                //return RedirectToAction("Success");
+                //return RedirectToAction("SuccesserrorMsg
             }
             catch(Exception ex)
             {
                 //return View();
             }
-           return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
+           return Json(errorMsg, JsonRequestBehavior.AllowGet);
         }
       
     }

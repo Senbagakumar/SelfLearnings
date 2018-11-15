@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SelfAssessment.Business;
+using System.Data;
 
 namespace SelfAssessment.Business
 {
@@ -95,6 +96,38 @@ namespace SelfAssessment.Business
             return AllQuestions;
           
         }
+
+        public DataTable ExportPdf()
+        {
+            var dt = new DataTable();
+            dt.Columns.Add("SLNO");
+            dt.Columns.Add("GROUPNAME");
+            dt.Columns.Add("QUESTION");
+            dt.Columns.Add("ANSWERS");
+
+            var uInfo = new Repository<Answer>();
+            int i = 1;
+            AllQuestions.ForEach(v =>
+            {
+                v.listOfQuestions.ForEach(q =>
+                {
+                    var dr = dt.NewRow();
+                    dr[0] = i;
+                    dr[1] = v.GroupText;
+                    dr[2] = q.Questions.QuestionText;
+
+                    var isAnswer = uInfo.Filter(a => a.QuestionId == q.Questions.QuestionId && a.GroupId == v.GroupId && a.UserId == UserId).FirstOrDefault();
+                    if (isAnswer != null)
+                    {
+                        var selectedChoice = q.AnswerChoices.Where(ans => ans.AnswerChoiceId == isAnswer.UserOptionId).FirstOrDefault();
+                        dr[3] = selectedChoice.Choices;
+                    }
+                    dt.Rows.Add(dr);
+                });
+            });
+            return dt;
+        }
+
 
         public List<QuestionAnswer> GetMandatoryQuestion(int groupId)
         {

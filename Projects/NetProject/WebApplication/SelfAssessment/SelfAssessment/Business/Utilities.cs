@@ -1,6 +1,11 @@
-﻿using System;
+﻿using FileDownload.Controllers;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace SelfAssessment.Business
@@ -60,5 +65,55 @@ namespace SelfAssessment.Business
             }
             return score;
         }
+        public static string CreateCsv(DataTable dt)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (DataColumn column in dt.Columns)
+            {
+                sb.Append(column.ColumnName);
+                sb.Append(",");
+            }
+            sb.AppendLine();
+            foreach (DataRow row in dt.Rows)
+            {
+                foreach (DataColumn column in dt.Columns)
+                {
+                    sb.Append(row[column]);
+                    sb.Append(",");
+                }
+                sb.AppendLine();
+            }
+            return sb.ToString();
+
+        }
+        public static void CreatePdf(string pdfFilename, DataTable dt)
+        {
+            PDFform pdfForm = new PDFform(dt, pdfFilename);
+
+            // Create a MigraDoc document
+            Document document = pdfForm.CreateDocument();
+            document.UseCmykColor = true;
+
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            pdfRenderer.Save(pdfFilename);
+        }
+
+        public static DataTable GetReport(int userId,string level=null)
+        {
+            var groupQuizManager = new GroupQuizManager(userId);
+            var listOfQuestions = groupQuizManager.GetAllQuestions(level);
+            groupQuizManager.AllQuestions = listOfQuestions;
+            var dt = groupQuizManager.ExportPdf();
+            return dt;
+        }
+        
     }
 }

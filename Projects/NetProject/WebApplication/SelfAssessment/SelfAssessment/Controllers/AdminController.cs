@@ -139,31 +139,70 @@ namespace SelfAssessment.Controllers
             return groupQuiz;
         }
 
+        public FileResult PdfExport(int userId, string level = null)
+        {
+
+            var dt = Utilities.GetReport(userId, level);
+            var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
+            Utilities.CreatePdf(fileName, dt);
+            return File(fileName, "application/pdf", $"{dynamicName}.pdf");
+
+        }
+
+        public FileResult CsvExport(int userId,string level = null)
+        {
+            var dt = Utilities.GetReport(userId, level);
+            var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
+            var s = Utilities.CreateCsv(dt);
+            System.IO.File.AppendAllText(fileName, s);
+            return File(fileName, "application/text", $"{dynamicName}.csv");
+
+        }
+
         [HttpPost]
         public ActionResult CustomerAssessmentReport(QuestionOnePost question)
         {
-            var groupQuizManager = new GroupQuizManager(question.UserId);
-            var listOfGroup = groupQuizManager.GetAllQuestions(question.Level);
-            groupQuizManager.AllQuestions = listOfGroup;
+            //PDF-1-Level 1
 
-            GroupQuiz groupQuiz = null;
-            int groupId = int.Parse(question.QInfo);
-            if (question.hdnaction == "Previous")
+            if (question.hdnaction != string.Empty && (question.hdnaction.Contains("PDF") || question.hdnaction.Contains("CSV")))
             {
-                groupId = groupId - 1;
-                if (groupId <= 0)
-                    groupId = 1;
-               
+                var values = question.hdnaction.Split('-');
+                if (question.hdnaction.Contains("PDF"))
+                {
+                    return PdfExport(int.Parse(values[1]),values[2]);
+                }
+                else
+                {
+                    return CsvExport(int.Parse(values[1]), values[2]);
+                }
             }
             else
-                groupId = groupId + 1;
-
-            if (groupQuizManager.MoveToNextGroup(groupId))
             {
-                groupQuiz = groupQuizManager.LoadQuiz(groupId);
-            }           
-            groupQuiz.UserId = question.UserId;
-            return PartialView("~/Views/ManageUser/QuizGroupPartial.cshtml", groupQuiz);
+                var groupQuizManager = new GroupQuizManager(question.UserId);
+                var listOfGroup = groupQuizManager.GetAllQuestions(question.Level);
+                groupQuizManager.AllQuestions = listOfGroup;
+
+                GroupQuiz groupQuiz = null;
+                int groupId = int.Parse(question.QInfo);
+                if (question.hdnaction == "Previous")
+                {
+                    groupId = groupId - 1;
+                    if (groupId <= 0)
+                        groupId = 1;
+
+                }
+                else
+                    groupId = groupId + 1;
+
+                if (groupQuizManager.MoveToNextGroup(groupId))
+                {
+                    groupQuiz = groupQuizManager.LoadQuiz(groupId);
+                }
+                groupQuiz.UserId = question.UserId;
+                return PartialView("~/Views/ManageUser/QuizGroupPartial.cshtml", groupQuiz);
+            }
         }
     }
 }

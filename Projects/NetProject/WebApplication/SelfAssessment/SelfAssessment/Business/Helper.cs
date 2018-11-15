@@ -55,6 +55,7 @@ namespace SelfAssessment.Business
                 listOrganization.ForEach(q =>
                 {
                     UIOrganization model = new UIOrganization();
+                    model.IsActive = org.IsActive == true ? "checked" : "Unchecked";
                     model.Id = q.Id;
                     model.Name = !string.IsNullOrEmpty(q.Name) ? q.Name : city.AssessmentContext.UserInfo.FirstOrDefault(t => t.Id == q.Id).Name;
                     model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;

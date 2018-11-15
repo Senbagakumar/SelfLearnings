@@ -63,7 +63,7 @@ namespace SelfAssessment.Business
             
             using (Repository<Organization> repository = new Repository<Organization>())
             {
-                var user = repository.Filter(q => q.Email == userName).FirstOrDefault();
+                var user = repository.Filter(q => q.Email == userName && q.IsActive).FirstOrDefault();
                 var tpwd = !string.IsNullOrEmpty(user.Password) ? StringCipher.Decrypt(user.Password) : string.Empty;
                 if (user != null && !string.IsNullOrEmpty(user.UserId) && (tpwd == password || user.TempPassword == password))
                     return user.Id;
@@ -86,13 +86,14 @@ namespace SelfAssessment.Business
         {
             ValidationInformation validation= this.userBValidation.RegistrationValidation(uIOrganization);
             if (validation.IsSuccess)
+
             {
                 string password = GenerateTempPassword(8, 2);
                 string[] sector = new string[2];
                 string[] subSector = new string[2];
                 Others other = new Others();
 
-                bool isOthers = false;               
+                bool isOthers = false;
 
                 if (uIOrganization.Sector.Contains(Utilities.OthersValue))
                 {
@@ -125,7 +126,7 @@ namespace SelfAssessment.Business
                     organization.TypesOfService = repository.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == organization.Id);
                     organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
                     organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
-                    
+
 
                     organization.TempPassword = password;
                     repository.Create(organization);
@@ -142,11 +143,14 @@ namespace SelfAssessment.Business
                         repository.SaveChanges();
                     }
                 }
+                validation.IsSuccess = true;
 
-                     
                 //this.registrationSendMail.Send(new MailConfiguration());
             }
-
+            else
+            {
+                validation.IsSuccess = false;
+            }
             return validation;             
         }
     }

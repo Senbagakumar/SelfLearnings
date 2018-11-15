@@ -5,18 +5,20 @@
         <div class="card">
             <div class="card-header">
                 <strong>Assessment Name</strong>
-                <div class="user-area dropdown float-right">
+                <form action="" method="post" class="form-horizontal" id="Report">
+                    <input type="hidden" id="hdnaction" name="hdnaction" value="" />
+                    <div class="user-area dropdown float-right">
 
-                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="ti-export"></span>&nbsp; Export
-                    </a>
+                        <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="ti-export"></span>&nbsp; Export
+                        </a>
 
-                    <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
-                        <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#" onclick="GetReport('PDF')"><i class="ti-file"></i> Export AS PDF</a>
+                            <a class="nav-link" href="#" onclick="GetReport('CSV')"><i class="ti-microsoft"></i> Export AS Excel</a>
+                        </div>
                     </div>
-                </div>
-
+                </form>
             </div>
             <div class="card-body card-block">
                 @*<form action="" method="post" class="form-horizontal">*@
@@ -65,6 +67,12 @@
 
 
 <script type="text/javascript">
+    function GetReport(action) {
+        var selectValue = $('#selectValue').val();
+        document.getElementById("hdnaction").value = action + "-" + selectValue;
+        document.getElementById("Report").submit()
+    }
+
     function formSubmitWithAction(action) {
         document.getElementById("hdnaction").value = action;
         var s = $('#myForm').serializeArray()

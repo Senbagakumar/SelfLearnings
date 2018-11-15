@@ -5,13 +5,17 @@ using SelfAssessment.Models.DBModel;
 using SelfAssessment.Validation;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using System.Web.UI;
 
 namespace SelfAssessment.Controllers
 {
@@ -67,7 +71,7 @@ namespace SelfAssessment.Controllers
         {
             var lAssessment = new List<UIAssessment>();
             var userInfo = new Repository<Organization>();
-            int sectorValue = int.Parse(Utilities.SectorValue);
+            int sectorValue = int.Parse(SelfAssessment.Business.Utilities.SectorValue);
             var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
             if (user != null)
             {
@@ -77,7 +81,7 @@ namespace SelfAssessment.Controllers
 
                 ViewBag.WelComeMessage = assessment.WelcomeMessage;
                 ViewBag.Description = assessment.Description;
-                ViewBag.Url = assessment.AssessmentFormat == "2" ? "/manageuser/QuizGroup" : assessment.AssessmentFormat == "1" ? "/manageuser/QuizOne" : "/manageuser/QuizGroup";
+                ViewBag.Url = assessment.AssessmentFormat == "2" ? "QuizGroup" : assessment.AssessmentFormat == "1" ? "QuizOne" : "QuizGroup";
                 if (assessment.Id != 0)
                 {
                     //Completion Level details
@@ -108,25 +112,47 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult CustomerAssessment(QuestionOnePost question)
         {
-            GroupQuiz groupQuiz=null;
-            int groupId = int.Parse(question.QInfo);
-            if(question.hdnaction== "Previous")
+            // Get Report
+
+            if (question.hdnaction != string.Empty && (question.hdnaction.Contains("PDF") || question.hdnaction.Contains("CSV")))
             {
-                groupId = groupId - 1;
-                if (groupId <= 0)
-                    groupId = 1;
+                var level = question.hdnaction.Split('-')[1];
+                if(question.hdnaction.Contains("PDF"))
+                {
+                    return PdfExport(level);
+                }
+                else
+                {
+                    return CsvExport(level);
+                }
             }
             else
-            {                
-               groupId = groupId + 1;
-            }
-            this.groupQuizManager = new GroupQuizManager(this.UserId);
-            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
-            if (this.groupQuizManager.MoveToNextGroup(groupId))
             {
-                groupQuiz = this.groupQuizManager.LoadQuiz(groupId);
-            }           
-            return PartialView("QuizGroupPartial", groupQuiz);
+                GroupQuiz groupQuiz = null;
+                int groupId = int.Parse(question.QInfo);
+                if (question.hdnaction == "Previous")
+                {
+                    groupId = groupId - 1;
+                    if (groupId <= 0)
+                        groupId = 1;
+                }
+                else
+                {
+                    groupId = groupId + 1;
+                }
+                this.groupQuizManager = new GroupQuizManager(this.UserId);
+                this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
+                if (this.groupQuizManager.MoveToNextGroup(groupId))
+                {
+                    groupQuiz = this.groupQuizManager.LoadQuiz(groupId);
+                }
+                else
+                {
+                    groupQuiz = this.groupQuizManager.LoadQuiz(--groupId);
+                }
+
+                return PartialView("QuizGroupPartial", groupQuiz);
+            }
         }
 
         public ActionResult GetFirstGroup(string id)
@@ -164,6 +190,29 @@ namespace SelfAssessment.Controllers
                 message = "Please Enter Correct Details";
             }
             return Json(message, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public FileResult PdfExport(string level = null)
+        {
+
+            var dt = Utilities.GetReport(this.UserId,level);
+            var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
+            Utilities.CreatePdf(fileName, dt);
+            return File(fileName, "application/pdf", $"{dynamicName}.pdf");
+
+        }
+
+        public FileResult CsvExport(string level = null)
+        {
+            var dt = Utilities.GetReport(this.UserId,level);
+            var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
+            var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
+            var s=Utilities.CreateCsv(dt);
+            System.IO.File.AppendAllText(fileName, s);
+            return File(fileName, "application/text", $"{dynamicName}.csv");
+
         }
 
         public ActionResult QuizOne()
@@ -239,6 +288,19 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult ShowResults()
         {
+            return View();
+        }
+
+        public ActionResult EndMsg()
+        {
+            var uInfo= new Repository<Organization>();
+            int sectorValue = int.Parse(Business.Utilities.SectorValue);
+            var userSectorId = uInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+            var assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == userSectorId.SectorId).FirstOrDefault();
+            if (assessmentDetails == null || assessmentDetails.Sector == 0)
+                assessmentDetails = uInfo.AssessmentContext.assessments.Where(q => q.Sector == sectorValue).FirstOrDefault();
+
+            ViewBag.EndMessage = assessmentDetails.EndMessage;
             return View();
         }
 
@@ -333,7 +395,7 @@ namespace SelfAssessment.Controllers
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == this.UserId).FirstOrDefault();
-                org.CurrentAssignmentStatus = Utilities.AssessmentCompletedStatus;
+                org.CurrentAssignmentStatus = Business.Utilities.AssessmentCompletedStatus;
                 repo.Update(org);
                 repo.SaveChanges();
             }
