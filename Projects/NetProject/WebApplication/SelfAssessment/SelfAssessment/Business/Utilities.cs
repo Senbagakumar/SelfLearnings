@@ -4,6 +4,7 @@ using MigraDoc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -113,6 +114,22 @@ namespace SelfAssessment.Business
             groupQuizManager.AllQuestions = listOfQuestions;
             var dt = groupQuizManager.ExportPdf();
             return dt;
+        }
+
+        public static void DeleteOldFiles(string path)
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                if (file.Extension.Contains(".csv") || file.Extension.Contains(".pdf"))
+                {
+                    var olddate = file.Name.Replace(file.Extension, "");
+                    DateTime oldDate = DateTime.ParseExact(olddate, "ddMMyyyyHHmmss", System.Globalization.CultureInfo.InvariantCulture);
+                    if (oldDate <= DateTime.Now)
+                        file.Delete();
+                }
+            }
         }
         
     }

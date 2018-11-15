@@ -141,7 +141,7 @@ namespace SelfAssessment.Controllers
 
         public FileResult PdfExport(int userId, string level = null)
         {
-
+            Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(userId, level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
@@ -152,6 +152,7 @@ namespace SelfAssessment.Controllers
 
         public FileResult CsvExport(int userId,string level = null)
         {
+            Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(userId, level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
