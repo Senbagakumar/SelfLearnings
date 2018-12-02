@@ -1,0 +1,58 @@
+﻿@model WebWindowsCommunication.Models.Settings
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Settings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Minimum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Minimum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Maximum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Maximum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ConstWt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ConstWt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Factor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Factor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
