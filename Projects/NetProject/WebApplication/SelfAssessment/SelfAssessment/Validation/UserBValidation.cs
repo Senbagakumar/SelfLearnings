@@ -19,7 +19,10 @@ namespace SelfAssessment.Validation
         public ValidationInformation RegistrationValidation(UIOrganization uIOrganization)
         {
             if (uIOrganization.Name.Length < 6)
+            {
+                UserException.LogInformation("OrganizationName length should be 6 or More");
                 this.validation.ErrorMessages.Add("OrganizationName length should be 6 or More");
+            }
 
             if (this.validation.ErrorMessages.Count == 0)
                 this.validation.IsSuccess = true;

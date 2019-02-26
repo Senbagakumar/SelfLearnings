@@ -23,4 +23,13 @@ namespace SelfAssessment.Models.DBModel
         [ForeignKey("GroupId")]
         public virtual Group Groups { get; set; }
     }
+
+    public class Log
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Type { get; set; } //Error, Information
+        public string Details { get; set; }
+    }
 }

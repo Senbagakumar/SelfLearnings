@@ -38,6 +38,8 @@ namespace SelfAssessment.Business
         public const string Group9 = "Group9";
         public const string SectorAll = "ALL";
         public const string SectorValue = "1001";
+        public const string Error = "Error";
+        public const string Information = "Information";
 
         public static int CalculateScoreByAns(int answerId)
         {

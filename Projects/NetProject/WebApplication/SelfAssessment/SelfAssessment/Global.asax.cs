@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SelfAssessment.ExceptionHandler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,12 @@ namespace SelfAssessment
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Bootstrapper.Initialise();
+        }
+
+        protected void Application_Error()
+        {
+            var ex = Server.GetLastError();
+            UserException.LogException(ex);
         }
     }
 }

@@ -30,6 +30,7 @@ namespace SelfAssessment.DataAccess
         public DbSet<OrganizationLevelHistory> organizationLevelHistories { get; set; }
         public DbSet<AssessmentLevelMapping> assessmentLevelMappings { get; set; }
         public DbSet<Answer> answers { get; set; }
+        public DbSet<Log> logs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

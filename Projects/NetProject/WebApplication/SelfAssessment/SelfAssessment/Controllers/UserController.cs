@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.ExceptionHandler;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using SelfAssessment.Validation;
@@ -178,6 +179,7 @@ namespace SelfAssessment.Controllers
             }
             catch(Exception ex)
             {
+                UserException.LogException(ex);
                 //return View();
             }
            return Json(errorMsg, JsonRequestBehavior.AllowGet);

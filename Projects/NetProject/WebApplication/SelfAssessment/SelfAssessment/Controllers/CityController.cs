@@ -1,4 +1,5 @@
 ﻿using SelfAssessment.DataAccess;
+using SelfAssessment.ExceptionHandler;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
@@ -86,6 +87,7 @@ namespace SelfAssessment.Controllers
             }
             catch(Exception ex)
             {
+                UserException.LogException(ex);
                 return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
             return Json("Success", JsonRequestBehavior.AllowGet);

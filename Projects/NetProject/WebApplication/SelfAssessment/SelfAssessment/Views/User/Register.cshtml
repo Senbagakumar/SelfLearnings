@@ -222,6 +222,10 @@
                 Type: $('#Type').val()
             };
 
+            if (model.Name.length < 6) {
+                alert("OrganizationName length should be 6 or More");
+                return false;
+            }
 
             $.ajax({
                 type: "POST",

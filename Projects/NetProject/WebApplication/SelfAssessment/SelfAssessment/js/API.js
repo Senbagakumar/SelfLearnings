@@ -1,14 +1,13 @@
-﻿var API = {
-    baseUrl: 'http://localhost:26579/',
-
-
-
+﻿var API = {    //https://selfassesment.azurewebsites.net/, 'https://localhost:26579/' , location.protocol + "//" + window.location.hostname+":26579/
+    
+    baseUrl: location.protocol + "//" + window.location.hostname+"/",
+    
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
     },
 
     GetCities: function () {
-        return this.baseUrl + "User/GetCities/"
+        return this.baseUrl + "User/GetCities/";
     },
 
     GetBaseUrl: function () {
