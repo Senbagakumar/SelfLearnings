@@ -14,7 +14,7 @@ namespace SelfAssessment.Models
         public string GroupDescription { get; set; }
         public int NoOfQuestions { get; set; }
         public List<UIQuestions> questions { get; set; }
-        public int Weight { get; set; }
+        public double Weight { get; set; }
 
     }
 }

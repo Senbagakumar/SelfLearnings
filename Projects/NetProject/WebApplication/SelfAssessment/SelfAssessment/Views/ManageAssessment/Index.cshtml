@@ -17,7 +17,7 @@
                     <div class="row form-group">
                         <div class="col col-md-3">
                             <label for="text-input" class=" form-control-label">Assessment Name</label>
-                            <input type="hidden" id="txt-id-input" name="text-id-input" placeholder="Text" class="form-control">
+                            <input type="hidden" id="txt-id-input" name="txt-id-input" placeholder="Text" class="form-control">
                         </div>
                         <div class="col-12 col-md-9">
                             <input type="text" id="txt-AName-input" name="txt-AName-input" placeholder="Text" class="form-control">
@@ -444,17 +444,17 @@
 		//$('#chk-APReg').val('');
 	}
 
-	function GetAssessment(id, type) {
+    function GetAssessment(id, type) {
 		$.ajax({
 			type: "GET",
 			url: API.GetAssessmentDetails() + id,
 			contentType: "application/json"
 		}).done(function (result) {
 			if (type == "Edit") {
-				$("#txt-id-input").text(id);
+				$("#txt-id-input").val(id);
 				$("#txt-AName-input").val(result.Name);
 				//$("#txt-ADes-input").val(result.Description);
-                $("#adesinput").text(result.Description);
+                //$("#adesinput").text(result.Description);
 				$("#txt-AWMsg-input").val(result.WelcomeMessage);
 				$("#txt-AEMsg-input").val(result.EndMessage);
 				$("#txt-AEmail-input").val(result.AdminEmail);
