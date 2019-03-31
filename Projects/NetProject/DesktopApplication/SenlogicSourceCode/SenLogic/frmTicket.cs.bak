@@ -1,0 +1,1006 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.IO;
+using System.Data.SqlClient;
+using System.Drawing.Imaging;
+using System.IO.Ports;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using System.Diagnostics;
+using System.Net;
+namespace WeighBridge
+{
+    public partial class frmTicket : Form
+    {
+        #region " Common Varible "
+        DBEngine objDB = null;
+        DataSet dtVendor = null;
+        DataSet dtCustomer = null;
+        DataSet dtVehicle = null;
+        DataSet dtCompany = null;
+        DataSet dtPlace = null;
+        DataSet dtMaterial = null;
+        string Camara1IP = "";
+        string Camara2IP = "";
+        string Camara3IP = "";
+        string Camera1UserName = "";
+        string Camera2UserName = "";
+        string Camera3UserName = "";
+        string Camera1Password = "";
+        string Camera2Password = "";
+        string Camera3Password = "";
+        int CompanyId;
+        SerialPort com = null;
+        int StartingPosition = 0;
+        int NumberOfCharacter = 0;
+        string RootFolderPath = "";
+        Excel.Application excelApp;
+        string Camara1NoPlateValue;
+        string Camara2NoPlateValue;
+        string Camara3NoPlateValue;
+        string RecivedData = "";
+        HttpWebRequest req = null;
+        #endregion
+        public frmTicket()
+        {
+            InitializeComponent();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            this.Close();
+        }
+
+        private void frmTicket_Load(object sender, EventArgs e)
+        {
+            DisplayLineNo();
+            rbInbound.Checked = true;
+            rbTare.Checked = true;
+            rbInbound_Click(sender, e);
+            Fill_Company();
+            Load_Company();
+            FillVehicles();
+            FillMaterial();
+            FillSource();
+            FillDestination();
+            com = new SerialPort();
+            com.ReadTimeout = 500;
+            com.WriteTimeout = 500;
+            com.DataReceived += new SerialDataReceivedEventHandler(com_DataReceived);
+            Init_Comm();
+            //FileSystemWatcher();
+            //LaunchANPR();
+            pbCamera1.Width = 240;
+            pbCamera2.Width = 240;
+            pbCamera3.Width = 240;
+            excelApp = new Excel.Application();
+            //LoadInitalImageAndData(); 
+            timer1.Start();
+            timer2.Start();
+            timer3.Start();
+            timer4.Start();
+        }
+
+        void com_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            try
+            {
+                RecivedData = com.ReadLine();
+            }
+
+            catch (Exception ex)
+            {
+                Shared_Functions.Show_Message(ex.Message);
+            }
+        }
+        private void Init_Comm()
+        {
+            try
+            {
+
+                if (com.IsOpen) com.Close();
+
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                DataSet dtGeneralSetting = new DataSet();
+                objDB.ExecuteQuery(" SELECT Comm_Port_No ,	Baud_Rate ,	Data_Bit ,	Parity ,	Stop_Bits , 	Camara1IP ,	Camara1Subnetmask ,	Camara2IP ,	Camara2Subnetmask ,	Camara3IP ,	Camara3Subnetmask ,	Created_On ,	Created_By  ,	Modified_On ,	Modified_By,FilePath,StartingPosition,NoOfCharacter,Unit,Camara1IP,Camara2IP,Camara3IP,Camera1UserName,Camera2UserName,Camera3UserName,Camera1Password,Camera2Password,Camera3Password FROM wb_General_Setting", null, dtGeneralSetting, "GeneralSetting");
+                if (dtGeneralSetting.Tables.Count > 0)
+                {
+                    if (dtGeneralSetting.Tables[0].Rows.Count > 0)
+                    {
+                        DataRow dr = dtGeneralSetting.Tables[0].Rows[0];
+                        if (!dr.IsNull("Camara1IP"))
+                        {
+                            Camara1IP = dr["Camara1IP"].ToString().Replace(" ", "");
+                        }
+                        if (!dr.IsNull("Camara2IP"))
+                        {
+                            Camara2IP = dr["Camara2IP"].ToString().Replace(" ", "");
+                        }
+                        if (!dr.IsNull("Camara3IP"))
+                        {
+                            Camara3IP = dr["Camara3IP"].ToString().Replace(" ", "");
+                        }
+                        if (!dr.IsNull("Camera1UserName"))
+                        {
+                            Camera1UserName = dr["Camera1UserName"].ToString();
+                        }
+                        if (!dr.IsNull("Camera2UserName"))
+                        {
+                            Camera2UserName = dr["Camera2UserName"].ToString();
+                        }
+                        if (!dr.IsNull("Camera3UserName"))
+                        {
+                            Camera3UserName = dr["Camera3UserName"].ToString();
+                        }
+                        if (!dr.IsNull("Camera1Password"))
+                        {
+                            Camera1Password = dr["Camera1Password"].ToString();
+                        }
+                        if (!dr.IsNull("Camera2Password"))
+                        {
+                            Camera2Password = dr["Camera2Password"].ToString();
+                        }
+                        if (!dr.IsNull("Camera3Password"))
+                        {
+                            Camera3Password = dr["Camera3Password"].ToString();
+                        }
+                        if (!dr.IsNull("Unit"))
+                        {
+                            Unit.Text = dr["Unit"].ToString();
+                        }
+                        if (!dr.IsNull("Comm_Port_No"))
+                        {
+                            com.PortName = dr["Comm_Port_No"].ToString();
+                        }
+                        else
+                        {
+                            com.PortName = "COM1";
+                        }
+                        if (!dr.IsNull("Baud_Rate"))
+                        {
+                            com.BaudRate = Convert.ToInt32(dr["Baud_Rate"]);
+                        }
+                        else
+                        {
+                            com.BaudRate = 9600;
+                        }
+                        if (!dr.IsNull("Parity"))
+                        {
+                            switch (dr["Parity"].ToString())
+                            {
+                                case "None":
+                                    com.Parity = Parity.None;
+                                    break;
+                                case "Even":
+                                    com.Parity = Parity.Even;
+                                    break;
+                                case "Odd":
+                                    com.Parity = Parity.Odd;
+                                    break;
+                                case "Mark":
+                                    com.Parity = Parity.Mark;
+                                    break;
+                                case "Space":
+                                    com.Parity = Parity.Space;
+                                    break;
+                                default:
+                                    com.Parity = Parity.None;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            com.Parity = Parity.None;
+                        }
+                        if (!dr.IsNull("Stop_Bits"))
+                        {
+                            switch (dr["Stop_Bits"].ToString())
+                            {
+                                case "None":
+                                    com.StopBits = StopBits.None;
+                                    break;
+                                case "One":
+                                    com.StopBits = StopBits.One;
+                                    break;
+                                case "OnePointFive":
+                                    com.StopBits = StopBits.OnePointFive;
+                                    break;
+                                case "Two":
+                                    com.StopBits = StopBits.Two;
+                                    break;
+                                default:
+                                    com.StopBits = StopBits.None;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            com.StopBits = StopBits.One;
+                        }
+                        if (!dr.IsNull("Data_Bit"))
+                            com.DataBits = Convert.ToInt32(dr["Data_Bit"]);
+                        else
+                            com.DataBits = 8;
+
+                        com.ReadBufferSize = 500;
+
+                        if (dr.IsNull("FilePath") == false)
+                        {
+                            RootFolderPath = dr["FilePath"].ToString();
+                        }
+                        else
+                        {
+                            RootFolderPath = @"C:\";
+                        }
+
+                        if (dr.IsNull("StartingPosition") == false)
+                        {
+                            StartingPosition = Convert.ToInt32(dr["StartingPosition"].ToString());
+                        }
+                        if (dr.IsNull("NoOfCharacter") == false)
+                        {
+                            NumberOfCharacter = Convert.ToInt32(dr["NoOfCharacter"].ToString());
+                        }
+                    }
+                }
+                com.Open();
+
+            }
+            catch (Exception ex)
+            {
+                Shared_Functions.Show_Message(ex.Message);
+            }
+        }
+        private void DisplayLineNo()
+        {
+            switch (Shared_Variables.LineNumber)
+            {
+                case 1:
+                    lblLineNo.Text = "Weighbridge 1";
+                    break;
+                case 2:
+                    lblLineNo.Text = "Weighbridge 2";
+                    break;
+                case 3:
+                    lblLineNo.Text = "Weighbridge 3";
+                    break;
+                case 4:
+                    lblLineNo.Text = "Weighbridge 4";
+                    break;
+                case 5:
+                    lblLineNo.Text = "Weighbridge 5";
+                    break;
+                case 6:
+                    lblLineNo.Text = "Weighbridge 6";
+                    break;
+                case 7:
+                    lblLineNo.Text = "Weighbridge 7";
+                    break;
+                case 8:
+                    lblLineNo.Text = "Weighbridge 8";
+                    break;
+                case 9:
+                    lblLineNo.Text = "Weighbridge 9";
+                    break;
+                case 10:
+                    lblLineNo.Text = "Weighbridge 10";
+                    break;
+                default:
+                    lblLineNo.Text = "Weighbridge 1";
+                    break;
+            }
+
+        }
+        private void FillVendors()
+        {
+            try
+            {
+                cbotran.DataSource = null;
+                cbotran.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtVendor = new DataSet();
+                objDB.ExecuteQuery("SELECT 	VendorID,Vendor_Name + '   [' +  Vendor_Code + ']' as Vendor  FROM wb_Vendors WITH (NOLOCK)", null, dtVendor, "Vendors");
+
+                if (dtVendor.Tables[0].Rows.Count > 0)
+                {
+                    cbotran.DataSource = dtVendor.Tables[0];
+                    cbotran.DisplayMember = "Vendor";
+                    cbotran.ValueMember = "VendorID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+        }
+        private void FillCustomers()
+        {
+            try
+            {
+                cbotran.DataSource = null;
+                cbotran.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtCustomer = new DataSet();
+                objDB.ExecuteQuery("SELECT 	CustomerID,Customer_Name + '   [' +  Customer_Code + ']' as Customer  FROM wb_Customers WITH (NOLOCK)", null, dtCustomer, "Customers");
+
+                if (dtCustomer.Tables[0].Rows.Count > 0)
+                {
+                    cbotran.DataSource = dtCustomer.Tables[0];
+                    cbotran.DisplayMember = "Customer";
+                    cbotran.ValueMember = "CustomerID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+        }
+
+        private void FillVehicles()
+        {
+            try
+            {
+                cboVechicle.DataSource = null;
+                cboVechicle.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtVehicle = new DataSet();
+                objDB.ExecuteQuery("SELECT 	VehicleID,Vehicle_Name + '   [' +  Vehicle_Code + ']' as Vehicle  FROM wb_vehicles WITH (NOLOCK)", null, dtVehicle, "Vehicles");
+
+                if (dtVehicle.Tables[0].Rows.Count > 0)
+                {
+                    cboVechicle.DataSource = dtVehicle.Tables[0];
+                    cboVechicle.DisplayMember = "Vehicle";
+                    cboVechicle.ValueMember = "VehicleID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+        }
+        private void Fill_Company()
+        {
+            try
+            {
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtCompany = new DataSet();
+                objDB.ExecuteQuery("SELECT CompanyID,Company_Code,Company_Name,Company_Logo,Display_Name,Company_Website_URL,Address1,Address2,City,State,Zip,Country,Email,Phone1,Phone2,Created_On,Created_By,Modified_On,Modified_By FROM wb_Companies WITH(NOLOCK) ", null, dtCompany, "Users");
+                if (dtCompany.Tables.Count > 0 && dtCompany.Tables[0].Rows.Count > 0)
+                {
+                    if (dtCompany.Tables[0].Rows[0].IsNull("CompanyID"))
+                    {
+                        CompanyId = Convert.ToInt32(dtCompany.Tables[0].Rows[0]["CompanyID"]);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+
+        }
+        private void Load_Company()
+        {
+            try
+            {
+                if (dtCompany != null && dtCompany.Tables.Count > 0 && dtCompany.Tables[0].Rows.Count > 0)
+                {
+                    DataRow drItem = dtCompany.Tables[0].Rows[0];
+                    CompanyId = Convert.ToInt32(drItem["CompanyID"]);
+                    //txtCode.Text = drItem["Company_Code"].ToString();
+                    lblCompanyName.Text = drItem["Company_Name"].ToString();
+                    if (!drItem.IsNull("Display_Name")) lblCompanyName.Text = drItem["Display_Name"].ToString();
+                    if (!drItem.IsNull("Company_Website_URL")) lblURL.Text = drItem["Company_Website_URL"].ToString();
+                    if (!drItem.IsNull("Address1")) lbladdress.Text = drItem["Address1"].ToString();
+                    if (!drItem.IsNull("Address2")) lbladdress.Text += drItem["Address2"].ToString();
+                    if (!drItem.IsNull("City")) lblcity.Text = drItem["City"].ToString();
+                    if (!drItem.IsNull("State")) lblcity.Text += drItem["State"].ToString();
+                    //if (!drItem.IsNull("Zip")) txtZip.Text = drItem["Zip"].ToString();
+                    //if (!drItem.IsNull("Email")) txtEmail.Text = drItem["Email"].ToString();
+                    //if (!drItem.IsNull("Phone1")) txtPhone1.Text = drItem["Phone1"].ToString();
+                    //if (!drItem.IsNull("Phone2")) txtPhone2.Text = drItem["Phone2"].ToString();
+                    if (!drItem.IsNull("Company_Logo"))
+                    {
+                        MemoryStream ms = new MemoryStream((byte[])drItem["Company_Logo"]);
+                        pictureBox1.Image = Image.FromStream(ms);
+                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox1.Refresh();
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void FillMaterial()
+        {
+            try
+            {
+                cboMaterial.DataSource = null;
+                cboMaterial.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtMaterial = new DataSet();
+                objDB.ExecuteQuery("SELECT 	MaterialID,Materials_Name + '   [' +  Materials_Code + ']' as Material  FROM wb_Materials WITH (NOLOCK)", null, dtMaterial, "Materials");
+
+                if (dtMaterial.Tables[0].Rows.Count > 0)
+                {
+                    cboMaterial.DataSource = dtMaterial.Tables[0];
+                    cboMaterial.DisplayMember = "Material";
+                    cboMaterial.ValueMember = "MaterialID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+        }
+
+        private void FillSource()
+        {
+            try
+            {
+                cboSource.DataSource = null;
+                cboSource.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtPlace = new DataSet();
+                objDB.ExecuteQuery("SELECT 	PlaceID,Place_Name + '   [' +  Place_Code + ']' as Place  FROM wb_Places WITH (NOLOCK)", null, dtPlace, "Source");
+
+                if (dtPlace.Tables[0].Rows.Count > 0)
+                {
+                    cboSource.DataSource = dtPlace.Tables[0];
+                    cboSource.DisplayMember = "Place";
+                    cboSource.ValueMember = "PlaceID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+                dtPlace = null;
+            }
+        }
+
+        private void FillDestination()
+        {
+            try
+            {
+                cboDestination.DataSource = null;
+                cboDestination.Items.Clear();
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtPlace = new DataSet();
+                objDB.ExecuteQuery("SELECT 	PlaceID,Place_Name + '   [' +  Place_Code + ']' as Place  FROM wb_Places WITH (NOLOCK)", null, dtPlace, "Destination");
+
+                if (dtPlace.Tables[0].Rows.Count > 0)
+                {
+                    cboDestination.DataSource = dtPlace.Tables[0];
+                    cboDestination.DisplayMember = "Place";
+                    cboDestination.ValueMember = "PlaceID";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+                dtPlace = null;
+            }
+        }
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rbInbound_Click(object sender, EventArgs e)
+        {
+            lblTran.Text = "Supplier:";
+            FillVendors();
+        }
+
+        private void rbOutbound_Click(object sender, EventArgs e)
+        {
+            lblTran.Text = "Customer:";
+            FillCustomers();
+        }
+
+        private void cbCamera1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbCamera1.Checked)
+            {
+                timer2.Stop();
+                pbCamera1.Image.Save("camera1.png");
+            }
+            else
+            {
+                timer2.Start();  
+            }
+            AssignRegNo();
+        }
+
+        private void AssignRegNo()
+        {
+            if (cbCamera1.Checked)
+            {
+                cbCamera2.Checked = false;
+                txtRegNo.Text = lblCamera1.Text;
+            }
+            if (cbCamera2.Checked)
+            {
+                cbCamera1.Checked = false;
+                txtRegNo.Text = lblCamera2.Text;
+            }
+
+            if ((!cbCamera1.Checked) && (!cbCamera2.Checked))
+                txtRegNo.Text = "";
+        }
+
+        private void cbCamera2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbCamera2.Checked)
+            {
+                timer3.Stop();
+                pbCamera2.Image.Save("camera2.png");
+            }
+            else
+            {
+                timer3.Start();
+            }
+            AssignRegNo();
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbCamera3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbCamera3.Checked)
+            {
+                cboMaterial.Text = lblCamera3.Text;
+                timer4.Stop();
+                pbCamera3.Image.Save("camera3.png");
+            }
+            else
+            {
+                timer4.Start();
+                cboMaterial.Text = "";
+            }
+        }
+
+        // Method to save weighment and Create Ticket
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Validatation())
+                {
+                    objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                    SqlConnection dbConn = new SqlConnection();
+                    dbConn.ConnectionString = Shared_Variables.GetConnectionString;
+                    SqlCommand dbCommand = new SqlCommand() { CommandType = CommandType.StoredProcedure, CommandText = "wb_Ticket_Save", Connection = dbConn };
+
+                    dbCommand.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = CompanyId });
+                    dbCommand.Parameters.Add(new SqlParameter("@Ticket_Date", SqlDbType.DateTime) { Value = dtTicketDate.Value });
+                    if (rbInbound.Checked)
+                    {
+                        dbCommand.Parameters.Add(new SqlParameter("@Ticket_Type", SqlDbType.Char) { Value = 'I' });
+                        dbCommand.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int) { Value = null });
+                        dbCommand.Parameters.Add(new SqlParameter("@VendorID", SqlDbType.Int) { Value = cbotran.SelectedValue });
+                    }
+                    else
+                    {
+                        dbCommand.Parameters.Add(new SqlParameter("@Ticket_Type", SqlDbType.Char) { Value = 'O' });
+                        dbCommand.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int) { Value = cbotran.SelectedValue });
+                        dbCommand.Parameters.Add(new SqlParameter("@VendorID", SqlDbType.Int) { Value = null });
+                    }
+
+                    dbCommand.Parameters.Add(new SqlParameter("@VehicleID", SqlDbType.Int) { Value = cboVechicle.SelectedValue });
+                    if (cboMaterial.SelectedValue != null)
+                        dbCommand.Parameters.Add(new SqlParameter("@MaterialID", SqlDbType.Int) { Value = cboMaterial.SelectedValue });
+                    else
+                        dbCommand.Parameters.Add(new SqlParameter("@MaterialID", SqlDbType.Int) { Value = GetMaterialID(cboMaterial.Text) });
+                    dbCommand.Parameters.Add(new SqlParameter("@SourceID", SqlDbType.Int) { Value = cboSource.SelectedValue });
+                    dbCommand.Parameters.Add(new SqlParameter("@DestinationID", SqlDbType.Int) { Value = cboDestination.SelectedValue });
+                    dbCommand.Parameters.Add(new SqlParameter("@LineID", SqlDbType.Int) { Value = 1 }); //Shared_Variables.LineID
+
+                    float res;
+                    if (!float.TryParse(txtWeight.Text.ToString(), out res))
+                        res = 0;
+
+                    if (rbTare.Checked)
+                    {
+                        dbCommand.Parameters.Add(new SqlParameter("@Tare", SqlDbType.Float) { Value = res });
+                        dbCommand.Parameters.Add(new SqlParameter("@Gross", SqlDbType.Float) { Value = null });
+                    }
+                    else
+                    {
+                        dbCommand.Parameters.Add(new SqlParameter("@Gross", SqlDbType.Float) { Value = res });
+                        dbCommand.Parameters.Add(new SqlParameter("@Tare", SqlDbType.Float) { Value = null });
+                    }
+                    dbCommand.Parameters.Add(new SqlParameter("@Register_No", SqlDbType.VarChar) { Value = txtRegNo.Text.Trim() });
+                    dbCommand.Parameters.Add(new SqlParameter("@Created_By", SqlDbType.Int) { Value = Shared_Variables.UserID });
+
+                    //if (!string.IsNullOrEmpty(FilePath))
+                    //{
+
+                    //    FileStream fs = new FileStream(FilePath, FileMode.Open, FileAccess.Read);
+                    //    BinaryReader br = new BinaryReader(fs);
+                    //    Byte[] bytes = br.ReadBytes((Int32)fs.Length);
+                    //    br.Close();
+                    //    fs.Close();
+                    //    dbCommand.Parameters.Add(new SqlParameter("@Company_Logo", SqlDbType.Binary) { Value = bytes });
+
+                    //}
+
+                    MemoryStream msCamera1 = new MemoryStream();
+
+                    if (cbCamera1.Checked)
+                    {
+                        if (pbCamera1.Image != null)
+                            dbCommand.Parameters.Add(new SqlParameter("@Selected_Image", SqlDbType.Image) { Value = ConvertPBImageToByteArray(pbCamera1.Image) });
+                        if (pbCamera2.Image != null)
+                            dbCommand.Parameters.Add(new SqlParameter("@Other_Image1", SqlDbType.Image) { Value = ConvertPBImageToByteArray(pbCamera2.Image) });
+                    }
+                    else if (cbCamera2.Checked)
+                    {
+                        if (pbCamera2.Image != null)
+                            dbCommand.Parameters.Add(new SqlParameter("@Selected_Image", SqlDbType.Image) { Value = ConvertPBImageToByteArray(pbCamera2.Image) });
+                        if (pbCamera1.Image != null)
+                            dbCommand.Parameters.Add(new SqlParameter("@Other_Image1", SqlDbType.Image) { Value = ConvertPBImageToByteArray(pbCamera1.Image) });
+
+                    }
+
+                    if (cbCamera3.Checked)
+                        if (pbCamera3.Image != null)
+                            dbCommand.Parameters.Add(new SqlParameter("@Other_Image2", SqlDbType.Image) { Value = ConvertPBImageToByteArray(pbCamera3.Image) });
+
+                    dbConn.Open();
+                    dbCommand.ExecuteNonQuery();
+                    dbConn.Close();
+                    MessageBox.Show("Ticket Created Successfully!", "Weighment", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearScreen();
+                    rbInbound.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+        }
+
+        private void ClearScreen()
+        {
+            // Checkboxes
+            cbCamera1.Checked = false;
+            cbCamera2.Checked = false;
+            cbCamera3.Checked = false;
+            cbWeight.Checked = false;
+
+            // Combos
+
+            cboDestination.Text = "";
+            cboMaterial.Text = "";
+            cboSource.Text = "";
+            cbotran.Text = "";
+            cboVechicle.Text = "";
+
+            // Radio Buttons
+            rbInbound.Checked = true;
+            rbTare.Checked = true;
+
+
+        }
+
+        private byte[] ConvertPBImageToByteArray(Image pbImage)
+        {
+            MemoryStream msCamera = new MemoryStream();
+            pbImage.Save(msCamera, ImageFormat.Jpeg);
+            byte[] baCamera = new byte[msCamera.Length];
+            msCamera.Position = 0;
+            msCamera.Read(baCamera, 0, baCamera.Length);
+            return baCamera;
+        }
+
+        private int GetMaterialID(string materialName)
+        {
+            int matID = 0;
+            try
+            {
+
+                objDB = new DBEngine(Shared_Variables.GetConnectionString);
+                dtMaterial = null;
+                dtMaterial = new DataSet();
+                objDB.ExecuteQuery("SELECT 	MaterialID FROM wb_Materials WITH (NOLOCK) WHERE Materials_Name='" + materialName + "'", null, dtMaterial, "Materials");
+
+                if (dtMaterial.Tables[0].Rows.Count > 0)
+                {
+
+                    DataRow drItem = dtMaterial.Tables[0].Rows[0];
+                    matID = Convert.ToInt32(drItem["MaterialID"]);
+                }
+                else
+                {
+                    matID = (int)objDB.ExecuteScalar("INSERT INTO wb_materials (Materials_Code,Materials_Name) VALUES (" + materialName.Substring(0, 4) + "','" + materialName + "'); SELECT @@SCOPEIDENTITY()", null);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                objDB = null;
+            }
+
+            return matID;
+        }
+
+        private bool Validatation()
+        {
+            StringBuilder str_Temp = new StringBuilder();
+            bool bln = true;
+            if (string.IsNullOrEmpty(cbotran.Text.Trim()))
+            {
+                if ((!rbInbound.Checked) && (!rbOutbound.Checked))
+                {
+                    str_Temp.Append("\t Transaction type is empty, Please select Inbound or Outbond. \n");
+                    bln = false;
+                }
+                else
+                {
+                    if (rbInbound.Checked)
+                    {
+                        str_Temp.Append("\t Supplier is empty, Please enter Supplier. \n");
+                        bln = false;
+                    }
+                    if (rbOutbound.Checked)
+                    {
+                        str_Temp.Append("\t Customer is empty, Please enter Customer. \n");
+                        bln = false;
+                    }
+                }
+            }
+
+            if (!cbWeight.Checked)
+            {
+                str_Temp.Append("\t Please Select Weight. \n");
+                bln = false;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(txtWeight.Text.Trim()))
+                {
+                    str_Temp.Append("\t Weight is empty, Please enter Weight. \n");
+                    bln = false;
+                }
+                float res;
+                if (!float.TryParse(txtWeight.Text.ToString(), out res))
+                {
+                    str_Temp.Append("\t Weight Value is not a Numeric. Please enter numeric value in Weight. \n");
+                    bln = false;
+                }
+            }
+            if ((!rbTare.Checked) && (!rbGross.Checked))
+            {
+                str_Temp.Append("\t Weight type is empty, Please select Tare or Gross. \n");
+                bln = false;
+            }
+
+            if ((!cbCamera1.Checked) && (!cbCamera2.Checked))
+            {
+                str_Temp.Append("\t Select Camera1 or Camera 2 Image. \n");
+                bln = false;
+
+            }
+            if (string.IsNullOrEmpty(cboVechicle.Text.Trim()))
+            {
+                str_Temp.Append("\t Vehicle is empty, Please enter Vehicle. \n");
+                bln = false;
+            }
+            if (string.IsNullOrEmpty(txtRegNo.Text.Trim()))
+            {
+                str_Temp.Append("\t Register Number is empty, Please enter Register Number. \n");
+                bln = false;
+            }
+
+            if (string.IsNullOrEmpty(cboMaterial.Text.Trim()))
+            {
+                str_Temp.Append("\t Material is empty, Please enter Material. \n");
+                bln = false;
+            }
+            if (string.IsNullOrEmpty(cboSource.Text.Trim()))
+            {
+                str_Temp.Append("\t Source is empty, Please enter Source. \n");
+                bln = false;
+            }
+
+            if (string.IsNullOrEmpty(cboDestination.Text.Trim()))
+            {
+                str_Temp.Append("\t Destination is empty, Please enter Destination. \n");
+                bln = false;
+            }
+            if (!bln)
+            {
+                MessageBox.Show(str_Temp.ToString());
+            }
+            return bln;
+        }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                dtTicketDate.Value = DateTime.Now;
+                dtTicketDate.Refresh();
+                lblCamera1.Text = Camara1NoPlateValue;
+                lblCamera2.Text = Camara2NoPlateValue;
+                lblCamera3.Text = Camara3NoPlateValue;
+                if (!string.IsNullOrEmpty(RecivedData))
+                {
+                    if (StartingPosition >= 0 && NumberOfCharacter > 0)
+                    {
+                        if ((StartingPosition + NumberOfCharacter) <= RecivedData.Length)
+                        {
+                            txtWeight.Text = RecivedData.Substring(StartingPosition, NumberOfCharacter);
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Shared_Functions.Show_Message(ex.Message);
+            }
+        }
+
+        private void frmTicket_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                timer1.Stop();
+                if (com.IsOpen)
+                    com.Close();
+            }
+            catch (Exception ex)
+            {
+                Shared_Functions.Show_Message(ex.Message);
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            LoadCamera1Image();
+
+        }
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            LoadCamera2Image();
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            LoadCamera3Image();
+        }
+        private void LoadCamera1Image()
+        {
+            try
+            {
+                timer2.Stop();
+                //using (var webClient = new WebClient())
+                //{
+                //    webClient.Credentials = new NetworkCredential(Camera1UserName, Camera1Password);
+                //    pbCamera1.Image = ByteArrayToImage(webClient.DownloadData("http://" + Camara1IP + "/cgi-bin/viewer/video.jpg"));
+                //}
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message); 
+            }
+            finally
+            {
+                timer2.Start();
+            }
+        }
+        private void LoadCamera2Image()
+        {
+            try
+            {
+                timer3.Stop();
+                //using (var webClient = new WebClient())
+                //{
+                //    webClient.Credentials = new NetworkCredential(Camera2UserName, Camera2Password);
+                //    pbCamera2.Image = ByteArrayToImage(webClient.DownloadData("http://" + Camara2IP + "/cgi-bin/viewer/video.jpg"));
+                //}
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message); 
+            }
+            finally
+            {
+                timer3.Start();
+            }
+        }
+        private void LoadCamera3Image()
+        {
+            try
+            {
+                timer4.Stop();
+                //using (var webClient = new WebClient())
+                //{
+                //    webClient.Credentials = new NetworkCredential(Camera3UserName, Camera3Password);
+                //    pbCamera3.Image = ByteArrayToImage(webClient.DownloadData("http://" + Camara3IP + "/cgi-bin/viewer/video.jpg"));
+                //}
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message); 
+            }
+            finally
+            {
+                timer4.Start();
+            }
+        }
+
+        public static Image ByteArrayToImage(byte[] fileBytes)
+        {
+            using (var stream = new MemoryStream(fileBytes))
+            {
+                return Image.FromStream(stream);
+            }
+        }
+
+    }
+}

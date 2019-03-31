@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F87DBAE1-7D45-482F-8CBA-F07B9888351C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SenLogic</RootNamespace>
+    <AssemblyName>SenLogic</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ApplicationIcon>Company.ico</ApplicationIcon>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.MSCommLib, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Railinmotion Essea\Essae Apps_Source code_tested\RailInmotion - Copy\RailInmotion\bin\Debug\AxInterop.MSCommLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.MSCommLib, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\Railinmotion Essea\Essae Apps_Source code_tested\RailInmotion - Copy\RailInmotion\bin\Debug\Interop.MSCommLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\packages\DotNetZip.1.9.8\lib\net20\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WinForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WinForms.DLL</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataGridViewPrinter.cs" />
+    <Compile Include="SystemSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SystemSettings.Designer.cs">
+      <DependentUpon>SystemSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DefaultPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DefaultPage.Designer.cs">
+      <DependentUpon>DefaultPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingPage.Designer.cs">
+      <DependentUpon>SettingPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBEngine.cs" />
+    <Compile Include="InitialForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InitialForm.designer.cs">
+      <DependentUpon>InitialForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MasterPage.Designer.cs">
+      <DependentUpon>MasterPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManualTareEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManualTareEdit.Designer.cs">
+      <DependentUpon>ManualTareEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="SystemSettings.resx">
+      <DependentUpon>SystemSettings.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DefaultPage.resx">
+      <DependentUpon>DefaultPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingPage.resx">
+      <DependentUpon>SettingPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InitialForm.resx">
+      <DependentUpon>InitialForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MasterPage.resx">
+      <DependentUpon>MasterPage.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManualTareEdit.resx">
+      <DependentUpon>ManualTareEdit.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report.resx">
+      <DependentUpon>Report.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManualTareEntry.resx">
+      <DependentUpon>ManualTareEntry.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticWeighment.resx">
+      <DependentUpon>StaticWeighment.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View.resx">
+      <DependentUpon>View.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report.designer.cs">
+      <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Shared_Class.cs" />
+    <Compile Include="Shared_Functions.cs" />
+    <Compile Include="Shared_Variables.cs" />
+    <Compile Include="ManualTareEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManualTareEntry.designer.cs">
+      <DependentUpon>ManualTareEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StaticWeighment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StaticWeighment.Designer.cs">
+      <DependentUpon>StaticWeighment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View.Designer.cs">
+      <DependentUpon>View.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Desert Landscape.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Winter Leaves.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Forest.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Oryx Antelope.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="1-Normal-Train-icon[1].png" />
+    <Content Include="ajax-loader.gif" />
+    <Content Include="Company.ico" />
+    <Content Include="Company.JPG" />
+    <Content Include="GANNET.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\About.png" />
+    <None Include="Resources\SpeedSetup.png" />
+    <None Include="Resources\turnoffimage.png" />
+    <None Include="Resources\Report1.png" />
+    <None Include="Resources\Report2.png" />
+    <None Include="Resources\ManualTareEntry.png" />
+    <None Include="Resources\ManualTareEdit.png" />
+    <None Include="Resources\delete.png" />
+    <Content Include="Resources\dynamicweighing.png" />
+    <None Include="Resources\OneReport.png" />
+    <Content Include="Resources\ReportSS.png" />
+    <None Include="Resources\CropDefaultImage.png" />
+    <None Include="Resources\DefaultImagWithoutBtn.png" />
+    <None Include="Resources\static Weigment.png" />
+    <None Include="Resources\default1.png" />
+    <None Include="Resources\Default2.png" />
+    <None Include="Resources\Default3.png" />
+    <None Include="Resources\SystemSS.png" />
+    <None Include="Resources\PrinterSetup.png" />
+    <None Include="Resources\OverSpeedWt.png" />
+    <None Include="Resources\LPS.png" />
+    <None Include="Resources\EngineElimination.png" />
+    <None Include="Resources\Merge.png" />
+    <None Include="Resources\OLT.png" />
+    <None Include="Resources\GW.png" />
+    <None Include="Resources\OLSummary.png" />
+    <None Include="Resources\ComboRPcBacedSystem.png" />
+    <None Include="Resources\fullDraftWeight.png" />
+    <None Include="Resources\cmbRailSystem.png" />
+    <None Include="Resources\setWeight.png" />
+    <None Include="Resources\SecondPort.png" />
+    <None Include="Resources\SettingSS.png" />
+    <None Include="Resources\System Setup.png" />
+    <None Include="Resources\SystemSetup.png" />
+    <None Include="Resources\SettingDefault.png" />
+    <None Include="Resources\wagonLibrary.png" />
+    <None Include="Resources\Destination.png" />
+    <None Include="Resources\Source.png" />
+    <None Include="Resources\commodity.png" />
+    <None Include="Resources\WagonList.png" />
+    <None Include="Resources\Screen.png" />
+    <None Include="Resources\EnterPwd.png" />
+    <None Include="Resources\AllSetting.png" />
+    <None Include="Resources\Default.png" />
+    <None Include="Resources\Login.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

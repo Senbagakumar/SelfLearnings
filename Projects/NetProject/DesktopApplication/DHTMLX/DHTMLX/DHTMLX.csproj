@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F4232FC5-0C73-41B4-A359-161B7CAC23E1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DHTMLX</RootNamespace>
+    <AssemblyName>DHTMLX</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Google.GData.AccessControl, Version=2.2.0.0, Culture=neutral, PublicKeyToken=b4b8eb9a7afc8328, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.AccessControl.2.2.0.0\lib\Google.GData.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Calendar, Version=2.2.0.0, Culture=neutral, PublicKeyToken=aa6748391206b888, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Calendar.2.2.0.0\lib\Google.GData.Calendar.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Extensions.2.2.0.0\lib\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.5.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.5\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AgendaView.cs" />
+    <Compile Include="AjaxSaveResponse.cs" />
+    <Compile Include="AjaxUrl.cs" />
+    <Compile Include="ChainingPropertyDescriptor.cs" />
+    <Compile Include="CommonPropertiesContainer.cs" />
+    <Compile Include="DataAction.cs" />
+    <Compile Include="DataActionResult.cs" />
+    <Compile Include="DateFormatHelper.cs" />
+    <Compile Include="DateTemplate.cs" />
+    <Compile Include="DHTMLX.cs" />
+    <Compile Include="DHXBlockTime.cs" />
+    <Compile Include="DHXCollisionExtension.cs" />
+    <Compile Include="DHXEventHandlers.cs" />
+    <Compile Include="DHXEventsHelper.cs" />
+    <Compile Include="DHXEventTemplate.cs" />
+    <Compile Include="DHXMarkTime.cs" />
+    <Compile Include="DHXScheduler.cs" />
+    <Compile Include="DHXSchedulerDataStore.cs" />
+    <Compile Include="DHXSchedulerEvent.cs" />
+    <Compile Include="DHXServerList.cs" />
+    <Compile Include="DHXTimeSpan.cs" />
+    <Compile Include="DictionaryMerger.cs" />
+    <Compile Include="ExternalLightboxControl.cs" />
+    <Compile Include="ExternalLightboxForm.cs" />
+    <Compile Include="FileGrabber.cs" />
+    <Compile Include="Filter.cs" />
+    <Compile Include="GoogleCalendarHelper.cs" />
+    <Compile Include="GridView.cs" />
+    <Compile Include="GridViewColumn.cs" />
+    <Compile Include="ICalEvent.cs" />
+    <Compile Include="ICalRenderer.cs" />
+    <Compile Include="LightboxCheckbox.cs" />
+    <Compile Include="LightboxField.cs" />
+    <Compile Include="LightboxSelectOption.cs" />
+    <Compile Include="ListBoxSelect.cs" />
+    <Compile Include="MapView.cs" />
+    <Compile Include="MiniCalendar.cs" />
+    <Compile Include="MiniCalendarManager.cs" />
+    <Compile Include="PropertiesContainer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecTypes.cs" />
+    <Compile Include="Rule.cs" />
+    <Compile Include="SchedulerControlsBase.cs" />
+    <Compile Include="SchedulerExtensions.cs" />
+    <Compile Include="SchedulerHighlighter.cs" />
+    <Compile Include="SchedulerLightbox.cs" />
+    <Compile Include="SchedulerLocalization.cs" />
+    <Compile Include="SchedulerTimeSpanMarker.cs" />
+    <Compile Include="SchedulerUser.cs" />
+    <Compile Include="SchedulerUserPermissions.cs" />
+    <Compile Include="SchedulerView.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

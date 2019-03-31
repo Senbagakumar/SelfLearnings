@@ -1,0 +1,124 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+namespace WeighBridge
+{
+    public partial class Login : Form
+    {
+        public Login()
+        {
+            InitializeComponent();
+        }
+        private void Login_Load(object sender, EventArgs e)
+        {
+            Shared_Variables.UserID = -1;
+            lblError.Text = "";
+            txtPassword.Text = "test";
+            txtUserName.Text = "test";
+         //   btnLogin_Click(null, null); 
+        }
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            //DBEngine objDb = null;
+            try
+            {
+                if (txtUserName.Text.Trim() != "" && txtPassword.Text.Trim() != "")
+                {
+                    //objDb = new DBEngine(Shared_Variables.GetConnectionString);
+                    if (txtUserName.Text.ToString() == "admin" && txtPassword.Text.ToString() == "admin")
+                    {
+                        Shared_Variables.Engine.ExecuteNonQuery("INSERT INTO wb_Login_Log(UserID,Login_Name,DateTime) VALUES(9999,'Default admin',GETDATE()" + ")", null);
+                        Shared_Variables.UserID = 9999;
+                        this.Close();
+                    }
+                    else if (txtUserName.Text.Trim() == "")
+                    {
+                        lblError.Text = "Error Message:User name is empty.";
+                    }
+                    else if (txtPassword.Text.Trim() == "")
+                    {
+                        lblError.Text = "Error Message:Password is empty.";
+                    }
+                    else
+                    {
+                        DataSet dtUsers = new DataSet();
+                        Shared_Variables.Engine.ExecuteQuery("SELECT UserID,Login_Name,Password,Status FROM wb_Users WHERE Login_Name='" + txtUserName.Text.Trim() + "'", null, dtUsers, "User");
+                        if (dtUsers.Tables.Count > 0)
+                        {
+                            if (dtUsers.Tables[0].Rows.Count == 0)
+                            {
+                                lblError.Text = "Error Message:User not exit.";
+                                return;
+                            }
+                            DataRow dr = dtUsers.Tables[0].Rows[0];
+                            if (dr["Status"].ToString() == "I")
+                            {
+                                lblError.Text = "Error Message:User is inactive status.";
+                                return;
+
+                            }
+                            if (txtUserName.Text.ToString().ToUpper() == dr["Login_Name"].ToString().ToUpper() && txtPassword.Text.ToString() == dr["Password"].ToString())
+                            {
+                                Shared_Variables.Engine.ExecuteNonQuery("INSERT INTO wb_Login_Log(UserID,Login_Name,DateTime) VALUES(" + dr["UserID"].ToString() + "'" + dr["Login_Name"].ToString() + "',GETDATE()" + ")", null);
+
+                                Shared_Variables.UserID = Convert.ToInt32(dr["UserID"].ToString());
+                                this.Close();
+                            }
+                            else if (txtUserName.Text.ToString() == "admin" && txtPassword.Text.ToString() == "admin")
+                            {
+                                Shared_Variables.Engine.ExecuteNonQuery("INSERT INTO wb_Login_Log(UserID,Login_Name,DateTime) VALUES(9999,'Default admin',GETDATE()" + ")", null);
+                                Shared_Variables.UserID = 1;
+                                this.Close();
+                            }
+                            else if (txtUserName.Text != "admin")
+                            {
+                                lblError.Text = "Error Message:Invalid user name.";
+                            }
+                            else if (txtPassword.Text != "admin")
+                            {
+                                lblError.Text = "Error Message:Invalid password.";
+                            }
+                        }
+                        else
+                        {
+                            lblError.Text = "Error Message:User not exit.";
+                        }
+
+
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                //objDb = null;
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void txtUserName_TextChanged(object sender, EventArgs e)
+        {
+            lblError.Text = "";
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
+        {
+            lblError.Text = "";
+        }
+
+
+    }
+}

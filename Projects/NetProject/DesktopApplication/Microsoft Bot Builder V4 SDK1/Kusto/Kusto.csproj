@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6E0F94F2-CB55-4B0D-839F-61473DEB5867}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Kusto</RootNamespace>
+    <AssemblyName>Kusto</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Kusto.Cloud.Platform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=829a00acde12d551, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Kusto.Cloud.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Kusto.Data, Version=5.0.3.0, Culture=neutral, PublicKeyToken=829a00acde12d551, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Kusto.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Tools.SterlingKustoClientV2, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoClientV2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Tools.SterlingKustoCommon, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Tools.SterlingKustoConnectionLogicV2, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoConnectionLogicV2.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Tools.SterlingKustoLibUtil, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoLibUtil.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Tools.SterlingKustoQueryLogic, Version=2.2.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoQueryLogic.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>ExternalDlls\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="KustoContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ExternalDlls\Kusto.Cloud.Platform.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Kusto.Data.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoClientV2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoCommon.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoConnectionLogicV2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoLibUtil.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Microsoft.SqlServer.Tools.SterlingKustoQueryLogic.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ExternalDlls\Newtonsoft.Json.dll" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
