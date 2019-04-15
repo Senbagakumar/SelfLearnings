@@ -157,8 +157,16 @@
             if ($(this).val() == "1000") {
                 $('#divOthers').show();
                 $('#txtSector').show();
+                $('#SubSector').empty();
+                $('#SubSector')
+                    .append($("<option></option>")
+                        .attr("value", "1000")
+                        .text("OTHERS"));
             }
             else {
+                $('#divOthers').hide();
+                $('#txtSector').hide();
+
                 $.ajax({
                     type: "GET",
                     url: API.GetSubSectors() + $(this).val(),
@@ -172,19 +180,22 @@
                                 .text(value.Text));
                     });
                 });
-                $('#divOthers').hide();
-                $('#txtSector').hide();
             }
+            subsectoronchange();
         });
 
-        $('#SubSector').on('change', function () {
-            if ($(this).val() == "1000") {
+        function subsectoronchange() {
+            if ($('#SubSector').val() == "1000") {
                 $('#divOthers1').show();
                 $('#txtSubSector').show();
             } else {
                 $('#divOthers1').hide();
                 $('#txtSubSector').hide();
             }
+        }
+
+        $('#SubSector').on('change', function () {
+            subsectoronchange();
         });
 
         $('#btnLogin').click(function () {

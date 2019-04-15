@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class Organization
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string UserId { get; set; }
         public string Name { get; set; }
@@ -37,10 +38,10 @@ namespace SelfAssessment.Models.DBModel
         public virtual State States { get; set; }
         [ForeignKey("CityId")]
         public virtual City Cities { get; set; }
-        [ForeignKey("SectorId")]
-        public virtual Sector Sectors { get; set; }
-        [ForeignKey("SubSectorId")]
-        public virtual SubSector SubSectors { get; set; }
+        //[ForeignKey("SectorId")]
+        //public virtual Sector Sectors { get; set; }
+        //[ForeignKey("SubSectorId")]
+        //public virtual SubSector SubSectors { get; set; }
         [ForeignKey("RevenueId")]
         public virtual Revenue Revenues { get; set; }
         [ForeignKey("TypeOfServiceId")]

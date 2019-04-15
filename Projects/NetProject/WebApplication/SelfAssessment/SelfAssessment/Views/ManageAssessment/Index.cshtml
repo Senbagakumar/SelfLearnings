@@ -524,7 +524,8 @@
 				url: API.GetSubSectorForAssessment() + $(this).val(),
 				contentType: "application/json"
 			}).done(function (res) {
-				if (res.length > 0) {
+                if (res.length > 0) {
+                    $('#SubSector').empty();
 					$.each(res, function (key, value) {
 						$('#SubSector')
 							.append($("<option></option>")

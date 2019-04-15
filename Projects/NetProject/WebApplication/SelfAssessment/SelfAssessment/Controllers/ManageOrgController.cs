@@ -130,8 +130,9 @@ namespace SelfAssessment.Controllers
             org.States = repo.AssessmentContext.states.FirstOrDefault(q => q.Id == org.StateId);
             org.Revenues = repo.AssessmentContext.revenues.FirstOrDefault(q => q.Id == org.RevenueId);
             org.TypesOfService = repo.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == org.Id);
-            org.Sectors = repo.AssessmentContext.sectors.FirstOrDefault(q => q.Id == org.SectorId);
-            org.SubSectors = repo.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == org.SubSectorId);
+
+            //org.Sectors = repo.AssessmentContext.sectors.FirstOrDefault(q => q.Id == org.SectorId);
+            //org.SubSectors = repo.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == org.SubSectorId);
 
 
             //this.registrationSendMail.Send(new MailConfiguration());

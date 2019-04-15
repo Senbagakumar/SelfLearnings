@@ -26,7 +26,7 @@ namespace SelfAssessment.Business
             orgHistory.ForEach(t => 
             {
                 listOrganization.Add(new Organization() { AssessmentId=t.AssessmentId, CurrentAssignmentType=t.Level, CityId=t.CityId, StateId=t.StateId,
-                SectorId=t.SectorId, SubSectorId=t.SubSectorId, RevenueId=t.RevenueId, TypeOfServiceId=t.TypeOfServiceId, Id=t.OrgId});
+                SectorId=t.SectorId, SubSectorId=t.SubSectorId, RevenueId=t.RevenueId, TypeOfServiceId=t.TypeOfServiceId, Id=t.OrgId, CurrentAssignmentStatus=t.Status});
             });
 
             //if (org.AssessmentId > 0)
@@ -65,6 +65,7 @@ namespace SelfAssessment.Business
                     model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
                     model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
                     model.Type = org.CurrentAssignmentType;
+                    model.Status = q.CurrentAssignmentStatus;
                     lmodel.Add(model);
                 });
             }

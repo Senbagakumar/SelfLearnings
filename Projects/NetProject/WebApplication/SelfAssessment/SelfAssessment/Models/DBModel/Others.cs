@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class Others
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string OrganizationId { get; set; }
         public string Sector { get; set; }
         public string SubSector { get; set; }

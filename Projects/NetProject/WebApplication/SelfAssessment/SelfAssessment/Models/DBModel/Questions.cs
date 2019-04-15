@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class Questions
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int GroupId { get; set; }  // ForeignKey
         public string QuestionCode { get; set; }

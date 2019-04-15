@@ -88,9 +88,9 @@
 
 
     //WidgetChart 2
-    var ctx = document.getElementById( "widgetChart2" );
-    ctx.height = 150;
-    var myChart = new Chart( ctx, {
+    var ctx2 = document.getElementById("widgetChart2" );
+    ctx2.height = 150;
+    var myChart2 = new Chart( ctx2, {
         type: 'line',
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -158,9 +158,9 @@
 
 
     //WidgetChart 3
-    var ctx = document.getElementById( "widgetChart3" );
-    ctx.height = 70;
-    var myChart = new Chart( ctx, {
+    var ctx3 = document.getElementById("widgetChart3" );
+    ctx3.height = 70;
+    var myChart3 = new Chart( ctx3, {
         type: 'line',
         data: {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -226,9 +226,9 @@
 
 
     //WidgetChart 4
-    var ctx = document.getElementById( "widgetChart4" );
-    ctx.height = 70;
-    var myChart = new Chart( ctx, {
+    var ctx4 = document.getElementById("widgetChart4" );
+    ctx4.height = 70;
+    var myChart4 = new Chart(ctx4, {
         type: 'bar',
         data: {
             labels: ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],

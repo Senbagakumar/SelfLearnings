@@ -64,9 +64,14 @@ namespace SelfAssessment.Business
             using (Repository<Organization> repository = new Repository<Organization>())
             {
                 var user = repository.Filter(q => q.Email == userName && q.IsActive).FirstOrDefault();
-                var tpwd = !string.IsNullOrEmpty(user.Password) ? StringCipher.Decrypt(user.Password) : string.Empty;
-                if (user != null && !string.IsNullOrEmpty(user.UserId) && (tpwd == password || user.TempPassword == password))
-                    return user.Id;
+                if (user != null)
+                {
+                    var tpwd = !string.IsNullOrEmpty(user.Password) ? StringCipher.Decrypt(user.Password) : string.Empty;
+                    if (user != null && !string.IsNullOrEmpty(user.UserId) && (tpwd == password || user.TempPassword == password))
+                        return user.Id;
+                    else
+                        return 0;
+                }
                 else
                     return 0;
             }
@@ -94,7 +99,6 @@ namespace SelfAssessment.Business
                 Others other = new Others();
 
                 bool isOthers = false;
-
                 if (uIOrganization.Sector.Contains(Utilities.OthersValue))
                 {
                     sector = uIOrganization.Sector.Split(Utilities.SplitValue);
@@ -124,10 +128,10 @@ namespace SelfAssessment.Business
                     organization.States = repository.AssessmentContext.states.FirstOrDefault(q => q.Id == organization.StateId);
                     organization.Revenues = repository.AssessmentContext.revenues.FirstOrDefault(q => q.Id == organization.RevenueId);
                     organization.TypesOfService = repository.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == organization.Id);
-                    organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
-                    organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
-
-
+                    //organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
+                    //organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
+                    organization.SectorId = isOthers ? Convert.ToInt16(Utilities.OthersValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
+                    organization.SubSectorId = isOthers ? Convert.ToInt16(Utilities.OthersValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
                     organization.TempPassword = password;
                     repository.Create(organization);
                     repository.SaveChanges();

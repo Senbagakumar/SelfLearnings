@@ -25,6 +25,7 @@ namespace SelfAssessment.Models
         public string Password { get; set; }
         public string SelectLevel { get; set; }
         public string IsActive { get; set; }
+        public string Status { get; set; }
     }   
   
 }

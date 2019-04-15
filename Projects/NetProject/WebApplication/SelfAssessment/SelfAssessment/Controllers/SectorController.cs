@@ -53,8 +53,8 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        var count = repository.All().Count();
-                        repository.Create(new Sector() { Id=++count, SectorName = sector.SectorName, CreateDate = DateTime.Now });
+                        var count = repository.All().Count(); 
+                        repository.Create(new Sector() { Id = ++count, SectorName = sector.SectorName, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
                 }

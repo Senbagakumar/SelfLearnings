@@ -73,13 +73,13 @@ namespace SelfAssessment.Controllers
         public JsonResult GetSubSector(int id)
         {
             var subSector = new List<SelectListItem>();
-            //var firstItem = new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true };            
+           //var lastItem = new SelectListItem() { Text =Utilities.Others, Value = Utilities.OthersValue };
            
             using (var repository = new Repository<SubSector>())
             {
                 subSector = repository.Filter(q=> q.SectorId == id).Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.SubSectorName }).ToList();
             }
-            //subSector.Insert(0, firstItem);
+            //subSector.Add(lastItem);
             return Json(subSector,JsonRequestBehavior.AllowGet);
         }
 

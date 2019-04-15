@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class ServiceType
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime CreateDate { get; set; }

@@ -14,7 +14,8 @@ namespace SelfAssessment.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            if (Session[Utilities.UserId] == null || string.IsNullOrEmpty(Session[Utilities.UserId].ToString()))
+
+            if (Session[Utilities.UserId] == null || string.IsNullOrWhiteSpace(Session[Utilities.UserId].ToString()))
                 Response.Redirect(Utilities.RedirectToLogin);
             userId = Convert.ToInt16(Session[Utilities.UserId].ToString());
         }

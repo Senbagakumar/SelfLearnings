@@ -2,6 +2,7 @@
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
@@ -43,7 +44,6 @@ namespace SelfAssessment.DataAccess
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
-
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
 

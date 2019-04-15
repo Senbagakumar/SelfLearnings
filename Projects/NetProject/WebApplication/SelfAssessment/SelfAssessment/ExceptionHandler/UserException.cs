@@ -16,7 +16,7 @@ namespace SelfAssessment.ExceptionHandler
             var errorDetails = new { errorMsg=ex.Message, InnerException=ex.InnerException?.Message, source=ex.Source, stackTrace=ex.StackTrace, data=ex.Data, error=ex.ToString()  };
             using (Repository<Log> repository = new Repository<Log>())
             {
-                repository.Create(new Log() { Type = Utilities.Error, Details = errorDetails.ToString() });
+                repository.Create(new Log() { Type = Utilities.Error, Details = errorDetails.ToString(), CreatedDate=DateTime.UtcNow });
                 repository.SaveChanges();
             }
         }
@@ -25,7 +25,7 @@ namespace SelfAssessment.ExceptionHandler
         {
             using (Repository<Log> repository = new Repository<Log>())
             {
-                repository.Create(new Log() { Type = Utilities.Information, Details = Info });
+                repository.Create(new Log() { Type = Utilities.Information, Details = Info, CreatedDate=DateTime.UtcNow });
                 repository.SaveChanges();
             }
         }

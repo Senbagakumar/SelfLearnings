@@ -54,7 +54,7 @@ namespace SelfAssessment.Controllers
         {
             var assessment = new Assessment();
 
-            assessment.Id = Convert.ToInt16(userValues["txt-id-input"]);
+            assessment.Id = !string.IsNullOrWhiteSpace(userValues["txt-id-input"]) ? Convert.ToInt16(userValues["txt-id-input"]) : 0;
             assessment.AdminEmail = userValues["txt-AEmail-input"];
             assessment.AssessmentFormat = userValues["st-AFormat"];
             assessment.Description = userValues["txt-ADes-input"];
@@ -157,12 +157,16 @@ namespace SelfAssessment.Controllers
             return View();
         }
 
-        public JsonResult MoveToNextLevel(int id)
+        public JsonResult MoveToNextLevel(int id, string level)
         {
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == id).FirstOrDefault();
                 string type = org.CurrentAssignmentType;
+
+                if(org.CurrentAssignmentType != level)//&& org.CurrentAssignmentStatus == Utilities.AssessmentCompletedStatus
+                    return Json("IsAlreadyMoved", JsonRequestBehavior.AllowGet);
+
                 if (org != null)
                 {
                     if (org.CurrentAssignmentType == Utilities.AssessmentTypeLevel1)
@@ -220,21 +224,26 @@ namespace SelfAssessment.Controllers
 
             using (var repo = new Repository<Organization>())
             {
-                var pendingCount = repo.All().ToList().GroupBy(q => q.CurrentAssignmentType).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
+                var pendingCount = repo.All().ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status=q.Key.CurrentAssignmentStatus }).ToList();
 
-                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
-                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
-                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;               
+                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+
+                level1ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+                level2ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+                level3ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+
             }
 
             using (var repo = new Repository<OrganizationLevelHistory>())
             {
                 var completedCount = repo.All().ToList().GroupBy(q => q.Level).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
 
-                level1ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
-                level2ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
-                level3ComCount = completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;
-            }
+                level1ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
+                level2ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
+                level3ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;
+            } 
 
             var questionRepo = new Repository<Questions>();
             var assessmentRepo = new Repository<AssessmentLevelMapping>();

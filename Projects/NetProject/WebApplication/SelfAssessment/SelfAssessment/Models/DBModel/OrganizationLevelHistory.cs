@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class OrganizationLevelHistory
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public int OrgId { get; set; }
         public string Level { get; set; }      

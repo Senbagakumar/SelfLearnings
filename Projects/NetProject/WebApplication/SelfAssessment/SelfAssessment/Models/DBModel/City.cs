@@ -10,6 +10,7 @@ namespace SelfAssessment.Models.DBModel
     public class City
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public int StateId { get; set; } // Foreign Key
         public string CityName { get; set; }

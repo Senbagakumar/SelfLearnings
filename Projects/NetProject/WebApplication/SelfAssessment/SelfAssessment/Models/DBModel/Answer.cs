@@ -31,5 +31,6 @@ namespace SelfAssessment.Models.DBModel
         public int Id { get; set; }
         public string Type { get; set; } //Error, Information
         public string Details { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

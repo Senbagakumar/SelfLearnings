@@ -109,7 +109,11 @@ namespace SelfAssessment.Controllers
                 {
                     using (Repository<Group> repository = new Repository<Group>())
                     {
-                        var group = new Group() { Name = uiGroup.GroupName, Description = uiGroup.GroupDescription, CreateDate = DateTime.Now , Weight=uiGroup.Weight};
+                        var count = repository.All().Count();
+                        if (count > 0)
+                            count = repository.All().Max(q => q.Id);
+
+                        var group = new Group() { Id=++count, Name = uiGroup.GroupName, Description = uiGroup.GroupDescription, CreateDate = DateTime.Now , Weight=uiGroup.Weight};
                         repository.Create(group);
                         repository.SaveChanges();
                     }
@@ -119,7 +123,7 @@ namespace SelfAssessment.Controllers
                 return Json(Utilities.Success, JsonRequestBehavior.AllowGet);
 
             }
-            catch
+            catch(Exception ex)
             {
                 return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
             }

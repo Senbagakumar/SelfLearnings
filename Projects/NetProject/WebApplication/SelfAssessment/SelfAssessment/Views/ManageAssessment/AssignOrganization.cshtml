@@ -102,7 +102,7 @@
                             <th>Sector</th>
                             <th>Sub Sector</th>
                             <th>Revenue</th>
-                            <th>Type</th>
+                            <th>Status</th>
                             @*<th>In Level's</th>*@
                         </tr>
                     </thead>
@@ -135,13 +135,13 @@
 <script>
 
     $("#btnMoveNextLevel").click(function () {
-
+        var type = $('#Type').val();
         $("#bootstrap-data-table input[type=checkbox]").each(function (idx, elem) {
             var is_checked = $(this).prop("checked");  
             if (is_checked) {
                 var orgId = $(this).prop("id");
 
-                var url = API.AssignOrganizationMoveNextLevel() + orgId;
+                var url = API.AssignOrganizationMoveNextLevel() + "?id=" + orgId + "&level=" + type;;
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -209,7 +209,7 @@
         }).done(function (res) {
             $("#bootstrap-data-table tbody").empty();
             $.each(res, function (key, value) {
-                var markup = "<tr><td>" + value.Id + "</td>" + "<td><input id=" + value.Id +" type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Type+"</td>";
+                var markup = "<tr><td>" + value.Id + "</td>" + "<td><input id=" + value.Id +" type='checkbox' name='chk1'></td>"+"<td>" + value.Name + "</td><td>" + value.City + "</td><td>" + value.State + "</td><td>" + value.TypeOfService + "</td><td>" + value.Sector + "</td><td>" + value.SubSector + "</td><td>" + value.Revenue +"</td><td>"+ value.Status+"</td>";
                 $("#bootstrap-data-table tbody").append(markup);
             });            
         });

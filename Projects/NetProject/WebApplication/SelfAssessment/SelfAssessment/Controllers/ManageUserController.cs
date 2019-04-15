@@ -256,15 +256,19 @@ namespace SelfAssessment.Controllers
 
             this.quizManager = new QuizManager(this.UserId);
             this.quizManager.AllQuestions = (List<QuestionAnswer>)Session["AllQuestions"];
-            bool isAnswered = false;
-            if(this.quizManager.IsMandatoryQuestion(quiz.UIQId))
-            {
-                isAnswered = quiz.UserOptionId > 0 ? true : false;
-            }
+            bool isAnswered = quiz.UserOptionId > 0 ? true : false;
 
-            if (isAnswered)
+            this.quizManager.SaveAnswer(quiz);
+            bool isMandatory = true;
+            isMandatory = this.quizManager.IsMandatoryQuestion(quiz.UIQId);
+
+            if(isMandatory && quiz.UserOptionId == 0)
             {
-                this.quizManager.SaveAnswer(quiz);
+                qId = quiz.UIQId;
+                ViewBag.Msg = "Please Fill the Mandatroy Questions";
+            }
+            else
+            {
                 qId = quiz.UIQId;
 
                 if (!isAction)
@@ -275,11 +279,8 @@ namespace SelfAssessment.Controllers
                 if (qId == 0)
                     qId = 1;
             }
-            else
-            {
-                qId = quiz.UIQId;
-                ViewBag.Msg = "Please Fill the Mandatroy Questions";
-            }
+
+                
             if (this.quizManager.MoveToNextQuestion(qId))
             {
                 var question = this.quizManager.LoadQuiz(qId);
@@ -350,19 +351,21 @@ namespace SelfAssessment.Controllers
             this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
             var lQuestions=this.groupQuizManager.GetMandatoryQuestion(groupId);
 
-            bool isMandatoryAnswerd = false;
-            lQuestions.ForEach(q =>
+            this.groupQuizManager.SaveAnswer(groupQuiz);
+
+            bool isMandatoryAnswerd = true;
+            foreach (var q in lQuestions)
             {
-                if (groupQuiz == null || groupQuiz.Count ==0 || groupQuiz.Any(t => t.QuestionId == q.Questions.QuestionId && t.UserOptionId == 0))
+                if (groupQuiz == null || groupQuiz.Count == 0 || !groupQuiz.Exists(t => t.QuestionId == q.Questions.QuestionId))
+                {
                     isMandatoryAnswerd = false;
-                else
-                    isMandatoryAnswerd = true;
-            });
-            
+                    break;
+                }
+            }
 
             if (isMandatoryAnswerd)
             {
-                this.groupQuizManager.SaveAnswer(groupQuiz);
+
                 groupId = groupQuiz.First().UIGroupId;
 
                 if (!isAction)

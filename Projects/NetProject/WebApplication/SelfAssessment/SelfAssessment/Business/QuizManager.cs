@@ -37,6 +37,7 @@ namespace SelfAssessment.Business
             var lQuestions = uInfo.AssessmentContext.questions.Where(q => questionIds.Contains(q.Id)).GroupBy(q => q.GroupId).Select(q => new { Questions = q.ToList(), Type = q.Key }).OrderBy(t => t.Type).ToList();
 
             int i = 1;
+            int slno = 1;
             lQuestions.ForEach(t =>
             {
 
@@ -44,7 +45,7 @@ namespace SelfAssessment.Business
                 {
                     var question = new QuestionAnswer();
                     
-                    question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId, Mandatory=v.Mandatory };
+                    question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId, Mandatory=v.Mandatory, Slno=slno };
 
                     question.Questions.GroupText = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
 
@@ -60,6 +61,7 @@ namespace SelfAssessment.Business
 
                     listOfQuestions.Add(question);
                     i++;
+                    slno++;
                 });
               
             });

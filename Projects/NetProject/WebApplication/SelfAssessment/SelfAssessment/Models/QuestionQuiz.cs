@@ -7,6 +7,7 @@ namespace SelfAssessment.Models
 {
     public class QuestionQuiz
     {
+        public int Slno { get; set; }
         public int QuestionId { get; set; }
         public int UIQId { get; set; }
         public string QuestionCode { get; set; }

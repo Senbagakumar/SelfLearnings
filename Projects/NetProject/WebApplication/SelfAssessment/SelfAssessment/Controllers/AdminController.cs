@@ -116,8 +116,8 @@ namespace SelfAssessment.Controllers
                         State = sty.st.StateName,
                         Designation = sty.s.og.Designation,
                         TypeOfService = stype.Name,
-                        Sector = org.AssessmentContext.sectors.Where(q => q.Id == selectOrg.SubSectorId).FirstOrDefault().SectorName,
-                        SubSector = org.AssessmentContext.subSectors.Where(q => q.Id == selectOrg.SubSectorId).FirstOrDefault().SubSectorName,
+                        Sector = selectOrg.SectorId == 1000 ? Utilities.Others : org.AssessmentContext.sectors.Where(q => q.Id == selectOrg.SubSectorId).FirstOrDefault().SectorName,
+                        SubSector = selectOrg.SubSectorId == 1000 ? Utilities.Others :  org.AssessmentContext.subSectors.Where(q => q.Id == selectOrg.SubSectorId).FirstOrDefault().SubSectorName,
                         Revenue = org.AssessmentContext.revenues.Where(q=>q.Id == selectOrg.RevenueId).FirstOrDefault().Name,
                         Type = selectOrg.TypeId == 1 ? Utilities.Small : selectOrg.TypeId == 2 ? Utilities.Large : Utilities.OperatingUnit
 

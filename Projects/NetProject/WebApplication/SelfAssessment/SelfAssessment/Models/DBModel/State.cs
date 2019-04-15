@@ -9,7 +9,8 @@ namespace SelfAssessment.Models.DBModel
 {
     public class State
     {
-        [Key]     
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string StateName { get; set; }
         public DateTime CreateDate { get; set; }
