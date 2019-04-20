@@ -935,6 +935,7 @@ namespace SenLogic
             //psettings.PaperSize = a4rotated;
 
             PrintDocument pd = new PrintDocument();
+            pd.PrinterSettings.DefaultPageSettings.PaperSize = Shared_Functions.GetPaperSize(5, pd);
             //pd.DefaultPageSettings = psettings;
             pd.PrintPage += new PrintPageEventHandler(PrintImage56);
 
@@ -1075,7 +1076,7 @@ namespace SenLogic
                     e.Graphics.DrawString(tare.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 430, height, GNRDW, GRDH), str);
                     e.Graphics.DrawString(net.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 500, height, GNRDW, GRDH), str);
                     e.Graphics.DrawString(ul.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 570, height, GNRDW, GRDH), str);
-                    e.Graphics.DrawString(ol.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 690, height, GNRDW, GRDH), str);
+                    e.Graphics.DrawString(ol.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 650, height, GNRDW, GRDH), str);
 
                     CC56 += cc; PCC56 += pcc; Gross56 += gross;
                     Tare56 += tare; Net56 += net; Ul56 += ul;
@@ -1111,13 +1112,13 @@ namespace SenLogic
                 e.Graphics.DrawString(Tare56.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 430, height, GNRDW, GRDH), str);
                 e.Graphics.DrawString(Net56.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 500, height, GNRDW, GRDH), str);
                 e.Graphics.DrawString(Ul56.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 570, height, GNRDW, GRDH), str);
-                e.Graphics.DrawString(Ol56.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 690, height, GNRDW, GRDH), str);
+                e.Graphics.DrawString(Ol56.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 650, height, GNRDW, GRDH), str);
 
                 height += Shared_Variables.SpaceValueForFinalCopy;
 
                 e.Graphics.DrawString(Shared_Variables.dotLine, Shared_Variables.GetFontForHeader, Brushes.Black, new RectangleF(Corigin, height, width + 610, GRDH), str);
                
-                height += 50;
+                height += 30;
                 e.Graphics.DrawString("All Weights are in Tonnes", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin, height, width + 100, GRDH), str);
                 e.Graphics.DrawString("Authorised Signature", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 500, height, GNRDW + 100, GRDH), str);
 
@@ -1222,7 +1223,7 @@ namespace SenLogic
             e.Graphics.DrawString("TARE", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 430, height, GNRDW, GRDH), str);
             e.Graphics.DrawString("NET", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 500, height, GNRDW, GRDH), str);
             e.Graphics.DrawString("UNDER", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 570, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString("OVER", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 690, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString("OVER", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 650, height, GNRDW, GRDH), str);
 
             height += Shared_Variables.SpaceValueForFinalCopy;
 
@@ -1235,7 +1236,7 @@ namespace SenLogic
             e.Graphics.DrawString("WT.", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 430, height, GNRDW, GRDH), str);
             e.Graphics.DrawString("WT.", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 500, height, GNRDW, GRDH), str);
             e.Graphics.DrawString("LOAD.", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 570, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString("LOAD.", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 690, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString("LOAD.", Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 650, height, GNRDW, GRDH), str);
 
             height += Shared_Variables.SpaceValueForFinalCopy;
 
@@ -1404,22 +1405,24 @@ namespace SenLogic
             //pd.DefaultPageSettings = psettings;
             pd.PrintPage += new PrintPageEventHandler(PrintImage34);
 
+            pd.PrinterSettings.DefaultPageSettings.PaperSize = Shared_Functions.GetPaperSize(5, pd);
+
             if (!Convert.ToBoolean(Shared_Variables.printPreviewEnable))
             {
-                PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dgRakeView.Rows.Count * 15) + 200));
+                //PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dgRakeView.Rows.Count * 15) + 200));
 
                 int mode = Convert.ToInt32(ConfigurationManager.AppSettings["Mode"]);
                 pd.PrinterSettings.DefaultPageSettings.PrinterResolution = new PrinterResolution() { Kind = (PrinterResolutionKind)mode };
                 pd.DefaultPageSettings.PrinterResolution = new PrinterResolution() { Kind = (PrinterResolutionKind)mode };
 
-                pd.DefaultPageSettings.PaperSize = ps;
+                //pd.DefaultPageSettings.PaperSize = ps;
                 pd.Print();
             }
             else
             {
-                PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dgRakeView.Rows.Count * 15) + 200));
+                //PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dgRakeView.Rows.Count * 15) + 200));
 
-                pd.DefaultPageSettings.PaperSize = ps;
+                //pd.DefaultPageSettings.PaperSize = ps;
 
                 int mode = Convert.ToInt32(ConfigurationManager.AppSettings["Mode"]);
                 pd.PrinterSettings.DefaultPageSettings.PrinterResolution=new PrinterResolution() { Kind=(PrinterResolutionKind)mode };
@@ -1432,7 +1435,7 @@ namespace SenLogic
 
 
         }
-        int printRowCount34 = 0; int pageRowCount34 = 60; int RowCount34 = 0; bool is34header = false; int j = 1;
+        int printRowCount34 = 0; bool is34header = false; int j = 1;
         double Weight34 = 0.0; int FooterDotLine1 = 0; int FooterDotLine2 = 0; int FooterTotal = 0; int FooterSign = 0; int currentpage = 0;
         void PrintImage34(object o, PrintPageEventArgs e)
         {
@@ -1616,8 +1619,8 @@ namespace SenLogic
                         e.Graphics.DrawString(Weight34.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(Corigin + 350, height, GNRDW, GRDH), str);
 
 
-                        e.Graphics.DrawString("Train Leaving Time:", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 500, height, GNRDW + 100, GRDH), str);
-                        e.Graphics.DrawString(leavingtime, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 650, height, GNRDW, GRDH), str);
+                        e.Graphics.DrawString("Train Leaving Time:", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 450, height, GNRDW + 100, GRDH), str);
+                        e.Graphics.DrawString(leavingtime, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 630, height, GNRDW, GRDH), str);
 
                         FooterTotal = 1;
                     }
@@ -1652,7 +1655,7 @@ namespace SenLogic
                 }
 
                 if(FooterSign == 0)
-                    height += 50;
+                    height += 30;
 
                 if (!CheckHeight_1(height, currentpage))
                 {
@@ -1673,7 +1676,7 @@ namespace SenLogic
                 }  
 
 
-                is34header = false; printRowCount34 = 0; RowCount34 = 0; j = 1;
+                is34header = false; printRowCount34 = 0; j = 1;
                 e.HasMorePages = false;
                 Weight34 = 0.0;
                 FooterDotLine1 = 0; FooterDotLine2 = 0; FooterTotal = 0; FooterSign = 0; currentpage = 0;

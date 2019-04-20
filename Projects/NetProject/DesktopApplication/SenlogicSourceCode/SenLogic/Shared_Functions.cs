@@ -5,6 +5,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Data;
+using System.Drawing.Printing;
+
 namespace SenLogic
 {
     public static class Shared_Functions
@@ -14,7 +16,20 @@ namespace SenLogic
             MessageBox.Show(strMsg, "SenLogic");
         }
 
-      
+        public static PaperSize GetPaperSize(int rawKind, PrintDocument printdocument)
+        {
+            PaperSize papersize = null;
+            foreach (PaperSize item in printdocument.PrinterSettings.PaperSizes)
+            {
+                if (item.RawKind == rawKind)
+                {
+                    papersize = item;
+                    break;
+                }
+            }
+            return papersize;
+        }
+
         public static void Logged_StartStop(string userName, string type)
         {
             string path = Application.StartupPath + "\\Log";

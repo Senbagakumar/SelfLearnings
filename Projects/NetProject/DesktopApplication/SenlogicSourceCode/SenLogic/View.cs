@@ -523,7 +523,7 @@ namespace SenLogic
                 
                 if ((speed1 / axcount) <= 9)
                     dr[3] = "X"; //"NS"; 
-                if ((speed1 / axcount) > 9 && (speed1 / axcount) <= 15)
+                if ((speed1 / axcount) > 10 && (speed1 / axcount) <= 15)
                     dr[3] = "MS";
                 if ((speed1 / axcount) > 15)
                     dr[3] = "OS";
@@ -735,20 +735,19 @@ namespace SenLogic
            // pd.DefaultPageSettings = psettings;
             pd.PrintPage += new PrintPageEventHandler(PrintImage);
 
+            pd.PrinterSettings.DefaultPageSettings.PaperSize = Shared_Functions.GetPaperSize(5,pd);
             if (!Convert.ToBoolean(Shared_Variables.printPreviewEnable))
             {
-                PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dataGridView1.Rows.Count * 15) + 200));
-                pd.DefaultPageSettings.PaperSize = ps;                
+                //PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dataGridView1.Rows.Count * 15) + 200));
+               // pd.DefaultPageSettings.PaperSize = ps;                
                 pd.Print();
             }
             else
             {
 
-                PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dataGridView1.Rows.Count * 15) + 200));
-
-                pd.DefaultPageSettings.PaperSize = ps;
-                PrintPreviewDialog pview = new PrintPreviewDialog();
-
+                //PaperSize ps = new PaperSize("sd", pd.DefaultPageSettings.PaperSize.Width, (141 + (dataGridView1.Rows.Count * 15) + 200));
+                //pd.DefaultPageSettings.PaperSize = ps;
+                PrintPreviewDialog pview = new PrintPreviewDialog();              
                 pview.Document = pd;
                 pview.ShowDialog();
             }
@@ -868,8 +867,8 @@ namespace SenLogic
                         e.Graphics.DrawString("TOTAL (MT):", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin+80, height, GNRDW + 60, GRDH), str);
                         e.Graphics.DrawString(WSpeed.ToString("00.00"), Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 230, height, GNRDW, GRDH), str);
 
-                        e.Graphics.DrawString("Train Leaving Time:", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 500, height, GNRDW + 100, GRDH), str);
-                        e.Graphics.DrawString(leavingTime, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 650, height, GNRDW, GRDH), str);
+                        e.Graphics.DrawString("Train Leaving Time:", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 400, height, GNRDW + 100, GRDH), str);
+                        e.Graphics.DrawString(leavingTime, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 550, height, GNRDW, GRDH), str);
 
                         FooterTotal = 1;
                     }
@@ -905,7 +904,7 @@ namespace SenLogic
                 
                 
                 if(FooterSign ==0)
-                   height += 50;
+                   height += 30;
 
                 if (!CheckHeight(height, currentpage))                
                 {
@@ -1010,9 +1009,9 @@ namespace SenLogic
             e.Graphics.DrawString(txtRakeNo.Text, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 100, height, GNRDW, GRDH), str);
 
 
-            e.Graphics.DrawString("DIRECTION", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 560, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString(":", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 640, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString(txtDirection.Text, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 650, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString("DIRECTION", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 500, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString(":", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 580, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString(txtDirection.Text, Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 590, height, GNRDW, GRDH), str);
 
             height += 18; 
 
@@ -1041,9 +1040,9 @@ namespace SenLogic
             }
             
 
-            e.Graphics.DrawString("TIME IN", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 560, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString(":", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 640, height, GNRDW, GRDH), str);
-            e.Graphics.DrawString(rakeArrivalTime != string.Empty ? rakeArrivalTime : DateTime.Now.ToString(Shared_Variables.TimeFormatWithSeconds), Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 650, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString("TIME IN", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 500, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString(":", Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 580, height, GNRDW, GRDH), str);
+            e.Graphics.DrawString(rakeArrivalTime != string.Empty ? rakeArrivalTime : DateTime.Now.ToString(Shared_Variables.TimeFormatWithSeconds), Shared_Variables.GetFont, Brushes.Black, new RectangleF(origin + 590, height, GNRDW, GRDH), str);
 
             height += 18; 
             e.Graphics.DrawString(dotLine, Shared_Variables.GetFontForHeader, Brushes.Black, new RectangleF(Corigin, height, width + 610, GRDH), str);
@@ -1089,7 +1088,6 @@ namespace SenLogic
                 MessageBox.Show(ex.Message.ToString(), ex.Message.GetType().ToString());
             }
         }
-
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
