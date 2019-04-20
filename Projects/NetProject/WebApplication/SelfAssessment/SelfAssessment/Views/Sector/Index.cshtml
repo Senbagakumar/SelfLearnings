@@ -3,20 +3,7 @@
     ViewBag.Title = "Sector";
 }
 
-
-
-<!-- Left Panel -->
-<!-- Right Panel -->
-
 <div>
-
-    <!-- Header-->
-    <!-- /header -->
-    <!-- Header-->
-
-
-
-
     <div class="content mt-3">
 
         <div class="col-md-12">
@@ -37,13 +24,14 @@
                                     <form action="" method="post" class="form-horizontal">
                                         <div class="row form-group">
                                             <div class="col col-md-3">
-                                                <label for="text-input" class=" form-control-label">Sector Name</label>
+                                                <label for="text-input" class=" form-control-label required">Sector Name</label>
                                             </div>
                                             <div>
                                                 <input type="hidden" id="txtId" />
                                             </div>
                                             <div class="col-12 col-md-9">
                                                 <input type="text" id="text-input" name="text-input" placeholder="Sector Name" class="form-control">
+                                                <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
                                             </div>
                                         </div>
 
@@ -97,6 +85,7 @@
 </div><!-- /#right-panel -->
 <!-- Right Panel -->
 
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -120,6 +109,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
+
         $('#btnPlus').click(function () {
             $('#txtId').val('');
             $('#text-input').val('');
@@ -130,7 +123,7 @@
             var modle = {};
             var id = $('#txtId').val();
 
-            if (id != '') {              
+            if (id != '') {
                 model = {
                     SectorName: $('#text-input').val(),
                     Id: id
@@ -139,7 +132,12 @@
             else {
                 model = {
                     SectorName: $('#text-input').val()
-                };               
+                };
+            }
+
+            if (model.SectorName == '' || model.SectorName.length <= 0) {
+                $('#text-input_validationMessage').text("Please Enter the SectorName");
+                return false;
             }
 
             $.ajax({

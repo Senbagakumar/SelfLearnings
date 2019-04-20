@@ -3,7 +3,6 @@
     ViewBag.Title = "Index";
 }
 
-
 <div class="content mt-3">
 
     <div class="col-md-12">
@@ -20,35 +19,35 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
-                                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                            <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                <div class="modal-body">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class="form-control-label">Select State </label>
+                                            <label for="text-input" class="form-control-label required">Select State </label>
                                         </div>
                                         <div>
                                             <input type="hidden" id="txtId" />
                                         </div>
                                         <div class="col-12 col-md-9">
                                             @Html.DropDownList("StateName", (IEnumerable<SelectListItem>)ViewBag.StateList, new { @class = "form-control" })
+                                            <span class="field-validation-valid text-danger" id="StateName_validationMessage"></span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">City Name</label>
+                                            <label for="text-input" class=" form-control-label required">City Name</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="text-input" placeholder="City Name" class="form-control">
+                                            <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
                                         </div>
                                     </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-
-                                <button id="btnSave" type="button" class="btn btn-primary">Save</button>
-                                <button id="btnCancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="btnSave" type="submit" class="btn btn-primary">Save</button>
+                                    <button id="btnCancel" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -88,9 +87,9 @@
     </div>
 
     <!-- .animated -->
-</div><!-- .content -->
+</div>
 
-
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -107,21 +106,29 @@
 <script src="~/admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
 <script src="~/admin/assets/js/lib/data-table/datatables-init.js"></script>
 
-
 <script type="text/javascript">
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
-
-        //$('td:nth-child(2)').hide();
 
         $('#btnPlus').click(function () {
             $('#txtId').val('');
         });
 
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
+
+        $('#StateName').change(function () {
+            var selectedOption = $('option:selected', this).val();
+            if (selectedOption > 0) {
+                $('#StateName_validationMessage').text("");
+            }
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
-            var id = $('#txtId').val();           
+            var id = $('#txtId').val();
 
             if (id != '') {
                 model = {
@@ -138,6 +145,16 @@
                 };
             }
 
+            if (model.StateId <= 0) {
+                $('#StateName_validationMessage').text("Please select the StateName");
+                return false;
+            }
+
+            if (model.CityName == '' || model.CityName.length <= 0) {
+                $('#text-input_validationMessage').text("Please Enter the CityName");
+                return false;
+            }
+           
 
             $.ajax({
                 type: "POST",
@@ -150,10 +167,8 @@
                 $('#StateName').val('-- Select --');
                 $('#btnCancel').click();
                 $('#btnCancel').click();
-
                 location.href = API.CityHome();
-            });
-
+            });            
         });
 
     });

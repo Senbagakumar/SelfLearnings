@@ -261,6 +261,7 @@
   <ItemGroup>
     <Content Include="admin\.gitattributes" />
     <Content Include="admin\apple-touch-icon.png" />
+    <Content Include="admin\assets\css\AddAsterisk.css" />
     <Content Include="admin\assets\css\animate.css" />
     <Content Include="admin\assets\css\bootstrap-select.css" />
     <Content Include="admin\assets\css\bootstrap.css" />

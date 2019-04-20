@@ -23,21 +23,23 @@
                                 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class="form-control-label">Select Sector </label>
+                                            <label for="text-input" class="form-control-label required">Select Sector </label>
                                         </div>
                                         <div>
                                             <input type="hidden" id="txtId" />
                                         </div>
                                         <div class="col-12 col-md-9">
                                             @Html.DropDownList("SectorName", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
+                                            <span class="field-validation-valid text-danger" id="SectorName_validationMessage"></span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Sub Sector Name</label>
+                                            <label for="text-input" class=" form-control-label required">Sub Sector Name</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="text-input" placeholder="sub sector name" class="form-control">
+                                            <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
@@ -89,7 +91,7 @@
     <!-- .animated -->
 </div><!-- .content -->
 
-
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -114,13 +116,25 @@
         $('#btnPlus').click(function () {
             $('#SectorName').val(0);
             $('#text-input').val('');
-        });    
+        });
+
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
+
+        $('#SectorName').change(function () {
+            var selectedOption = $('option:selected', this).val();
+            if (selectedOption > 0) {
+                $('#SectorName_validationMessage').text("");
+            }
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
             var id = $('#txtId').val();
             var sectorName = $('#SectorName').val();
-            var subSectorName = $('#text-input').val();           
+            var subSectorName = $('#text-input').val();
 
             if (id != '') {
                 model = {
@@ -136,6 +150,17 @@
                     SubSectorName: $('#text-input').val()
                 };
             }
+
+            if (model.SectorId <= 0) {
+                $('#SectorName_validationMessage').text("Please select the SectorName");
+                return false;
+            }
+
+            if (model.SubSectorName == '' || model.SubSectorName.length <= 0) {
+                $('#text-input_validationMessage').text("Please Enter the SubSectorName");
+                return false;
+            }
+
 
             $.ajax({
                 type: "POST",

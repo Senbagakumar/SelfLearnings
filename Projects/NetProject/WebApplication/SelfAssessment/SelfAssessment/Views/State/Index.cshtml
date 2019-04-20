@@ -23,13 +23,14 @@
                                 <form action="" method="post" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">State Name</label>
+                                            <label for="text-input" class=" form-control-label required">State Name</label>
                                         </div>
                                         <div>
                                             <input type="hidden" id="txtId" />
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="text-input" placeholder="State Name" class="form-control">
+                                            <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
@@ -81,6 +82,7 @@
 
 <!-- Right Panel -->
 
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -108,8 +110,11 @@
             $('#txtId').val('');
         });
 
-        $('#btnSave').click(function () {
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
 
+        $('#btnSave').click(function () {
             var modle = {};
             var id = $('#txtId').val();
             
@@ -123,7 +128,12 @@
                 model = {
                     StateName: $('#text-input').val()
                 };
-            }           
+            }
+
+            if (model.StateName == '' || model.StateName.length <= 0) {
+                $('#text-input_validationMessage').text("Please Enter the StateName");
+                return false;
+            }
 
             $.ajax({
                 type: "POST",

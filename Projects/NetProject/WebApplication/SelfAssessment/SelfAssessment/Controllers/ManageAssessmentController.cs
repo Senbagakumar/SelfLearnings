@@ -380,6 +380,9 @@ namespace SelfAssessment.Controllers
         {      
             var removelist = new List<AssessmentLevelMapping>();
 
+            if(uIQuest.QuestionId == null)
+                return Json(Utilities.Failiure, JsonRequestBehavior.AllowGet);
+
             try
             {
                 using (var rep = new Repository<Questions>())

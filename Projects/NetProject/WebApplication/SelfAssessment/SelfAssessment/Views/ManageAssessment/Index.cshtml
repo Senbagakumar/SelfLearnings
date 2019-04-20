@@ -16,26 +16,26 @@
                 <div class="modal-body">
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">Assessment Name</label>
+                            <label for="text-input" class=" form-control-label required">Assessment Name</label>
                             <input type="hidden" id="txt-id-input" name="txt-id-input" placeholder="Text" class="form-control">
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AName-input" name="txt-AName-input" placeholder="Text" class="form-control">
+                            <input type="text" id="txt-AName-input" name="txt-AName-input" placeholder="Text" class="form-control" required>                            
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">Description</label>
+                            <label for="textarea-input" class=" form-control-label required">Description</label>
                         </div>
                         <div class="col-12 col-md-9">
                             @*<input type="text" id="txt-ADes-input" name="text-input" placeholder="Text" class="form-control">*@
                             <textarea name="txt-ADes-input" id="txt-ADes-input" rows="3" placeholder="Content..." class="form-control">
-                            </textarea>
+                            </textarea>                            
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">Welcome Message</label>
+                            <label for="textarea-input" class=" form-control-label required">Welcome Message</label>
                         </div>
                         <div class="col-12 col-md-9">
                             @*<input type="text" id="txt-AWMsg-input" name="txt-AWMsg-input" placeholder="Text" class="form-control">*@
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="textarea-input" class=" form-control-label">End Message</label>
+                            <label for="textarea-input" class=" form-control-label required">End Message</label>
                         </div>
                         <div class="col-12 col-md-9">
                             @*<input type="text" id="txt-AEMsg-input" name="txt-AEMsg-input" placeholder="Text" class="form-control">*@
@@ -53,18 +53,18 @@
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="text-input" class=" form-control-label">Admin Email</label>
+                            <label for="text-input" class=" form-control-label required">Admin Email</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <input type="text" id="txt-AEmail-input" name="txt-AEmail-input" placeholder="Text" class="form-control">
+                            <input type="text" id="txt-AEmail-input" name="txt-AEmail-input" placeholder="Text" class="form-control" required>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Assessment Format</label>
+                            <label for="select" class=" form-control-label required">Assessment Format</label>
                         </div>
                         <div class="col-12 col-md-9">
-                            <select name="st-AFormat" id="st-AFormat" class="form-control">
+                            <select name="st-AFormat" id="st-AFormat" class="form-control" required>
                                 <option value="0">Select Format</option>
                                 <option value="1">Question By Question</option>
                                 <option value="2">Group By Group</option>
@@ -87,7 +87,7 @@
 
                     <div class="row form-group">
                         <div class="col col-md-3">
-                            <label for="select" class=" form-control-label">Sector</label>
+                            <label for="select" class=" form-control-label required">Sector</label>
                         </div>
                         <div class="col-12 col-md-9">
                             @Html.DropDownList("Sector", (IEnumerable<SelectListItem>)ViewBag.SectorList, new { @class = "form-control" })
@@ -399,7 +399,7 @@
 
 
 
-
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>

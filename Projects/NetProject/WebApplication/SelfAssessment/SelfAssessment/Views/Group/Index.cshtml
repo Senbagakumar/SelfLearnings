@@ -33,24 +33,24 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="text-input" class=" form-control-label">Question Text</label>
+                                            <label for="text-input" class=" form-control-label required">Question Text</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <textarea cols="2" id="txt-QT-text-input" name="text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-QT-text-input_validationMessage"></span>
                                         </div>
                                     </div>
-
-
                                     <div class="row form-group">
-
                                         <div class="col col-md-2">
-                                            <label for="text-input" class=" form-control-label">User Hint</label>
+                                            <label for="text-input" class=" form-control-label required">User Hint</label>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <input type="text" id="txt-UH-text-input" name="text-input" placeholder="Text" class="form-control">
+                                            <span class="field-validation-valid text-danger" id="txt-UH-text-input_validationMessage"></span>
                                         </div><div class="col col-md-1">&nbsp;</div>
+
                                         <div class="col col-md-2">
-                                            <label for="select" class="form-control-label">Question Type</label>
+                                            <label for="select" class="form-control-label required">Question Type</label>
                                         </div>
                                         <div class="col-12 col-md-3">
                                             <select name="select" id="select" class="form-control">
@@ -60,57 +60,63 @@
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="select" class="form-control-label">Question Option &nbsp;&nbsp;&nbsp; 1)</label>
+                                            <label for="select" class="form-control-label required">Question Option &nbsp;&nbsp;&nbsp; 1)</label>
                                         </div>
 
                                         <div class="col col-md-9">
                                             <textarea rows="2" id="txt-Opt1-text-input" name="text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-Opt1-text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 2)</label>
+                                            <label for="select" class=" form-control-label required">Question Option &nbsp;&nbsp;&nbsp; 2)</label>
                                         </div>
 
                                         <div class="col col-md-9">
                                             <textarea rows="2" name="text-input" id="txt-Opt2-text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-Opt2-text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 3)</label>
+                                            <label for="select" class=" form-control-label required">Question Option &nbsp;&nbsp;&nbsp; 3)</label>
                                         </div>
 
                                         <div class="col col-md-9">
                                             <textarea rows="2" name="text-input" id="txt-Opt3-text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-Opt3-text-input_validationMessage"></span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 4)</label>
+                                            <label for="select" class=" form-control-label required">Question Option &nbsp;&nbsp;&nbsp; 4)</label>
                                         </div>
 
                                         <div class="col col-md-9">
                                             <textarea rows="2" name="text-input" id="txt-Opt4-text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-Opt4-text-input_validationMessage"></span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="select" class=" form-control-label">Question Option &nbsp;&nbsp;&nbsp; 5)</label>
+                                            <label for="select" class=" form-control-label required">Question Option &nbsp;&nbsp;&nbsp; 5)</label>
                                         </div>
 
                                         <div class="col col-md-9">
-                                            <textarea rows="2" name="text-input" id="txt-Opt5-text-input" placeholder="Text" class="form-control"></textarea>
+                                            <textarea rows="2" name="text-input" id="txt-Opt5-text-input required" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-Opt5-text-input_validationMessage"></span>
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col col-md-2">
-                                            <label for="text-input" class=" form-control-label">Question  Answer</label>
+                                            <label for="text-input" class=" form-control-label required">Question  Answer</label>
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <textarea rows="2" name="text-input" id="txt-QA-text-input" placeholder="Text" class="form-control"></textarea>
+                                            <span class="field-validation-valid text-danger" id="txt-QA-text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
@@ -146,26 +152,29 @@
                 <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
                     <div class="row form-group">
                         <div class="col col-md-2">
-                            <label for="text-input" class=" form-control-label">Group Name</label>
+                            <label for="text-input" class=" form-control-label required">Group Name</label>
                         </div>
                         <div class="col-12 col-md-10">
                             <input type="text" id="txt-GN-text-input" name="text-input" placeholder="GroupName" class="form-control">
+                            <span class="field-validation-valid text-danger" id="txt-GN-text-input_validationMessage"></span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-2">
-                            <label for="text-input" class=" form-control-label">Group Description</label>
+                            <label for="text-input" class=" form-control-label required">Group Description</label>
                         </div>
                         <div class="col-12 col-md-10">
                             <textarea id="txt-GD-text-input" name="text-input" class="form-control" placeholder="GroupDescription"></textarea>
+                            <span class="field-validation-valid text-danger" id="txt-GD-text-input_validationMessage"></span>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col col-md-2">
-                            <label for="text-input" class=" form-control-label">Group Weight</label>
+                            <label for="text-input" class=" form-control-label required">Group Weight</label>
                         </div>
                         <div class="col-12 col-md-10">
                             <input type="text" id="txt-GW-text-input" name="text-input" class="form-control" placeholder="weight">
+                            <span class="field-validation-valid text-danger" id="txt-GW-text-input_validationMessage"></span>
                         </div>
                     </div>
                     <div class="row">
@@ -401,7 +410,7 @@
                             <th>Options</th>
                         </tr>
                     </thead>
-                    <tbody>                        
+                    <tbody>
                         @foreach(var item in Model)
                         {
                             <tr>
@@ -424,7 +433,7 @@
     </div>
 </div>
 
-
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -467,6 +476,54 @@
                 Clear();
             });
 
+            $("#txt-GN-text-input").blur(function () {
+                $('#txt-GN-text-input_validationMessage').text("");
+            });
+
+            $("#txt-GD-text-input").blur(function () {
+                $('#txt-GD-text-input_validationMessage').text("");
+            });
+
+            $("#txt-GW-text-input").blur(function () {
+                $('#txt-GW-text-input_validationMessage').text("");
+            });
+
+
+            $("#txt-QT-text-input").blur(function () {
+                $('#txt-QT-text-input_validationMessage').text("");
+            });
+
+            $("#txt-UH-text-input").blur(function () {
+                $('#txt-UH-text-input_validationMessage').text("");
+            });
+
+            $("#txt-Opt1-text-input").blur(function () {
+                $('#txt-Opt1-text-input_validationMessage').text("");
+            });
+
+            $("#txt-Opt2-text-input").blur(function () {
+                $('#txt-Opt2-text-input_validationMessage').text("");
+            });
+
+            $("#txt-Opt3-text-input").blur(function () {
+                $('#txt-Opt3-text-input_validationMessage').text("");
+            });
+
+            $("#txt-Opt4-text-input").blur(function () {
+                $('#txt-Opt4-text-input_validationMessage').text("");
+            });
+
+            $("#txt-Opt5-text-input").blur(function () {
+                $('#txt-Opt5-text-input_validationMessage').text("");
+            });
+
+            $("#txt-QA-text-input").blur(function () {
+                $('#txt-QA-text-input_validationMessage').text("");
+            });
+
+
+
+
             $("#btnGroupSave").click(function () {
                 var groupId = $('#txt-GroupId-text-input').val();
                 var groupName = $('#txt-GN-text-input').val();
@@ -479,6 +536,21 @@
                     GroupDescription: groupDescription,
                     Weight: weight
                 };
+
+                if (model.GroupName == '' || model.GroupName.length <= 0) {
+                    $('#txt-GN-text-input_validationMessage').text("Please Enter the GroupName");
+                    return false;
+                }
+
+                if (model.GroupDescription == '' || model.GroupDescription.length <= 0) {
+                    $('#txt-GD-text-input_validationMessage').text("Please Enter the GroupDescription");
+                    return false;
+                }
+
+                if (model.Weight == '' || model.Weight.length <= 0) {
+                    $('#txt-GW-text-input_validationMessage').text("Please Enter the Weight");
+                    return false;
+                }
 
                 $.ajax({
                     type: "POST",
@@ -517,6 +589,48 @@
                     GroupId: $('#txt-GroupId-text-input').val(),
                     QType: $('#select').val()
                 };
+
+                if (model.QuestionText == '' || model.QuestionText.length <= 0) {
+                    $('#txt-QT-text-input_validationMessage').text("Please Enter the QuestionText");
+                    return false;
+                }
+
+                if (model.QHint == '' || model.QHint.length <= 0) {
+                    $('#txt-UH-text-input_validationMessage').text("Please Enter the QuestionHint");
+                    return false;
+                }
+
+                if (model.Option1 == '' || model.Option1.length <= 0) {
+                    $('#txt-Opt1-text-input_validationMessage').text("Please Enter the QuestionOption1");
+                    return false;
+                }
+
+                if (model.Option2 == '' || model.Option2.length <= 0) {
+                    $('#txt-Opt2-text-input_validationMessage').text("Please Enter the QuestionOption2");
+                    return false;
+                }
+
+                if (model.Option3 == '' || model.Option3.length <= 0) {
+                    $('#txt-Opt3-text-input_validationMessage').text("Please Enter the QuestionOption3");
+                    return false;
+                }
+
+                if (model.Option4 == '' || model.Option4.length <= 0) {
+                    $('#txt-Opt4-text-input_validationMessage').text("Please Enter the QuestionOption4");
+                    return false;
+                }
+
+                if (model.Option5 == '' || model.Option5.length <= 0) {
+                    $('#txt-Opt5-text-input_validationMessage').text("Please Enter the QuestionOption5");
+                    return false;
+                }
+
+                if (model.Answer == '' || model.Answer.length <= 0) {
+                    $('#txt-QA-text-input_validationMessage').text("Please Enter the QuestionAnswer");
+                    return false;
+                }
+
+
 
                 $.ajax({
                     type: "POST",

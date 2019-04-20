@@ -23,13 +23,14 @@
                                 <form action="" method="post" class="form-horizontal">
                                     <div class="row form-group">
                                         <div class="col col-md-3">
-                                            <label for="text-input" class=" form-control-label">Revenue Name</label>
+                                            <label for="text-input" class=" form-control-label required">Revenue Name</label>
                                         </div>
                                         <div>
                                             <input type="hidden" id="txtId" />
                                         </div>
                                         <div class="col-12 col-md-9">
                                             <input type="text" id="text-input" name="text-input" placeholder="Revenue Name" class="form-control">
+                                            <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
                                         </div>
                                     </div>
 
@@ -78,6 +79,8 @@
 
     <!-- .animated -->
 </div><!-- .content -->
+
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -101,6 +104,10 @@
     $(document).ready(function () {
         $('#bootstrap-data-table-export').DataTable();
 
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
+
         $('#btnSave').click(function () {
 
             var modle = {};
@@ -116,6 +123,11 @@
                 model = {
                     Name: $('#text-input').val()
                 };
+            }
+
+            if (model.Name == '' || model.Name.length <= 0) {
+                $('#text-input_validationMessage').text("Please Enter the Revenue");
+                return false;
             }
 
             $.ajax({

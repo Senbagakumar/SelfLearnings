@@ -1,10 +1,10 @@
-﻿function BarChart(sector,subsector,level,assementId) {
+﻿function BarChart(sector, subsector, level, assementId) {
 
     var bC1OrgScore = [];
     var bc4groups = [];
     $.ajax({
         type: "GET",
-        url: API.SectorAloneOrganizationReport() + "/?sectorId=" + sector + "&subsectorId=" + subsector + "&level=" + level +"&assessementId="+assementId,
+        url: API.SectorAloneOrganizationReport() + "/?sectorId=" + sector + "&subsectorId=" + subsector + "&level=" + level + "&assessementId=" + assementId,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         async: true,
@@ -20,18 +20,17 @@
             bC1OrgScore.push(oo[i]);
         }
 
-        for (var i = 0; i < groups.length; i++) {
-            bc4groups.push(groups[i]);
+        for (var j = 0; j < groups.length; j++) {
+            bc4groups.push(groups[j]);
         }
-
     }
 
     function OnErrorCall_(response) {
         alert("Whoops something went wrong!");
     }
 
-    //bar chart
-    var ctx1 = document.getElementById("barChart1");
+        //bar chart
+     var ctx1 = document.getElementById("barChart1");
     // ctx1.height = 100;
     var myChart1 = new Chart(ctx1, {
         type: 'bar',
@@ -68,6 +67,7 @@
             }
         }
     });
+
 
 
     var bC3OrgScore = [];

@@ -65,12 +65,13 @@
 
                     <div class="row form-group" style="text-align:center">
 
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Assessment   </label></div>
+                        <div class="col col-md-1"><label for="hf-password" class="form-control-label required">Assessment   </label></div>
                         <div class="col-12 col-md-3">
                             @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
+                            <span class="field-validation-valid text-danger" id="Assessment_validationMessage"></span>
                         </div>
 
-                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Levels</label></div>
+                        <div class="col col-md-1"><label for="hf-password" class=" form-control-label required">Levels</label></div>
                         <div class="col-12 col-md-3">
                             <select class="form-control" id="slLevel">
                                 <option value="0">-Select-</option>
@@ -78,6 +79,7 @@
                                 <option value="Level 2">Level 2</option>
                                 <option value="Level 3">Level 3</option>
                             </select>
+                            <span class="field-validation-valid text-danger" id="slLevel_validationMessage"></span>
                         </div>
 
                         <div class="col-12 col-md-3">
@@ -186,7 +188,7 @@
 </div>
 
 
-
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
 <script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/admin/assets/js/popper.min.js"></script>
 <script src="~/admin/assets/js/plugins.js"></script>
@@ -252,14 +254,29 @@
             $("#divAssignQuestionAddEditForm").show();
         });
 
+        $('#Assessment').change(function () {
+            var selectedOption = $('option:selected', this).val();
+            if (selectedOption > 0) {
+                $('#Assessment_validationMessage').text("");
+            }
+        });
+
+        $('#slLevel').change(function () {
+            var selectedOption = $('option:selected', this).val();
+            if (selectedOption != 0) {
+                $('#slLevel_validationMessage').text("");
+            }
+        });
+
+
         $("#btnSave").click(function () {
            
             var questionId = [];
               $("#treeview input[type=checkbox]").each(function (idx, elem) {
                   var is_checked = $(this).prop("checked");
                   var quest = $(this).data("id");
-                  if (is_checked && quest == "custom-1") {                   
-                          questionId.push($(this).prop("id"));                      
+                  if (is_checked && quest == "custom-1") {
+                          questionId.push($(this).prop("id"));
                   }
             });
 
@@ -269,6 +286,16 @@
                 QuestionId: questionId,
                 Level: $("#slLevel").val()
             };
+
+            if (model.AssessmentId <= 0) {
+                $('#Assessment_validationMessage').text("Please select the Assessment");
+                return false;
+            }
+
+            if (model.Level == 0) {
+                $('#slLevel_validationMessage').text("Please select the level");
+                return false;
+            }
 
             $.ajax({
                 type: "POST",
@@ -282,8 +309,8 @@
                 $("#frmAddEditClose").click();
                 $("#frmAddEditClose").click();
                 $("#treeview").hummingbird("uncheckAll");
-
-                location.href = API.AssignQuestionHome();
+                if (res =="Success")
+                    location.href = API.AssignQuestionHome();
             });
 
 
