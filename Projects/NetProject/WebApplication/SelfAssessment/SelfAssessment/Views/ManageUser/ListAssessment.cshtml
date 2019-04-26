@@ -9,10 +9,10 @@
             <div class="card-header"> <strong>Assessment Name</strong> </div>
             <div class="card-body card-block">
                 <div class="alert alert-primary" role="alert">
-                    @ViewBag.WelComeMessage
+                    @Html.Raw(HttpUtility.HtmlDecode(ViewBag.WelComeMessage))
                 </div>
 
-                <p class="pb-4 display-5 " align="justify">@ViewBag.Description</p>
+                <p class="pb-4 display-5 " align="justify">@Html.Raw(HttpUtility.HtmlDecode(ViewBag.Description))</p>
 
                 @foreach (var assessment in Model)
                 {
