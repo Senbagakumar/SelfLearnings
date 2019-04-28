@@ -1,5 +1,4 @@
-﻿function GetUserReport(uid, level)
-{
+﻿function GetUserReport(uid, level) {
     "use strict";
 
     var bC1OrgScore = [];
@@ -25,62 +24,64 @@
             bC1OtherOrgScore.push(oo[i]);
         }
 
-        for (var i = 0; i < og.length; i++) {
-            bC1OrgScore.push(og[i]);
+        for (var j = 0; j < og.length; j++) {
+            bC1OrgScore.push(og[j]);
         }
-        for (var i = 0; i < groups.length; i++) {
-            bc10groups.push(groups[i]);
+        for (var k = 0; k < groups.length; k++) {
+            bc10groups.push(groups[k]);
         }
+
+        //bar chart
+        var ctx1 = document.getElementById("barChart1");
+        // ctx1.height = 100;
+        var myChart1 = new Chart(ctx1, {
+            type: 'bar',
+
+            data: {
+                labels: bc10groups,
+                datasets: [
+                    {
+
+                        label: "organization Score",
+                        data: bC1OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    },
+                    {
+                        label: "other organization Score",
+                        data: bC1OtherOrgScore,
+                        borderColor: "rgba(0,0,0,0.09)",
+                        borderWidth: "0",
+                        backgroundColor: "green"
+                    }
+                ]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            //beginAtZero: true
+                            min: 0,
+                            max: 100,
+                            stepSize: 20
+
+                            //steps: 100,
+                            //stepValue: 100,
+                            //max: 40 
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     function OnErrorCall_(response) {
         alert("Whoops something went wrong!");
     }
 
-    //bar chart
-    var ctx1 = document.getElementById("barChart1");
-    // ctx1.height = 100;
-    var myChart1 = new Chart(ctx1, {
-        type: 'bar',
 
-        data: {
-            labels: bc10groups,
-            datasets: [
-                {
-
-                    label: "organization Score",
-                    data: bC1OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                },
-                {
-                    label: "other organization Score",
-                    data: bC1OtherOrgScore,
-                    borderColor: "rgba(0,0,0,0.09)",
-                    borderWidth: "0",
-                    backgroundColor: "green"
-                }
-            ]
-        },
-
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        //beginAtZero: true
-                        min: 0,
-                        max: 100,
-                        stepSize: 20
-
-                        //steps: 100,
-                        //stepValue: 100,
-                        //max: 40 
-                    }
-                }]
-            }
-        }
-    });
 
 
     var bC3OrgScore = [];
@@ -104,52 +105,54 @@
             bC3OtherOrgScore.push(oo[i]);
         }
 
-        for (var i = 0; i < og.length; i++) {
-            bC3OrgScore.push(og[i]);
+        for (var j = 0; j < og.length; j++) {
+            bC3OrgScore.push(og[j]);
         }
+
+        //bar chart
+        var ctx3 = document.getElementById("barChart3");
+        //    ctx.height = 200;
+        var myChart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ["Final Score"],
+                datasets: [
+                    {
+
+                        label: "organization Score",
+                        data: bC3OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    },
+                    {
+                        label: "other organization Score",
+                        data: bC3OtherOrgScore,
+                        borderColor: "rgba(0,0,0,0.09)",
+                        borderWidth: "0",
+                        backgroundColor: "green"
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 1000,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     function OnErrorCall3_(response) {
         alert("Whoops something went wrong!");
     }
 
-    //bar chart
-    var ctx3 = document.getElementById("barChart3");
-    //    ctx.height = 200;
-    var myChart3 = new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: ["Final Score"],
-            datasets: [
-                {
 
-                    label: "organization Score",
-                    data: bC3OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                },
-                {
-                    label: "other organization Score",
-                    data: bC3OtherOrgScore,
-                    borderColor: "rgba(0,0,0,0.09)",
-                    borderWidth: "0",
-                    backgroundColor: "green"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 1000,
-                        stepSize: 100
-                    }
-                }]
-            }
-        }
-    });
 
     var bC4OrgScore = [];
     var bC4OtherOrgScore = [];
@@ -174,56 +177,58 @@
             bC4OtherOrgScore.push(oo[i]);
         }
 
-        for (var i = 0; i < og.length; i++) {
-            bC4OrgScore.push(og[i]);
+        for (var j = 0; j < og.length; j++) {
+            bC4OrgScore.push(og[j]);
         }
 
-        for (var i = 0; i < groups.length; i++) {
-            bc4groups.push(groups[i]);
+        for (var k = 0; k < groups.length; k++) {
+            bc4groups.push(groups[k]);
         }
+
+        //bar chart
+        var ctx4 = document.getElementById("barChart4");
+        // ctx4.height = 100;
+        var myChart4 = new Chart(ctx4, {
+            type: 'bar',
+            data: {
+                labels: bc4groups,
+                datasets: [
+                    {
+                        label: "organization individual Score",
+                        data: bC4OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    },
+                    {
+                        label: "manufacure individual Score",
+                        data: bC4OtherOrgScore,
+                        borderColor: "rgba(0,0,0,0.09)",
+                        borderWidth: "0",
+                        backgroundColor: "green"
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            //beginAtZero: true
+                            min: 0,
+                            max: 100,
+                            stepSize: 20
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     function OnErrorCall4_(response) {
         alert("Whoops something went wrong!");
     }
 
-    //bar chart
-    var ctx4 = document.getElementById("barChart4");
-    // ctx4.height = 100;
-    var myChart4 = new Chart(ctx4, {
-        type: 'bar',
-        data: {
-            labels: bc4groups,
-            datasets: [
-                {
-                    label: "organization individual Score",
-                    data: bC4OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                },
-                {
-                    label: "manufacure individual Score",
-                    data: bC4OtherOrgScore,
-                    borderColor: "rgba(0,0,0,0.09)",
-                    borderWidth: "0",
-                    backgroundColor: "green"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        //beginAtZero: true
-                        min: 0,
-                        max: 100,
-                        stepSize: 20
-                    }
-                }]
-            }
-        }
-    });
+
 
     var bC5OrgScore = [];
     var bC5OtherOrgScore = [];
@@ -246,51 +251,50 @@
             bC5OtherOrgScore.push(oo[i]);
         }
 
-        for (var i = 0; i < og.length; i++) {
-            bC5OrgScore.push(og[i]);
+        for (var j = 0; j < og.length; j++) {
+            bC5OrgScore.push(og[j]);
         }
+
+        //bar chart
+        var ctx5 = document.getElementById("barChart5");
+        //    ctx.height = 200;
+        var myChart5 = new Chart(ctx5, {
+            type: 'bar',
+            data: {
+                labels: ["Final Score"],
+                datasets: [
+                    {
+
+                        label: "organization individual Score",
+                        data: bC5OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    },
+                    {
+                        label: "manufacture individual Score",
+                        data: bC5OtherOrgScore,
+                        borderColor: "rgba(0,0,0,0.09)",
+                        borderWidth: "0",
+                        backgroundColor: "green"
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 1000,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     function OnErrorCall5_(response) {
         alert("Whoops something went wrong!");
     }
-
-    //bar chart
-    var ctx5 = document.getElementById("barChart5");
-    //    ctx.height = 200;
-    var myChart5 = new Chart(ctx5, {
-        type: 'bar',
-        data: {
-            labels: ["Final Score"],
-            datasets: [
-                {
-
-                    label: "organization individual Score",
-                    data: bC5OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                },
-                {
-                    label: "manufacture individual Score",
-                    data: bC5OtherOrgScore,
-                    borderColor: "rgba(0,0,0,0.09)",
-                    borderWidth: "0",
-                    backgroundColor: "green"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 1000,
-                        stepSize: 100
-                    }
-                }]
-            }
-        }
-    });
-
-};
+}

@@ -23,52 +23,50 @@
         for (var j = 0; j < groups.length; j++) {
             bc4groups.push(groups[j]);
         }
+
+        //bar chart
+        var ctx1 = document.getElementById("barChart1");
+        // ctx1.height = 100;
+        var myChart1 = new Chart(ctx1, {
+            type: 'bar',
+
+            data: {
+                labels: bc4groups,
+                datasets: [
+                    {
+
+                        label: "organization Score",
+                        data: bC1OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    }
+
+                ]
+            },
+
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            //beginAtZero: true
+                            min: 0,
+                            max: 100,
+                            stepSize: 20
+
+                            //steps: 100,
+                            //stepValue: 100,
+                            //max: 40 
+                        }
+                    }]
+                }
+            }
+        });
     }
 
     function OnErrorCall_(response) {
         alert("Whoops something went wrong!");
     }
-
-        //bar chart
-     var ctx1 = document.getElementById("barChart1");
-    // ctx1.height = 100;
-    var myChart1 = new Chart(ctx1, {
-        type: 'bar',
-
-        data: {
-            labels: bc4groups,
-            datasets: [
-                {
-
-                    label: "organization Score",
-                    data: bC1OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                }
-
-            ]
-        },
-
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        //beginAtZero: true
-                        min: 0,
-                        max: 100,
-                        stepSize: 20
-
-                        //steps: 100,
-                        //stepValue: 100,
-                        //max: 40 
-                    }
-                }]
-            }
-        }
-    });
-
-
 
     var bC3OrgScore = [];
 
@@ -88,41 +86,41 @@
         for (var i = 0; i < oo.length; i++) {
             bC3OrgScore.push(oo[i]);
         }
+
+        //bar chart
+        var ctx3 = document.getElementById("barChart3");
+        //    ctx.height = 200;
+        var myChart3 = new Chart(ctx3, {
+            type: 'bar',
+            data: {
+                labels: ["Final Score"],
+                datasets: [
+                    {
+
+                        label: "organization Score",
+                        data: bC3OrgScore,
+                        borderColor: "rgba(0, 123, 255, 0.9)",
+                        borderWidth: "0",
+                        backgroundColor: "rgba(0, 123, 255, 0.5)"
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            max: 1000,
+                            stepSize: 100
+                        }
+                    }]
+                }
+            }
+        });
+
     }
 
     function OnErrorCall3_(response) {
         alert("Whoops something went wrong!");
     }
-
-    //bar chart
-    var ctx3 = document.getElementById("barChart3");
-    //    ctx.height = 200;
-    var myChart3 = new Chart(ctx3, {
-        type: 'bar',
-        data: {
-            labels: ["Final Score"],
-            datasets: [
-                {
-
-                    label: "organization Score",
-                    data: bC3OrgScore,
-                    borderColor: "rgba(0, 123, 255, 0.9)",
-                    borderWidth: "0",
-                    backgroundColor: "rgba(0, 123, 255, 0.5)"
-                }
-            ]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        min: 0,
-                        max: 1000,
-                        stepSize: 100
-                    }
-                }]
-            }
-        }
-    });
-
 }
