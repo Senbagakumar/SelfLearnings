@@ -1,8 +1,13 @@
 ﻿
 
-<div class="row contact-info">
-    <div class="col-md-5">
-        <p>@Html.Raw(HttpUtility.HtmlDecode(ViewBag.EndMessage))</p>
+<div class="contact-info">
+
+    <div class="jumbotron" style="background: none;">
+        <h1 class="display-4">Sucessfully Completed the Assessment</h1>
+        <p class="lead">@Html.Raw(HttpUtility.HtmlDecode(ViewBag.EndMessage)).</p>
+        <hr class="my-4">
+        <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information</p>
+        <a class="btn btn-primary btn-lg" href="#" role="button">View Report</a>
     </div>
 </div>
 

@@ -10,7 +10,6 @@ using System.Web.Mvc;
 
 namespace SelfAssessment.Controllers
 {
-    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class GroupController : AdminBaseController
     {
         private readonly IBusinessContract businessContract;

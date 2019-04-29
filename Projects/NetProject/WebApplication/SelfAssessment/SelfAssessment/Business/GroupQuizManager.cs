@@ -139,9 +139,15 @@ namespace SelfAssessment.Business
         }
 
         public GroupQuiz LoadQuiz(int groupId)
-        { 
+        {
+            var nullgroup = new GroupQuiz();
+            nullgroup.listOfQuestions = new List<QuestionAnswer>();
+
             var allGroup = AllGroupQuiz();
-            var currentGroup=allGroup.Where(q => q.UIGroupId == groupId).First();          
+            if (allGroup.Count == 0)
+                return nullgroup;
+
+            var currentGroup=allGroup.Where(q => q.UIGroupId == groupId).First();
             return GetCountDetails(allGroup, currentGroup);
         }
 

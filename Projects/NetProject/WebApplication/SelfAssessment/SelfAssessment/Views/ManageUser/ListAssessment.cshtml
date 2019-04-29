@@ -25,7 +25,7 @@
                                         {
                                             <a>
                                                 <div class="media-body">
-                                                    <h2 class="text-light display-6">@assessment.Type</h2>
+                                                    <h3 class="text-light">@assessment.Type</h3>
                                                 </div>
                                             </a>
                                         }
@@ -33,7 +33,7 @@
                                         {
                                             <a href=@ViewBag.Url>
                                                 <div class="media-body">
-                                                    <h2 class="text-light display-6">@assessment.Type</h2>
+                                                    <h3 class="text-light">@assessment.Type</h3>
                                                 </div>
                                             </a>
                                         }
@@ -44,20 +44,44 @@
 
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
-                                        <a href="#"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right">@assessment.NoOfGroup</span></a>
+                                        <p style="margin-bottom:0px; padding-top:5px;"> <i class="fa fa-envelope-o"></i> No of Group <span class="badge badge-primary pull-right" style="padding:8px;">@assessment.NoOfGroup</span></p>
                                     </li>
                                     <li class="list-group-item">
-                                        <a href="#"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right">@assessment.NoOfQuestion</span></a>
+                                        <p style="margin-bottom:0px;padding-top:5px;"> <i class="fa fa-envelope-o"></i> No of Questions <span class="badge badge-primary pull-right" style="padding:8px;">@assessment.NoOfQuestion</span></p>
                                     </li>
 
+
+@if (assessment.AssignmentStatus == "Completed")
+{
                                     <li class="list-group-item">
-                                        <a href="#">
-                                            <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right">
+                                        <p style="margin-bottom:0px;padding-top:5px;">
+                                            <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-success pull-right" style="padding:8px;">
                                                 <br>
                                                 @assessment.AssignmentStatus<br>&nbsp;
                                             </span>
-                                        </a>
+                                        </p>
                                     </li>
+
+
+}
+else
+{
+    <li class="list-group-item">
+        <p style="margin-bottom:0px;padding-top:5px;">
+            <i class="fa fa-tasks"></i> Assessment Status <span class="badge badge-danger pull-right" style="padding:8px;">
+                <br>
+                @assessment.AssignmentStatus<br>&nbsp;
+            </span>
+        </p>
+    </li>
+    <li class="list-group-item text-right">
+        <a href=@ViewBag.Url style="font-size:16px;">
+            <span class="badge badge-success">
+                <br>Start Assessment<br>&nbsp;
+            </span>
+        </a>
+    </li>
+}
                                 </ul>
 
                             </section>
@@ -78,10 +102,12 @@
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
-<script src="~/Admin/assets/js/main.js"></script>
+
 
 
 <script src="~/Admin/assets/js/lib/chart-js/Chart.bundle.js"></script>
 <script src="~/Admin/assets/js/dashboard.js"></script>
 <script src="~/Admin/assets/js/widgets.js"></script>
+
+<script src="~/Admin/assets/js/main.js"></script>
 

@@ -13,7 +13,6 @@ using System.Web.Security;
 
 namespace SelfAssessment.Controllers
 {
-    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class UserController : Controller
     {
         private readonly IBusinessContract businessContract;

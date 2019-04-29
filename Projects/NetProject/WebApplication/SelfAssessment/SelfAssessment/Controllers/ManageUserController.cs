@@ -19,7 +19,6 @@ using System.Web.UI;
 
 namespace SelfAssessment.Controllers
 {
-    [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
     public class ManageUserController : BaseController
     {      
         private GroupQuizManager groupQuizManager;
@@ -109,6 +108,17 @@ namespace SelfAssessment.Controllers
         }
         public ActionResult CustomerAssessment()
         {
+
+            var userInfo = new Repository<Organization>();
+            int sectorValue = int.Parse(SelfAssessment.Business.Utilities.SectorValue);
+            var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+            if (user != null)
+            {
+                var assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(q => q.Sector == user.SectorId);
+                if (assessment == null)
+                    assessment = userInfo.AssessmentContext.assessments.FirstOrDefault(t => t.Sector == sectorValue);
+                ViewBag.AssessmentName = assessment.Name;
+            }
             return View();
         }
         [HttpPost]
