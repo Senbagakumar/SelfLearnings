@@ -68,7 +68,9 @@ namespace SelfAssessment.Business
                 {
                     var tpwd = !string.IsNullOrEmpty(user.Password) ? StringCipher.Decrypt(user.Password) : string.Empty;
                     if (user != null && !string.IsNullOrEmpty(user.UserId) && (tpwd == password || user.TempPassword == password))
+                    {
                         return user.Id;
+                    }
                     else
                         return 0;
                 }
@@ -147,15 +149,20 @@ namespace SelfAssessment.Business
                         repository.SaveChanges();
                     }
                 }
+
                 validation.IsSuccess = true;
 
+                Repository<Template> template = new Repository<Template>();
+                var registrationTemplate=template.Filter(q => q.Name.StartsWith(Utilities.RegistrationTemplateName)).FirstOrDefault();
+                if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.RegistrationSubject, uIOrganization.Email);
                 //this.registrationSendMail.Send(new MailConfiguration());
             }
             else
             {
                 validation.IsSuccess = false;
             }
-            return validation;             
+            return validation;
         }
     }
 }

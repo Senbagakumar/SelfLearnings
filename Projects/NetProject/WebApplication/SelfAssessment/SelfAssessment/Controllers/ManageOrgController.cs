@@ -81,17 +81,25 @@ namespace SelfAssessment.Controllers
         {
             var userids = id;
             var listUserIds = userids.Split('$');
-
+            string email = string.Empty;
             var repo = new Repository<Organization>();
             foreach (var ids in listUserIds)
             {
                 var uid = int.Parse(ids);
                 var org = repo.Filter(q => q.Id == uid).FirstOrDefault();
                 org.IsActive = true;
+                email = org.Email;
                 repo.Update(org);
             }
             repo.SaveChanges();
             AssignDefaultValues();
+
+            Repository<Template> template = new Repository<Template>();
+            var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.EnableUserTemplate)).FirstOrDefault();
+
+            if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
+                RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.EnableUserSubject, email);
+
             return Json("Enabled Successfully", JsonRequestBehavior.AllowGet);
         }
 

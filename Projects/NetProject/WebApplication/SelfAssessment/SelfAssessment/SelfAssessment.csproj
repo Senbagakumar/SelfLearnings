@@ -2542,6 +2542,7 @@
     <Content Include="Views\ManageUser\LoadLevel2GraphPartial.cshtml" />
     <Content Include="Views\ManageUser\LoadLevel3GraphPartial.cshtml" />
     <Content Include="Views\User\LogOut.cshtml" />
+    <Content Include="Views\Admin\EmailTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

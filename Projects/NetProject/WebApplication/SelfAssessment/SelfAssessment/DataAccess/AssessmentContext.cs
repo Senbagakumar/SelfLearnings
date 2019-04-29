@@ -32,6 +32,7 @@ namespace SelfAssessment.DataAccess
         public DbSet<AssessmentLevelMapping> assessmentLevelMappings { get; set; }
         public DbSet<Answer> answers { get; set; }
         public DbSet<Log> logs { get; set; }
+        public DbSet<Template> templates { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

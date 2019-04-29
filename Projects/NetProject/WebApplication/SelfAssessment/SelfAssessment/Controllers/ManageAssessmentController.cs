@@ -185,6 +185,12 @@ namespace SelfAssessment.Controllers
                     });
                     repo.SaveChanges();
 
+                    Repository<Template> template = new Repository<Template>();
+                    var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.MoveUserTemplate)).FirstOrDefault();
+                    if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
+                        RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.MoveUserSubject, org.Email);
+
+
                 }
             }
             return Json(Utilities.Success, JsonRequestBehavior.AllowGet);

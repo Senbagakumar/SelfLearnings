@@ -33,4 +33,16 @@ namespace SelfAssessment.Models.DBModel
         public string Details { get; set; }
         public DateTime CreatedDate { get; set; }
     }
+
+
+    public class Template
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+    }
 }

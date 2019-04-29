@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.ExceptionHandler;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
@@ -17,6 +18,90 @@ namespace SelfAssessment.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult EmailTemplate()
+        {
+            var listTemplate = new List<Template>();
+            //listTemplate.Add(new Template() { Id= 1, Name= "Tiger Nixon", Description= "System Architect" });
+            //listTemplate.Add(new Template() { Id = 2, Name = "Garrett Winters", Description = "Accountant" });
+
+            using (var repository = new Repository<Template>())
+            {
+                listTemplate = repository.All().ToList();
+            }
+
+            var uilistTemplate = new List<UITemplate>();
+            int i = 1;
+            foreach(var template in listTemplate)
+            {
+                var uiTemplate = new UITemplate();
+                uiTemplate.UiId = i;
+                uiTemplate.Name = template.Name;
+                uiTemplate.Description = template.Description;
+                uilistTemplate.Add(uiTemplate);
+                i++;
+            }
+
+            return View(uilistTemplate);
+        }
+        [HttpPost]
+        public JsonResult TemplateSave(UITemplate template)
+        {
+            try
+            {
+                using (var repository = new Repository<Template>())
+                {
+                    if (template.Id != 0)
+                    {
+                        var uiTemp = repository.Filter(q => q.Id == template.Id).FirstOrDefault();
+                        if (uiTemp != null && !string.IsNullOrEmpty(uiTemp.Name))
+                        {
+                            uiTemp.Name = template.Name;
+                            uiTemp.Description = template.Description;
+                            uiTemp.Id = template.Id;
+                            uiTemp.UpdateDate = DateTime.Now;
+                            repository.Update(uiTemp);
+                        }
+                    }
+                    else
+                    {
+                        var temp = new Template()
+                        {
+                            Name = template.Name,
+                            CreateDate = DateTime.Now,
+                            Description = template.Description,
+                            UpdateDate = DateTime.Now
+                        };
+                        repository.Create(temp);
+                    }
+                    repository.SaveChanges();
+                }
+
+                // TODO: Add insert logic here
+
+                // return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                UserException.LogException(ex);
+                return Json("Failiure", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult TemplateDelete(int id)
+        {
+            using (var repository = new Repository<Template>())
+            {
+                var deleteTemplate = repository.Filter(q => q.Id == id).FirstOrDefault();
+                if (deleteTemplate != null && !string.IsNullOrEmpty(deleteTemplate.Name))
+                {
+                    repository.Delete(deleteTemplate);
+                }
+                repository.SaveChanges();
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult CustomerWiseReport()

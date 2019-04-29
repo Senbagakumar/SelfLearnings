@@ -24,7 +24,7 @@ namespace SelfAssessment.Business
         public const string Success = "Success";
         public const string Failiure = "Failiure";
         public const string Usermail = "UserMail";
-        public const string RedirectToUser = "~/ManageUser/Index";
+        public const string RedirectToUser = "~/ManageUser/ListAssessment";
         public const string RedirectToAdmin = "~/Admin/Index";
         public const string Small = "Small";
         public const string Large = "Large";
@@ -40,6 +40,15 @@ namespace SelfAssessment.Business
         public const string SectorValue = "1001";
         public const string Error = "Error";
         public const string Information = "Information";
+
+        public const string RegistrationSubject = "Registration Mail";
+        public const string RegistrationTemplateName = "Registration Mail";
+        public const string EnableUserSubject = "Account Activation Mail";
+        public const string EnableUserTemplate = "Account Activation Mail";
+        public const string MoveUserSubject = "Level Migration Mail";
+        public const string MoveUserTemplate = "Level Migration Mail";
+        public const string ChangePasswordSubject = "Password Reset Mail";
+        public const string ChangePasswordTemplate = "Password Reset Mail";
 
         public static int CalculateScoreByAns(int answerId)
         {

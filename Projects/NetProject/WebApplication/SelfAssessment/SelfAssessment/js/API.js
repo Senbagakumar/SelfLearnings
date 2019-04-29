@@ -1,7 +1,7 @@
 ﻿var API = {    //https://selfassesment.azurewebsites.net/, 'https://localhost:26579/' , location.protocol + "//" + window.location.hostname+":26579/
-    
-    baseUrl: location.protocol + "//" + window.location.hostname+":26579/",
-    
+
+    baseUrl: location.protocol + "//" + window.location.hostname + ":26579/",
+
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
     },
@@ -230,4 +230,13 @@
     ExportPdf: function () {
         return this.baseUrl + "ManageUser/PdfExport";
     },
+    TemplateSave: function () {
+        return this.baseUrl + "Admin/TemplateSave";
+    },
+    TemplateDelete: function () {
+        return this.baseUrl + "Admin/TemplateDelete";
+    },
+    TemplateHome: function () {
+        return this.baseUrl + "Admin/EmailTemplate";
+    }
 };

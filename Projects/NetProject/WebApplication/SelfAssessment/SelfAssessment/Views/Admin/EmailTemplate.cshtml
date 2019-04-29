@@ -1,0 +1,224 @@
+﻿@model IEnumerable<SelfAssessment.Models.UITemplate>
+@{
+    ViewBag.Title = "EmailTemplate";
+}
+
+<div class="content mt-3">
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">Email Template</strong>
+                <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="smallmodalLabel">Email Template</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="default-tab">
+                                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="nav-level1" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <div class="row form-group">
+                                                    <div>
+                                                        <input type="hidden" id="txtId" />
+                                                    </div>
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">Template Name</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <input type="text" id="text-input" name="text-input" placeholder="Template Name" class="form-control" readonly="readonly">
+                                                        <span class="field-validation-valid text-danger" id="text-input_validationMessage"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-description" class=" form-control-label">Template Description</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        <textarea id="text-description" name="text-description" class="form-control" placeholder="Template Description" required></textarea>
+                                                        <span class="field-validation-valid text-danger" id="text-description_validationMessage"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btnCancel">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="frmViewEmailTemplate" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="smallmodalLabel">View Template</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="post" enctype="multipart/form-data" class="form-horizontal">
+                                    <div class="default-tab">
+                                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="nav-level1" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">Template Name</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        : <label for="text-input" class=" form-control-label" id="lblName"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="row form-group">
+                                                    <div class="col col-md-3">
+                                                        <label for="text-input" class=" form-control-label">Template Description</label>
+                                                    </div>
+                                                    <div class="col-12 col-md-9">
+                                                        : <label for="text-input" class=" form-control-label" id="lblDescription"></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Template Name</th>
+                            <th>Template Description</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.UiId</td>
+                                <td>@item.Name</td>
+                                <td>@item.Description</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#mediumModal" onclick="EditAction(@item.Id,'@item.Name','@item.Description');"> <i class="fa fa-pencil"></i></button>
+                                    &nbsp;&nbsp;<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#frmViewEmailTemplate" onclick="ViewAction('@item.Name','@item.Description');"> <i class="fa fa-eye"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- .animated -->
+</div><!-- .content -->
+
+<link href="~/admin/assets/css/AddAsterisk.css" rel="stylesheet" />
+<script src="~/admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
+<script src="~/admin/assets/js/popper.min.js"></script>
+<script src="~/admin/assets/js/plugins.js"></script>
+<script src="~/admin/assets/js/main.js"></script>
+
+
+<script src="~/admin/assets/js/lib/data-table/datatables.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/jszip.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/pdfmake.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="~/admin/assets/js/lib/data-table/datatables-init.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bootstrap-data-table-export').DataTable();
+
+        $('#btnPlus').click(function () {
+            $('#txtId').val('');
+            $('#text-input').val('');
+            $('#text-description').val('');
+        });
+
+        $("#text-input").blur(function () {
+            $('#text-input_validationMessage').text("");
+        });
+        //text-input_validationMessage, text-description_validationMessage
+
+        $('#btnSave').click(function () {
+
+            var modle = {};
+            var id = $('#txtId').val();
+
+            if (id != '') {
+                model = {
+                    Name: $('#text-input').val(),
+                    Description: $('#text-description').val(),
+                    Id: id
+                };
+            }
+            else {
+                model = {
+                    Name: $('#text-input').val(),
+                    Description: $('#text-description').val()
+                };
+            }
+
+            if (model.Name == '' || model.Name.length <= 0) {
+                $('#text-input_validationMessage').text("Please select the TemplateName");
+                return false;
+            }
+
+            if (model.Description == '' || model.Description.length <= 0) {
+                $('#text-description_validationMessage').text("Please Enter the Template Description");
+                return false;
+            }
+
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(model),
+                url: API.TemplateSave(),
+                contentType: "application/json"
+            }).done(function (res) {
+                $('#text-input').val('');
+                $('#txtId').val('');
+                $('#text-description').val('');
+                $('#btnCancel').click();
+                location.href = API.TemplateHome();
+            });
+        });
+    });
+
+    function EditAction(id, name, description) {
+        $('#txtId').val(id);
+        $('#text-input').val(name);
+        $('#text-description').val(description);
+    }
+
+    function ViewAction(name, description) {
+        $('#lblName').text(name);
+        $('#lblDescription').text(description);
+    }
+</script>
+

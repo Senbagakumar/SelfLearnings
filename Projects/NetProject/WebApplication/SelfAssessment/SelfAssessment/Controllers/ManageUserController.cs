@@ -82,6 +82,8 @@ namespace SelfAssessment.Controllers
                 ViewBag.WelComeMessage = assessment.WelcomeMessage;
                 ViewBag.Description = assessment.Description;
                 ViewBag.Url = assessment.AssessmentFormat == "2" ? "QuizGroup" : assessment.AssessmentFormat == "1" ? "QuizOne" : "QuizGroup";
+                ViewBag.AssessmentName = assessment.Name;
+
                 if (assessment.Id != 0)
                 {
                     //Completion Level details
@@ -184,6 +186,13 @@ namespace SelfAssessment.Controllers
                 org.Update(user);
                 org.SaveChanges();
                 message = "Successfully Updated";
+
+                Repository<Template> template = new Repository<Template>();
+                var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.ChangePasswordTemplate)).FirstOrDefault();
+
+                if(registrationTemplate!=null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.ChangePasswordSubject, user.Email);
+
             }
             else
             {

@@ -5,6 +5,15 @@ using System.Web;
 
 namespace SelfAssessment.Models
 {
+    public class UITemplate
+    {
+        public int UiId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
+    }
     public class UICity
     {
         public int Id { get; set; }
@@ -14,7 +23,6 @@ namespace SelfAssessment.Models
         public string StateName { get; set; }
 
     }
-
     public class Graph
     {
         public string[] Groups { get; set; }

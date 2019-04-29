@@ -62,7 +62,7 @@ namespace SelfAssessment.Controllers
                 {
                     Session[Utilities.UserId] = UserId;
                     Session[Utilities.Usermail] = email;
-                    return Redirect(Utilities.RedirectToUser);             
+                    return Redirect(Utilities.RedirectToUser);
                 }
                 else
                     return View();

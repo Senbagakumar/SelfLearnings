@@ -36,7 +36,7 @@ namespace SelfAssessment.Controllers
                 lmodel.Add(cty);
             }
 
-            var lmod = new List<SelectListItem>();            
+            var lmod = new List<SelectListItem>();
             lmod = state.Select(t => new SelectListItem() { Value = t.Id.ToString(), Text = t.StateName }).ToList();
             lmod.Insert(0, new SelectListItem() { Text = "-- Select --", Value = "0", Selected = true });
 
