@@ -36,6 +36,7 @@ namespace SelfAssessment.Controllers
             {
                 var uiTemplate = new UITemplate();
                 uiTemplate.UiId = i;
+                uiTemplate.Id = template.Id;
                 uiTemplate.Name = template.Name;
                 uiTemplate.Description = template.Description;
                 uilistTemplate.Add(uiTemplate);
@@ -63,17 +64,17 @@ namespace SelfAssessment.Controllers
                             repository.Update(uiTemp);
                         }
                     }
-                    else
-                    {
-                        var temp = new Template()
-                        {
-                            Name = template.Name,
-                            CreateDate = DateTime.Now,
-                            Description = template.Description,
-                            UpdateDate = DateTime.Now
-                        };
-                        repository.Create(temp);
-                    }
+                    //else
+                    //{
+                    //    var temp = new Template()
+                    //    {
+                    //        Name = template.Name,
+                    //        CreateDate = DateTime.Now,
+                    //        Description = template.Description,
+                    //        UpdateDate = DateTime.Now
+                    //    };
+                    //    repository.Create(temp);
+                    //}
                     repository.SaveChanges();
                 }
 
