@@ -454,6 +454,9 @@
 				$("#txt-id-input").val(id);
 				$("#txt-AName-input").val(result.Name);
 				//$("#txt-ADes-input").val(result.Description);
+				tinyMCE.get("txt-ADes-input").setContent(result.Description);
+				tinyMCE.get("txt-AWMsg-input").setContent(result.WelcomeMessage);
+				tinyMCE.get("txt-AEMsg-input").setContent(result.EndMessage);
 				//$("#adesinput").text(result.Description);
 				$("#txt-AWMsg-input").val(result.WelcomeMessage);
 				$("#txt-AEMsg-input").val(result.EndMessage);
@@ -496,9 +499,9 @@
 			}
 			else {
 				$("#lbl-AName-input").text(result.Name);
-				$("#lbl-ADes-input").text(result.Description);
-				$("#lbl-AWMsg-input").text(result.WelcomeMessage);
-				$("#lbl-AEMsg-input").text(result.EndMessage);
+				$("#lbl-ADes-input").html(result.Description);
+				$("#lbl-AWMsg-input").html(result.WelcomeMessage);
+				$("#lbl-AEMsg-input").html(result.EndMessage);
 				$("#lbl-AEmail-input").val(result.AdminEmail);
 				$("#lbl-st-AFormat").text(result.AssessmentFormat);
 				//$("#lbl-AStart-Date").text(result.StartDate);
