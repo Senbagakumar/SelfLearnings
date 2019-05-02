@@ -17,7 +17,8 @@ namespace SelfAssessment.Business
         {
             try
             {
-                var apiKey = "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";//System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
+                var apiKey = System.Environment.GetEnvironmentVariable("smtpkey");
+                UserException.LogInformation(apiKey);
                 var client = new SendGridClient(apiKey);
                 var msg = new SendGridMessage()
                 {
