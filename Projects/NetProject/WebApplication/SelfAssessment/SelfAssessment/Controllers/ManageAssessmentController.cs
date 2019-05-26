@@ -187,7 +187,7 @@ namespace SelfAssessment.Controllers
                     Repository<Template> template = new Repository<Template>();
                     var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.MoveUserTemplate)).FirstOrDefault();
                     if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
-                        RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.MoveUserSubject, org.Email);
+                        RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.MoveUserSubject, org.Email,org.Name);
 
 
                 }
@@ -210,8 +210,10 @@ namespace SelfAssessment.Controllers
             return Json(lmodel, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ListAssessment()
+        [HttpPost]
+        public ActionResult ListAssessment(int AssessMent)
         {
+
             int? level1PenCount = 0;
             int? level2PenCount = 0;
             int? level3PenCount = 0;
@@ -227,35 +229,44 @@ namespace SelfAssessment.Controllers
             int level2GCount = 0;
             int level3GCount = 0;
 
+            var assessMent = new List<SelectListItem>();
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
+
+
             using (var repo = new Repository<Organization>())
             {
-                var pendingCount = repo.All().ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status=q.Key.CurrentAssignmentStatus }).ToList();
+                var pendingCount = repo.Filter(q=> q.AssessmentId == AssessMent).ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status = q.Key.CurrentAssignmentStatus }).ToList();
 
-                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
-                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
-                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+                level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentPendingStatus)?.count ?? 0;
+                level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentPendingStatus)?.count ?? 0;
+                level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentPendingStatus)?.count ?? 0;
 
                 level1ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
                 level2ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
                 level3ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
 
+                assessMent = repo.AssessmentContext.assessments.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+
             }
+
+            assessMent.Insert(0, firstItem);
+            ViewBag.AssessMent = assessMent;
 
             using (var repo = new Repository<OrganizationLevelHistory>())
             {
-                var completedCount = repo.All().ToList().GroupBy(q => q.Level).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
+                var completedCount = repo.Filter(q => q.AssessmentId == AssessMent).ToList().GroupBy(q => q.Level).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
 
-                level1ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
-                level2ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
-                level3ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;
-            } 
+                level1ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count ?? 0;
+                level2ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count ?? 0;
+                level3ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count ?? 0;
+            }
 
             var questionRepo = new Repository<Questions>();
             var assessmentRepo = new Repository<AssessmentLevelMapping>();
-            var assessmentList=assessmentRepo.All().ToList().GroupBy(q => new { q.AssessmentId, q.Level}).Select(q => new { id = q.Key.AssessmentId, type=q.Key.Level }).ToList();
+            var assessmentList = assessmentRepo.Filter(q => q.AssessmentId == AssessMent).ToList().GroupBy(q => new { q.AssessmentId, q.Level }).Select(q => new { id = q.Key.AssessmentId, type = q.Key.Level }).ToList();
 
 
-            var groupMap = assessmentRepo.All().GroupBy(q => new { q.AssessmentId, q.Level }).ToList().Select(t => t).ToList();
+            var groupMap = assessmentRepo.Filter(q => q.AssessmentId == AssessMent).GroupBy(q => new { q.AssessmentId, q.Level }).ToList().Select(t => t).ToList();
             foreach (var grp in groupMap)
             {
                 if (grp.Key.Level == Utilities.AssessmentTypeLevel1)
@@ -275,10 +286,10 @@ namespace SelfAssessment.Controllers
                     level3QCount = grp.Count();
                     level3GCount = grp.GroupBy(q => q.GroupId).Count();
                 }
-            }         
+            }
 
 
-            var level1AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel1, NoOfPending = level1PenCount.Value, NoOfGroup = level1GCount, NoOfQuestion= level1QCount, NoOfCompleted = level1ComCount.Value, NoOfParticipants = (level1ComCount.Value + level1PenCount.Value) };
+            var level1AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel1, NoOfPending = level1PenCount.Value, NoOfGroup = level1GCount, NoOfQuestion = level1QCount, NoOfCompleted = level1ComCount.Value, NoOfParticipants = (level1ComCount.Value + level1PenCount.Value) };
             var level2AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel2, NoOfPending = level2PenCount.Value, NoOfGroup = level2GCount, NoOfQuestion = level2QCount, NoOfCompleted = level2ComCount.Value, NoOfParticipants = (level2ComCount.Value + level2PenCount.Value) };
             var level3AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel3, NoOfPending = level3PenCount.Value, NoOfGroup = level3GCount, NoOfQuestion = level3QCount, NoOfCompleted = level3ComCount.Value, NoOfParticipants = (level3ComCount.Value + level3PenCount.Value) };
 
@@ -288,6 +299,96 @@ namespace SelfAssessment.Controllers
             lAssessment.Add(level1AssignMent);
             lAssessment.Add(level2AssignMent);
             lAssessment.Add(level3AssignMent);
+            return View(lAssessment);
+        }
+
+        public ActionResult ListAssessment()
+        {
+            //int? level1PenCount = 0;
+            //int? level2PenCount = 0;
+            //int? level3PenCount = 0;
+            //int? level1ComCount = 0;
+            //int? level2ComCount = 0;
+            //int? level3ComCount = 0;
+
+            //int level1QCount = 0;
+            //int level2QCount = 0;
+            //int level3QCount = 0;
+
+            //int level1GCount = 0;
+            //int level2GCount = 0;
+            //int level3GCount = 0;
+
+            var assessMent = new List<SelectListItem>();
+            var firstItem = new SelectListItem() { Text = Utilities.DefaultSelectionValue, Value = "0", Selected = true };
+
+
+            using (var repo = new Repository<Organization>())
+            {
+            //    var pendingCount = repo.All().ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status=q.Key.CurrentAssignmentStatus }).ToList();
+
+            //    level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+            //    level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+            //    level3PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentPendingStatus)?.count??0;
+
+            //    level1ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+            //    level2ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+            //    level3ComCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3 && t.status == Utilities.AssessmentCompletedStatus)?.count ?? 0;
+
+                assessMent = repo.AssessmentContext.assessments.Select(q => new SelectListItem() { Value = q.Id.ToString(), Text = q.Name }).ToList();
+
+            }
+
+            assessMent.Insert(0, firstItem);
+            ViewBag.AssessMent = assessMent;
+
+            //using (var repo = new Repository<OrganizationLevelHistory>())
+            //{
+            //    var completedCount = repo.All().ToList().GroupBy(q => q.Level).Select(q => new { count = q.Count(), Type = q.Key }).ToList();
+
+            //    level1ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1)?.count??0;
+            //    level2ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2)?.count??0;
+            //    level3ComCount += completedCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel3)?.count??0;
+            //} 
+
+            //var questionRepo = new Repository<Questions>();
+            //var assessmentRepo = new Repository<AssessmentLevelMapping>();
+            //var assessmentList=assessmentRepo.All().ToList().GroupBy(q => new { q.AssessmentId, q.Level}).Select(q => new { id = q.Key.AssessmentId, type=q.Key.Level }).ToList();
+
+
+            //var groupMap = assessmentRepo.All().GroupBy(q => new { q.AssessmentId, q.Level }).ToList().Select(t => t).ToList();
+            //foreach (var grp in groupMap)
+            //{
+            //    if (grp.Key.Level == Utilities.AssessmentTypeLevel1)
+            //    {
+            //        level1QCount = grp.Count();
+            //        level1GCount = grp.GroupBy(q => q.GroupId).Count();
+            //    }
+
+            //    if (grp.Key.Level == Utilities.AssessmentTypeLevel2)
+            //    {
+            //        level2QCount = grp.Count();
+            //        level2GCount = grp.GroupBy(q => q.GroupId).Count();
+            //    }
+
+            //    if (grp.Key.Level == Utilities.AssessmentTypeLevel3)
+            //    {
+            //        level3QCount = grp.Count();
+            //        level3GCount = grp.GroupBy(q => q.GroupId).Count();
+            //    }
+            //}         
+
+
+            //var level1AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel1, NoOfPending = level1PenCount.Value, NoOfGroup = level1GCount, NoOfQuestion= level1QCount, NoOfCompleted = level1ComCount.Value, NoOfParticipants = (level1ComCount.Value + level1PenCount.Value) };
+            //var level2AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel2, NoOfPending = level2PenCount.Value, NoOfGroup = level2GCount, NoOfQuestion = level2QCount, NoOfCompleted = level2ComCount.Value, NoOfParticipants = (level2ComCount.Value + level2PenCount.Value) };
+            //var level3AssignMent = new UIAssessment() { Type = Utilities.AssessmentTypeLevel3, NoOfPending = level3PenCount.Value, NoOfGroup = level3GCount, NoOfQuestion = level3QCount, NoOfCompleted = level3ComCount.Value, NoOfParticipants = (level3ComCount.Value + level3PenCount.Value) };
+
+
+
+            var lAssessment = new List<UIAssessment>();
+            //lAssessment.Add(level1AssignMent);
+            //lAssessment.Add(level2AssignMent);
+            //lAssessment.Add(level3AssignMent);
 
             
             return View(lAssessment);

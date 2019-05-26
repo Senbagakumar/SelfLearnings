@@ -155,7 +155,7 @@ namespace SelfAssessment.Business
                 Repository<Template> template = new Repository<Template>();
                 var registrationTemplate=template.Filter(q => q.Name.StartsWith(Utilities.RegistrationTemplateName)).FirstOrDefault();
                 if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
-                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.RegistrationSubject, uIOrganization.Email);
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.RegistrationSubject, uIOrganization.Email,uIOrganization.Name);
                 //this.registrationSendMail.Send(new MailConfiguration());
             }
             else

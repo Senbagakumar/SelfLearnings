@@ -48,6 +48,7 @@ namespace SelfAssessment.Business
                     question.Questions = new QuestionQuiz() { UIQId = i, QuestionCode="Q"+i, QuestionId = v.Id, QuestionText = v.QuestionText, GroupId=v.GroupId, Mandatory=v.Mandatory, Slno=slno };
 
                     question.Questions.GroupText = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
+                    question.AssessmentName = assessmentDetails.Name;
 
                     var answerChoice = new List<AnswerChoice>();
 

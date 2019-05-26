@@ -13,7 +13,7 @@ namespace SelfAssessment.Business
 {
     public class RegistrationSendMail
     {
-        public static void SendMail(string body,string subject, string to)
+        public static void SendMail(string body,string subject, string to,string userName,string pwd=null)
         {
             try
             {
@@ -22,10 +22,17 @@ namespace SelfAssessment.Business
                 var client = new SendGridClient(apiKey);
                 var msg = new SendGridMessage()
                 {
-                    From = new EmailAddress("lakshmikanth1187@gmail.com", "LakshmiKanth"),
+                    From = new EmailAddress(Utilities.FromMailId, "CII Online Self-Assessment System for Business Excellence"),
                     Subject = subject,
-                    PlainTextContent = body,
+                    PlainTextContent = body.Replace("<<Name>>", userName),
                 };
+
+                msg.PlainTextContent=msg.PlainTextContent.Replace("<<userid>>", to);
+                if(pwd!=null)
+                {
+                    msg.PlainTextContent=msg.PlainTextContent.Replace("<<pwd>>", pwd);
+                }
+
                 msg.AddTo(new EmailAddress(to, "User"));
                 var response = client.SendEmailAsync(msg).Result;
                 UserException.LogInformation(response.StatusCode.ToString());

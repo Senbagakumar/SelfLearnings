@@ -5,6 +5,7 @@ using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -38,7 +39,7 @@ namespace SelfAssessment.Controllers
                 uiTemplate.UiId = i;
                 uiTemplate.Id = template.Id;
                 uiTemplate.Name = template.Name;
-                uiTemplate.Description = template.Description;
+                uiTemplate.Description = template.Description.ToString();
                 uilistTemplate.Add(uiTemplate);
                 i++;
             }

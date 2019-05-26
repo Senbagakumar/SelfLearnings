@@ -25,7 +25,7 @@ namespace SelfAssessment.Business
         public const string Failiure = "Failiure";
         public const string Usermail = "UserMail";
         public const string RedirectToUser = "~/ManageUser/ListAssessment";
-        public const string RedirectToAdmin = "~/Admin/Index";
+        public const string RedirectToAdmin = "~/ManageAssessment/ListAssessment";
         public const string Small = "Small";
         public const string Large = "Large";
         public const string OperatingUnit = "Operating Unit";
@@ -41,14 +41,15 @@ namespace SelfAssessment.Business
         public const string Error = "Error";
         public const string Information = "Information";
 
-        public const string RegistrationSubject = "Registration Mail";
+        public const string RegistrationSubject = "Acknowledgement @ CII Online Self-Assessment System for Business Excellence";
         public const string RegistrationTemplateName = "Registration Mail";
-        public const string EnableUserSubject = "Account Activation Mail";
+        public const string EnableUserSubject = "Profile Activation @ CII Online Self-Assessment System for Business Excellence";
         public const string EnableUserTemplate = "Account Activation Mail";
-        public const string MoveUserSubject = "Level Migration Mail";
+        public const string MoveUserSubject = "Level Migration @ CII Online Self-Assessment System for Business Excellence";
         public const string MoveUserTemplate = "Level Migration Mail";
-        public const string ChangePasswordSubject = "Password Reset Mail";
+        public const string ChangePasswordSubject = "Password reset @ CII Online Self-Assessment System for Business Excellence";
         public const string ChangePasswordTemplate = "Password Reset Mail";
+        public const string FromMailId = "be.award@cii.in";
 
         public static int CalculateScoreByAns(int answerId)
         {

@@ -49,6 +49,7 @@ namespace SelfAssessment.Business
                 listOfGroupQuiz.UIGroupId = i;
                 listOfGroupQuiz.GroupId = t.Type;
                 listOfGroupQuiz.GroupText = uInfo.AssessmentContext.groups.Where(q => q.Id == t.Type).FirstOrDefault().Name;
+                listOfGroupQuiz.AssessmentName = assessmentDetails.Name;
                 listOfGroupQuiz.listOfQuestions = new List<QuestionAnswer>();
                 int k = 1;
 

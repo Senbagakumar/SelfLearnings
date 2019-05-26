@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<SelfAssessment.Models.UITemplate>
+
 @{
     ViewBag.Title = "EmailTemplate";
 }
@@ -117,11 +118,12 @@
                                 <td>@item.Name</td>
                                 <td>@item.Description</td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#mediumModal" onclick="EditAction(@item.Id,'@item.Name','@item.Description');"> <i class="fa fa-pencil"></i></button>
-                                    &nbsp;&nbsp;<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#frmViewEmailTemplate" onclick="ViewAction('@item.Name','@item.Description');"> <i class="fa fa-eye"></i></button>
+                                    <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#mediumModal" onclick="EditAction(@item.Id,'@item.Name','@item.Description.Replace('\n',' ')');"> <i class="fa fa-pencil"></i></button>
+                                    &nbsp;&nbsp;<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#frmViewEmailTemplate" onclick="ViewAction('@item.Name','@item.Description.Replace('\n',' ')');"> <i class="fa fa-eye"></i></button>
                                 </td>
                             </tr>
                         }
+
                     </tbody>
                 </table>
             </div>

@@ -15,6 +15,7 @@ namespace SelfAssessment.Models
         public int NoOfGroups { get; set; }
         public int NoOfCompletedQuestions { get; set; }
         public int UserId { get; set; }
+        public string AssessmentName { get; set; }
 
     }
 }

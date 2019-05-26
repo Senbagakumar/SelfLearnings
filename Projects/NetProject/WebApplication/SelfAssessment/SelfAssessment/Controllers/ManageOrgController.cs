@@ -83,6 +83,7 @@ namespace SelfAssessment.Controllers
             string email = string.Empty;
             string password = string.Empty;
             var repo = new Repository<Organization>();
+            string name = string.Empty;
             foreach (var ids in listUserIds)
             {
                 var uid = int.Parse(ids);
@@ -90,6 +91,7 @@ namespace SelfAssessment.Controllers
                 org.IsActive = true;
                 email = org.Email;
                 password = org.TempPassword;
+                name = org.Name;
                 repo.Update(org);
             }
             repo.SaveChanges();
@@ -100,8 +102,7 @@ namespace SelfAssessment.Controllers
 
             if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
             {
-                var body = $"{registrationTemplate.Description}\n your temporary password is {password}"; 
-                RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.EnableUserSubject, email);
+                RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.EnableUserSubject, email,name, password);
             }
 
             return Json("Enabled Successfully", JsonRequestBehavior.AllowGet);

@@ -6,8 +6,24 @@
     <div class="content mt-3">
 
         <div class="card">
-            <div class="card-header"> <strong>Assessment Name</strong> </div>
-            <div class="card-body card-block">              
+            <div class="card-header">
+                <form method="post" action="/ManageAssessment/ListAssessment">
+                    <div class="row form-group">
+                        <div class="col col-md-3">
+                            <label for="text-input" class=" form-control-label">Assessment Name</label>
+                        </div>
+                        <div class="col-12 col-md-6" id="ddl-AName-input">
+                            @Html.DropDownList("Assessment", (IEnumerable<SelectListItem>)ViewBag.AssessMent, new { @class = "form-control" })
+                        </div>
+                        <div class="col col-md-3">
+                            <button id="btnGetOrganization" type="submit" class="btn btn-primary btn-sm">
+                                <i class="fa fa-dot-circle-o"></i> Go
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body card-block">
                 @foreach (var assessment in Model)
                 {
                     <div class="col-md-4">

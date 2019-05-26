@@ -1,6 +1,7 @@
 ﻿var API = {    //https://selfassesment.azurewebsites.net/, 'https://localhost:26579/' , location.protocol + "//" + window.location.hostname+":26579/
 
     baseUrl: location.protocol + "//" + window.location.hostname + "/",
+    //baseUrl: 'http://localhost:26579/',
 
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";

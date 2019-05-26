@@ -201,7 +201,7 @@ namespace SelfAssessment.Controllers
                 var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.ChangePasswordTemplate)).FirstOrDefault();
 
                 if(registrationTemplate!=null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
-                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.ChangePasswordSubject, user.Email);
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.ChangePasswordSubject, user.Email,user.Name);
 
             }
             else
@@ -241,6 +241,7 @@ namespace SelfAssessment.Controllers
             var listOfQuestions = this.quizManager.GetAllQuestions();
             Session["AllQuestions"] = this.quizManager.AllQuestions = listOfQuestions;
             var question = this.quizManager.LoadQuiz(1);
+            ViewBag.AssessmentName = question.AssessmentName;
             return View(question);
         }
 
@@ -332,8 +333,10 @@ namespace SelfAssessment.Controllers
         }
 
         public ActionResult QuizGroup()
-        {           
-            return View(GetGroupQuiz());
+        {
+            var groupQuiz = GetGroupQuiz();
+            ViewBag.AssessmentName = groupQuiz.AssessmentName;
+            return View(groupQuiz);
         }
 
         [HttpPost]
