@@ -60,11 +60,15 @@ namespace FileDownload.Controllers
         /// <summary>
         /// Creates the invoice document.
         /// </summary>
-        public Document CreateDocument()
+        public Document CreateDocument(string companyName, string address, string contactName)
         {
+            CompanyName = companyName;
+            Address = address;
+            Author = contactName;
+
             // Create a new MigraDoc document
             this.document = new Document();
-            this.document.Info.Title = "";
+            this.document.Info.Title = "Assessment Report";
             this.document.Info.Subject = "";
             this.document.Info.Author = Author;
 

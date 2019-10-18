@@ -75,6 +75,8 @@
                 }
             }
         });
+
+        $("#1").show();
     }
 
     function OnErrorCall_(response) {
@@ -146,6 +148,8 @@
                 }
             }
         });
+
+        $("#2").show();
     }
 
     function OnErrorCall3_(response) {
@@ -222,6 +226,8 @@
                 }
             }
         });
+
+        $("#3").show();
     }
 
     function OnErrorCall4_(response) {
@@ -292,6 +298,7 @@
                 }
             }
         });
+        $("#4").show();
     }
 
     function OnErrorCall5_(response) {

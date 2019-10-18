@@ -52,12 +52,15 @@ namespace SelfAssessment.Business
                     if (isAnswer != null)
                     {
                         score += Utilities.CalculateScoreByAns(isAnswer.UserOptionId);
-                        if (isFinalScore)
-                            score = score * weight;
+                        
                     }
 
                 });
-                dynamicScore.MyScore =Convert.ToInt16((score /t.Questions.Count()));
+
+                if (isFinalScore)
+                    score = score * weight;
+
+                dynamicScore.MyScore = Convert.ToInt16((score /t.Questions.Count()));
                 scoreCalc.Scores.Add(dynamicScore);
             });
             return scoreCalc;

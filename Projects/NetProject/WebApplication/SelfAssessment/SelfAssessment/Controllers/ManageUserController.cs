@@ -93,7 +93,7 @@ namespace SelfAssessment.Controllers
                         {
                             var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessment.Id && q.Level == q.Level).ToList();
                             lAssessment.Add(AssessmentMapping(q.Level, completedList.GroupBy(t => t.GroupId).Count(), completedList.Count(), q.Status));
-                        });                       
+                        });
                     }
 
                     //Current Level details
@@ -125,17 +125,26 @@ namespace SelfAssessment.Controllers
         public ActionResult CustomerAssessment(QuestionOnePost question)
         {
             // Get Report
+            string companyName=string.Empty, address=string.Empty, contactName=string.Empty;
+            var userInfo = new Repository<Organization>();
+            var user = userInfo.Filter(q => q.Id == this.UserId).FirstOrDefault();
+            if (user != null)
+            {
+                companyName = user.Name;
+                address = user.Address;
+                contactName = user.ContactName;
+            }
 
             if (question.hdnaction != string.Empty && (question.hdnaction.Contains("PDF") || question.hdnaction.Contains("CSV")))
             {
                 var level = question.hdnaction.Split('-')[1];
                 if(question.hdnaction.Contains("PDF"))
                 {
-                    return PdfExport(level);
+                    return PdfExport(companyName,address,contactName,level);
                 }
                 else
                 {
-                    return CsvExport(level);
+                    return CsvExport(companyName, address, contactName, level);
                 }
             }
             else
@@ -212,35 +221,40 @@ namespace SelfAssessment.Controllers
         }
 
 
-        public FileResult PdfExport(string level = null)
+        public FileResult PdfExport(string companyName,string address, string contactName, string level = null)
         {
             Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(this.UserId,level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
-            Utilities.CreatePdf(fileName, dt);
+            Utilities.CreatePdf(fileName, dt, companyName, address, contactName);
             return File(fileName, "application/pdf", $"{dynamicName}.pdf");
 
         }
 
-        public FileResult CsvExport(string level = null)
+        public FileResult CsvExport(string companyName, string address, string contactName, string level = null)
         {
             Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(this.UserId,level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
-            var s=Utilities.CreateCsv(dt);
+            var s=Utilities.CreateCsv(dt, companyName, address, contactName);
             System.IO.File.AppendAllText(fileName, s);
             return File(fileName, "application/text", $"{dynamicName}.csv");
 
         }
 
-        public ActionResult QuizOne()
+        public ActionResult QuizOne(string id = null)
         {
+            int qid = 1;
             this.quizManager = new QuizManager(this.UserId);
             var listOfQuestions = this.quizManager.GetAllQuestions();
             Session["AllQuestions"] = this.quizManager.AllQuestions = listOfQuestions;
-            var question = this.quizManager.LoadQuiz(1);
+
+            if (!string.IsNullOrWhiteSpace(id))
+                qid = listOfQuestions.Count;
+
+            var question = this.quizManager.LoadQuiz(qid);
             ViewBag.AssessmentName = question.AssessmentName;
             return View(question);
         }
@@ -306,10 +320,12 @@ namespace SelfAssessment.Controllers
                 var question = this.quizManager.LoadQuiz(qId);
                 return View(question);
             }
-            return RedirectToAction("ShowResults");
+
+            return RedirectToAction("ShowResults", new { id=qId, origin= "Questions" });
         }
-        public ActionResult ShowResults()
+        public ActionResult ShowResults(string origin)
         {
+            ViewBag.Origin = origin;
             return View();
         }
 
@@ -332,9 +348,17 @@ namespace SelfAssessment.Controllers
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult QuizGroup()
+        public ActionResult QuizGroup(string id = null)
         {
-            var groupQuiz = GetGroupQuiz();
+            GroupQuiz groupQuiz = null;
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                groupQuiz = GetGroupQuiz();
+            }
+            else
+            {
+                groupQuiz = GetLastGroupQuiz();
+            }
             ViewBag.AssessmentName = groupQuiz.AssessmentName;
             return View(groupQuiz);
         }
@@ -342,89 +366,114 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult QuizGroup(FormCollection questionCode)
         {
-            bool isAction = false;
-            var groupQuiz = new List<QuestionQuiz>();
-            foreach(string user in questionCode.Keys)
-            {
-                if (user == "hdnaction")
-                {
-                    isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
-                    continue;
-                }
-                if (user == "UIGroupId")
-                    continue;
-                
-                string[] values = questionCode[user].Split('~');
-                var quiz = new QuestionQuiz();
-                quiz.GroupId =Convert.ToInt16(values[0]);
-                quiz.QuestionId = Convert.ToInt16(values[1]);
-                quiz.UserOptionId = Convert.ToInt16(values[2]);
-                quiz.UIGroupId = Convert.ToInt16(values[3]);
-                groupQuiz.Add(quiz);
-            }
-
             int groupId = 0;
-            this.groupQuizManager = new GroupQuizManager(this.UserId);
-            if (groupQuiz.Count == 0)
-                groupId = int.Parse(questionCode[1]);
-            else
-                groupId = groupQuiz[0].GroupId;
+            //string result = string.Empty;
+            //if (questionCode["Origin"] != null && questionCode["Origin"].Equals("Result"))
+            //{
+            //    groupId = int.Parse(questionCode["Id"].ToString());
+            //    var groupQuiz = GetGroupQuiz(--groupId);
+            //    return RedirectToAction("QuizGroup", new { quiz = groupQuiz });
+            //}
+            //else
+            //{
 
-            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
-            var lQuestions=this.groupQuizManager.GetMandatoryQuestion(groupId);
 
-            this.groupQuizManager.SaveAnswer(groupQuiz);
-
-            bool isMandatoryAnswerd = true;
-            foreach (var q in lQuestions)
-            {
-                if (groupQuiz == null || groupQuiz.Count == 0 || !groupQuiz.Exists(t => t.QuestionId == q.Questions.QuestionId))
+                bool isAction = false;
+                var groupQuiz = new List<QuestionQuiz>();
+                foreach (string user in questionCode.Keys)
                 {
-                    isMandatoryAnswerd = false;
-                    break;
+                    if (user == "hdnaction")
+                    {
+                        isAction = questionCode["hdnaction"].Equals("Previous", StringComparison.OrdinalIgnoreCase) ? true : false;
+                        continue;
+                    }
+                    if (user == "UIGroupId")
+                        continue;
+
+                    string[] values = questionCode[user].Split('~');
+                    var quiz = new QuestionQuiz();
+                    quiz.GroupId = Convert.ToInt16(values[0]);
+                    quiz.QuestionId = Convert.ToInt16(values[1]);
+                    quiz.UserOptionId = Convert.ToInt16(values[2]);
+                    quiz.UIGroupId = Convert.ToInt16(values[3]);
+                    groupQuiz.Add(quiz);
                 }
-            }
+                this.groupQuizManager = new GroupQuizManager(this.UserId);
+                if (groupQuiz.Count == 0)
+                    groupId = int.Parse(questionCode[1]);
+                else
+                    groupId = groupQuiz[0].GroupId;
 
-            if (isMandatoryAnswerd)
-            {
+                this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
+                var lQuestions = this.groupQuizManager.GetMandatoryQuestion(groupId);
 
-                groupId = groupQuiz.First().UIGroupId;
+                this.groupQuizManager.SaveAnswer(groupQuiz);
 
-                if (!isAction)
-                    groupId = groupId + 1;
+                bool isMandatoryAnswerd = true;
+                foreach (var q in lQuestions)
+                {
+                    if (groupQuiz == null || groupQuiz.Count == 0 || !groupQuiz.Exists(t => t.QuestionId == q.Questions.QuestionId))
+                    {
+                        ViewBag.AssessmentName = q.AssessmentName;
+                        isMandatoryAnswerd = false;
+                        break;
+                    }
+                }
+
+                if (isMandatoryAnswerd)
+                {
+                    groupId = groupQuiz.First().UIGroupId;
+
+                    if (!isAction)
+                        groupId = groupId + 1;
+                    else
+                    {
+                        groupId = Convert.ToInt16(questionCode["UIGroupId"].ToString());
+                        groupId = groupId - 1;
+                    }
+
+                    if (groupId == 0)
+                        groupId = 1;
+                }
                 else
                 {
-                    groupId = Convert.ToInt16(questionCode["UIGroupId"].ToString());
-                    groupId = groupId - 1;
+                    groupId = groupQuiz.Count > 0 ? groupQuiz.First().UIGroupId : groupId;
+                    ViewBag.Msg = "Please Fill the Mandatroy Questions";
                 }
 
-                if (groupId == 0)
-                    groupId = 1;
-            }
-            else
-            {
-                groupId = groupQuiz.Count > 0 ? groupQuiz.First().UIGroupId : groupId;
-                ViewBag.Msg = "Please Fill the Mandatroy Questions";
-            }
-
-            this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
-            if (this.groupQuizManager.MoveToNextGroup(groupId))
-            {
-                var question = this.groupQuizManager.LoadQuiz(groupId);
-                return View(question);
-            }           
-            return RedirectToAction("ShowResults");
+                this.groupQuizManager.AllQuestions = (List<GroupQuiz>)Session["AllGroupQuestions"];
+                if (this.groupQuizManager.MoveToNextGroup(groupId))
+                {
+                    var question = this.groupQuizManager.LoadQuiz(groupId);
+                    ViewBag.AssessmentName = question.AssessmentName;
+                    return View(question);
+                }
+            //}
+            return RedirectToAction("ShowResults", new { origin = "Group" });
         }
 
         private void CompleteAssignment()
         {
+            string name = string.Empty;
+            string email = string.Empty;
             using (var repo = new Repository<Organization>())
             {
                 var org = repo.Filter(q => q.Id == this.UserId).FirstOrDefault();
                 org.CurrentAssignmentStatus = Business.Utilities.AssessmentCompletedStatus;
                 repo.Update(org);
                 repo.SaveChanges();
+                name = org.Name;
+                email = org.Email;
             }
+
+            using (var template = new Repository<Template>())
+            {
+                var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.AssessmentCompletionMail)).FirstOrDefault();
+
+                if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.ChangePasswordSubject, email, name);
+            }
+
         }
         private GroupQuiz GetGroupQuiz(string level=null)
         {
@@ -433,6 +482,15 @@ namespace SelfAssessment.Controllers
             Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
             return this.groupQuizManager.LoadQuiz(1);
         }
+        private GroupQuiz GetLastGroupQuiz()
+        {
+            this.groupQuizManager = new GroupQuizManager(this.UserId);
+            var listOfGroup = this.groupQuizManager.GetAllQuestions(null);
+            Session["AllGroupQuestions"] = this.groupQuizManager.AllQuestions = listOfGroup;
+            var groupId = listOfGroup.Count;
+            return this.groupQuizManager.LoadQuiz(groupId);
+        }
+
     }
    
 }

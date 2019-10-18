@@ -235,7 +235,7 @@ namespace SelfAssessment.Controllers
 
             using (var repo = new Repository<Organization>())
             {
-                var pendingCount = repo.Filter(q=> q.AssessmentId == AssessMent).ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status = q.Key.CurrentAssignmentStatus }).ToList();
+                var pendingCount = repo.Filter(q=> q.AssessmentId == AssessMent || q.AssessmentId == 0).ToList().GroupBy(q => new { q.CurrentAssignmentType, q.CurrentAssignmentStatus }).Select(q => new { count = q.Count(), Type = q.Key.CurrentAssignmentType, status = q.Key.CurrentAssignmentStatus }).ToList();
 
                 level1PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel1 && t.status == Utilities.AssessmentPendingStatus)?.count ?? 0;
                 level2PenCount = pendingCount.FirstOrDefault(t => t.Type == Utilities.AssessmentTypeLevel2 && t.status == Utilities.AssessmentPendingStatus)?.count ?? 0;

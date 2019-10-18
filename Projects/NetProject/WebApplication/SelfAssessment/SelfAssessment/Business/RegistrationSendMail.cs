@@ -6,8 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
-using SendGrid;
-using SendGrid.Helpers.Mail;
+//using SendGrid;
+//using SendGrid.Helpers.Mail;
 
 namespace SelfAssessment.Business
 {
@@ -17,25 +17,25 @@ namespace SelfAssessment.Business
         {
             try
             {
-                var apiKey = System.Environment.GetEnvironmentVariable("smtpkey");
-                UserException.LogInformation(apiKey);
-                var client = new SendGridClient(apiKey);
-                var msg = new SendGridMessage()
-                {
-                    From = new EmailAddress(Utilities.FromMailId, "CII Online Self-Assessment System for Business Excellence"),
-                    Subject = subject,
-                    PlainTextContent = body.Replace("<<Name>>", userName),
-                };
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("ciibe-onlineassessment.in");
 
-                msg.PlainTextContent=msg.PlainTextContent.Replace("<<userid>>", to);
-                if(pwd!=null)
+                mail.From = new MailAddress("info@ciibe-onlineassessment.in");
+                mail.To.Add(to);
+                mail.Subject = subject;
+
+                string emailbody = body.Replace("<<Name>>", userName);
+                emailbody = emailbody.Replace("<<userid>>", to);
+                if (pwd != null)
                 {
-                    msg.PlainTextContent=msg.PlainTextContent.Replace("<<pwd>>", pwd);
+                    emailbody = emailbody.Replace("<<pwd>>", pwd);
                 }
 
-                msg.AddTo(new EmailAddress(to, "User"));
-                var response = client.SendEmailAsync(msg).Result;
-                UserException.LogInformation(response.StatusCode.ToString());
+                mail.Body = emailbody;
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("info@ciibe-onlineassessment.in", "mynameisKANTH@2019");
+                SmtpServer.Send(mail);
+
             }
             catch (Exception ex)
             {

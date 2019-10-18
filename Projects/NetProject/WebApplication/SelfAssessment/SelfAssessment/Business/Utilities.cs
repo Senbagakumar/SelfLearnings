@@ -49,6 +49,7 @@ namespace SelfAssessment.Business
         public const string MoveUserTemplate = "Level Migration Mail";
         public const string ChangePasswordSubject = "Password reset @ CII Online Self-Assessment System for Business Excellence";
         public const string ChangePasswordTemplate = "Password Reset Mail";
+        public const string AssessmentCompletionMail = "Assessment Completion Mail";
         public const string FromMailId = "be.award@cii.in";
 
         public static int CalculateScoreByAns(int answerId)
@@ -78,9 +79,14 @@ namespace SelfAssessment.Business
             }
             return score;
         }
-        public static string CreateCsv(DataTable dt)
+        public static string CreateCsv(DataTable dt, string companyName, string address, string contactName)
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append($"CompanyName={companyName}\n");
+            sb.Append($"Address={address}\n");
+            sb.Append($"Author={contactName}\n");
+
+            sb.Append($"Assessment Report");
             foreach (DataColumn column in dt.Columns)
             {
                 sb.Append(column.ColumnName);
@@ -99,12 +105,12 @@ namespace SelfAssessment.Business
             return sb.ToString();
 
         }
-        public static void CreatePdf(string pdfFilename, DataTable dt)
+        public static void CreatePdf(string pdfFilename, DataTable dt, string companyName, string address, string contactName)
         {
             PDFform pdfForm = new PDFform(dt, pdfFilename);
 
             // Create a MigraDoc document
-            Document document = pdfForm.CreateDocument();
+            Document document = pdfForm.CreateDocument(companyName, address, contactName);
             document.UseCmykColor = true;
 
             PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer(true);

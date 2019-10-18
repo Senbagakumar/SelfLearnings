@@ -14,30 +14,30 @@ namespace SelfAssessment
 {
     public class Bootstrapper
     {
-        public static IUnityContainer Initialise()
-        {
-            var container = BuildUnityContainer();
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-            return container;
-        }
-        private static IUnityContainer BuildUnityContainer()
-        {
-            var container = new UnityContainer();
+        //public static IUnityContainer Initialise()
+        //{
+        //    var container = BuildUnityContainer();
+        //    DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+        //    return container;
+        //}
+        //private static IUnityContainer BuildUnityContainer()
+        //{
+        //    //var container = new UnityContainer();
 
-            // register all your components with the container here   
-            //This is the important line to edit   
-            container.RegisterType<IBusinessContract, BusinessContract>();
-            container.RegisterType<IOrganizationMapper, OrganizationMapper>();
-            container.RegisterType<IUserBValidation, UserBValidation>();
-            container.RegisterInstance<ValidationInformation>(new ValidationInformation());           
+        //    //// register all your components with the container here   
+        //    ////This is the important line to edit   
+        //    //container.RegisterType<IBusinessContract, BusinessContract>();
+        //    //container.RegisterType<IOrganizationMapper, OrganizationMapper>();
+        //    //container.RegisterType<IUserBValidation, UserBValidation>();
+        //    //container.RegisterInstance<ValidationInformation>(new ValidationInformation());
 
 
-            RegisterTypes(container);
-            return container;
-        }
-        public static void RegisterTypes(IUnityContainer container)
-        {
+        //    //RegisterTypes(container);
+        //    //return container;
+        //}
+        //public static void RegisterTypes(IUnityContainer container)
+        //{
 
-        }
+        //}
     }
 }

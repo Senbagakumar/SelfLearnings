@@ -40,6 +40,7 @@ namespace SelfAssessment.Controllers
                 uiTemplate.Id = template.Id;
                 uiTemplate.Name = template.Name;
                 uiTemplate.Description = template.Description.ToString();
+                uiTemplate.Description = uiTemplate.Description.Replace("\r\n", " ").Replace("\t"," ");
                 uilistTemplate.Add(uiTemplate);
                 i++;
             }
@@ -227,22 +228,45 @@ namespace SelfAssessment.Controllers
 
         public FileResult PdfExport(int userId, string level = null)
         {
+            string companyName = string.Empty, address = string.Empty, contactName = string.Empty;
+            using (var org = new Repository<Organization>())
+            {
+                var user = org.Filter(q => q.Id == userId).FirstOrDefault();
+                if (user != null)
+                {
+                    companyName = user.Name;
+                    address = user.Address;
+                    contactName = user.ContactName;
+                }
+            }
             Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(userId, level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
-            Utilities.CreatePdf(fileName, dt);
+            Utilities.CreatePdf(fileName, dt,companyName,address,contactName);
             return File(fileName, "application/pdf", $"{dynamicName}.pdf");
 
         }
 
         public FileResult CsvExport(int userId,string level = null)
         {
+            string companyName = string.Empty, address = string.Empty, contactName = string.Empty;
+            using (var org = new Repository<Organization>())
+            {
+                var user = org.Filter(q => q.Id == userId).FirstOrDefault();
+                if (user != null)
+                {
+                    companyName = user.Name;
+                    address = user.Address;
+                    contactName = user.ContactName;
+                }
+            }
+
             Utilities.DeleteOldFiles(Server.MapPath("~/Downloads"));
             var dt = Utilities.GetReport(userId, level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
-            var s = Utilities.CreateCsv(dt);
+            var s = Utilities.CreateCsv(dt,companyName,address,contactName);
             System.IO.File.AppendAllText(fileName, s);
             return File(fileName, "application/text", $"{dynamicName}.csv");
 

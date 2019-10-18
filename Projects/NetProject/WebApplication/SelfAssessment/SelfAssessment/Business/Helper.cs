@@ -25,8 +25,22 @@ namespace SelfAssessment.Business
 
             orgHistory.ForEach(t => 
             {
-                listOrganization.Add(new Organization() { AssessmentId=t.AssessmentId, CurrentAssignmentType=t.Level, CityId=t.CityId, StateId=t.StateId,
-                SectorId=t.SectorId, SubSectorId=t.SubSectorId, RevenueId=t.RevenueId, TypeOfServiceId=t.TypeOfServiceId, Id=t.OrgId, CurrentAssignmentStatus=t.Status});
+                if (!listOrganization.Any(q => q.Id == t.OrgId))
+                {
+                    listOrganization.Add(new Organization()
+                    {
+                        AssessmentId = t.AssessmentId,
+                        CurrentAssignmentType = t.Level,
+                        CityId = t.CityId,
+                        StateId = t.StateId,
+                        SectorId = t.SectorId,
+                        SubSectorId = t.SubSectorId,
+                        RevenueId = t.RevenueId,
+                        TypeOfServiceId = t.TypeOfServiceId,
+                        Id = t.OrgId,
+                        CurrentAssignmentStatus = t.Status
+                    });
+                }
             });
 
             //if (org.AssessmentId > 0)
@@ -60,8 +74,8 @@ namespace SelfAssessment.Business
                     model.Name = !string.IsNullOrEmpty(q.Name) ? q.Name : city.AssessmentContext.UserInfo.FirstOrDefault(t => t.Id == q.Id).Name;
                     model.City = city.Filter(c => c.Id == q.CityId).FirstOrDefault().CityName;
                     model.Revenue = city.AssessmentContext.revenues.FirstOrDefault(r => r.Id == q.RevenueId).Name;
-                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000) ? Utilities.Others : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
-                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000) ? Utilities.Others : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
+                    model.Sector = (q.SectorId == 0 || q.SectorId == 1000 || q.SectorId == 1001 ) ? Utilities.Others : city.AssessmentContext.sectors.FirstOrDefault(r => r.Id == q.SectorId).SectorName;
+                    model.SubSector = (q.SectorId == 0 || q.SubSectorId == 1000 || q.SubSectorId == 1001) ? Utilities.Others : city.AssessmentContext.subSectors.FirstOrDefault(r => r.Id == q.SubSectorId).SubSectorName;
                     model.State = q.StateId > 0 ? city.AssessmentContext.states.FirstOrDefault(s => s.Id == q.StateId).StateName : "";
                     model.TypeOfService = q.TypeOfServiceId > 0 ? city.AssessmentContext.serviceTypes.FirstOrDefault(ty => ty.Id == q.TypeOfServiceId).Name : "";
                     model.Type = org.CurrentAssignmentType;

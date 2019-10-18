@@ -18,7 +18,7 @@ namespace SelfAssessment
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Bootstrapper.Initialise();
+            //Bootstrapper.Initialise();
         }
 
         protected void Application_Error()

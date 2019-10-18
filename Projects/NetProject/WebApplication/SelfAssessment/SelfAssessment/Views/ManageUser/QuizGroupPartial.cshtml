@@ -25,13 +25,13 @@
                             <div>
                                 @*@Html.HiddenFor(_=> quest.Questions.QuestionId)*@
                                 <p>
-                                    <div class=" form-check">
+                                    <div class="form-check">
                                         @*@Html.RadioButtonFor(m => Model.AnswerChoices, false, htmlAttributes: new { @checked = "" }) test<br />*@
                                         @foreach (var choice in quest.AnswerChoices)
                                         {
-                                            <label for="inline-radio1" class="form-check-label">
+                                            <label for="inline-radio1" class="form-check-label text-justify border card-body list-group-item col-md-12">
                                                 @Html.RadioButton(quest.Questions.QuestionCode, Model.GroupId + "~" + quest.Questions.QuestionId + "~" + choice.AnswerChoiceId + "~" + Model.UIGroupId, choice.IsChecked, new { disabled = "disabled" }) @choice.Choices
-                                            </label>
+                                            </label><br/>
                                         }
                                     </div>
                                 </p>

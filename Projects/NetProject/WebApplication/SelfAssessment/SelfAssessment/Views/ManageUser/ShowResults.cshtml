@@ -44,13 +44,7 @@
     //function Export(type) {
     //    alert(type);
 
-    //    $.ajax({
-    //        type: "GET",
-    //        url: API.ExportPdf(),
-    //        contentType: "application/json"
-    //    }).done(function (res) {
-    //    });
-    //}
+    
 
     $(document).ready(function () {
         $('#btnYes').click(function () {
@@ -66,7 +60,15 @@
         });
 
         $('#btnNo').click(function () {
-            location.href = API.UserIndex();
+            var origin = '@ViewBag.Origin';
+            var routingUrl = '';
+            if (origin == 'Group') {
+                routingUrl = API.UserGroupQuizSubmit() + "Result";
+            }
+            else {
+                routingUrl = API.UserQuestionQuizSubmit() + "Result";
+            }
+            location.href = routingUrl;
         });
     });
 </script>

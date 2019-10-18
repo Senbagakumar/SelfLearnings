@@ -12,11 +12,6 @@ namespace SelfAssessment.Controllers
 {
     public class GroupController : AdminBaseController
     {
-        private readonly IBusinessContract businessContract;
-        public GroupController(IBusinessContract businessContract)
-        {
-            this.businessContract = businessContract;
-        }
         // GET: Group
         public ActionResult Index()
         {

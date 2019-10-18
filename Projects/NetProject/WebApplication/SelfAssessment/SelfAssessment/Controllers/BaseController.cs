@@ -17,7 +17,10 @@ namespace SelfAssessment.Controllers
 
             if (Session[Utilities.UserId] == null || string.IsNullOrWhiteSpace(Session[Utilities.UserId].ToString()))
                 Response.Redirect(Utilities.RedirectToLogin);
-            userId = Convert.ToInt16(Session[Utilities.UserId].ToString());
+            else
+            {
+                userId = Convert.ToInt16(Session[Utilities.UserId].ToString());
+            }
         }
 
         public int UserId => userId;

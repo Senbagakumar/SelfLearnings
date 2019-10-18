@@ -18,6 +18,11 @@ namespace SelfAssessment
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "User", action = "Index", id = UrlParameter.Optional }
             );
+
+            //routes.Add(new Route("{controller}.mvc.aspx/{action}", new MvcRouteHandler())
+            //{
+            //    Defaults = new RouteValueDictionary(new { controller= "User", action= "Index" })
+            //});
         }
     }
 }

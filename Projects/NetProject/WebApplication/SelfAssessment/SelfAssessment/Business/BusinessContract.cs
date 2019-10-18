@@ -19,11 +19,11 @@ namespace SelfAssessment.Business
         private readonly RegistrationSendMail registrationSendMail;
 
 
-        public BusinessContract(IOrganizationMapper organizationMapper, IUserBValidation userBValidation, RegistrationSendMail registrationSendMail)
+        public BusinessContract()//IOrganizationMapper organizationMapper, IUserBValidation userBValidation, RegistrationSendMail registrationSendMail
         {
-            this.organizationMapper = organizationMapper;
-            this.userBValidation = userBValidation;
-            this.registrationSendMail = registrationSendMail;
+            this.organizationMapper = new OrganizationMapper();
+            this.userBValidation = new UserBValidation(new ValidationInformation());
+            this.registrationSendMail = new RegistrationSendMail();
         }
 
         public string DeleteState(int stateId)
@@ -130,10 +130,27 @@ namespace SelfAssessment.Business
                     organization.States = repository.AssessmentContext.states.FirstOrDefault(q => q.Id == organization.StateId);
                     organization.Revenues = repository.AssessmentContext.revenues.FirstOrDefault(q => q.Id == organization.RevenueId);
                     organization.TypesOfService = repository.AssessmentContext.serviceTypes.FirstOrDefault(q => q.Id == organization.Id);
+                    
                     //organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
                     //organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
-                    organization.SectorId = isOthers ? Convert.ToInt16(Utilities.OthersValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
-                    organization.SubSectorId = isOthers ? Convert.ToInt16(Utilities.OthersValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
+                    organization.SectorId = isOthers ? Convert.ToInt16(Utilities.SectorValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
+                    organization.SubSectorId = isOthers ? Convert.ToInt16(Utilities.SectorValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
+
+                    int assessmentid = 0;
+                    var assessmentId = repository.AssessmentContext.assessments.Where(q => q.Sector == organization.SectorId).ToList();
+                    if(assessmentId !=null && assessmentId.Count > 0)
+                    {
+                        var subAssessment = assessmentId.FirstOrDefault(q => q.SubSector == organization.SubSectorId);
+                        if (subAssessment != null && subAssessment.Id > 0)
+                            assessmentid = subAssessment.Id;
+
+                    }
+                    else
+                    {
+                        assessmentid = int.Parse(SelfAssessment.Business.Utilities.SectorValue);
+                    }
+                    organization.AssessmentId = assessmentid;
+
                     organization.TempPassword = password;
                     repository.Create(organization);
                     repository.SaveChanges();

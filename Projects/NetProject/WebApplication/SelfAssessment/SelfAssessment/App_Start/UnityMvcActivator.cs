@@ -3,8 +3,8 @@ using System.Web.Mvc;
 
 using Unity.AspNet.Mvc;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(SelfAssessment.UnityMvcActivator), nameof(SelfAssessment.UnityMvcActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(SelfAssessment.UnityMvcActivator), nameof(SelfAssessment.UnityMvcActivator.Shutdown))]
+//[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(SelfAssessment.UnityMvcActivator), nameof(SelfAssessment.UnityMvcActivator.Start))]
+//[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(SelfAssessment.UnityMvcActivator), nameof(SelfAssessment.UnityMvcActivator.Shutdown))]
 
 namespace SelfAssessment
 {
@@ -18,10 +18,10 @@ namespace SelfAssessment
         /// </summary>
         public static void Start() 
         {
-            FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
-            FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
+            //FilterProviders.Providers.Remove(FilterProviders.Providers.OfType<FilterAttributeFilterProvider>().First());
+           //FilterProviders.Providers.Add(new UnityFilterAttributeFilterProvider(UnityConfig.Container));
 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
+            //DependencyResolver.SetResolver(new UnityDependencyResolver(UnityConfig.Container));
 
             // TODO: Uncomment if you want to use PerRequestLifetimeManager
             // Microsoft.Web.Infrastructure.DynamicModuleHelper.DynamicModuleUtility.RegisterModule(typeof(UnityPerRequestHttpModule));
@@ -32,7 +32,7 @@ namespace SelfAssessment
         /// </summary>
         public static void Shutdown()
         {
-            UnityConfig.Container.Dispose();
+           // UnityConfig.Container.Dispose();
         }
     }
 }

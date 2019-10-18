@@ -1,7 +1,7 @@
 ﻿var API = {    //https://selfassesment.azurewebsites.net/, 'https://localhost:26579/' , location.protocol + "//" + window.location.hostname+":26579/
 
-    baseUrl: location.protocol + "//" + window.location.hostname + "/",
-    //baseUrl: 'http://localhost:26579/',
+    //baseUrl: location.protocol + "//" + window.location.hostname + "/",
+    baseUrl: 'http://localhost:26579/',
 
     GetSubSectors: function () {
         return this.baseUrl + "User/GetSubSector/";
@@ -239,5 +239,11 @@
     },
     TemplateHome: function () {
         return this.baseUrl + "Admin/EmailTemplate";
+    },
+    UserGroupQuizSubmit: function () {
+        return this.baseUrl + "ManageUser/QuizGroup/";
+    },
+    UserQuestionQuizSubmit: function () {
+        return this.baseUrl + "ManageUser/QuizOne/";
     }
 };

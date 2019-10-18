@@ -18,9 +18,9 @@ namespace SelfAssessment.Controllers
         private readonly IBusinessContract businessContract;
 
 
-        public UserController(IBusinessContract businessContract)
+        public UserController()//IBusinessContract businessContract
         {
-            this.businessContract = businessContract;
+            this.businessContract = new BusinessContract();
         }
 
         // GET: User
@@ -64,7 +64,10 @@ namespace SelfAssessment.Controllers
                     return Redirect(Utilities.RedirectToUser);
                 }
                 else
+                {
+                    ViewBag.Text = "Incorrect UserName and Password";
                     return View();
+                }
             }
         }
 
