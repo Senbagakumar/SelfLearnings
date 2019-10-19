@@ -305,6 +305,8 @@
     <Content Include="admin\assets\js\dashboard.js" />
     <Content Include="admin\assets\js\hummingbird-treeview.js" />
     <Content Include="admin\assets\js\index.html" />
+    <Content Include="admin\assets\js\Jquery_ui.js" />
+    <Content Include="admin\assets\js\Jquuery-ui.css" />
     <Content Include="admin\assets\js\less.min.js" />
     <Content Include="admin\assets\js\lib\chart-js\Chart.bundle.js" />
     <Content Include="admin\assets\js\lib\chart-js\chartjs-init2.js" />
@@ -1219,6 +1221,7 @@
     <Content Include="admin\images\flag\fr.png" />
     <Content Include="admin\images\flag\it.png" />
     <Content Include="admin\images\flag\us.png" />
+    <Content Include="admin\images\loader.gif" />
     <Content Include="admin\images\logo.png" />
     <Content Include="admin\images\logo2.png" />
     <Content Include="admin\images\placeholder.png" />

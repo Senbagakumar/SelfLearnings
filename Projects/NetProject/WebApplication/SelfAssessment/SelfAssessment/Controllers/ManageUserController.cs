@@ -465,7 +465,7 @@ namespace SelfAssessment.Controllers
                 name = org.Name;
                 email = org.Email;
             }
-
+            
             using (var template = new Repository<Template>())
             {
                 var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.AssessmentCompletionMail)).FirstOrDefault();

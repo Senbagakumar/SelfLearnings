@@ -7,19 +7,19 @@
     <div class="col-sm-12">
         <div class="card">
             @*<div class="card-header">
-                <strong>Assessment Name</strong>
-                <div class="user-area dropdown float-right">
-                    <input type="hidden" id="lblUserId" value="0" />
-                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="ti-export"></span>&nbsp; Export
-                    </a>
+                    <strong>Assessment Name</strong>
+                    <div class="user-area dropdown float-right">
+                        <input type="hidden" id="lblUserId" value="0" />
+                        <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="ti-export"></span>&nbsp; Export
+                        </a>
 
-                    <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
-                        <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
+                            <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
+                        </div>
                     </div>
-                </div>
-            </div>*@
+                </div>*@
             <div class="card-body card-block">
                 @*<form action="" method="post" class="form-horizontal">*@
                 <div class="row form-group">
@@ -55,18 +55,20 @@
         <div>&nbsp;</div>
     </div>
     <!--/.col-->
-
+    <div id="load">
+        <img src="~/admin/images/loader.gif" />
+    </div>
     <div id="LoadLevel1Graph">
         @{ Html.RenderPartial("LoadLevel1GraphPartial"); }
     </div>
 
     @*<div id="LoadLevel2Graph">
-        @{ Html.RenderPartial("LoadLevel2GraphPartial"); }
-    </div>
+            @{ Html.RenderPartial("LoadLevel2GraphPartial"); }
+        </div>
 
-    <div id="LoadLevel3Graph">
-        @{ Html.RenderPartial("LoadLevel3GraphPartial"); }
-    </div>*@
+        <div id="LoadLevel3Graph">
+            @{ Html.RenderPartial("LoadLevel3GraphPartial"); }
+        </div>*@
 </div>
 
 <script src="~/js/API.js"></script>
@@ -87,6 +89,7 @@
 
 
 <script type="text/javascript">
+    $('#load').hide();
     $(document).ready(function () {
         $("#1").hide();    
         $("#2").hide();   
@@ -95,6 +98,7 @@
         //$("#LoadLevel3Graph").hide();       
 
         $("#btnGo").click(function () {
+            $('#load').show();
             var selectValue = $('#selectValue').val();  
             GetUserReport(0, selectValue);
             //if (selectValue == 1) {

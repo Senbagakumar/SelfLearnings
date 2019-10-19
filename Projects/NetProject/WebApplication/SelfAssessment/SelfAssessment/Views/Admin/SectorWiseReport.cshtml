@@ -10,15 +10,15 @@
                 <strong>Sector Wise Report</strong>
                 @*<div class="user-area dropdown float-right">
 
-                    <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="ti-export"></span>&nbsp; Export
-                    </a>
+                        <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="ti-export"></span>&nbsp; Export
+                        </a>
 
-                    <div class="user-menu dropdown-menu">
-                        <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
-                        <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
-                    </div>
-                </div>*@
+                        <div class="user-menu dropdown-menu">
+                            <a class="nav-link" href="#"><i class="ti-file"></i> Export AS PDF</a>
+                            <a class="nav-link" href="#"><i class="ti-microsoft"></i> Export AS Excel</a>
+                        </div>
+                    </div>*@
             </div>
             <div class="card-body card-block">
                 @*<form action="" method="post" class="form-horizontal">*@
@@ -70,9 +70,11 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-
-                <div id="level1OrgScore" class="">
-                    <div class="card">
+                <div id="load">
+                    <img src="~/admin/images/loader.gif" />
+                </div>
+                <div id="level1OrgScore">
+                    <div id="1" class="card">
                         <div class="card-body">
                             <h4 class="mb-3">Organization Score (%) Result </h4>
                             <canvas id="barChart1"></canvas>
@@ -80,8 +82,8 @@
                     </div>
                 </div>
 
-                <div id="level1OrgFinalScore" class="">
-                    <div class="card">
+                <div id="level1OrgFinalScore">
+                    <div id="2" class="card">
                         <div class="card-body">
                             <h4 class="mb-3">Final Score (%) Result </h4>
                             <canvas id="barChart3"></canvas>
@@ -89,41 +91,6 @@
                     </div>
                 </div>
 
-                <div id="level2OrgScore" class="">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="mb-3">Organization Score (%) Result </h4>
-                            <canvas id="barChart21"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="level2OrgFinalScore" class="">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="mb-3">Final Score (%) Result </h4>
-                            <canvas id="barChart23"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="level3OrgScore" class="">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="mb-3">Organization Score (%) Result </h4>
-                            <canvas id="barChart31"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="level3OrgFinalScore" class="">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="mb-3">Final Score (%) Result </h4>
-                            <canvas id="barChart33"></canvas>
-                        </div>
-                    </div>
-                </div>
 
 
 
@@ -159,11 +126,9 @@
 <script src="~/Admin/assets/js/popper.min.js"></script>
 <script src="~/Admin/assets/js/plugins.js"></script>
 <script src="~/js/API.js"></script>
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
+<link href="~/admin/assets/js/Jquuery-ui.css" rel="stylesheet" />
+@*<link rel="stylesheet" href="/resources/demos/style.css">*@
+<script src="~/admin/assets/js/Jquery_ui.js"></script>
 
 
 <!--  Chart js -->
@@ -173,8 +138,10 @@
 <script src="~/admin/assets/js/lib/chart-js/TestChart.js"></script>
 
 <script type="text/javascript">
+    $('#1').hide();
+    $('#2').hide();
+    $('#load').hide();
     $(document).ready(function () {
-
         clear();
         $('#Sector').on('change', function () {
             $.ajax({
@@ -240,7 +207,7 @@
                 CurrentAssignmentType: level,
                 AssessmentId: $('#Assessment').val()
             };
-
+            $('#load').show();
 
             BarChart(model.SectorId, model.SubSectorId, level, model.AssessmentId);
 

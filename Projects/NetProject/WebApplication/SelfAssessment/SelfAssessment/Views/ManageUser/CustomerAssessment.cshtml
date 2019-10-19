@@ -54,6 +54,9 @@
 
         </div>
     </div>
+    <div id="load">
+        <img src="~/admin/images/loader.gif" />
+    </div>
     <div>&nbsp;</div>
     <div id="LoadGroup">
     </div>
@@ -67,6 +70,7 @@
 
 
 <script type="text/javascript">
+    $('#load').hide();
     function GetReport(action) {
         var selectValue = $('#selectValue').val();
         document.getElementById("hdnaction").value = action + "-" + selectValue;
@@ -94,9 +98,11 @@
     }
     $(document).ready(function () {
         $("#btnGo").click(function () {
+            $('#load').show();
             var selectValue = $('#selectValue').val();
             var url = API.UserGetGroupDetails() + selectValue;
             $.get(url, function (data) {
+                $('#load').hide();
                 $('#LoadGroup').html(data);
             });
         });

@@ -62,6 +62,8 @@
                 }
             }
         });
+
+        $('#1').show();
     }
 
     function OnErrorCall_(response) {
@@ -118,6 +120,8 @@
             }
         });
 
+        $('#2').show();
+        $('#load').hide();
     }
 
     function OnErrorCall3_(response) {

@@ -4,126 +4,137 @@
     ViewBag.Title = "CustomerDetails";
 }
 
+<style type="text/css">
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        /*background: #eee url('https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif') 50% 50% no-repeat;*/
+    }
+</style>
 <div class="content mt-3">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header">
-                <strong class="card-title">CUSTOMER DETAILS</strong>
-                <form action="/Admin/CustomerAssessmentReport" method="post" class="form-horizontal" id="Report">
-                    <input type="hidden" id="hdnaction" name="hdnaction" value="" />
-                    <div class="user-area dropdown float-right">
+    
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">CUSTOMER DETAILS</strong>
+                    <form action="/Admin/CustomerAssessmentReport" method="post" class="form-horizontal" id="Report">
+                        <input type="hidden" id="hdnaction" name="hdnaction" value="" />
+                        <div class="user-area dropdown float-right">
 
-                        <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="ti-export"></span>&nbsp; Export
-                        </a>
+                            <a href="#" class="dropdown-toggle btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="ti-export"></span>&nbsp; Export
+                            </a>
 
-                        <div class="user-menu dropdown-menu">
-                            <a class="nav-link" href="#" onclick="GetReport('PDF')"><i class="ti-file"></i> Export AS PDF</a>
-                            <a class="nav-link" href="#" onclick="GetReport('CSV')"><i class="ti-microsoft"></i> Export AS Excel</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-
-            <div class="card-body">
-
-
-                <div class="default-tab">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-question" role="tab" aria-controls="nav-level1" aria-selected="true">Assessment Questions</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab-Level1" data-toggle="tab" href="#Level1-nav-graph" role="tab" aria-controls="nav-level2" aria-selected="false">Assessment Graph Level1</a>
-                            @*<a class="nav-item nav-link" id="nav-profile-tab-Level2" data-toggle="tab" href="#Level2-nav-graph" role="tab" aria-controls="nav-level3" aria-selected="false">Assessment Graph Level2</a>
-                            <a class="nav-item nav-link" id="nav-profile-tab-Level3" data-toggle="tab" href="#Level3-nav-graph" role="tab" aria-controls="nav-level4" aria-selected="false">Assessment Graph Level3</a>*@
-
-                        </div>
-                    </nav>
-                    <div class="tab-content pl-3 pt-2" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-question" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <div class="row form-group">
-                                <input type="hidden" id="lblUserId" value="@Model.Id" />
-                                <input type="hidden" id="lblSelectLevel" value="@Model.SelectLevel" />
-                                <div class="col-4 col-md-4"><h2>@Model.Name</h2></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Email</label></div>
-                                <div class="col-3 col-md-3"> : <b>@Model.Email</b></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Desgination</label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.Designation</b></div>
-
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Address</label></div>
-                                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.Address</b></label></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Mobile </label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.MobileNo</b></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Service</label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.TypeOfService</b></div>
-
-                            </div>
-
-                            <div class="row form-group">
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">City</label></div>
-                                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.City</b></label></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">State </label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.State</b></div>
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector </label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.Sector</b></div>
-
-                            </div>
-
-
-                            <div class="row form-group">
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector</label></div>
-                                <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.SubSector</b></label></div>
-
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Revenue </label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.Revenue</b></div>
-                                <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type </label></div>
-                                <div class="col-3 col-md-3"><b> : @Model.Type</b></div>
-
-                            </div>
-
-
-                            <div>
-                                <div>&nbsp;</div>
-                                <div id="LoadGroup">
-
-                                </div>
-
+                            <div class="user-menu dropdown-menu">
+                                <a class="nav-link" href="#" onclick="GetReport('PDF')"><i class="ti-file"></i> Export AS PDF</a>
+                                <a class="nav-link" href="#" onclick="GetReport('CSV')"><i class="ti-microsoft"></i> Export AS Excel</a>
                             </div>
                         </div>
-
-                        <div class="tab-pane fade" id="Level1-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level1">
-                            @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel1GraphPartial.cshtml"); }
-                        </div>
-                        @*<div class="tab-pane fade" id="Level2-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level2">
-                            @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel2GraphPartial.cshtml"); }
-                        </div>
-                        <div class="tab-pane fade" id="Level3-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level3">
-                            @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel3GraphPartial.cshtml"); }
-                        </div>*@
-
-                    </div>
-
+                    </form>
                 </div>
 
 
+                <div class="card-body">
 
 
+                    <div class="default-tab">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-question" role="tab" aria-controls="nav-level1" aria-selected="true">Assessment Questions</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab-Level1" data-toggle="tab" href="#Level1-nav-graph" role="tab" aria-controls="nav-level2" aria-selected="false">Assessment Graph Level1</a>
+                                @*<a class="nav-item nav-link" id="nav-profile-tab-Level2" data-toggle="tab" href="#Level2-nav-graph" role="tab" aria-controls="nav-level3" aria-selected="false">Assessment Graph Level2</a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab-Level3" data-toggle="tab" href="#Level3-nav-graph" role="tab" aria-controls="nav-level4" aria-selected="false">Assessment Graph Level3</a>*@
 
-                <!-- .animated -->
-            </div><!-- .content -->
+                            </div>
+                        </nav>
+                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-question" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="row form-group">
+                                    <input type="hidden" id="lblUserId" value="@Model.Id" />
+                                    <input type="hidden" id="lblSelectLevel" value="@Model.SelectLevel" />
+                                    <div class="col-4 col-md-4"><h2>@Model.Name</h2></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Email</label></div>
+                                    <div class="col-3 col-md-3"> : <b>@Model.Email</b></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Desgination</label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.Designation</b></div>
+
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Address</label></div>
+                                    <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.Address</b></label></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Mobile </label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.MobileNo</b></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Service</label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.TypeOfService</b></div>
+
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">City</label></div>
+                                    <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.City</b></label></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">State </label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.State</b></div>
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sector </label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.Sector</b></div>
+
+                                </div>
 
 
-        </div><!-- /#right-panel -->
-        <!-- Right Panel -->
-    </div>
+                                <div class="row form-group">
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Sub Sector</label></div>
+                                    <div class="col-3 col-md-3"><label for="hf-password" class=" form-control-label"><b> : @Model.SubSector</b></label></div>
+
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Revenue </label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.Revenue</b></div>
+                                    <div class="col col-md-1"><label for="hf-password" class=" form-control-label">Type </label></div>
+                                    <div class="col-3 col-md-3"><b> : @Model.Type</b></div>
+
+                                </div>
+
+
+                                <div>
+                                    <div id="load">
+                                        <img src="~/admin/images/loader.gif" />
+                                    </div>
+                                    <div>&nbsp;</div>
+                                    <div id="LoadGroup">
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="Level1-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level1">
+                                @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel1GraphPartial.cshtml"); }
+                            </div>
+                            @*<div class="tab-pane fade" id="Level2-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level2">
+                                    @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel2GraphPartial.cshtml"); }
+                                </div>
+                                <div class="tab-pane fade" id="Level3-nav-graph" role="tabpanel" aria-labelledby="nav-profile-tab-Level3">
+                                    @{ Html.RenderPartial("~/Views/ManageUser/LoadLevel3GraphPartial.cshtml"); }
+                                </div>*@
+
+                        </div>
+
+                    </div>
+
+                    <!-- .animated -->
+                </div><!-- .content -->
+
+
+            </div><!-- /#right-panel -->
+            <!-- Right Panel -->
+        </div>
 </div>
 
 <script src="~/Admin/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -153,6 +164,10 @@
     //    var v = location.pathname.substring(location.pathname.lastIndexOf("/") + 1);
     //    alert(v);
     //}​
+
+    $('#load').show(); // Show loading animation
+    $('#LoadGroup').hide(); // Hide content until loaded
+
 
     function GetReport(action) {
 
@@ -187,6 +202,13 @@
         });
     }
     $(document).ready(function () {
+
+
+        $("#1").hide();
+        $("#2").hide();
+        $("#3").hide();
+        $("#4").hide();   
+
         //$("#btnGo").click(function () {
         var selectValue = $('#lblSelectLevel').val();
         var id = $('#lblUserId').val();
@@ -221,6 +243,9 @@
         
         var url = API.AdminGetGroupDetailsByFilter()+"?id=" + id + "&level=" + selectValue;
         $.get(url, function (data) {
+            $('#load').hide(); // Show loading animation
+            $('#LoadGroup').show(); // Hide content until loaded
+
             $('#LoadGroup').html(data);
         });
         // });

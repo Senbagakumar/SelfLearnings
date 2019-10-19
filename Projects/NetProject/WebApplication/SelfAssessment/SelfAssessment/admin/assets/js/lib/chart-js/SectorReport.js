@@ -4,15 +4,48 @@
     var bC1OrgScore = [];
     var bC1OtherOrgScore = [];
     var bc10groups = [];
+    $.when(
+        $.ajax({
+            type: "GET",
+            url: API.OrganizationLevel1Report() + "/?id=" + uid + "&level=" + level,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: OnSuccess_,
+            error: OnErrorCall_
+        }),
 
-    $.ajax({
-        type: "GET",
-        url: API.OrganizationLevel1Report() + "/?id=" + uid + "&level=" + level,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: OnSuccess_,
-        error: OnErrorCall_
+        $.ajax({
+            type: "GET",
+            url: API.OrganizationLevel1FinalReport() + "/?id=" + uid + "&level=" + level,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: OnSuccess3_,
+            error: OnErrorCall3_
+        }),
+
+        $.ajax({
+            type: "GET",
+            url: API.SectorLevel1Report() + "/?id=" + uid + "&level=" + level,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: OnSuccess4_,
+            error: OnErrorCall4_
+        }),
+
+        $.ajax({
+            type: "GET",
+            url: API.SectorLevel1FinalReport() + "/?id=" + uid + "&level=" + level,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: OnSuccess5_,
+            error: OnErrorCall5_
+        })
+    ).then(function () {
+        $('#load').hide();
     });
 
     function OnSuccess_(response) {
@@ -83,21 +116,8 @@
         alert("Whoops something went wrong!");
     }
 
-
-
-
     var bC3OrgScore = [];
     var bC3OtherOrgScore = [];
-
-    $.ajax({
-        type: "GET",
-        url: API.OrganizationLevel1FinalReport() + "/?id=" + uid + "&level=" + level,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: OnSuccess3_,
-        error: OnErrorCall3_
-    });
 
     function OnSuccess3_(response) {
         var oo = response.OtherOrg;
@@ -162,15 +182,7 @@
     var bC4OtherOrgScore = [];
     var bc4groups = [];
 
-    $.ajax({
-        type: "GET",
-        url: API.SectorLevel1Report() + "/?id=" + uid + "&level=" + level,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: OnSuccess4_,
-        error: OnErrorCall4_
-    });
+
 
     function OnSuccess4_(response) {
         var oo = response.OtherOrg;
@@ -238,16 +250,6 @@
 
     var bC5OrgScore = [];
     var bC5OtherOrgScore = [];
-
-    $.ajax({
-        type: "GET",
-        url: API.SectorLevel1FinalReport() + "/?id=" + uid + "&level=" + level,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: OnSuccess5_,
-        error: OnErrorCall5_
-    });
 
     function OnSuccess5_(response) {
         var oo = response.OtherOrg;
