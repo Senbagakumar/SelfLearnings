@@ -1,9 +1,6 @@
 ﻿function GetUserReport(uid, level) {
     "use strict";
 
-    var bC1OrgScore = [];
-    var bC1OtherOrgScore = [];
-    var bc10groups = [];
     $.when(
         $.ajax({
             type: "GET",
@@ -52,6 +49,10 @@
         var oo = response.OtherOrg;
         var og = response.Org;
         var groups = response.Groups;
+
+        var bC1OrgScore = [];
+        var bC1OtherOrgScore = [];
+        var bc10groups = []; 
 
         for (var i = 0; i < oo.length; i++) {
             bC1OtherOrgScore.push(oo[i]);
@@ -116,12 +117,13 @@
         alert("Whoops something went wrong!");
     }
 
-    var bC3OrgScore = [];
-    var bC3OtherOrgScore = [];
 
     function OnSuccess3_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
+
+        var bC3OrgScore = [];
+        var bC3OtherOrgScore = [];
 
         for (var i = 0; i < oo.length; i++) {
             bC3OtherOrgScore.push(oo[i]);
@@ -178,9 +180,6 @@
 
 
 
-    var bC4OrgScore = [];
-    var bC4OtherOrgScore = [];
-    var bc4groups = [];
 
 
 
@@ -188,6 +187,11 @@
         var oo = response.OtherOrg;
         var og = response.Org;
         var groups = response.Groups;
+
+
+        var bC4OrgScore = [];
+        var bC4OtherOrgScore = [];
+        var bc4groups = [];
 
         for (var i = 0; i < oo.length; i++) {
             bC4OtherOrgScore.push(oo[i]);
@@ -248,12 +252,14 @@
 
 
 
-    var bC5OrgScore = [];
-    var bC5OtherOrgScore = [];
-
     function OnSuccess5_(response) {
         var oo = response.OtherOrg;
         var og = response.Org;
+
+
+        var bC5OrgScore = [];
+        var bC5OtherOrgScore = [];
+
 
         for (var i = 0; i < oo.length; i++) {
             bC5OtherOrgScore.push(oo[i]);

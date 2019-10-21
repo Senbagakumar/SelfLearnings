@@ -50,9 +50,9 @@ namespace SelfAssessment.Business
 
             string cacheName = string.Empty;
             if (isFinalScore)
-                cacheName = CalculateScoreTrue + userId;
+                cacheName = CalculateScoreTrue + userId + level;
             else
-                cacheName = CalculateScoreFalse + userId;
+                cacheName = CalculateScoreFalse + userId + level;
 
             ScoreCalc scoreCalc = Caching.GetObjectFromCache<ScoreCalc>(cacheName, 120, () => CalculateScoresForReports(userId, isFinalScore, lQuestions));
 
@@ -111,9 +111,13 @@ namespace SelfAssessment.Business
             graph.Groups = new string[myScore.Scores.Count];
             int i = 0;
             foreach (var grp in myScore.Scores)
-            {                
+            {
+                double avg = 0.0;
                 var other = otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp.GroupName)).ToList();
-                var avg = other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault();
+                if (other != null && other.Count > 0)
+                    avg = other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault();
+                else
+                    avg = 0.0;
                 graph.OtherOrg[i] = Convert.ToInt16(avg);
                 graph.Org[i]= Convert.ToInt16(grp.MyScore);
                 graph.Groups[i] = grp.GroupName;
@@ -140,8 +144,8 @@ namespace SelfAssessment.Business
             graph.OtherOrg = new int[1];
             graph.Org = new int[1];
 
-            graph.Org[0] = myScore.Scores.Sum(q => q.MyScore);
-            graph.OtherOrg[0] = otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault();
+            graph.Org[0] = myScore != null && myScore.Scores.Count > 0 ?  myScore.Scores.Sum(q => q.MyScore): 0;
+            graph.OtherOrg[0] = otherOrg!=null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault() : 0;
 
             return graph;
 
@@ -168,8 +172,8 @@ namespace SelfAssessment.Business
             int i = 0;
             foreach (var grp in myScore.Scores)
             {
-                var other = otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp.GroupName)).ToList();
-                var avg = other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault();
+                var other = otherOrg != null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp.GroupName)).ToList():null;
+                double avg = other != null && other.Count > 0 ? other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault(): 0.0;
                 graph.OtherOrg[i] = Convert.ToInt16(avg);
                 graph.Org[i] = Convert.ToInt16(grp.MyScore);
                 graph.Groups[i] = grp.GroupName;
@@ -196,8 +200,8 @@ namespace SelfAssessment.Business
             var graph = new Graph();
             graph.OtherOrg = new int[1];
             graph.Org = new int[1];
-            graph.Org[0] = myScore.Scores.Sum(q => q.MyScore);
-            graph.OtherOrg[0] = otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault();
+            graph.Org[0] = myScore!=null && myScore.Scores.Count > 0 ? myScore.Scores.Sum(q => q.MyScore) : 0;
+            graph.OtherOrg[0] = otherOrg != null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault() : 0;
             return graph;
 
         }
@@ -218,10 +222,13 @@ namespace SelfAssessment.Business
             }
 
             var groups = new List<string>();
-            otherOrg[0].Scores.ForEach(t =>
+            if (otherOrg != null && otherOrg.Count > 0)
             {
-                groups.Add(t.GroupName);
-            });
+                otherOrg[0].Scores.ForEach(t =>
+                {
+                    groups.Add(t.GroupName);
+                });
+            }
 
             var graph = new Graph();
             graph.OtherOrg = new int[scores.Scores.Count];
@@ -232,7 +239,7 @@ namespace SelfAssessment.Business
             {
                 try
                 {
-                    var other = otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp)).ToList();
+                    var other = otherOrg!=null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp)).ToList() : null;
                     if (other != null && other.Count > 0)
                     {
                         var oth = other.FirstOrDefault().FirstOrDefault();
@@ -299,7 +306,7 @@ namespace SelfAssessment.Business
             var graph = new Graph();
             graph.OtherOrg = new int[1];
             graph.Org = new int[1];
-            graph.OtherOrg[0] = otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault();
+            graph.OtherOrg[0] = otherOrg != null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Sum(v => v.MyScore)).FirstOrDefault() : 0;
             return graph;
 
         }
