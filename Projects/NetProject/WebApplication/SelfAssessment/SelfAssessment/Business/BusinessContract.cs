@@ -134,21 +134,27 @@ namespace SelfAssessment.Business
                     //organization.Sectors = repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId);
                     //organization.SubSectors = repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId);
                     organization.SectorId = isOthers ? Convert.ToInt16(Utilities.SectorValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
-                    organization.SubSectorId = isOthers ? Convert.ToInt16(Utilities.SectorValue) : repository.AssessmentContext.sectors.FirstOrDefault(q => q.Id == organization.SectorId).Id;
+                    organization.SubSectorId = isOthers ? Convert.ToInt16(Utilities.SectorValue) : repository.AssessmentContext.subSectors.FirstOrDefault(q => q.Id == organization.SubSectorId).Id;
 
                     int assessmentid = 0;
-                    var assessmentId = repository.AssessmentContext.assessments.Where(q => q.Sector == organization.SectorId).ToList();
-                    if(assessmentId !=null && assessmentId.Count > 0)
+                    var listAssesment = new List<Assessment>();
+                    int sectorValue = Convert.ToInt16(Utilities.SectorValue);
+
+                    listAssesment = repository.AssessmentContext.assessments.Where(q => q.Sector == organization.SectorId).ToList();
+                    
+                    if(listAssesment == null || listAssesment.Count == 0)
+                        listAssesment = repository.AssessmentContext.assessments.Where(q => q.Sector == sectorValue).ToList();
+
+                    if (listAssesment != null && listAssesment.Count > 0)
                     {
-                        var subAssessment = assessmentId.FirstOrDefault(q => q.SubSector == organization.SubSectorId);
+                        var subAssessment = listAssesment.FirstOrDefault(q => q.SubSector == organization.SubSectorId);
                         if (subAssessment != null && subAssessment.Id > 0)
                             assessmentid = subAssessment.Id;
-
-                    }
-                    else
-                    {
-                        assessmentid = int.Parse(SelfAssessment.Business.Utilities.SectorValue);
-                    }
+                        else
+                        {
+                            assessmentid = listAssesment[0].Id;
+                        }
+                    }                   
                     organization.AssessmentId = assessmentid;
 
                     organization.TempPassword = password;

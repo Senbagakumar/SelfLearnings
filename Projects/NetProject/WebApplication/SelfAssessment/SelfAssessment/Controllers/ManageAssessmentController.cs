@@ -176,9 +176,11 @@ namespace SelfAssessment.Controllers
                     org.CurrentAssignmentStatus = Utilities.AssessmentPendingStatus;
                     repo.Update(org);
 
+                    int count = repo.AssessmentContext.organizationLevelHistories.Count();
+
                     repo.AssessmentContext.organizationLevelHistories.Add(new OrganizationLevelHistory()
                     {
-                        Level = type, OrgId = id, PromoteDate = DateTime.Now, Status = Utilities.AssessmentCompletedStatus, Id = id,
+                        Level = type, OrgId = id, PromoteDate = DateTime.Now, Status = Utilities.AssessmentCompletedStatus, Id = count+1,
                         AssessmentId=org.AssessmentId, CityId=org.CityId, RevenueId=org.RevenueId, SectorId=org.SectorId,
                         StateId=org.StateId, SubSectorId=org.SubSectorId, TypeId=org.TypeId, TypeOfServiceId=org.TypeOfServiceId
                     });
@@ -198,10 +200,11 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public JsonResult AssignOrganizationByFilter(Organization org)
         {
+            string url = Request.UrlReferrer.AbsoluteUri;
             var lmodel = new List<UIOrganization>();
             try
             {
-                lmodel = Helper.AssignOrganizationByFilter(org);
+                lmodel = Helper.AssignOrganizationByFilter(org, url.Contains("Report"));
             }
             catch (Exception ex)
             {

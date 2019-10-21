@@ -50,6 +50,7 @@ namespace SelfAssessment.Business
         public const string ChangePasswordSubject = "Password reset @ CII Online Self-Assessment System for Business Excellence";
         public const string ChangePasswordTemplate = "Password Reset Mail";
         public const string AssessmentCompletionMail = "Assessment Completion Mail";
+        public const string AssessmentCompletionSubject = "Assessment Completion @ CII Online Self-Assessment System for Business Excellence";
         public const string FromMailId = "be.award@cii.in";
 
         public static int CalculateScoreByAns(int answerId)

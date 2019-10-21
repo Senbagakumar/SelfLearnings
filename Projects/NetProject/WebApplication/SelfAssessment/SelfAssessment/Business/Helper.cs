@@ -11,7 +11,7 @@ namespace SelfAssessment.Business
 {
     public class Helper
     {
-        public static List<UIOrganization> AssignOrganizationByFilter(Organization org)
+        public static List<UIOrganization> AssignOrganizationByFilter(Organization org, bool orgEnable=false)
         {
             var lmodel = new List<UIOrganization>();
             var listOrganization = new List<Organization>();
@@ -25,7 +25,7 @@ namespace SelfAssessment.Business
 
             orgHistory.ForEach(t => 
             {
-                if (!listOrganization.Any(q => q.Id == t.OrgId))
+                if (orgEnable)
                 {
                     listOrganization.Add(new Organization()
                     {

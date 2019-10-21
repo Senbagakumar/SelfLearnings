@@ -295,7 +295,7 @@ namespace SelfAssessment.Controllers
                 var listOfGroup = groupQuizManager.GetAllQuestions(question.Level);
                 groupQuizManager.AllQuestions = listOfGroup;
 
-                GroupQuiz groupQuiz = null;
+                GroupQuiz groupQuiz = new GroupQuiz();
                 int groupId = int.Parse(question.QInfo);
                 if (question.hdnaction == "Previous")
                 {
@@ -305,7 +305,10 @@ namespace SelfAssessment.Controllers
 
                 }
                 else
-                    groupId = groupId + 1;
+                {
+                    if (listOfGroup.Count > groupId)
+                        groupId = groupId + 1;
+                }
 
                 if (groupQuizManager.MoveToNextGroup(groupId))
                 {

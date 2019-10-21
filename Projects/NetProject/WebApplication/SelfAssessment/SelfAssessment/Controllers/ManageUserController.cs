@@ -86,22 +86,30 @@ namespace SelfAssessment.Controllers
                 if (assessment.Id != 0)
                 {
                     //Completion Level details
-                    var compList = userInfo.AssessmentContext.organizationLevelHistories.Where(q => q.OrgId == this.UserId).ToList();
-                    if(compList !=null && compList.Count > 0)
-                    {
-                        compList.ForEach(q =>
+                    //var compList = userInfo.AssessmentContext.organizationLevelHistories.Where(q => q.OrgId == this.UserId).GroupBy(t=>t.OrgId).ToList();
+                    //if(compList !=null && compList.Count > 0)
+                    //{
+                        //compList.ForEach(q =>
+                        //{
+                        
+                        var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessment.Id).GroupBy(t=>t.Level).ToList();
+                        completedList.ForEach(v => 
                         {
-                            var completedList = userInfo.AssessmentContext.assessmentLevelMappings.Where(t => t.AssessmentId == assessment.Id && q.Level == q.Level).ToList();
-                            lAssessment.Add(AssessmentMapping(q.Level, completedList.GroupBy(t => t.GroupId).Count(), completedList.Count(), q.Status));
+                            if(v.Key == user.CurrentAssignmentType)
+                                lAssessment.Add(AssessmentMapping(v.Key, v.GroupBy(t => t.GroupId).Count(), v.Count(), user.CurrentAssignmentStatus));
+                            else
+                                lAssessment.Add(AssessmentMapping(v.Key, v.GroupBy(t => t.GroupId).Count(), v.Count(), Utilities.AssessmentCompletedStatus));
                         });
-                    }
+                           
+                       // });
+                   // }
 
                     //Current Level details
-                    var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessment.Id && q.Level == user.CurrentAssignmentType).ToList();
-                    if (mappings != null)
-                    {
-                        lAssessment.Add(AssessmentMapping(user.CurrentAssignmentType, mappings.GroupBy(q => q.GroupId).Count(), mappings.Count(), user.CurrentAssignmentStatus));                      
-                    }
+                    //var mappings = userInfo.AssessmentContext.assessmentLevelMappings.Where(q => q.AssessmentId == assessment.Id && q.Level == user.CurrentAssignmentType).ToList();
+                    //if (mappings != null)
+                    //{
+                    //    lAssessment.Add(AssessmentMapping(user.CurrentAssignmentType, mappings.GroupBy(q => q.GroupId).Count(), mappings.Count(), user.CurrentAssignmentStatus));                      
+                    //}
                 }
             }
             return View(lAssessment);
@@ -471,7 +479,7 @@ namespace SelfAssessment.Controllers
                 var registrationTemplate = template.Filter(q => q.Name.StartsWith(Utilities.AssessmentCompletionMail)).FirstOrDefault();
 
                 if (registrationTemplate != null && !string.IsNullOrWhiteSpace(registrationTemplate.Description))
-                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.ChangePasswordSubject, email, name);
+                    RegistrationSendMail.SendMail(registrationTemplate.Description, Utilities.AssessmentCompletionSubject, email, name);
             }
 
         }
