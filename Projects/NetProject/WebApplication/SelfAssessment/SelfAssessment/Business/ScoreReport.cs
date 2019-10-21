@@ -112,12 +112,8 @@ namespace SelfAssessment.Business
             int i = 0;
             foreach (var grp in myScore.Scores)
             {
-                double avg = 0.0;
-                var other = otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp.GroupName)).ToList();
-                if (other != null && other.Count > 0)
-                    avg = other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault();
-                else
-                    avg = 0.0;
+                var other = otherOrg!=null && otherOrg.Count > 0 ? otherOrg.Select(t => t.Scores.Where(v => v.GroupName == grp.GroupName)).ToList() : null;
+                double avg = other != null && other.Count > 0 ? other.Select(q => q.Average(t => t.MyScore)).FirstOrDefault() : 0.0;
                 graph.OtherOrg[i] = Convert.ToInt16(avg);
                 graph.Org[i]= Convert.ToInt16(grp.MyScore);
                 graph.Groups[i] = grp.GroupName;
