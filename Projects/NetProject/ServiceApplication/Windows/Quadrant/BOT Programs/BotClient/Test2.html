@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+   <link href="/css/webchat-stable/botchat.css" rel="stylesheet" />
+ <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <style>
+        #mychat {
+            margin: 10px;
+            position: fixed;
+            bottom: 30px;
+            right: 10px;
+            z-index: 1000000;
+        }
+
+        .botIcon {
+            float: left !important;
+            border-radius: 50%;
+        }
+
+        .userIcon {
+            float: right !important;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img id="mychat" src="https://i.stack.imgur.com/jyAmj.png"/>
+    </div>
+</body>
+</html>
+<script>
+    (function () {
+        var div = document.createElement("div");
+        document.getElementsByTagName('body')[0].appendChild(div);
+        div.outerHTML = "<div id='botDiv' style='width: 400px; height: 0px; margin:10px; position: fixed; bottom: 0; right:0; z-index: 1000;><div id='botTitleBar' style='height:40px; width: 400px; position:fixed; cursor: pointer;'></div></div>";
+		
+		window.WebChat.renderWebChat({
+        directLine: window.WebChat.createDirectLine({ secret: 'l_11_un7HKk.j7SiuuYH6s1kEjswUyYca55tECp4qciHCtIkO3LrGqU', webSocket:true }),
+        bot: { id: 'saibabatempleassistance', name: 'saibabatempleassistance' },
+        reszie: 'window',
+        userID: 'senba',
+        locale: 'en'
+    }, document.getElementById('webchat'));
+	
+        document.getElementsByClassName("wc-header")[0].setAttribute("id", "chatbotheader");
+        document.querySelector('body').addEventListener('click', function (e) {
+            e.target.matches = e.target.matches || e.target.msMatchesSelector;
+            if (e.target.matches('#chatbotheader')) {
+                var botDiv = document.querySelector('#botDiv');
+
+                botDiv.style.height = "0px";
+
+                document.getElementById("mychat").style.display = "block";
+            };
+        });
+
+        document.getElementById("mychat").addEventListener("click", function (e) {
+
+            document.getElementById("botDiv").style.height = '500px';
+
+            e.target.style.display = "none";
+        })
+    }());
+</script>

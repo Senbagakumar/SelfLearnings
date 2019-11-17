@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+        chatbot
+   </title>
+   <meta charset="UTF-8">
+   <link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+    <style>
+        .wc-chatview-panel {
+            width: 350px;
+            height: 450px;
+            position: relative;
+        }
+
+        #bot {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+        }
+
+        .closechat {
+            top: 405px !important;
+        }
+    </style>
+</head>
+<body>
+   <div id="bot" />
+   <script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+   <script>
+       function guid() {
+           return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+               s4() + '-' + s4() + s4() + s4();
+       }
+
+       function s4() {
+           return Math.floor((1 + Math.random()) * 0x10000)
+               .toString(16)
+               .substring(1);
+       }
+
+       var userId = guid().toUpperCase();
+       var userName = 'User-' + Math.floor((1 + Math.random()) * 10000);
+
+       var secret = 'cL5bN3nBfXE.7TTxeTXRyTxWV4vmcs3sNqjABBe_9u-_moH8NI-8K50';
+
+       var user = {
+           id: userId,
+           name: userName
+       };
+
+       var bot = {
+           id: 'Demo-WebAppBot',
+           name: ' Demo ChatBot'
+       };
+
+
+      const speechOptions = {
+         speechRecognizer: new BotChat.Speech.BrowserSpeechRecognizer(),
+         speechSynthesizer: new BotChat.Speech.BrowserSpeechSynthesizer()
+      };
+	  
+       var botConnection = new BotChat.DirectLine({
+           secret: secret,
+           webSocket: true
+       });
+
+       console.log("Init bot component");
+
+       BotChat.App({
+           botConnection: botConnection,
+		   speechOptions: speechOptions,
+           user: user,
+           bot: bot,
+           resize: 'detect'
+       }, document.getElementById("bot"));
+<!-- Conversation is initiated here by sending a dummy message to the bot -->
+       botConnection.postActivity({ type: "event", from: user, name: "firstMessage", value: "ping" }).subscribe(id => console.log("Conversation updated"));
+	   
+	   $(function () {
+        $("div.wc-header").prop("isopen", "true");
+
+        $("div.wc-header").click(function () {
+            var isopen = $(this).prop("isopen");
+            //alert(isopen);
+            if (isopen == "true") {
+                $("div.wc-chatview-panel").addClass("closechat");
+                $("div.wc-header").prop("isopen", "false");
+            } else {
+                $("div.wc-chatview-panel.closechat").removeClass("closechat");
+                $("div.wc-header").prop("isopen", "true");
+            }
+        })
+    })
+	
+   </script>
+</body>
+</html>
