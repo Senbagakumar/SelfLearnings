@@ -1,0 +1,7 @@
+Juypter
+Download Link:
+https://www.anaconda.com/distribution/ --> Anaconda ( Jupter with Python )
+
+How to run:
+http://docs.anaconda.com/anaconda/user-guide/getting-started/
+

@@ -1,0 +1,14 @@
+﻿@*@model IEnumerable<MyNPO.Models.CalendarEvent>
+
+
+<data>
+     @foreach (var myevent in Model) {
+    <event id="@myevent.id">
+        <start_date><@String.Format("{0:MM/dd/yyyy HH:mm}",@myevent.StartDate)></start_date>
+        <end_date><@String.Format("{0:MM/dd/yyyy HH:mm}",@myevent.EndDate)></end_date>
+        <text><@myevent.EventDescription></text>
+    </event>
+    }
+</data>*@
+
+

@@ -1,0 +1,811 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+@{
+    ViewBag.Title = "priestServices";
+}
+<style>
+    .sl-img-center{
+        margin:0 auto;
+    }
+</style>
+<!--Preist Services page content-->
+<div class="stl-glb-ctnr afb-clear " id="priest">
+    <h1>Saibaba Seattle/Preist Services at Saibaba Seattle:</h1>
+    <hr class="stl-hr" />
+    <div class="stl-glb-ctnr">
+        <div class="stl-glb-ctnt">
+            <div class="col-sm-6">
+                <a class="btn stl-btn" href="~/pdf/sai-pooja-materials.pdf" target="_blank">View Puja Materials List</a>
+            </div>
+            <div class="col-sm-6">
+                <a class="btn stl-btn" href="~/Docs/Priest_Services_Application.docx" target="top">Priest Services Application</a>
+            </div>
+        </div>
+    </div>
+    <div class="stl-glb-ctnr afb-clear stl-ctnr-three" id="hours">
+        <h3>Prices</h3>
+        <hr class="stl-hr" />
+        <div class="stl-tbl-ctnr afb-clear">
+            <div class="stl-tbl-ctnr afb-clear">
+                <div class="stl-table-ctnt">
+                    <table class="table stl-tbl stl-tbl-events">
+                        <thead class="stl-tbl-hd">
+                            <tr class="stl-tbl-row">
+                                @if (Model.Columns != null)
+                                {
+                                    foreach (DataColumn col in Model.Columns)
+                                    {
+                                        <th class="stl-th">@col.ColumnName</th>
+                                    }
+                                }
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow row in Model.Rows)
+                            {
+
+                                <tr class="stl-tbl-row" id="stlEventsRow" data-toggle="collapse" data-parent="#bs-collapse">
+
+                                    @foreach (DataColumn col in Model.Columns)
+                                    {
+                                        <td>
+                                            @row[col.ColumnName]
+                                        </td>
+                                    }
+
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="stl-glb-ctnr">
+        <div class="panel-group wrap" id="bs-collapse">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-baba-dress-offer" aria-expanded="false" class="collapsed">Baba Dress Offer<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-baba-dress-offer" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Baba Dress Offer</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="H286ZQRFYBXF4">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Donate Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-baba-idol-donation" aria-expanded="false" class="collapsed">Sai Baba Idol Donation<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-baba-idol-donation" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Sai Baba Idol Donation</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="CDGK2CVHFGJ3Q">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Donate Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>  
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-archana">Sai Archana<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-archana" class="panel-collapse collapse">  
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <div class="clearfix">
+                                <div class="col-sm-4">
+                                    <img src="~/pics/sai-pooja.png" class="img-responsive sl-img-center img-bdr-shd" alt="Sai Archana" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>Archana is a personal puja done by temple priests in which the name, birth star and family lineage of a devotee are recited to invoke individual guidance and blessings.</p>
+                                </div>
+                            </div>
+                          
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="8T9CQJJJWXKSC">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-abhishekam" aria-expanded="false" class="collapsed">Sai Abhishekam <span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-abhishekam" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <div class="clearfix">
+                                <div class="col-sm-4">
+                                    <img src="~/pics/abhishekam.png" class="img-responsive sl-img-center img-bdr-shd" alt="Sai Abhishekam" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>Abhishekam is the ancient sacred Hindu custom of bathing a deity in water, milk, honey, ghee, fruit juice and other liquids.The pouring of these liquids symbolizes the pouring of a devotee's purest love for God.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="ZW4MMHDFYLM2Q">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-annadanam">Sai Annadanam<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-annadanam" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <div class="clearfix">
+                                <div class="col-sm-4">
+                                    <img src="~/pics/annadanam.png" class="img-responsive sl-img-center img-bdr-shd" alt="Sai Archana" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>In our tradition, serving spiritual seekers and monks was of utmost importance. In fact for many, this was a path in itself. The most beautiful expression of this was the Annadanam, the offering of food.</p>
+                                </div>
+                            </div>
+                           
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="2ZPHSYUNN7EU6">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#garland" aria-expanded="false" class="collapsed">Garland<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="garland" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <div class="clearfix">
+                                <div class="col-sm-4">
+                                    <img src="~/pics/garland.png" class="img-responsive sl-img-center img-bdr-shd" alt="Sai Garland" />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>Garland</p>
+                                </div>
+                            </div>
+                           
+
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="GH2Z2H6FVN5CS">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#vahana-puja">Vahana puja<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="vahana-puja" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Vahana puja is a ceremony to consecrate or bless a new car in the Lord's name and keep it safe from bad influences.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="KUZTCCU269CMW">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#aksharabhyasam" class="collapsed" aria-expanded="false">Aksharabhyasam<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="aksharabhyasam" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Akshara abyasam is a Hindu ceremony for children where they are introduced to educati on and learning.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="EJA2839RQS5UC">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#gruha-pravesham">Gruha pravesham<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="gruha-pravesham" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Gruha pravesham is a homa done and believed that would lead to prosperity in the house, and would lead to good health and peace.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="4TR8Q8M5LG3YN">
+
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#gruha-pravesham---homam----vratam" aria-expanded="false" class="collapsed">Gruhapravesha & Homam & Vratham<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="gruha-pravesham---homam----vratam" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Gruhapravesha & Homam & Vratham</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="JE54PPUMVS6G2">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#ten">Satya Narayana Swami Vratam (At Home)<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="ten" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>
+                                Satyanarayana puja when performed in reverence and sincerity is considered to have a beneficial effect upon those who perform it. According to legends associated with the puja, several kings and merchants used to perform it
+                                to overcome adversity and earn the grace of Sri Satyanarayana Swami
+                            </p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="GL7BDA6WZABS4">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#sai-sathya-vratham">Satya Narayana Swami Vratam (At Temple)<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="sai-sathya-vratham" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>The presiding deity, Sri Sathya Narayana, is celebrated for his readiness to grant every boon and fulfil every desire seeking which a devotee performs the Vratham.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="WEYYHNLCHMBFN">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#namakaranam-at-temple">Nama Karanam at Temple<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="namakaranam-at-temple" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>According to the general rule of the Gruhyasutras the Namakarana ceremony was performed on the tenth or the twelfth day after the birth of the child</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="SPS8SXQETV2A4">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#namakaranam-at-home">Nama Karanam (At Home)<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="namakaranam-at-home" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>According to the general rule of the Gruhyasutras the Namakarana ceremony was performed on the tenth or the twelfth day after the birth of the child</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="TRQTBHRYTA8UN">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#annaprasana-at-temple">Annaprasanam at Temple<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="annaprasana-at-temple" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Annaprasanam ritual literally means feeding the baby Anna for the first time. 'Anna' means grain (food) while 'prashan' means to feed. The Annaprashan ceremony welcomes the baby into the society.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="A7QFKCNVRGTSS">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#annaprasana-at-home">Annaprasanam(At Home)<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="annaprasana-at-home" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Annaprasanam ritual literally means feeding the baby Anna for the first time. 'Anna' means grain (food) while 'prashan' means to feed. The Annaprashan ceremony welcomes the baby into the society.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="ZYXV9XFV33GFE">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#samuhika-vratam" aria-expanded="false" class="collapsed">Samuhika Vratham<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="samuhika-vratam" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Samuhika Vratham at Temple</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="CCJJAH9EQHYFN">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#kalyanam-at-temple" aria-expanded="false" class="collapsed">Kalyanam at Temple<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="kalyanam-at-temple" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Kalyanam at Temple</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="MK8ELU99FNQG4">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#six">Bhoomi Puja<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="six" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>Bhoomi Puja is performed at the construction site before beginning the construction, which is considered to be a new beginning. By doing this, it is believed that their success is ensured of a secure future in the new house.</p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="5RG3CKT5AL8DU">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#eleven">Sudharshana Homam<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="eleven" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>
+                                Sudharshana Homam serves two important attributes one being immediate relief from pain and suffering to the performer by removing negative forces from the path. Another important the Sudarshana Chakra is the destruction of
+                                sins / removal of negative effects.
+                            </p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="KXEQLANJU8R9W">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#bs-collapse" href="#twelve">Rudrabhishekam<span class="pnl-icon"><i class="ion ion-ios-arrow-up"></i></span></a>
+                    </h4>
+                </div>
+                <div id="twelve" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panl-inner-body">
+                            <p>
+                                Rudrabhishekam, where Lord Shiva is worshiped in his Rudra form, is hailed by all Vedic scriptures as one of the greatest Poojas to remove all evils, to attain all desires and for all round prosperity. The Maha Rudrabhishekam
+                                is particularly performed for the sake of washing away ones sins and afflictions, for bringing peace, prospertiy and happiness, along with family togetherness.
+                            </p>
+                            <div class="form-body">
+                                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                    <input type="hidden" name="cmd" value="_s-xclick">
+                                    <input type="hidden" name="hosted_button_id" value="5P5LJGJBKKBSY">
+                                    <div class="entry-feild">
+                                        <label for="demail">Devotee's Email ID:</label>
+                                        <input type="email" id="demail" name="demail" placeholder="Enter Your Email">
+                                    </div>
+                                    <div class="entry-feild">
+                                        <label for="dfname">Devotee's name:</label>
+                                        <input type="text" id="dname" name="dfname" placeholder="Enter Your Name">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button type="submit" class="btn stl-btn stl-send stl-bynow">Buy Now</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end of panel -->
+        </div>
+    </div>
+</div>
+<!--Preist Services page content End-->
+
+<script>
+    $(document).ready(function () {
+        $("li").removeClass("active");
+        $("a:contains('Priest Services')").parent().addClass("active");
+        $('.stl-tbl-events tbody tr td:nth-child(1)').each(function (index, item) {
+            var aHref = $('.stl-tbl-events tbody tr td:nth-child(1):eq(' + index + ')').text().toLowerCase().trim().replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+            $('.stl-tbl-events tbody tr td:nth-child(1):eq(' + index + ')').parents().attr("href", "#" + aHref);
+            $(this).click(function () {
+                var x = $("#" + aHref).parents().offset().top;
+               // console.log(x);
+                $("html,body").animate({
+                    scrollTop: x
+                }, 300);
+            });
+            
+        });
+
+
+    })
+
+</script>

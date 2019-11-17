@@ -1,0 +1,14 @@
+https://developer.paypal.com/docs/reports/payflow-reports/#reporting-api-operations
+
+ payflow-support@paypal.com.
+
+https://payments-reports.paypal.com/reportingengine/User=saibabaseattle@hotmail.com&Pwd=saibaba*99&VENDOR=saibabaseattle@hotmail.com&start_date=2018-08-01 00.00.00&end_date=2018-08-02 00.00.00
+
+
+https://pilot-payflowpro.paypal.com/runReportRequest?User=saibabaseattle@hotmail.com&Pwd=saibaba*99&VENDOR=saibabaseattle@hotmail.com&start_date=2018-08-01 00.00.00&end_date=2018-08-02 00.00.00
+
+
+Thanks for submitting your question. Use this reference number for follow up: #180822-000296 
+Responses to your inquiry will be sent from the PayPal email support@paypal-techsupport.com. Please ensure that your email inbox is setup to receive emails from this address and check your spam folders for responses when necessary. 
+If you need to update your question, click the Support History link and select the question to open and update it. 
+

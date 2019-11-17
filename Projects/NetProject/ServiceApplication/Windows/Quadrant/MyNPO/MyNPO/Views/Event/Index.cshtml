@@ -1,0 +1,99 @@
+﻿@model IEnumerable<MyNPO.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<script type="text/javascript">
+    var fbuserid, fbtoken;
+
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: '289439064991899', status: true, cookie: true,
+            xfbml: true
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function FaceBookShare(id) {
+          FB.ui({
+                method: 'feed',
+                name: 'UpComingEvent',
+                link: 'https://www.facebook.com/events/314357915823922/',
+                //picture: 'http://fbrell.com/f8.jpg',
+                caption: 'Reference Documentation',
+                description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+            });
+    }
+
+    function MailShare(id) {
+        $.ajax({
+            url: "/Event/GmailShare/"+id,
+            cache: false,
+            success: function (html) {
+                if (html == 'Success') {
+                    alert('Send Mail Successfully');
+                }
+            }
+        });
+    }
+</script>
+<div>
+    @foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]">
+                    <ul class="event-list">
+                        <li>
+                            <time datetime="2014-07-20">
+                                <span class="month">@item.StartDate.ToString("MMM")</span>
+                                <span class="day">@item.StartDate.Date.Day</span>
+                            </time>
+                            <img alt="@item.UploadFileName" src='~/Images/Events/@item.UploadFileName' />
+                            <div class="info">
+                                <h6 class="title">@item.Name</h6>
+                                <h6 class="title">@item.Location</h6>
+                                <p class="desc">@item.Details</p>
+                                <p>StartTime: @item.StartDate.ToString("hh:mm tt")   EndTime: @item.EndDate.ToString("hh:mm tt")</p>
+                            </div>
+                            <div>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            </div>
+                            <div class="social">
+                                <ul>
+                                    @*<li class="facebook" style="width:33%;"><a href="javascript:FaceBookShare(10)"><span class="fa fa-facebook"></span></a></li>*@
+                                    @*<li class="twitter" style="width:34%;"><a href="#twitter"><span class="fa fa-twitter"></span></a></li>*@
+                                    @*<li class="google-plus" style="width:33%;"><a href="javascript:MailShare(@item.Id)"><span class="fa fa-google-plus"></span></a></li>*@
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="social">
+        <ul>
+            <li class="facebook" style="float:left; width:5%; list-style-type: none; font-size:larger; padding: 14px 17px 12px 14px"><a href="https://www.facebook.com/SaibabaSeattle"><span class="fa fa-facebook"></span></a></li>
+            <li class="instagram" style="float:left; width:5%; list-style-type: none; font-size:larger; padding: 14px 17px 12px 14px"><a href="https://www.instagram.com/SaibabaSeattle"><span class="fa fa-instagram"></span></a></li>
+            <li class="youtube" style="list-style-type: none; float:left; width:5%; font-size:larger; padding: 14px 17px 12px 14px"><a href="https://www.youtube.com/channel/UCCtB1YmyTFIX5tQbqGfT3AQ/featured"><span class="fa fa-youtube"></span></a></li>
+        </ul>
+    </div>
+</div>
+<link href="~/Content/event.css" rel="stylesheet" />

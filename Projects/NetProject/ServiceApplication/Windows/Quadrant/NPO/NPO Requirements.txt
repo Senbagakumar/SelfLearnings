@@ -1,0 +1,87 @@
+1. Create a mobile app version.                                     --p5
+2. Post events into facebook. ( Facebook doesn't allow create the event programmately ) - 
+3. Volunteer info.                                                  -- p1
+4. Donation info need to be cash, check, paypal and update in db.   -- p1    -- manual transaction
+5. Pull report for customers for their transactions, tax receipt.   -- p1
+6. Reports - paypal etc.    					    -- p1 
+7. Email subscribers for both volunteer and non-volunteers.         -- p2
+8. Email service. For all the registered emails send the invites. Email should contain info about upcoming events, services etc. -- make it dynmically
+9. Add calendar invite in the email communication.   -- make it dyanamically
+10. Cumulative donation receipt.                                    -- p1 Year end donatation receipt
+11. Hosting in existing website or Azure, whichever is feasible.
+
+
+
+APPID: 289439064991899
+SecretKey : 95a1d506aabf76c033315dbfeacd1dd5
+
+
+http://localhost:31726/Home/PostPage
+
+The domain of this URL isn't included in the app's domains. To be able to load this URL, add all domains and subdomains of your app to the App Domains field in your app settings
+
+Action Requires At Least One Reference: The action you're trying to publish is invalid because it does not specify any reference objects. At least one of the following properties must be specified: object.
+
+
+https://www.c-sharpcorner.com/UploadFile/raj1979/post-on-facebook-users-wall-using-Asp-Net-C-Sharp/
+
+Invalid Scopes: create_event. This message is only shown to developers. Users of your app will ignore these permissions if present. Please read the documentation for valid permissions at: https://developers.facebook.com/docs/facebook-login/permissions
+
+Can't Load URL: The domain of this URL isn't included in the app's domains. To be able to load this URL, add all domains and subdomains of your app to the App Domains field in your app settings.
+
+Invalid Scopes: create_event. This message is only shown to developers. Users of your app will ignore these permissions if present. Please read the documentation for valid permissions at: https://developers.facebook.com/docs/facebook-login/permissions
+
+
+
+Please send your Weekly status reports to WSR@MyAppsHub.com
+To receive a copy of your LCA and filed petition send an email to accounts@MyAppsHub.com
+For immigration related email to immegration@MyAppsHub.com
+Send your timesheets to timesheet@MyAppsHub.com.
+
+Error:
+SmtpException: Unable to read data from the transport connection: net_io_connectionclosed
+Solution:
+https://stackoverflow.com/questions/20228644/smtpexception-unable-to-read-data-from-the-transport-connection-net-io-connect
+
+Error:
+The SMTP server requires a secure connection or the client was not authenticated. The server response was: Authentication required
+
+Solution for gmail :
+http://www.technologycrowds.com/2015/05/smtp-server-authentication-server-response-5-5-1-Authentication-Required-in-Gmail.html
+https://www.google.com/settings/security/lesssecureapps
+
+
+SMTP with Invitation:
+
+https://stackoverflow.com/questions/14545458/email-invitation-via-an-ical-file
+
+https://stackoverflow.com/questions/27334606/why-gmail-does-not-recognize-meeting-request-sent-from-code
+
+https://stackoverflow.com/questions/22734403/send-email-to-outlook-with-ics-meeting-appointment
+
+https://blog.jonudell.net/2011/10/17/x-wr-timezone-considered-harmful/
+
+-------------
+
+WhatsApp 
+
+https://developers.facebook.com/docs/whatsapp/getting-started
+
+
+ <span>
+                        <a href="https://www.facebook.com/SaibabaSeattle" target="_blank">Facebook</a>
+                    </span>
+                    <span>
+                        <a href="https://www.instagram.com/SaibabaSeattle" target="_blank">Instagram</a>
+                    </span>
+                    <span>
+                        <a href="https://www.youtube.com/channel/UCCtB1YmyTFIX5tQbqGfT3AQ/featured" target="_blank">Youtube</a>
+                    </span>
+
+
+https://nonprofit.microsoft.com/register
+shirdisaibaba@saibabaseattle.onmicrosoft.com
+SaiAdmin*99
+admin@saibabaseattle.com
+
+

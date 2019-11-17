@@ -1,0 +1,72 @@
+﻿{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Name"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Apple"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Kiwi"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Tag"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Fruit"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Fruit"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Price"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "2"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

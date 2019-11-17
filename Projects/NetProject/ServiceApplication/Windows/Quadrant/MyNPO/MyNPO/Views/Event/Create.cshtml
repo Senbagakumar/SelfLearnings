@@ -1,0 +1,66 @@
+﻿@model MyNPO.Models.Event
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Event</h2>
+
+@using (Html.BeginForm("Create", "Event", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Event Name</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="EventName" placeholder="Event Name" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Event Location</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="EventLocation" placeholder="Event Location" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Event Description</label>
+            <div class="col-md-10">
+                <input class="form-control" type="text" name="EventDescription" placeholder="Event Description" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Event-StartDate</label>
+            <div class="col-md-10">
+                <input class="form-control" type="datetime-local" name="EventStartDate" placeholder="StartDate: MM/dd/yyyy HH:mm:ss" , onkeypress = "return false" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Event-EndDate</label>
+            <div class="col-md-10">
+                <input class="form-control" type="datetime-local" name="EventEndDate" placeholder="EndDate: MM/dd/yyyy HH:mm:ss" , onkeypress = "return false" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Select Image/Video</label>
+            <div class="col-md-10">
+                <input class="form-control" type="file" id="dataFile" name="postedFile" accept="image/*,video/*" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="form-group">
+            @ViewBag.Status
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to Events", "Index")
+</div>

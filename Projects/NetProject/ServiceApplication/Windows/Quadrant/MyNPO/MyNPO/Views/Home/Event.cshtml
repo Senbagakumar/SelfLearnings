@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Event";
+}
+
+<h2>Event</h2>
+
+Welcome to our New Facebook App <span id='fbinfo'><fb:name uid='loggedinuser' useyou='false'></fb:name></span>
+<div id='fb-root'></div>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js'></script>
+<script type="text/javascript" src="http://connect.facebook.net/en_US/all.js"></script>
+<script type='text/javascript'>
+
+    var fbuserid, fbtoken;
+    var appid = "289439064991899";
+    var loggedin = false;
+    $(document).ready(function() {
+        loginFB();
+        createMyEvent();
+    });
+
+    FB.init({appId: appid, status: true, cookie: true, xfbml: true});
+    FB.Event.subscribe('auth.sessionChange', function(response) {
+            if (response.session) {
+                var session = FB.getSession();
+                fbtoken = session.access_token;
+                fbuserid = session.uid;
+            }
+    });
+
+    FB.getLoginStatus(function(response) {
+        if (response.session) {
+            var session = FB.getSession();
+            fbtoken = session.access_token;
+            fbuserid = session.uid;
+        }
+        else{
+            loginFB();
+        }
+    });
+
+    function loginFB() {
+        FB.login(function(response) {
+            if (response.session) {
+                var session = FB.getSession();
+                fbtoken = session.access_token;
+                fbuserid = session.uid;
+            }
+        }, {perms:'create_event'});
+    }
+
+    function logoutFB() {
+        FB.logout(function(response) {
+            // user is now logged out
+        });
+    }
+
+    function createEvent(name, startTime, endTime, location, description) {
+        var eventData = {
+            "access_token": fbtoken,
+            "start_time": startTime,
+            "end_time": endTime,
+            "location": location,
+            "name": name,
+            "description": description,
+            "privacy": "OPEN"
+        }
+        FB.api("/me/events", 'post', eventData, function (response) {
+            if (response.id) {
+                alert("We have successfully created a Facebook event with ID: " + response.id);
+            }
+        })
+    }
+
+    function createMyEvent() {
+        var name = "My Amazing Event";
+        var startTime = "10/02/2018 12:00 PM";
+        var endTime = "10/02/2018 06:00 PM";
+        var location = "Dhaka";
+        var description = "It will be freaking awesome";
+        createEvent(name, startTime, endTime, location, description);
+    }
+
+
+</script>

@@ -1,0 +1,14 @@
+1. Create a mobile app version.                                     --p5
+2. Post events into facebook. ( Facebook doesn't allow create the event programmately ) - 
+3. Volunteer info.                                                  -- p1
+4. Donation info need to be cash, check, paypal and update in db.   -- p1    -- manual transaction
+5. Pull report for customers for their transactions, tax receipt.   -- p1
+6. Reports - paypal etc.    					    -- p1 
+7. Email subscribers for both volunteer and non-volunteers.         -- p2
+8. Email service. For all the registered emails send the invites. Email should contain info about upcoming events, services etc. -- make it dynmically
+9. Add calendar invite in the email communication.   -- make it dyanamically
+10. Cumulative donation receipt.                                    -- p1 Year end donatation receipt
+11. Hosting in existing website or Azure, whichever is feasible.
+
+CSS design
+https://stackoverflow.com/questions/22399389/menu-items-with-drop-down-sub-menu-items-using-razor-in-mvc-not-coming-properly

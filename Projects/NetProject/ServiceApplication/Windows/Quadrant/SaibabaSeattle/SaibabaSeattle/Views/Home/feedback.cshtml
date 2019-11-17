@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "feedback";
+}
+
+<!--Feedback page content-->
+<div class="stl-glb-ctnr afb-clear">
+    <h1>Send Feedback</h1>
+    <hr class="stl-hr" />
+    <div class="stl-ctnr-one stl-glb-ctnr stl-fdb-ctnr">
+        <div class="stl-pnl-header text-center">
+            <p>We want to hear from you.</p>
+            <p>Thanks for taking time to give us your valuable feedback.</p>
+        </div>
+        <div class="form-body">
+            <form method="post" id="stlFeedback">
+                <div class="entry-feild">
+                    <label for="ffname">Name*</label>
+                    <input type="text" id="ffname" name="ffname" placeholder="Enter Your Name" required>
+                </div>
+                <div class="entry-feild">
+                    <label for="fmobile">Phone number</label>
+                    <input type="text" id="fmobile" name="fmobile" onkeypress="return isNumber(event)" placeholder="Enter Phone Number" required>
+                </div>
+                <div class="entry-feild">
+                    <label for="femail">Email address*</label>
+                    <input type="email" id="femail" name="femail" placeholder="Enter Your Email" required>
+                </div>
+                <div class="entry-feild">
+                    <label for="ffeedback">Your feedback*</label>
+                    <textarea name="ffeedback" id="ffeedback" placeholder="Enter Your Your feedback" required></textarea>
+                </div>
+                <div class="g-recaptcha" data-sitekey="6LfsOGoUAAAAAIDHFo_QLQTZ5mr9kMxw3J4K-m6G"></div>
+                <div class="entry-feild text-center">
+                    <span class="rqd-feilds-txt stl-dinb">
+                        <span>&bigstar; &nbsp; - required fields.</span>
+                    </span>
+                    <button class="btn stl-btn stl-send stl-dinb">Send Us</button>
+                    @if (ViewBag.message != null)
+                    {
+
+                        <p style="color:green";>@ViewBag.message</p>
+
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    //$('#stlFeedback').on('submit', function (e) {
+    //    if (grecaptcha.getResponse() == "") {
+    //        e.preventDefault();
+    //        alert("Invalid Captcha");
+    //    }
+    //});
+</script>
+<!--Feedback page content End-->

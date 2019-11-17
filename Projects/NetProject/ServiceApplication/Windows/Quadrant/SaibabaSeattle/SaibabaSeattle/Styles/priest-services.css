@@ -1,0 +1,12 @@
+﻿@media (max-width:600px) {
+    .stl-td-1{
+       display:none;
+    }
+
+    .stl-td-2{
+        width:80%;
+    }
+    .stl-t-3{
+        width:20%;
+    }
+}

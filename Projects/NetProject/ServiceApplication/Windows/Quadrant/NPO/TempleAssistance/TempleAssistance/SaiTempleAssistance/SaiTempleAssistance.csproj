@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>fc32dcba-5e1c-47ba-8f29-72fd57f0f97a</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="SaiTempleAssistance.bot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AdaptiveCards" Version="0.5.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.Bot.Builder" Version="4.3.2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.3.2" />
+    <PackageReference Include="Microsoft.Bot.Builder.Integration.AspNet.Core" Version="4.3.2" />
+    <PackageReference Include="Microsoft.Bot.Configuration" Version="4.3.2" />
+    <PackageReference Include="Microsoft.Bot.Connector" Version="4.3.2" />
+    <PackageReference Include="Microsoft.Bot.Schema" Version="4.3.2" />
+  </ItemGroup>
+</Project>

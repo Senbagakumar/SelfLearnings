@@ -1,0 +1,317 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Saibaba Seattle</title>
+    <meta name="description" content="Shirdi Saibaba Temple of Seattle is organized exclusively for furthering Cultural, Charitable, Spiritual, and educational causes.Our main mission is to promote the philosophy of Shri Shirdi Sai Baba.Our primary objective is to establish and sustain the Shirdi Sai Temple in cities of Bellevue, Redmond, Kirkland, Bothell, Seattle in the Washington state and facilitate worship services similar to Shri Shirdi Sai Baba Mandir in Shirdi, India." />
+    <link rel="shortcut icon" type="image/x-icon" href="../pics/sai-favicon.ico">
+    <!--Saibaba Seattle css files-->
+    <link href="~/Styles/bootstrap.css" rel="stylesheet" />
+    <link href="~/Styles/no-need.css" rel="stylesheet" />
+    <link href="~/Styles/fonts.css" rel="stylesheet" />
+    <link href="~/Styles/icons.css" rel="stylesheet" />
+    <link href="~/Styles/fancy.css" rel="stylesheet" />
+    <link href="~/Styles/gallery.css" rel="stylesheet" />
+    <link href="~/Styles/saibaba.css" rel="stylesheet" />
+    <!--Saibaba Seattle script files-->
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/animation.js"></script>
+    <script src="~/Scripts/fancy.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script src="~/Scripts/baba-answers.js"></script>
+    <script src="~/Scripts/update-news.js"></script>
+</head>
+
+<body>
+    <div class="stl-main-wrp-ctnr">
+        <div class="stl-header-ctnr">
+            <div class="stl-mini-nav-ctnr afb-clear space-bt-10">
+                <div class="mini-nav-ctnt">
+                    <ul class="mini-nav">
+                        <li><a class="mprs-bs" href="/Home/babaAnswers">MEE Prashnalaku BABA SAMADHANALU</a></li>
+
+                        <li><a href="/Home/AdminLogin">Sign in</a></li>
+                        @*<li class="update-link"><a class="mprs-bs" href="/Home/Prathistapana">Prathistapana</a></li>*@
+                        <li><a href="https://www.instagram.com/saibabaseattle/" target="_blank" class="sr-icon btn stl-btn stl-inst-btn" id="instragram"><i class="ion ion-social-instagram-outline"></i></a></li>
+                        <li>
+                            <a href="https://www.facebook.com/SaibabaSeattle" target="_blank" class="sr-icon btn stl-btn stl-fb" id="fb"> <i class="ion ion-social-facebook"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/channel/UCCtB1YmyTFIX5tQbqGfT3AQ/featured" target="_blank" class="sr-icon btn stl-btn stl-fb" id="yt"><i class="ion ion-social-youtube"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!---scl-icons-sr-ctnr End-->
+            <div class="stl-nav-ctnr">
+                <nav class="navbar navbar-inverse stl-navbar">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="stl-logo-ctnr">
+                                <a class="navbar-brand hidden-lg hidden-md hidden-sm hidden" href="#">Saibaba Seattle</a>
+                                <a href="/Home/Index"><img src="~/pics/saibaba-seattle-logo.png" alt="Saibaba Seattle" /></a>
+                            </div>
+                        </div>
+                        <div class="collapse navbar-collapse" id="myNavbar">
+                            <ul class="nav navbar-nav stl-navbar-nav rk-float-r">
+                                <li class="active">
+                                    <a href="/Home/Index">Home</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/events/#events">Events</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/padukaSeva/#seva">PadukaSeva</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/saiTemple/#temple">Sai Seattle</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/priestServices/#priest">Priest Services</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/aboutUs/#about">About us</a>
+                                </li>
+                                <li>
+                                    <a href="/Home/contactUs/#contact">Contact us</a>
+                                </li>
+                                <li> <a href="/Home/mainDonate/#donation" class="stl-btn btn stl-dn-btn">Donate &nbsp;<span class="glyphicon glyphicon-heart dh"></span> </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!--stl-nav-ctnr End-->
+        </div>
+        <div id="fade" class="pics stl-slider-ctnr container no-padding" style="position: relative;">
+
+
+            @{
+                var viewName = ViewBag.CurrentView;
+                if (viewName == "Index" || viewName == "adminConsoleForImages")
+                {
+                    foreach (var i in ViewBag.Getimage)
+                    {
+                        <img class="thumb img-responsive" src="../Images/@i" alt="images" />
+                    }
+                }
+            }
+
+        </div>
+        @*<div>
+            @{
+                Html.RenderPartial("_UpdateNews");
+            }
+        </div>*@
+        <!--stl-slider-ctnr End-->
+        <div class="stl-marquee-ctnr space-bt-20">
+            <marquee behavior="scroll">
+                <p>Saibaba Seattle is a Non Profit Tax Exempt Organization with 501(C)(3) status. All the donations to Saibaba Seattle are Tax Deductible.</p>
+            </marquee>
+            <p class="tax-id">Tax ID# 46-1077903</p>
+        </div>
+      
+        </div>
+    <div class="stl-body-ctnr container-fluid afb-clear">
+        <div class="container-fluid stl-glb-ctnr stl-media-ctnr stl-ctnr-one">
+            <div class="stl-glb-ctnt stl-ctnt-one">
+                <div class="col-sm-6">
+                    <div class="well stl-well clearfix">
+                        <h3 class="media-heading zoom-animate">Update News</h3>
+
+                        <marquee direction="up" height="105" scrollamount="2" onmouseover="this.stop();" onmouseout="this.start();" id="stl-update-news">
+
+                        </marquee>
+                    </div>
+                </div>
+                @*<hr class="hidden-lg hidden-md hidden-sm stl-hr" style="text-align:center;" />*@
+                <div class="col-sm-6">
+                    <div class="media well stl-well clearfix stl-brdr-rt">
+                        <div class="media-left stl-dn-media-img-ctnr">
+                            <img src="~/pics/stl-introduction.jpg" class="media-object">
+                        </div>
+                        <div class="media-body stl-dn-media-bdy">
+                            <h3 class="media-heading">Saibaba Seattle</h3>
+                            <p>
+                                Society and Communities, Philanthropy, Grants, Other, Religion and Spirituality EIN: 46-1077903
+                                Redmond, WA
+                            </p>
+                            <div class="stl-media-dn-btn-ctnr">
+                                <a href="https://www.paypal.com/us/fundraiser/charity/2016663" target="_blank" class="btn stl-btn stl-media-dn-btn zoom-animate">Donate</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+              
+        </div>
+        <br />
+        <div class="container-fluid stl-main-ctnr">
+            <div class="stl-main-ctnt afb-clear">
+                <div class="col-lg-3 col-md-3 col-sm-3 hidden-xs">
+                    <div class="stl-side-nav-ctnr">
+                        <ul class="nav nav-pills nav-stacked hidden-xs" id="st-sinav">
+                            <li><a href="/Home/ganGanGanatBote/#ganGan">Gan Gan Ganat Bote</a></li>
+                            <li><a href="/Home/saiElevenPromises/#saiEleven">Sai's 11 Promises</a></li>
+                            <li><a href="/Home/templeHours/#hours">Temple Hours</a></li>
+                            <li><a href="/Home/books/#Books">Books</a></li>
+                            <li><a href="/Home/pictureGallery/#pGallery">Picture Gallery</a></li>
+                            <li><a href="/Home/videoGallery/#vGallery">Video Gallery</a></li>
+                            <li><a href="/Home/saiSaying">Sai 100 Saying</a></li>
+                            <li><a href="/Home/feedback">Feedback</a></li>
+                            <li><a href="/Home/templeAddress">Temple Address</a></li>
+                            <li><a href="/Home/samadhi/#samadhi">Samadhi...</a></li>
+                        </ul>
+                    </div>
+                    <div class="stl-youtube-ctnr afb-clear">
+                        <object data="https://www.youtube.com/embed/uz4gic3OElQ" class="stl-youtube"></object>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9 col-sm-9">
+                    <div class="stl-page-view-ctnr afb-clear">
+                        <div id="mySidenav" class="sidenav hidden-lg hidden-md hidden-sm">
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                            <div class="stl-side-nav-ctnr">
+                                <ul class="nav nav-pills nav-stacked" id="st-sinav">
+                                    <li><a href="/Home/ganGanGanatBote">Gan Gan Ganat Bote</a></li>
+                                    <li><a href="/Home/saiElevenPromises">Sai's 11 Promises</a></li>
+                                    <li><a href="/Home/templeHours">Temple Hours</a></li>
+                                    <li><a href="/Home/books">Books</a></li>
+                                    <li><a href="/Home/pictureGallery">Picture Gallery</a></li>
+                                    <li><a href="/Home/videoGallery">Video Gallery</a></li>
+                                    <li><a href="/Home/saiSaying">Sai 100 Saying</a></li>
+                                    <li><a href="/Home/feedback">Feedback</a></li>
+                                    <li><a href="/Home/templeAddress">Temple Address</a></li>
+                                    <li><a href="/Home/samadhi">Samadhi...</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <span class="hidden-lg hidden-md hidden-sm side-nav-btn" onclick="openNav()">&#9776;</span>
+                        <div class="stl-page-view afb-clear">
+                            <!--     <p>Pages display here</p> -->
+                            <div>
+                                @RenderBody()
+                            </div>
+
+                            <div class="stl-youtube-ctnr afb-clear hidden-lg hidden-md hidden-sm">
+                                <object data="https://www.youtube.com/embed/uz4gic3OElQ" class="stl-youtube"></object>
+                            </div>
+                        </div>
+                        <!-- stl-page-view-ctnt End -->
+                    </div>
+                    <!-- stl-page-view-ctnr End -->
+                </div>
+            </div>
+            <!-- stl-main-ctnr End -->
+        </div>
+            <!--Bot Render Section-->
+            @{Html.RenderAction("BOT", "Home");}
+    </div>
+
+
+        <!--stl-body-ctnr End-->
+        <div class="stl-footer">
+            <div class="container-fluid text-center">   
+                <div class="stl-crt-ctnr">
+                    <p>Copyright &copy; 2010 - @DateTime.Now.Year Shiridi Sai Baba, All Rights Reserved &nbsp;&nbsp;<span><a href="https://www.facebook.com/SaibabaSeattle" target="_blank" class="sr-icon btn stl-btn stl-fb" id="fb"> <i class="ion ion-social-facebook"></i></a></span><span><a href="https://www.instagram.com/saibabaseattle/" target="_blank" class="sr-icon btn stl-btn stl-inst-btn" id="instragram"><i class="ion ion-social-instagram-outline"></i></a></span><span><a href="https://www.youtube.com/channel/UCCtB1YmyTFIX5tQbqGfT3AQ/featured " target="_blank" class="sr-icon btn stl-btn stl-fb" id="yt"><i class="ion ion-social-youtube"></i></a></span></p>
+                </div>
+            </div>
+        </div>
+        <!-- stl-footer End --> 
+        <div class="go-up-btn-ctnr">
+            <button class="sr-icon" id="go-up"><i class="ion ion-ios-arrow-up"></i> </button>
+        </div>
+
+        <audio id="saiAudio" loop>
+            <source src="~/audios/sai-bg.mp3" type="audio/mpeg" />
+        </audio>
+        <button id="pause" class="stl-btn btn sr-icon stl-audio"><i class="ion ion-ios-pause"></i></button>
+        <button id="play" class="stl-btn btn sr-icon stl-audio"><i class="ion ion-ios-play"></i></button>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle">SHIRDI SAIBABA ANSWER</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="stl-ans-body stl-glb-ctnr">
+                        <p id="babaSays" class="text-center"></p>
+                        <p id="babaAnswer"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn stl-btn md-close" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- stl-main-ctnr End -->
+
+    <script src="~/Scripts/gallery.js"></script>
+    <script src="~/Scripts/gl-thumbnail.js"></script>
+    <script src="~/Scripts/sl-flscreen.js"></script>
+    <script src="~/Scripts/mouse-weheel.js"></script>
+    <script src="~/Scripts/customAlert.js"></script>
+    @*<script src="~/Scripts/creat-event.min.js"></script>*@
+    <script src="~/Scripts/stl-custom.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            displayUpdateNews();
+
+            $("#lightgallery").lightGallery();
+            $('#aniimated-thumbnials').lightGallery({
+                thumbnail: true,
+                animateThumb: false,
+                showThumbByDefault: false
+            });
+      
+      
+            function displayUpdateNews() {
+                $.ajax(
+                    {
+                        type: "POST", //HTTP POST Method 
+                        url: "Home/updateNews", // Controller/View 
+
+                        success: function (result) {
+
+                         
+                            for (var r = 0; r < result.length; r++) {
+                                console.log(result[r]);
+                                $("#stl-update-news").append("<p>" + result[r] + "</p>");
+                            }
+                        },
+
+                    });
+            }
+        });
+        window.addEventListener("pageshow", function (event) {
+         
+            var historyTraversal = event.persisted ||
+                (typeof window.performance != "undefined" &&
+                    window.performance.navigation.type === 2);
+            if (historyTraversal) {
+                // Handle page restore.
+                window.location.reload();
+            }
+        });
+
+    </script>
+
+   
+
+</body>
+
+</html>

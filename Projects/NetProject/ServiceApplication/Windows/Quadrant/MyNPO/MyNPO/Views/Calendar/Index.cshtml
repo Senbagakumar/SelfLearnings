@@ -1,0 +1,31 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<h1 style="text-align:center;">Room Booking <h1>
+        <html>
+        <head>
+            <link href="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.css" rel="stylesheet" />
+            <title>Register the Room</title>
+            <script type="text/javascript">
+                function goBack()
+                {
+                    window.history.back()
+                }
+            </script>
+
+            <style>
+                body {
+                    background-color: #eee;
+                }
+            </style>
+        </head>
+        <body>
+
+            <a href="#" onclick="goBack()">Back</a>
+            <div style="height:700px;width:900px;margin:0 auto">
+                @Html.Raw(Model.Render())
+            </div>
+        </body>
+    </html>

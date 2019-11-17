@@ -1,0 +1,63 @@
+﻿
+@model System.Data.DataTable
+@using System.Data;
+
+@{
+    ViewBag.Title = "adminConsoleForExcel";
+}
+
+<div class="stl-glb-ctnr afb-clear stl-ctnr-one">
+    <h3>Upload Events / Priest Services</h3>
+    <hr class="stl-hr" />
+    <div class="stl-tbl-ctnr afb-clear">
+        <div class="stl-tbl-ctnr afb-clear">
+            <p class="stl-dinb"><a href='~/Excel/events.csv' class="btn stl-btn" target="_blank">Download Events</a></p>
+            <p class="stl-dinb"><a href='~/Excel/priest-services.csv' class="btn stl-btn" target="_blank">Download Priest Services</a></p>
+            <p class="stl-dinb"><a href='/Home/adminSignOut' class="btn stl-btn">Sign out</a></p>
+            @using (Html.BeginForm("adminConsoleForExcel", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <div class="form-group">
+            <input type="file" id="dataFile" name="excel" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Upload" class="btn btn-default" />
+        </div>
+
+if (Model != null)
+{
+        <div class="stl-table-ctnt">
+            <div class="table-responsive">
+                <table class="table stl-tbl stl-tbl-events">
+                    <thead class="stl-tbl-hd">
+                        <tr class="stl-tbl-row">
+                            @foreach (DataColumn col in Model.Columns)
+                    {
+                        <th class="stl-th">@col.ColumnName</th>
+            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (DataRow row in Model.Rows)
+                {
+                    <tr class="stl-tbl-row" id="stlEventsRow">
+                        @foreach (DataColumn col in Model.Columns)
+                {
+                    <td>@row[col.ColumnName]</td>
+        }
+                    </tr>
+        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+}
+}
+        </div>
+    </div>
+</div>
+
+

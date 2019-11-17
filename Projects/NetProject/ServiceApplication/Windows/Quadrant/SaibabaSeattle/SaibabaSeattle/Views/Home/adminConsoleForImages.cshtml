@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "adminConsoleForImages";
+}
+
+
+<div class="stl-glb-ctnr afb-clear stl-ctnr-one">
+    <div class="stl-glb-ctnt stl-ctnt">
+        <h3>Upload Flyer Images</h3>
+        <hr class="stl-hr" />
+        <div class="stl-admin-form">
+            <p class="stl-dinb"><a href='/Home/adminSignOut' class="btn stl-btn">Sign out</a></p>
+            @using (Html.BeginForm("adminConsoleForImages", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            <input type="file" id="sliderImage" name="file" multiple />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Upload images" class="btn btn-default" />
+        </div>
+}
+            <div class="imageBlock col-sm-12">
+
+                @foreach (var i in ViewBag.Getimage)
+        {
+            <img class="thumb img-responsive" src="../Images/@i" alt="images" /><br />
+            <div class="deleteDiv">
+                <button class="deleteIcon btn stl-btn admn-img-delbtn" onclick="deleteImage('../Images/@i')"><i class="ion ion-close-round"></i></button>
+            </div>
+}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        adminDelBtnPostion();
+    })
+    $(window).resize(function () {
+        adminDelBtnPostion();
+    })
+
+    function deleteImage(i) {
+
+        bootbox.confirm({
+
+            title: "Confirmation for deleting slider image",
+            message: "Are you sure you want to delete slider image?",
+            buttons: {
+                cancel: {
+                    label: '<i class="ion ion-close-round"></i> Cancel'
+                },
+                confirm: {
+                    label: '<i class="ion fa-check"></i> Confirm'
+                }
+            },
+            callback: function (result) {
+                console.log('This was logged in the callback: ' + result);
+                if (result == true) {
+                    debugger;
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Home/DeleteImage',
+                        data: { imagepath: i },
+                        success: function (Availablle) {
+                            debugger;
+                            window.location.href = "/Home/adminConsoleForImages";
+                        }
+                    });
+                }
+            }
+
+        });
+
+    }
+</script>

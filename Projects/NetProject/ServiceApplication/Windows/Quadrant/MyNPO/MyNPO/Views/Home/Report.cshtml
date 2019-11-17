@@ -1,0 +1,91 @@
+﻿@model MyNPO.Models.ReportUserInfo
+@{
+    ViewBag.Title = "Report";
+}
+
+<h2>Transaction Report</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY", onkeypress = "return false" } })
+            @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY", onkeypress = "return false" } })
+            @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
+        </div>
+    </div>   
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TypeOfReport, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.TypeOfReport, (IEnumerable<SelectListItem>)ViewBag.Reports, htmlAttributes: new { @class = "form-control"})
+            @Html.ValidationMessageFor(model => model.TypeOfReport, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" id="btnGetReport" value="GetReport" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div id="ReportTable" class="form-group" style="display:none">
+    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>PhoneNo</th>
+                <th>Email</th>
+                <th>DonationAmount</th>
+                <th>Date Time</th>
+                <th>Reason</th>
+                <th>CurrencyType</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ReportInfo)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.PhoneNo</td>
+                    <td>@item.FromEmailAddress</td>
+                    <td>@item.Net</td>
+                    <td>@item.Date</td>
+                    <td>@item.Reason</td>
+                    <td>@item.CurrencyType</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/Scripts/datatables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.min.js"></script>
+<script src="~/Scripts/datatables-init.js"></script>
+
+
+
+<script type="text/javascript">
+    $('#bootstrap-data-table').DataTable();
+    $(".dropdown-toggle").dropdown();     
+    $(document).ready(function () {
+        if (@Model.ReportInfo.Count() > 0) {
+            $('#ReportTable').show();
+        }        
+    });
+</script>

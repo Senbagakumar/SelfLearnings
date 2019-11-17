@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "AdminLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!--AdminLogin page content-->
+<div class="stl-glb-ctnr afb-clear" id="contact">
+   
+    <h1>Saibaba Seattle Admin Login</h1>
+    <hr class="stl-hr" />
+    <div class="stl-ctnr-one stl-glb-ctnr">
+        <div class="form-body">
+            @using (Html.BeginForm("AdminLoginForm", "Home", FormMethod.Post))
+            {
+                <div class="entry-feild">
+                    <label for="stl-admin-id">User Id*</label>
+                    <input type="text" name="userName" placeholder="User Id" required="" />
+                </div>
+                <div class="entry-feild">
+                    <label for="stl-admin-pasw">Password*</label>
+                    <input type="password" name="password" placeholder="Password" required />
+                </div>
+                @*<div class="g-recaptcha" data-sitekey="6LfsOGoUAAAAAIDHFo_QLQTZ5mr9kMxw3J4K-m6G"></div>*@
+                <div class="entry-feild text-center">
+                    <span class="rqd-feilds-txt stl-dinb">
+                        <p><span>&bigstar;</span> - required fields.</p>
+                    </span>
+                    <button class="btn stl-btn stl-send stl-dinb" type="submit">Submit</button>
+                    <p style="color:red" ;>@TempData["msg"]</p>
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

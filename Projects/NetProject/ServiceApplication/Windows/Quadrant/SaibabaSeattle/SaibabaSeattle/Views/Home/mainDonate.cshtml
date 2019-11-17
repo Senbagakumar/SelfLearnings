@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "mainDonate";
+}
+
+<!--Donate baba page content-->
+<div class="stl-glb-ctnr afb-clear">
+    <h1>Donate to Shirdi Saibaba Temple Seattle</h1>
+    <hr class="stl-hr" />
+</div>
+<div class="stl-glb-ctnr afb-clear stl-ctnr-one" id="donation">
+    <div class="stl-glb-ctnt stl-ans-ctnt">
+        
+        <p>We appreciate your willingness to support our initiatives. Please select your donation type</p>
+    </div>
+    <div class="stl-glb-ctnr">
+        <div class="stl-glb-ctnt">
+            <div class="col-md-10 rk-float">
+                <div class="stl-pnl-ctnr">
+                    <div class="stl-pnl stl-pnl-rt">
+                        <div class="stl-pnl-header stl-pnl-header-rt">
+                            <div class="col-sm-6">
+                                <button class="btn stl-btn stl-dn-tab stl-dn-tab-active" id="reccurring-donation">Reccurring donation</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button class="btn stl-btn stl-dn-tab" id="one-time-donation">One-time donation</button>
+                            </div>
+                        </div>
+                        <div class="stl-pnl-body">
+                            <div class="stl-dn-tab-body">
+                                <div class="form-body">
+                                    <form action=" https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="NGKPDKQ9WHRGJ">
+
+                                        <div class="entry-feild">
+                                            <input type="hidden" name="on0" value="Donation options">
+                                            <label>Donation options</label>
+                                            <select name="os0">
+                                                <option value="Be a Devotee">Be a Devotee : $31.00 USD - monthly</option>
+                                                <option value="Make an impact">Make an impact : $51.00 USD - monthly</option>
+                                                <option value="See the difference">See the difference : $101.00 USD - monthly</option>
+                                            </select>
+                                        </div>
+                                        <div class="entry-feild">
+                                            <label for="dnremail">Donar's Email ID</label>
+                                            <input type="hidden" name="on1" value="Donar's Email ID">
+                                            <input type="email" id="dnremail" name="on1" placeholder="Enter Your Email">
+                                        </div>
+
+                                        <div class="entry-feild text-center">
+                                            <input type="hidden" name="currency_code" value="USD">
+                                            <button name="submit" class="btn stl-btn stl-send stl-bynow">Subscribe</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="stl-dn-tab-body">
+                                <div class="form-body">
+
+                                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                        <input type="hidden" name="cmd" value="_s-xclick">
+                                        <input type="hidden" name="hosted_button_id" value="GVDSC9R7WLE54">
+                                        <div class="entry-feild">
+                                            <label for="dnremail">Donar's Email ID</label>
+                                            <input type="email" id="dnremail" name="dnremail" placeholder="Enter Your Email">
+                                        </div>
+                                        <div class="entry-feild text-center">
+                                            <button type="submit" class="btn stl-btn stl-send stl-bynow">Make a Donation</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Donate baba page content End-->

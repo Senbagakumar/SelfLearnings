@@ -1,0 +1,27 @@
+Below are the Hands-on samples on the topics listed in the excel.
+https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-quickstart
+https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-samples#core
+
+Core Concepts/Definitions to build bots using bot framework
+https://docs.microsoft.com/en-us/bot-framework/overview-how-bot-framework-works#core-concepts
+https://docs.microsoft.com/en-us/bot-framework/dotnet/bot-builder-dotnet-concepts
+
+Bot Framework FAQ
+https://docs.microsoft.com/en-us/bot-framework/resources-bot-framework-faq
+
+Troubleshoot common bot development or operational issues.
+https://docs.microsoft.com/en-us/bot-framework/troubleshoot-general-problems
+
+
+regarding tunneling ( ngrok )
+https://github.com/Microsoft/BotFramework-Emulator/wiki/Tunneling-(ngrok)
+
+Bot emulator url
+https://github.com/Microsoft/BotFramework-Emulator/releases/tag/v4.2.1
+
+Bot Samples:
+https://github.com/Microsoft/BotBuilder-Samples/blob/master/README.md
+
+
+http://www.schwammysays.net/an-expanding-web-chat-control-with-bot-framework-and-c/
+

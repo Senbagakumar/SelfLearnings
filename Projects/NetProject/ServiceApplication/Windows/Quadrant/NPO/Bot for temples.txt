@@ -1,0 +1,12 @@
+http://saitempleassistance.azurewebsites.net/
+
+https://www.c-sharpcorner.com/article/deploying-bot-application-to-azure-using-visual-studio-2019/
+
+<iframe src='https://webchat.botframework.com/embed/SaiTempleAssistance?s=BSe3bDHBIrU.b7FAaFI8TCpBW75ZEIM20lR-bybKe629_QYOzU2QaIQ'  style='min-width: 400px; width: 100%; min-height: 500px;'></iframe>
+
+Samples:
+
+https://github.com/microsoft/BotFramework-WebChat/tree/master/samples
+
+https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-user-experience?view=azure-bot-service-4.0
+

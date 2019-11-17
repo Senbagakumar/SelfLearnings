@@ -1,0 +1,35 @@
+1. Create a mobile app version.                                     --p5
+2. Post events into facebook. ( Facebook doesn't allow create the event programmately ). Event Registration.
+3. Volunteer info.                                                  -- p1
+4. Donation info need to be cash, check, paypal and update in db.   -- p1    -- manual transaction
+5. Pull report for customers for their transactions, tax receipt.   -- p1
+6. Reports - paypal etc.    					    -- p1 
+7. Email subscribers for both volunteer and non-volunteers.         -- p2
+8. Email service. For all the registered emails send the invites. Email should contain info about upcoming events, services etc. -- make it dynmically
+9. Add calendar invite in the email communication.   -- make it dyanamically
+10. Cumulative donation receipt.                                    -- p1 Year end donatation receipt
+11. Hosting in existing website or Azure, whichever is feasible.
+12. Recording Expenses transactions -  what are the expenses based on category -  groceries, rent, electricity, priest payments.
+13. Merge cash donation with regular donation form and adding donor's details.
+14. Remove the registration details from the page load.
+15. Change feature searching by phone/email/first name, last name
+16. Documentaion about the design and code. Update the ReadMe.
+17. Background job Sending email notification for birthdays, marriage events.
+18. Check Priest Service Availability (calendar management)
+19. Reserve preist Service for given date and time
+	a. Record Service Details
+	b. DateTime, Location
+	c. Devotee Name, Email, Contact, Birthday, Gothram, Payment Status
+    d. Generated receipt number even if not paid
+	e. Once paid, entry needs to go to transaction table with Priest service category.
+20. Retrieve the service with receipt number and update the details.
+21. Give the monthly view of Priest calendar.
+
+22. Room Calendar Management 
+   a. Check room availability for a given date time.    
+   b. Reserve room for a given date time or whole month or whole year.
+   c. Record details like Room No: 1,2 etc., Reserved by Name, Profession or Purpose, start date and end date, time slot (1pm-3pm), Rent, Reservation taken by (Volunteer name)
+   d. Once paid, An entry needs to go to transaction table with Rental service category.
+   e. Give the monthly view of room calendar.
+
+   d. 

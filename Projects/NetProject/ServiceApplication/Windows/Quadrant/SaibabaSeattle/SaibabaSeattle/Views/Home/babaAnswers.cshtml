@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "babaAnswers";
+}
+<script src="~/Scripts/baba-answers.js"></script>
+<!--Baba Answers page content-->
+<div class="stl-glb-ctnr afb-clear">
+    <h1>Baba Answers</h1>
+    <hr class="stl-hr" />
+</div>
+<div class="stl-glb-ctnr afb-clear stl-ctnr-one">
+    <div class="stl-glb-ctnt stl-ans-ctnt">
+        <h3>SHIRDI SAIBABA ANSWERS..</h3>
+        <hr class="stl-hr" />
+        <p class="text-center">Think of your problem... </p>
+        <p> Ask Baba for a number between 1 - 720;</p>
+        <p>A number should come to your mind...</p>
+        <p class="text-center">Think of your problem... </p>
+    </div>
+    <div class="stl-glb-ctnr">
+        <div class="stl-glb-ctnt">
+            <div class="col-md-6 rk-float">
+                <div class="stl-pnl-ctnr">
+                    <div class="stl-pnl stl-pnl-rt">
+                        <div class="stl-pnl-header stl-pnl-header-rt">
+                            <p class="p-remove-mp">TYPE YOUR NUMBER HERE </p>
+                        </div>
+                        <div class="stl-pnl-body">
+                            <div class="form-body">
+                               
+                                    <div class="entry-feild">
+                                        <label for="babanum">(Number between 1 - 720)</label>
+                                        <input type="text" id="babanum" name="babanum" placeholder="TYPE YOUR NUMBER HERE" autocomplete="off">
+                                    </div>
+                                    <div class="entry-feild text-center">
+                                        <button class="btn stl-btn stl-send ask-baba" data-toggle="modal" data-target="#myModal" onclick="showAnswer()">Ask SaiBaba</button>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="stl-pnl-ftr">
+                            <a href="http://www.facebook.com/sharer.php?u=http://www.saibabaseattle.com/babaanswers.aspx " target="_blank" class="sr-icon btn stl-btn stl-shr-fb" id="fb"> <i class="ion ion-social-facebook"></i><span class="share-fb-txt">Share this your friends</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    $("li").removeClass("active");
+</script>
+<!--Baba Answers page content End-->

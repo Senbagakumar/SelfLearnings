@@ -1,0 +1,71 @@
+Senthil:
+
+var n= "18f67104-7c89-4967-89ac-c5246a9814bb"; // app clientID
+			var p= "6Ivl1P5DiE/f8EtbjQdogjacTzQA36XC4P+wcwkcJpw="; // app clientSecret
+			var TokenURL = "https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47/oauth2/token"; // Your application token endpoint  
+
+
+SaibabaApp
+
+saibabaseattle@hotmail.com
+saibaba*99
+
+saibabaseattle-facilitator@hotmail.com  - Sandbox Account
+
+ClientId - AREz7ZiD3SSC4wBPan0fKS9HFWyIRk5rD7I_CdU2zZsa-4hKQ9IN3lL-wbK_c3F1U04_M7-lkell2RlY
+Secret - EJjopSx-GyVUkXZ5r1pFMBaM1cHuYTpezNwBN4IZjWNntTRjAvecT4efpm_5waDsc1DctpBWrI8LCXmo
+
+application/x-www-form-urlencoded
+
+SandBoX:
+
+Sample Response :
+
+{
+    "scope": "https://api.paypal.com/v1/payments/.* https://uri.paypal.com/services/payments/refund https://uri.paypal.com/services/applications/webhooks https://uri.paypal.com/services/payments/payment/authcapture https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/reporting/search/read https://uri.paypal.com/services/disputes/read-seller https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/disputes/read-buyer https://api.paypal.com/v1/vault/credit-card openid https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/realtimepayment",
+    
+
+"nonce": "2018-09-14T22:18:48ZgrkXkH4Rf6NJvzlsfbuSebCX7XzCVT7X0kVUe7bPdCo",
+   
+ "access_token": "A21AAGbmiSlsKurqSHZJ2QgDManW6Zz4gLiCySxSwQAV8jqeL8aXJawu8xKdv21APQAYyiEkYDuL6TDDv43syICo0oSSdzzig",
+   
+ "token_type": "Bearer",
+    "app_id": "APP-80W284485P519543T",
+    "expires_in": 32400
+}
+
+https://api.sandbox.paypal.com/v1/invoicing/invoices?page=3&page_size=4&total_count_required=true
+https://api.sandbox.paypal.com/v1/payments/payment
+
+
+https://payments-reports.paypal.com/test-reportingengine/runReportRequest?reportName=DailyActivityReport&report_date=2018-08-19
+
+https://uri.paypal.com/services/reporting/runReportRequest?reportName=DailyActivityReport&report_date=2018-08-19
+
+Live:
+
+PayPal Account : saibabaseattle@hotmail.com
+
+ClientId : Ae3OYUmpq2AghhV7N45glZ2S4MDUgLo6Co3HRpnHU8tRH9Xl7G5GrH3qlJ8YU49oukxW0WoZH83LVomS
+Secret : ELpyH8JFbS-2fiyC-rZQahiqQkReSSzuSuXjRUV5BcNfhhz_5CDe9ZAsWRI5zl8FlIDq65M2VAT0sV3B
+
+{
+    "scope": "https://api.paypal.com/v1/payments/.* https://uri.paypal.com/services/payments/refund https://uri.paypal.com/services/applications/webhooks https://uri.paypal.com/services/payments/payment/authcapture https://uri.paypal.com/payments/payouts https://api.paypal.com/v1/vault/credit-card/.* https://uri.paypal.com/services/reporting/search/read https://uri.paypal.com/services/disputes/read-seller https://uri.paypal.com/services/subscriptions https://uri.paypal.com/services/disputes/read-buyer https://api.paypal.com/v1/vault/credit-card openid https://uri.paypal.com/services/disputes/update-seller https://uri.paypal.com/services/payments/realtimepayment",
+    "nonce": "2018-09-14T23:12:34Zyzh2Se0lna87iAKigykRGSkTOwvdVA38V6OC72RxWZY",
+    "access_token": "A21AAEKbk6YjQFtZuFX6ZuJU3AUPLjLcpEOho2B6U78ux7mbpxp_LR2numsNgAN1huW8LZos4Ye1JJj0fjZL710ftkqUZs2ow",
+    "token_type": "Bearer",
+    "app_id": "APP-7FR90135UU218920W",
+    "expires_in": 32400
+}
+
+
+https://api.paypal.com/v1/invoicing/invoices?page=3&page_size=4&total_count_required=true
+https://api.paypal.com/v1/invoicing/invoices?page=3&start_time=2018-08-19T11:00:00Z&end_time=2018-08-20
+
+https://api.paypal.com/reportingengine/runReportRequest?reportName=DailyActivityReport&report_date=2018-08-19
+
+Error: This feature is currently not available for your account. We are working to bring this feature to you soon.
+https://manager.paypal.com/?orig=UL
+
+
+

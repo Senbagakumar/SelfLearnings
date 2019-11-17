@@ -1,0 +1,53 @@
+https://portal.office.com/AdminPortal/Home#/homepage
+https://nonprofit.microsoft.com/applicationstatus
+
+https://mail.ionos.com/ -- Portal logins
+
+https://nonprofit.microsoft.com/register
+shirdisaibaba@saibabaseattle.onmicrosoft.com
+SaiAdmin*99
+admin@saibabaseattle.com
+
+SqlServer Credential:
+ServerName: nposerver
+DataBaseName: NPO
+Credentials:
+shirdisaibaba
+SaiAdmin*99
+
+  <add key="DbConnectionString" value="Server=nposerver.database.windows.net; Database=NPO; User ID=shirdisaibaba; Password=SaiAdmin*99" />
+
+Portal Credential:
+
+userid: saibabaseattle2018@hotmail.com pwd: Saibaba@2018
+
+
+Application Credential:
+Admin@gmail.com
+Password: 
+Admin
+
+
+-----------------
+NPO NON Profit Subscription details:
+
+Subscription credentials:
+shirdisaibaba@saibabaseattle.onmicrosoft.com
+SaiAdmin*99
+Billing Info: saibabaseattle@hotmail.com
+
+SERVER NAME: sbst
+UserName: sbst
+Password: SaiAdmin*99
+
+DatabaseName: NPO
+
+
+Application Credential:
+Admin@gmail.com
+Password: 
+Admin
+
+
+https://saibabatempleassistance.azurewebsites.net/api/messages
+

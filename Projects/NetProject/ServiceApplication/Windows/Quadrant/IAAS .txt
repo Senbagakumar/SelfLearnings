@@ -1,0 +1,56 @@
+https://www.datamation.com/cloud-computing/top-iaas-companies.html
+https://rubygarage.org/blog/iaas-vs-paas-vs-saas
+https://azure.microsoft.com/en-us/overview/what-is-saas/
+
+
+
+Earlier we used to store our data in hard drives on a computer. Cloud Computing services have replaced such hard drive technology. 
+Cloud Computing service is nothing but providing services like Storage, Databases, Servers, networking and the software through the Internet.
+Few Companies offer such computing services, hence named as “Cloud Computing Providers/ Companies”. 
+They charge its users for utilizing such services and the charges are based on their usage of services.
+Using such cloud technology we can design and create new applications, store and recover data and hosting the website.
+
+
+
+Infrastructure as a service(IaaS), is the second-most basic cloud computing model available to customers, in that it provides just the virtualization platform and OS, and that’s it.
+IaaS provides you with virtual resources, such as server space, network connections, and IP addresses, primarily for hosting, building, testing, 
+and deploying Websites and applications. In other words, IaaS is a virtual data center. 
+It’s common to use an IaaS environment as a test environment so as to not disrupt a company’s own internal environment. 
+Once the application is completed, it can then be moved on premises.
+IaaS services can be used for a variety of purposes, from hosting websites to analyzing big data.
+Clients can install and use whatever operating systems and tools they like on the infrastructure they get.
+IaaS operates on a pay-as-you-go model, where use is metered and you pay for compute time, network bandwidth and storage. 
+The trade off is that you don’t have to deploy internal hardware, you can spin up a virtual machine in minutes. 
+The challenge is if you are not careful in monitoring your use, any savings can be effectively wiped out
+We are supporting below IaaS companies :
+Amazon Web Services
+Microsoft Azure
+
+
+PAAS:
+Platform as a service (PaaS) is a deployment and development environment within the cloud.
+PaaS is designed to support the complete web application lifecycle of building, testing, deploying, managing, and updating.
+A complete platform is offered in PaaS in which the client can host their applications without the need to worry about the maintenance of the servers and its operating systems.
+It means, PaaS includes a complete infrastructure of servers, storages, networking, and middleware development tools like business intelligence services (BI),
+database management systems, etc. software developers can deploy applications, from simple to sophisticated, without needing all the related infrastructure 
+(servers, databases, operating systems, development tools, etc).
+ Application to decide whether to scale it up or down depending on the traffic that the application receives.
+Azure offers five main services of Platform as a Service:
+Web Apps, Mobile Apps, Logic Apps, Functions and Web Jobs
+
+SASS:
+Software as a service (SaaS) allows users to connect to and use cloud-based apps over the Internet.
+SaaS is a software distribution model in which a third-party provider hosts applications and makes them available to customers over the Internet.
+Examples are email, calendaring, and office tools (such as Microsoft Office 365).
+SaaS provides a complete software solution that you purchase on a pay-as-you-go basis from a cloud service provider.
+All of the underlying infrastructure, middleware, app software, and app data are located in the service provider’s data center.
+SaaS allows your organization to get quickly up and running with an app at minimal upfront cost.
+If you’ve used a web-based email service such as Outlook, Hotmail, or Yahoo! Mail, then you’ve already used a form of SaaS.
+
+To provide SaaS apps to users, you don’t need to purchase, install, update, or maintain any hardware, middleware, or software.
+You also save money because the SaaS service automatically scales up and down according to the level of usage.
+Users can run most SaaS apps directly from their web browser without needing to download and install any software.
+SaaS makes it easy to “mobilize” your workforce because users can access SaaS apps and data from any Internet-connected computer or mobile device.
+With data stored in the cloud, users can access their information from any Internet-connected computer or mobile device
+
+

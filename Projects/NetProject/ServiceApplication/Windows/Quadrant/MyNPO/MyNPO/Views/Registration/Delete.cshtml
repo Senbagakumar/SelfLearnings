@@ -1,0 +1,136 @@
+﻿@model MyNPO.Models.FamilyInfo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FamilyInfo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MobileNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobileNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ZipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaritalStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaritalStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarriageDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarriageDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IsVolunteer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model=> model.IsVolunteer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NoOfDependents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoOfDependents)
+        </dd>
+        <dt>
+            Dependent Details
+        </dt>
+        <dd>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>RelationShip</th>
+                </tr>
+                @foreach (var dep in Model.DependentDetails)
+                {
+                    <tr>
+                        <td>@dep.Name</td>
+                        <td>@dep.DOB </td>
+                        <td>@dep.RelationShip</td>
+                    </tr>
+                }
+            </table>
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

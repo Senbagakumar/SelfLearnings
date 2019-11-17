@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SaiBabaRegistration</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="separator"></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Donation</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("PayPal", "Donation", "Home")</li>
+                            <li>@Html.ActionLink("Cash or Cheque", "Create", "Donation")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Upload Transactions", "Upload", "Home")</li>
+                            <li>@Html.ActionLink("Transaction Report", "Report", "Home")</li>
+                            <li>@Html.ActionLink("Registration Report", "Report", "Registration")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin Services</a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Email Notification", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Room Booking", "Index", "Calendar")</li>
+                            <li>@Html.ActionLink("Priest Services", "Index", "EventCalendar")</li>
+                        </ul>
+                    </li>
+
+                    <li class="separator"></li>
+
+                    <li>@Html.ActionLink("Registration", "Create", "Registration")</li>
+                    <li>@Html.ActionLink("Event", "Index", "Event")</li>
+
+                    <li>@Html.ActionLink("Contact us", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Logout", "LogOut")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <div class="stl-main-wrp-ctnr">
+                <div class="stl-marquee-ctnr space-bt-20">
+                    <marquee behavior="scroll" scrollamoun="10">
+                        <p>Saibaba Seattle is a Non Profit Tax Exempt Organization with 501(C)(3) status. All the donations to Saibaba Seattle are Tax Deductible.</p>
+                    </marquee>
+                </div>
+            </div>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/JavaScript.js"></script>
+</body>
+</html>

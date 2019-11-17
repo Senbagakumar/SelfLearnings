@@ -1,0 +1,442 @@
+﻿@model MyNPO.Models.FamilyInfo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<style type="text/css">
+
+    .currency:after {
+        color: #37424a !important;
+        content: "$";
+        font-size: 16px !important;
+        font-weight: 400;
+        position: absolute;
+        display: block;
+        height: 100%;
+        top: 0px;
+        left: 25px;
+        line-height: 35px;
+    }
+
+    .amount {
+        border: 2px solid #c9c9c9;
+        color: #6b6f72;
+        font-size: 10px;
+        text-transform: none;
+        width: 100%;
+        color: #37424a !important;
+        font-size: 16px !important;
+        height: 31px !important;
+        padding-left: 19px !important;
+        display: inline-block !important;
+    }
+
+</style>
+
+
+
+@using (Html.BeginForm("Create", "Registration", FormMethod.Post, new { @id = "registerFormId", @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+<div class="form-horizontal">
+    <h3>Registration</h3>
+    <hr />
+
+    <div class="text-danger" id="errorMsg">
+
+    </div>
+    <br />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter the FirstName" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter the LastName" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY", onkeypress = "return false" } })
+            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter MobileNo", maxlength = "10" } })
+            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: abc@gmail.com" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter City" } })
+            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ZipCode, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Zip Code", maxlength = "5" } })
+            @Html.ValidationMessageFor(model => model.ZipCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter Address" } })
+            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.MaritalStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div>
+                @Html.RadioButtonFor(model => model.MaritalStatus, "Single", new { @class = "", @checked= "true" }) Single
+                @Html.RadioButtonFor(model => model.MaritalStatus, "Married", new { htmlAttributes = new { @class = "form-control" } }) Married
+            </div>
+            @Html.ValidationMessageFor(model => model.MaritalStatus, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group" id="marriageDate">
+        @Html.LabelFor(model => model.MarriageDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.MarriageDate, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: MM/DD/YYYY", onkeypress = "return false" } })
+            @Html.ValidationMessageFor(model => model.MarriageDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsVolunteer, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div>
+                @Html.CheckBoxFor(model => model.IsVolunteer, new { htmlAttributes = new { @class = "form-control" } }) Volunteer
+            </div>
+            @Html.ValidationMessageFor(model => model.IsVolunteer, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Donation, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <span class="currency">
+                @Html.EditorFor(model => model.Donation, new { htmlAttributes = new { @class = "form-control amount", type="number" } }) @*placeholder = "$25"*@
+            </span>
+            @Html.ValidationMessageFor(model => model.Donation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DonationReason, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DonationReason, new { htmlAttributes = new { @class = "form-control", placeholder = "Donation Reason" } })
+            @Html.ValidationMessageFor(model => model.DonationReason, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NoOfDependents, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NoOfDependents, new { htmlAttributes = new { @class = "form-control", placeholder = "Enter NoOfDependents", @min = "0" } })
+            @Html.ValidationMessageFor(model => model.NoOfDependents, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" id="Next" value="Add Dependent Info" class="btn btn-default" />
+        </div>
+    </div>
+
+    <div id="dynamicGroup" class="form-group">
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" id="Complete" value="Complete" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
+
+
+
+@section Scripts {
+                    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+     <script type="text/javascript">
+         // Initially, Hide the MarriedDate textbox when Web Form is loaded
+         $('#marriageDate').hide();
+         // Function for Hidding MarriageDate when clicking SIngle button
+         $(document).ready(function () {
+             $("input[Value='Married']").click(function () {
+                 $('#marriageDate').show();
+                        });
+             $("input[Value='Single']").click(function () {
+                 $('#marriageDate').hide();
+                        });
+                    });
+
+
+        $(document).ready(function () {
+                        var filterData = {};
+            $("#FirstName").autocomplete({
+                            minLength: 2,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/Registration/FirstNameSearch",
+                        type: "POST",
+                        dataType: "json",
+                        data: { keyword: request.term },
+                        success: function (data) {
+                                        filterData = data;
+                                        response($.map(data, function (item) {
+                                            return { label: item.FirstName, value: item.FirstName };
+                                        }))
+                        },
+                        error: function () {
+                                        alert('something went wrong !');
+                                    }
+                                })
+                },
+                change: function (event, ui) {
+                    var selectedObject;
+                    var selectedValue = $("#FirstName").val();
+                    $(filterData).each(function (index, value) {
+                        if (selectedValue == value.FirstName) {
+                            selectedObject = value;
+                        }
+                    });
+
+
+                    if (selectedObject != null) {
+                        $("#LastName").val(selectedObject.LastName);
+                        $("#DateOfBirth").val(ToJavaScriptDate(selectedObject.DateOfBirth));
+                        $("#MobileNo").val(selectedObject.MobileNo);
+                        $("#Email").val(selectedObject.Email);
+                        $("#City").val(selectedObject.City);
+                        $("#ZipCode").val(selectedObject.ZipCode);
+                        $("#Address").val(selectedObject.Address);
+                        $("#MaritalStatus").val(selectedObject.MaritalStatus);
+                        $("#MarrigaeDate").val(selectedObject.MarrigaeDate);
+                        $("#NoOfDependents").val(selectedObject.NoOfDependents);
+                        if (selectedObject.IsVolunteer)
+                            $("#IsVolunteer").prop('checked', true);
+                        else
+                            $("#IsVolunteer").prop('checked', false);
+                    }
+                },
+                focus: function () { return false; },
+                messages: {
+                                noResults: "", results: function (resultsCount) { }
+                            }
+                        });
+                    });
+
+         function ToJavaScriptDate(value) {
+             var pattern = /Date\(([^)]+)\)/;
+             var results = pattern.exec(value);
+             var dt = new Date(parseFloat(results[1]));
+             var day = dt.getUTCDate() > 9 ? dt.getUTCDate() : "0" + dt.getUTCDate(); 
+             var month = (dt.getMonth() + 1) > 9 ? (dt.getMonth() + 1) : "0" + (dt.getMonth() + 1);
+
+             //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
+             return (dt.getFullYear()) + "-" + month + "-" + day;
+         }
+
+        $('#Next').click(function () {
+
+            var dependentCount = $('#NoOfDependents').val();
+
+
+            var items = '';
+            for (var i = 1; i <= dependentCount; i++) {
+
+                items += '<div class="form-group">';
+                items += '<label class="control-label col-md-2"> Dependent Name' + i + '</label>';
+
+                items += '<div class="col-md-10">';
+                items += '<input type="text" id=DependentName' + i + ' class="form-control text-box single-line" type = "text" placeholder = "Enter Dependent Name" />';
+                items += '</div>'
+                items += '</div>'
+
+
+                items += '<div class="form-group">';
+                items += '<label class="control-label col-md-2"> Dependent DOB' + i + '</label>';
+
+                items += '<div class="col-md-10">';
+                items += '<input id=DependentDOB' + i + ' class="form-control text-box single-line" type = "date" placeholder = "Ex: MM/DD/YYYY" , onkeypress = "return false" />';
+                items += '</div>'
+                items += '</div>'
+
+
+                items += '<div class="form-group">';
+                items += '<label class="control-label col-md-2">Dependent RelationShip' + i + '</label>';
+
+                items += '<div class="col-md-10">';
+                items += '<input type="text" id=DependentRelationShip' + i + ' class="form-control text-box single-line" type = "text" placeholder = "Enter RelationShip"/>';
+                items += '</div>'
+                items += '</div>'
+
+            }
+            var url = "/Registration/Next";
+            $.get(url, null, function (data) {
+                $('#dynamicGroup').html(items);
+            });
+        });
+
+        $('#Complete').click(function () {
+            $('#FirstName_validationMessage').text("");
+            $('#LastName_validationMessage').text("");
+            $('#DateOfBirth_validationMessage').text("");
+            $('#MobileNo_validationMessage').text("");
+            $('#Email_validationMessage').text("");
+            $('#Donation_validationMessage').text("");
+
+            var validation = true;
+            if ($('#FirstName').val() == '') {
+                $('#FirstName_validationMessage').text("FirstName is Required");
+                validation = false;
+            }
+
+            if ($('#LastName').val() == '') {
+                $('#LastName_validationMessage').text("LastName is Required");
+                validation = false;
+            }
+
+            if ($('#DateOfBirth').val() == '') {
+                $('#DateOfBirth_validationMessage').text('DateOfBirth is Required');
+                validation = false;
+            }
+
+            if ($('#MobileNo').val() == '') {
+                $('#MobileNo_validationMessage').text('MobileNo is Required');
+                validation = false;
+            }
+
+            if ($('#Email').val() == '') {
+                $('#Email_validationMessage').text('Email is Required');
+                validation = false;
+            }
+
+            if ($('#Donation').val() != '') {
+                var donation = $('#Donation').val();
+                if (donation == '') {
+                    $('#Donation_validationMessage').text('Enter the valid donation Amount ($25)');
+                    validation = false;
+                }
+            }
+            if (!validation)
+                return false;
+
+            var dependent = '';
+            var dependentCount = $('#NoOfDependents').val();
+            var depentdent = [];
+            for (var i = 1; i <= dependentCount; i++) {
+                depentdent.push({ Name: $('#DependentName' + i).val(), DOB: $('#DependentDOB' + i).val(), RelationShip: $('#DependentRelationShip' + i).val() });
+            }
+
+            var model = {
+
+                FirstName: $('#FirstName').val(),
+                LastName: $('#LastName').val(),
+                DateOfBirth: $('#DateOfBirth').val(),
+                MobileNo: $('#MobileNo').val(),
+                Email: $('#Email').val(),
+                City: $('#City').val(),
+                ZipCode: $('#ZipCode').val(),
+                Address: $('#Address').val(),
+                MaritalStatus: $('#MaritalStatus').val(),
+                MarriageDate: $('#MarriageDate').val(),
+                NoOfDependents: $('#NoOfDependents').val(),
+                IsVolunteer: $('#IsVolunteer').prop('checked'),
+                Donation: $('#Donation').val(),
+                DonationReason: $('#DonationReason').val(),
+                DependentDetails: depentdent //[{ Name: $('#DependentName1').val(), DOB: $('#DependentDOB1').val() }] //[{ Name: 'Senba' }, { Name: 'Sindhu' }]
+            };
+
+            var url = "/Registration/Create";
+
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(model),
+                url: url,
+                contentType: "application/json"
+            }).done(function (res) {
+
+                $("#errorMsg").text(res);
+
+                if (res.includes('Saved') || res.includes('Donation')) {
+                    //    location.href = "/Registration/Index";
+
+                    $('#FirstName_validationMessage').text("");
+                    $('#LastName_validationMessage').text("");
+                    $('#DateOfBirth_validationMessage').text("");
+                    $('#MobileNo_validationMessage').text("");
+                    $('#Email_validationMessage').text("");
+
+                    $('#FirstName').val("");
+                    $('#LastName').val("");
+                    $('#DateOfBirth').val("");
+                    $('#MobileNo').val("");
+                    $('#Email').val("");
+                    $('#City').val("");
+                    $('#ZipCode').val("");
+                    $('#Address').val("");
+                    $('#MaritalStatus').val("");
+                    $('#MarriageDate').val("");
+                    $('#NoOfDependents').val("");
+                    $('#IsVolunteer').prop('checked', false);
+                    $('#Donation').val("");
+                    $('#DonationReason').val("");
+
+                        for (var i = 1; i <= dependentCount; i++) {
+                        $('#DependentName' + i).val("");
+                        $('#DependentDOB' + i).val("");
+                        $('#DependentRelationShip' + i).val("");
+                    }
+                    if (dependentCount > 0) {
+                        $('#NoOfDependents').val(0);
+                        $('#Next').click();
+                    }
+
+                    //location.reload();
+                }
+                //else {
+                //    $("#errorMsg").text(res);
+                //}
+            });
+        });
+    </script>
+
+}

@@ -1,0 +1,38 @@
+﻿@model System.Data.DataTable
+@using System.Data;
+
+
+@{
+    ViewBag.Title = "displayData";
+}
+
+<div class="stl-tbl-ctnr afb-clear">
+    <div class="stl-table-ctnt">
+        <div class="table-responsive">
+            <table class="table stl-tbl stl-tbl-events">
+                <thead class="stl-tbl-hd">
+                    <tr class="stl-tbl-row">
+                        @foreach (DataColumn col in Model.Columns)
+                        {
+                            <th class="stl-th">@col.ColumnName</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DataRow row in Model.Rows)
+                    {
+                        <tr class="stl-tbl-row" id="stlEventsRow">
+                            @foreach (DataColumn col in Model.Columns)
+                            {
+                                <td>@row[col.ColumnName]</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+<script>
+    stlEventsTime();
+</script>

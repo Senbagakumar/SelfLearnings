@@ -1,0 +1,269 @@
+﻿@{
+    Layout = null;
+}
+@using DHTMLX.Scheduler;
+@model MyNPO.Models.PriestServices
+
+<!DOCTYPE html>
+<h1 style="text-align:center;">
+    Priest Services </h1>
+<html>
+<head>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <link href="/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Scripts/dhtmlxScheduler/dhtmlxscheduler.css" rel="stylesheet" />
+    <title>Register the Temple Event</title>
+
+    <script type="text/javascript">
+        function goBack() {
+            window.history.back()
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+    @*<a href="#" style="margin-left:250px;" onclick="goBack()">Back</a>*@
+    <ul><li style="list-style:none">@Html.ActionLink("Home", "Index", "Home")</li></ul>
+    <div>
+        <div style="float:left; margin-left:20px;">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control", type = "number", maxlength = "10" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Gothram, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Gothram, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Gothram, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.EventsDate, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <input class="form-control" type="datetime-local" id="EventsDate" name="EventsDate" placeholder="EndDate: MM/dd/yyyy HH:mm:ss" , onkeypress = "return false" />
+                            @Html.ValidationMessageFor(model => model.EventsDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PriestServicesList, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <select class="form-control" id="PriestServicesList" name="PriestServicesList">
+                                <option value="0" selected>-Select-</option>
+                                <option value="Sai Archana">Sai Archana  $11</option>
+                                <option value="Sai Abhishekam">Sai Abhishekam  $101</option>
+                                <option value="Sai Annadanam">Sai Annadanam	 $151</option>
+                                <option value="Garland Sponsorship">Garland Sponsorship	$151</option>
+                                <option value="Vahana puja">Vahana puja	$51</option>
+                                <option value="Gruha pravesham">Gruha pravesham	$251</option>
+                                <option value="Gruha pravesham  Homam  Vratam">Gruha pravesham + Homam + Vratam	$301</option>
+                                <option value="Satya Narayana Swami Vratam">Satya Narayana Swami Vratam (At Home)	$151</option>
+                                <option value="Nama Karanam (At Home)">Nama Karanam (At Home)	$125</option>
+                                <option value="Annaprasana (At Home)">Annaprasana (At Home)	$125</option>
+                                <option value="Nama Karanam (At Temple)">Nama Karanam (At Temple)	$51</option>
+                                <option value="Annaprasana (At Temple)">Annaprasana (At Temple)	$51</option>
+                                <option value="Satya Narayana Swami Vratam (At Temple)">Satya Narayana Swami Vratam (At Temple)	$101</option>
+                                <option value="Samuhika Vratam">Samuhika Vratam	$51</option>
+                                <option value="Kalyanam (At Temple)">Kalyanam (At Temple) $501</option>
+                            </select>
+                            @Html.ValidationMessageFor(model => model.PriestServicesList, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaymentMode, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8" style="float:left">
+                            @Html.RadioButtonFor(model => model.PaymentMode, "1", new { htmlAttributes = new { @class = "form-control" } })  @Html.Label("PayPal")
+                            @Html.RadioButtonFor(model => model.PaymentMode, "2", new { @class = "", @checked = "true" }) @Html.Label("Cash")
+                            @Html.RadioButtonFor(model => model.PaymentMode, "3", new { htmlAttributes = new { @class = "form-control" } })  @Html.Label("Cheque")
+                            @Html.ValidationMessageFor(model => model.PaymentMode, "", new { @class = "text-danger" })
+                            <div id="linkpaypal" style="display:none">
+                                <a href="/Home/Donation/" target="_blank">PayPal</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Register" class="btn btn-default" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @ViewBag.Status
+                    </div>
+                </div>
+            }
+        </div>
+        <div style="height:600px; float:left; margin-left:40px; width:900px;">
+            @Html.Raw(((DHXScheduler)@ViewBag.schedule).Render())
+            @*@Html.Raw(Model.Scheduler.Render())*@
+        </div>
+    </div>
+
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input[name=PaymentMode]').click(function () {
+                if ($(this).val() == '1') {
+                    $("#linkpaypal").show();
+                }
+                else {
+                    $("#linkpaypal").hide();
+                }
+            });           
+
+            $("#Id").val(0);
+            var filterData = {};
+            $("#Name").autocomplete({
+                minLength: 2,
+                source: function (request, response) {
+                    $.ajax({
+                        url: "/EventCalendar/EventSearch",
+                        type: "POST",
+                        dataType: "json",
+                        data: { keyWord: request.term },
+                        success: function (data) {
+                            filterData = data;
+                            response($.map(data, function (item) {
+                                return { label: item, value: item };
+                            }))
+                        },
+                        error: function () {
+                            alert('something went wrong !');
+                        }
+                    })
+                },
+                change: function (event, ui) {
+                    var selectedObject;
+                    var selectedValue = $("#Name").val();
+                    $(filterData).each(function (index, value) {
+                        if (selectedValue == value) {
+
+                            $.ajax({
+                                url: "/EventCalendar/EventInfoSearch",
+                                type: "Get",
+                                dataType: "json",
+                                data: { keyWord: value },
+                                success: function (data) {
+                                    selectedObject = data;
+                                    //console.log(data);
+                                    if (selectedObject != null) {
+                                        $("#Email").val(selectedObject.Email);
+                                        $("#Address").val(selectedObject.Address);
+                                        $("#Phone").val(selectedObject.Phone);
+                                        $("#Gothram").val(selectedObject.Gothram);
+                                        $("#PriestServicesList").val(selectedObject.PriestServicesList);
+                                        $("#Comments").val(selectedObject.Comments);
+                                        $("#DonationAmount").val(selectedObject.DonationAmount);
+
+                                        //var yourFormattedDate = moment(selectedObject.EventsDate).format('MM/DD/YYYY HH:mm A');
+                                        $("#EventsDate").val(ToJavaScriptDate(selectedObject.EventsDate));
+
+                                        if (selectedObject.PaymentMode == 'Cheque') {
+                                            $("input[name=PaymentMode][value='3']").prop("checked", true);
+                                        }
+                                        if (selectedObject.PaymentMode == 'Cash') {
+                                            $("input[name=PaymentMode][value='2']").prop("checked", true);
+                                        }
+                                        if (selectedObject.PaymentMode == 'PayPal') {
+                                            $("input[name=PaymentMode][value='1']").prop("checked", true);
+                                        }
+                                        $("#Id").val(selectedObject.Id);
+                                           
+                                    }
+                                },
+                                error: function () {
+                                    alert('something went wrong !');
+                                }
+                            });
+                        }
+                    });
+
+                    
+                },
+                focus: function () { return false; },
+                messages: {
+                    noResults: "", results: function (resultsCount) { }
+                }
+            });
+
+
+            function ToJavaScriptDate(value) {
+                var pattern = /Date\(([^)]+)\)/;
+                var results = pattern.exec(value);
+                var dt = new Date(parseFloat(results[1]));
+                var day = dt.getUTCDate() > 9 ? dt.getUTCDate() : "0" + dt.getUTCDate(); // format should be "DD" not "D" e.g 09
+                var month = (dt.getMonth() + 1) > 9 ? (dt.getMonth() + 1) : "0" + (dt.getMonth() + 1);
+                var hour = dt.getHours();
+                var minutes = dt.getMinutes() > 9 ? dt.getMinutes() : "0" + dt.getMinutes();
+                var seconds = dt.getSeconds() > 9 ? dt.getSeconds() : "0" + dt.getSeconds();
+                //return (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();  "2016-08-07T14:06:30"
+                var returnDate = (dt.getFullYear()) + "-" + month + "-" + day + "T" + hour + ":" + minutes + ":" + seconds;
+                return returnDate;
+            }
+        });
+    </script>
+
+</body>
+</html >

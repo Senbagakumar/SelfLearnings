@@ -1,0 +1,70 @@
+﻿<div id="bot" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
+<script>
+    var id = '@ViewBag.userId'
+    var t = '@ViewBag.token'
+    var cid = '@ViewBag.cid'
+    var f=@ViewBag.firstTime
+</script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/JavaScript.min.js"></script>
+<link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+<style>
+    .wc-chatview-panel {
+        width: 350px;
+        height: 450px;
+        position: relative;
+    }
+
+    .chat-wrapper .chat-header {
+        background: red !important;
+        border: red !important;
+    }
+
+    .wc-textbox {
+        /*border-color:rgb(210,49,11);*/
+    }
+
+    .wc-console .wc-textbox input {
+        background-color: rgb(245,234,232);
+        color: black;
+    }
+
+    #bot {
+        position: fixed;
+        bottom: 18px;
+        right: 60px;
+    }
+
+    .wc-message-content {
+        color: red !important;
+    }
+
+    .wc-header {
+        cursor: pointer;
+        background-color: rgb(210,49,11);
+    }
+
+    .wc-message-groups {
+        border: solid;
+        border-color: rgb(210,49,11);
+        background-color: rgb(245,234,232);
+    }
+
+    .wc-message-from {
+        color: black !important;
+    }
+
+    .wc-console .wc-upload {
+        background-color: rgb(245,234,232);
+    }
+
+    .wc-console .wc-mic, .wc-console .wc-send {
+        background-color: rgb(245,234,232);
+    }
+
+    .closechat {
+        top: 405px !important;
+    }
+</style>

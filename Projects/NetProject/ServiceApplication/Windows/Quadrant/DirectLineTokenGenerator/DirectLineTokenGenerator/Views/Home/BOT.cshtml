@@ -1,0 +1,28 @@
+﻿<div id="bot" />
+<script src="https://cdn.botframework.com/botframework-webchat/latest/botchat.js"></script>
+<script>
+    var id = '@ViewBag.userId'
+    var t = '@ViewBag.token'
+    var cid = '@ViewBag.cid'
+    var f=@ViewBag.firstTime
+</script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/JavaScript.min.js"></script>
+<link href="https://cdn.botframework.com/botframework-webchat/latest/botchat.css" rel="stylesheet" />
+<style>
+    .wc-chatview-panel {
+        width: 350px;
+        height: 450px;
+        position: relative;
+    }
+
+    #bot {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .closechat {
+        top: 405px !important;
+    }
+</style>

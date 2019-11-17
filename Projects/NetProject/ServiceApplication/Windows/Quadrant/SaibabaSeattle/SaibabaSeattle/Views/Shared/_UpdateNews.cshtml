@@ -1,0 +1,18 @@
+﻿
+
+@model System.Data.DataTable
+@using System.Data;
+
+<p>raja</p>
+<p>@ViewBag.csvTable</p>
+@foreach (DataRow row in Model.Rows)
+
+    {
+
+        <p>
+            @foreach (var col in Model.Columns)
+            {
+                <span>@row[col.ColumnName]</span>
+            }
+        </p>
+    }

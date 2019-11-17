@@ -1,0 +1,35 @@
+{
+  "BuddyBOT": 
+  {
+     "Owners" :
+	 [
+		 {
+			 "name" : "Shiva",
+			 "Permission" : 
+			 [
+				 {
+					"ProjectID" : "17433",
+					"Name" : "Azure Insights Team"
+				 },
+				 {
+					"ProjectID" : "15468",
+					"Name" : "WA Sql Team"
+				 }
+			 ],
+			 "Certifications" : 
+			 [ 
+				{
+				   "ID" : "70-533",
+				   "Text" : "Implementing Microsoft Azure Infrastructure Solutions",
+				   "Url"  : "https://www.pdfdrive.com/exam-ref-70-533-implementing-microsoft-azure-e19871591.html"
+				},
+				{
+				   "ID" :"70-532",
+				   "Text" : "Developing Microsoft Azure Solutions",
+				   "Url"  : "https://www.pdfdrive.com/exam-ref-70-532-developing-microsoft-azure-solutions-ebook-e19903172.html"
+				}
+			 ]
+		 }
+	 ]	 
+   }
+}   

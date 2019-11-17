@@ -1,0 +1,21 @@
+https://docs.microsoft.com/en-us/power-bi/service-connect-to-azure-audit-logs
+https://docs.microsoft.com/en-us/power-bi/service-admin-auditing
+https://www.c-sharpcorner.com/article/retrieve-sharepoint-audit-logs-programmatically-using-c-sharp-server-side-object-mode/
+
+https://angryanalyticsblog.azurewebsites.net/index.php/2018/02/16/power-bi-audit-log-analytics-solution/ -- Sample in PS1
+
+https://docs.microsoft.com/en-us/office365/securitycompliance/use-sharing-auditing
+
+https://github.com/microsoft/businessplatformapps -- Source code
+
+ https://compliance.microsoft.com -> from portal
+
+ganesh@quadrantresource.com
+Hyderabad65!
+
+https://docs.microsoft.com/en-us/office/office-365-management-api/get-started-with-office-365-management-apis
+
+https://docs.microsoft.com/en-us/office/office-365-management-api/office-365-management-activity-api-reference
+
+
+SolutionTemplate Path: C:\PBISolTemp
