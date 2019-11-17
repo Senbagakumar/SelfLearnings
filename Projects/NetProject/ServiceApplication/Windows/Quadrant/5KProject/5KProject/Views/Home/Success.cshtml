@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Success</title>
+    <link rel="stylesheet" href="~/css/linearicons.css">=
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+    <link rel="stylesheet" href="~/css/main.css">
+</head>
+<body>
+    <!-- Start Header Area -->
+    <header class="default-header">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="header-top d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="/Home"><img src="~/img/5KLogo2.png" alt="" style="width:75px; height:75px;"></a>
+                    </div>
+                    <div class="main-menubar d-flex align-items-center">
+                        <nav class="hide">
+                            <a href="/Home">Home</a>
+                        </nav>
+                        <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="project-area section-gap" id="about">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 pb-80 header-text">
+                    <h1>Congratulations</h1>
+                    <p>
+                        Thank you for your payment. Your transaction has been completed, and a copy of a receipt has been emailed to you.
+                        <br /> <a href="/Home">Go To Home</a>
+                    </p>
+                </div>
+            </div>
+            <div class="project-area section-gap">
+                Dear @ViewBag.Name,
+
+                <br><br> Congratulations! You are now registered for the 1st Annual 5k Saibaba Seattle Run.
+                <br><br> Please check our <a href="http://www.saibaba5krun.org/" target="_blank">Event's website</a> for updates
+
+                <br><br> Refer you friends
+                <br><br> <a href='https://www.facebook.com/events/206694916880368/' target="_blank"><img src='https://www.mail-signatures.com/articles/wp-content/themes/emailsignatures/images/facebook-35x35.gif'></a>
+
+                <br><br /> SaiBabaSeattle
+                <br>Email: Saibabaseattle@hotmail.com
+                <br>ContactNo: (425)-999-6350
+
+                <br><br> Registration Details:
+                <br> Participant name: @ViewBag.Name
+                <br /> Invoice No: @ViewBag.InvocieNo
+                <br> Date: Saturday, June 22nd, 2019
+                <br> Time: 8AM to 2PM
+                <br> Location: Marymoor Park 6046 West Lake Sammamish Pkwy, NE Redmond, WA 98082
+                <br> <a target="_blank" href='https://www.google.com/maps/place/6046+West+Lake+Sammamish+Pkwy+NE,+Redmond,+WA+98052/@("@")47.6603812,-122.1217066,17z/data=!3m1!4b1!4m5!3m4!1s0x549072a3f34cae2f:0x3e7d94db622d9769!8m2!3d47.6603776!4d-122.1195179'>Google Map</a>
+                <br><br> Thank You !
+                <br><br> Saibaba Seattle
+
+            </div>
+        </div>
+    </section>
+    <script src="~/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="~/js/vendor/bootstrap.min.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/parallax.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>
+
+

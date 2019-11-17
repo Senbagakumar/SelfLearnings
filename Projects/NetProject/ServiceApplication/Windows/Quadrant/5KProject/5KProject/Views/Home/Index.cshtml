@@ -1,0 +1,586 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="~/img/fav.png">
+
+    <meta content="telephone=no" name="format-detection">
+    <!-- Author Meta -->
+    <meta name="author" content="Saibaba Seattle">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Saibaba Seattle</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
+    CSS
+    ============================================= -->
+    <link rel="stylesheet" href="~/css/linearicons.css">=
+    <link rel="stylesheet" href="~/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="~/css/bootstrap.css">
+    <link rel="stylesheet" href="~/css/main.css">
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+
+        .donate-area .contact-right .form-control {
+            margin-left: -100px;
+            margin-top: 10px;
+        }
+		
+		.nice-select.app-select.form-control {
+            margin-left: 0px;
+			}
+    </style>
+	
+	<script type="text/javascript"> //<![CDATA[ 
+var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "https://www.trustlogo.com/");
+document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+//]]>
+</script>
+</head>
+<body>
+    <!-- Start Header Area -->
+    <header class="default-header">
+        <div class="container">
+            <div class="header-wrap">
+                <div class="header-top d-flex justify-content-between align-items-center">
+                    <div class="logo">
+                        <a href="#home"><img src="~/img/5KLogo2.png" alt="" style="width:75px; height:75px;"></a>
+                    </div>
+                    <div class="content" style="color:green; font-style:oblique">
+                        <p> @ViewBag.Status </p>
+                    </div>
+                    <div class="main-menubar d-flex align-items-center">
+                        <nav class="hide">
+                            <a href="#home">Home</a>
+                            <a href="#5kRun">5kRun/Walk</a>
+                            <a href="#services">Community Services</a> <!--Section changed-->
+                            <a href="#about">About</a>
+                            <a href="#winnerlist">Winners</a>
+                            <a href="#donate">Register</a>
+                            <a href="#faq">Faq</a>
+                        </nav>
+                        <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- End Header Area -->
+    <!-- start banner Area -->
+    <section class="banner-area relative" id="home" style="background-repeat: no-repeat; /* background-size: 1524px 680px */">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row fullscreen align-items-center justify-content-start" style="height: 815px;">
+                <div class="banner-content col-lg-9 col-md-12">
+                    <h1>
+                        5K run/walk <br /> at King County’s Marymoor Park <br /> on June 22
+                    </h1>
+                    <a href="#donate" class="head-btn btn text-uppercase">Register</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+    <!-- Start callto Area -->
+    <section class="callto-area relative">
+        <div class="container">
+            <div class="row d-flex callto-wrap justify-content-between pt-40 pb-40">
+                <h3 class="text-white">Pick your distance and find your pace</h3>
+                <a href="#donate" class="head-btn head-btn2 btn text-uppercase">Register</a>
+            </div>
+        </div>
+    </section>
+    <!-- End callto Area -->
+    <section class="project-area section-gap" id="videos">
+        <div style="margin-left:30%;">
+            <div class="col-md-8 pb-80 header-text">
+               <br /> <h3>Saibaba Seattle’s First Annual 5K Run/Walk 2019 - Race completed</h3> <br /> <br /> <br />
+                <iframe class="col-8" width="560" height="315" src="https://www.youtube-nocookie.com/embed/hAUWH0zle18" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+    <!-- Start project Area -->
+    <section class="project-area section-gap" id="about">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 pb-80 header-text">
+                    <h1>Saibaba Seattle 5k Run</h1>
+                    <p>
+                        Saibaba Seattle is conducting a 5K run/walk at King County’s Marymoor Park. <br> Proceeds from the SBS5K benefit local nonprofit organizations. This family-friendly 5K is open to participants of all ages and abilities, including runners, walkers and strollers. Don't forget to stick around after your run/walk for a FREE refreshing drinks and giveaways.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-area section-gap" id="winnerlist">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-4 pb-80 header-text">
+                    <h2>Winner List Of 5k Run</h2> <br />
+                    <table style="color:black" cellpadding="1" cellspacing="1" border="1">
+                        <tr style="font-weight:bold">
+                            <td>Male Winner</td>
+                            <td>Female Winner</td>
+                            <td>Kids Winner
+                            <td>
+                        </tr>
+                        <tr>
+                            <td>Tejas</td>
+                            <td>Sunita</td>
+                            <td>Aarav</td>
+                        </tr>
+                        <tr>
+                            <td>Suresh</td>
+                            <td>Sandhya</td>
+                            <td>Pooja</td>
+                        </tr>
+                        <tr>
+                            <td>Sudhakar</td>
+                            <td>Sravani</td>
+                            <td></td>
+                        </tr>
+                    </table>
+
+                    <br /> <br />
+                    <h4><a href="https://photos.app.goo.gl/cQXDpCt6qdyisNS57" target="_blank">View event pictures</a></h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="project-area section-gap" id="services">
+        <div class="container">
+            <div class="row">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8 pb-80 header-text">
+                        <h1>About the program and community cause</h1>
+                        <p>
+                            Saibaba Seattle supports various grassroot organizations like Sophia’s way, Joyofreading, Bloodworks to name a few and organizes various drives including blanket, books, food and blood donations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 project-wrap">
+                    <div class="single-project">
+                        <div class="content">
+                            <div class="content-overlay"></div>
+                            <img class="content-image img-fluid d-block mx-auto" src="~/img/SaveLife.jpeg" alt="" style="width:500px; height:275px;">
+                            <div class="content-details fadeIn-bottom">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 project-wrap">
+                    <div class="single-project">
+                        <div class="content">
+                            <div class="content-overlay"></div>
+                            <img class="content-image img-fluid d-block mx-auto" src="~/img/BlanketDrive.jpeg" alt="" style="width:500px; height:275px;">
+                            <div class="content-details fadeIn-bottom">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 project-wrap">
+                    <div class="single-project">
+                        <div class="content">
+                            <div class="content-overlay"></div>
+                            <img class="content-image img-fluid d-block mx-auto" src="~/img/SaveLife1.jpeg" alt="" style="width:500px; height:275px;">
+                            <div class="content-details fadeIn-bottom">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End project Area -->
+    <!-- Start about Area -->
+    <section class="about-area" id="5kRun">
+        <div class="container-fluid">
+            <div class="row d-flex justify-content-end align-items-center">
+                <div class="col-lg-6 col-md-12 about-left no-padding">
+                    <img class="img-fluid" src="~/img/about-img.jpg" alt="">
+                </div>
+                <div class="col-lg-6 col-md-12 about-right">
+                    <h1>
+                        FREE for kids<br>
+                        under 5 years
+                    </h1>
+                    <p>
+                        <b>Online Registration:</b>
+                        <br />
+                        Adults: $20 <br />
+                        Kids: 5 years and above $12 <br /> <br />
+                        <b>On spot registration :</b> <br />
+                        Adults: $25 <br />
+                        Kids: 5 years and above $15 <br /><br />
+                        For Sponsorship, please contact: <br />
+                        (425) 949 6964 <br />
+                        (425) 213 7705
+                        <h1> HIGHLIGHTS </h1>
+                        Finisher Ribbon<br>
+                        Winner Prizes <br>
+                        Photographs <br>
+                        Support a Great cause
+                    </p>
+                    @*<button class="primary-btn mt-20 text-uppercase ">learn more<span class="lnr lnr-arrow-right"></span></button>*@
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End about Area -->
+    <!-- Start volunteer Area -->
+    <section class="volunteer-area section-gap">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-8 pb-40 header-text">
+                    <h1>Our Volunteers</h1>
+                    @*<p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> labore  et dolore magna aliqua.
+                        </p>*@
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-3 vol-wrap">
+                    <div class="single-vol">
+                        <div class="content">
+                            <a href="#" target="_blank">
+                                <div class="content-overlay"></div>
+                                <img class="content-image img-fluid d-block mx-auto" src="~/img/Vol4.jpg" alt="" style="width:500px; height:275px;">
+                                <div class="content-details fadeIn-bottom">
+                                    <h4>Manohar</h4>
+                                    @*<p>
+                                            inappropriate behavior
+                                        </p>*@
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 vol-wrap">
+                    <div class="single-vol">
+                        <div class="content">
+                            <a href="#" target="_blank">
+                                <div class="content-overlay"></div>
+                                <img class="content-image img-fluid d-block mx-auto" src="~/img/Vol2.jpg" alt="" style="width:500px; height:275px;">
+                                <div class="content-details fadeIn-bottom">
+                                    <h4>Avinash</h4>
+                                    @*<p>
+                                            inappropriate behavior
+                                        </p>*@
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 vol-wrap">
+                    <div class="single-vol">
+                        <div class="content">
+                            <a href="#" target="_blank">
+                                <div class="content-overlay"></div>
+                                <img class="content-image img-fluid d-block mx-auto" src="~/img/ShivaVol.jpg" alt="" style="width:500px; height:275px;">
+                                <div class="content-details fadeIn-bottom">
+                                    <h4>Shiva</h4>
+                                    @*<p>
+                                            inappropriate behavior
+                                        </p>*@
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 vol-wrap">
+                    <div class="single-vol">
+                        <div class="content">
+                            <a href="#" target="_blank">
+                                <div class="content-overlay"></div>
+                                <img class="content-image img-fluid d-block mx-auto" src="~/img/Vol1.jpg" alt="" style="width:500px; height:275px;">
+                                <div class="content-details fadeIn-bottom">
+                                    <h4>Shoba</h4>
+                                    @*<p>
+                                            inappropriate behavior
+                                        </p>*@
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="" id="faq">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 d-flex flex-column">
+                    <div class="content">
+                        <h4>Registration - Frequently Asked Questions (FAQs)</h4> <br />
+                        <h4>Can I register my family members?</h4>
+                        Yes! You can register multiple people simultaneously.
+                        <h4>If I register for the event but cannot participate on Race Day, can I receive a refund or transfer my registration to another person? </h4>
+                        Unfortunately, all registrations are final and registrations cannot be transferred to another participant. Your registration does count as a donation for a good cause, so we thank you for your generosity!
+                        * Please note: This event will happen rain or shine.
+                        <h4> When and where do I pick up my packet?</h4>
+                        Packet Pickup will be offered at the registration desk on the day of the race. Please arrive as early as possible to avoid waiting in line. Packet pickup will start at 8:00AM. Please bring an ID along with you.
+                        <h4> Can someone else pick up my race packet for me?</h4>
+                        Yes, you can have someone else pick up your race packet for you. Please have them bring a copy of your race registration.
+                        <h4>Will I have to pay for parking?</h4>
+                        Yes, parking at Marymoor is $1. Please ensure you pay for parking.
+                        <h4>Can I bring pets to the race?</h4>
+                        No. For the safety of both two and four legged runners, we ask that you not run with pets during the race.
+                        <h4>Will there be water stops along the course?</h4>
+                        Yes, a water station will be located around mile 2 along the course and water will be provided at the start/finish line.
+                        <h4>Will there be sufficient aid and medical assistance on the course?</h4>
+                        We will have basic first aid with no trained medical staff.
+                    </div>
+                    <br />
+                    <br />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 d-flex flex-column">
+                    <div class="content">
+                        <a href="https://onthegomap.com/?m=r&u=mi&w%5B%5D=Routes+may+not+be+suitable+for+walking.&c%5B%5D=Route+data+%C2%A92019+On+The+Go+Map%2C+OpenStreetMap+Contributors&d=4987&f=c07a750d87&n=1&dm=1&context=share&r2=slzY9zkgfNJ5R7JR599l12d1CPk2l3Oj1AZ12P051n1DX53b54LAj2Mn2a1n2Mj225i1X16B2f1036l11B0V5Z1BZ1Hh1DH9DJJh1R3B5b23t21JBJJHD3JALQD6B3BN5r19j205Hv3Hb115b1f1n1DJd1DY1Rs15W1b1w60KCa1MUY1Y1IEg1KW1Y1Si1288a1GY32C8_16y18a31G0k15o36_33g17m12C0C4QKe1s1q2Mo1Am14s10_1Ds15Ax1Y4Fo15G5i10W13o50QDe29k2N_1Ng1Pc1Va134f2y1p2m1p2e2n2c2v1o1p1y1PW27c15u40s304Bk21g32U8W14COS4I4E1K9I7A4W1QW26O6o10SLy20Y11O2a18W1Ma2s1a3Q_1AW14W12a15W2Bg17EPs17SX2u89i15I3E1G2K8IUk18OO_31Y1TY21ECg2EY19RDd2172DUX2052R5b1Ht23B3BTj17H1J2D01AVUX4Qj3Kp28RETKb1Cf16~11Z13V9VJn15Br1Z3LZ27V1Z12v16RG~10R5n15NP~13V89AH2J3D3HNR3B7V1T2f38h14X10v36t48b1Q~1MPUX1i4t3UPs1j1q2l1g2x1ABQRQb1Of1Oz1Aj2Ed20P4Z4e3A" target="_blank">
+                            <h4>Course Map</h4>
+                            <div class="content-overlay"></div>
+                            <img class="content-image img-fluid d-block mx-auto" src="~/img/locations.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-flex flex-column">
+                    <div class="content">
+                        <div class="single-info">
+                            <h4>Event Details & Schedule</h4>
+                            <p>
+                                The start-line window will open at 8:45 AM with waves going every few minutes until about 9 AM! Make sure you plan your day with plenty of time. <br /> Pre-race party with music, warm up stretching and more!
+                            </p>
+                        </div>
+                        <div class="single-info">
+                            <h4>Date & Time :</h4><p>Saturday -June 22nd 2019 & 8AM to 2PM</p> <h4>Address :</h4> <p>King County’s Marymoor Park 6046 (Near Cricket Field) , <br /> West Lake Sammamish Pkwy, NE <br /> Redmond, WA 98082</p>
+                        </div>
+                        <div class="single-info">
+                            <h4>Race day parking</h4>
+                            <p>
+                                Parking is handled on-site by the venue. Typically, the venue will charge $1.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End volunteer Area -->
+
+
+    <section class="donate-area relative section-gap" id="donate">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-7 contact-left">
+                    <div class="single-info">
+                        <h4>Sponsors</h4>
+                        <div class="single-info">
+                        </div>
+                        <br /> <br />
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 vol-wrap" style="background-color:#ccc">
+                                <div class="single-vol">
+                                    <div class="content">
+                                        <a href="https://www.superjocknjill.com/redmond" target="_blank">
+                                            <div class="content-overlay"></div>
+                                            <img class="content-image img-fluid d-block mx-auto" src="/img/jocks1.png" alt="">
+                                            <div class="content-details fadeIn-bottom">
+                                                <h4>Jock 'n Jill</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 vol-wrap" style="background-color:#ccc">
+                                <div class="single-vol">
+                                    <div class="content">
+                                        <a href="http://www.cafebaharseattle.com/" target="_blank">
+                                            <div class="content-overlay"></div>
+                                            <img class="content-image img-fluid d-block mx-auto" src="/img/cafebahar.png" alt="">
+                                            <div class="content-details fadeIn-bottom">
+                                                <h4>Cafe Bahar</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 vol-wrap" style="background-color:#ccc">
+                                <div class="single-vol">
+                                    <div class="content">
+                                        <a href="http://mayuriseattle.com/grocery/" target="_blank">
+                                            <div class="content-overlay"></div>
+                                            <img class="content-image img-fluid d-block mx-auto" src="/img/Mayuri.jpeg" alt="">
+                                            <div class="content-details fadeIn-bottom">
+                                                <h4>Mayuri</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 vol-wrap" style="background-color:#ccc">
+                                <div class="single-vol">
+                                    <div class="content">
+                                        <a href="https://www.facebook.com/SwagathGroceries/" target="_blank">
+                                            <div class="content-overlay"></div>
+                                            <img class="content-image img-fluid d-block mx-auto" src="/img/Swagath.jpg" alt="">
+                                            <div class="content-details fadeIn-bottom">
+                                                <h4>Swagath</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 vol-wrap" style="background-color:#ccc">
+                                <div class="single-vol">
+                                    <div class="content">
+                                        <a href="http://www.namasteindiact.com/" target="_blank">
+                                            <div class="content-overlay"></div>
+                                            <img class="content-image img-fluid d-block mx-auto" src="/img/NamasteIndia.png" alt="">
+                                            <div class="content-details fadeIn-bottom">
+                                                <h4>NamaesteIndia</h4>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 contact-right">
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input id="hosted_button_id" type="hidden" name="hosted_button_id" value="VPMZ5KP8XQW44">
+                        <input type="hidden" name="rm" value="2">
+                        <input type="hidden" name="currency_code" value="USD">
+                        <div class="row">
+                            <div class="col-lg-12 d-flex flex-column">
+                                @*<div class="row">
+                                        <p style="color:#ccc;  margin-left:10px">PromoCode</p>
+                                        <div class="col-lg-5 d-flex flex-column mt-20">
+                                            <input style="margin-left:0px" type="text" id="txtPromoCode" class="app-select form-control" />
+                                            <label id="lblText" style="color:red; font-style:oblique"></label>
+                                        </div>
+                                        <div class="col-lg-5 d-flex justify-content-end send-btn">
+                                            <button id="btnPromo" type="button" class="submit-btn primary-btn mt-20 text-uppercase ">ApplyPromo<span class="lnr lnr-arrow-right"></span></button>
+                                        </div>
+                                    </div>*@
+                            </div>
+                            <input type="hidden" name="on0" value="Select count">
+                            <p style="color:#ccc;  margin-left:10px">Select count</p>
+                            <div class="col-lg-6 d-flex flex-column mt-20">
+                                <select id="price" name="os0" class="app-select form-control">
+                                    <option value="1 Adult">1 Adult $20.00 USD</option>
+                                    <option value="1 Kid">1 Kid $12.00 USD</option>
+                                    <option value="1 Adult + 1 Kid">1 Adult + 1 Kid $32.00 USD</option>
+                                    <option value="2 Adults + 1 Kid">2 Adults + 1 Kid $52.00 USD</option>
+                                    <option value="2 Adults + 2 Kids">2 Adults + 2 Kids $64.00 USD</option>
+                                    <option value="2 Adults">2 Adults $40.00 USD</option>
+                                    <option value="3 Adults">3 Adults $60.00 USD</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-12 d-flex flex-column">
+                                <div class="row" style="margin-top:20px;">
+                                    <p style="color:#ccc;  margin-left:10px">Waiver</p>
+                                    <p style="height:100px; margin-left:10px; overflow-y:scroll; color:#ccc">
+                                        In consideration of being allowed to participate in the 5k Saibaba Seattle – Run/Walk, I hereby agree that Saibaba Seattle,<br />
+                                        and any other person or entity associated with the event shall have no express or implied duty to provide traffic control, <br />
+                                        first aid or any other services or equipment to me during the event, and that I accept all risks, known or unknown, <br />
+                                        which may arise out of or related to my participation in this event. I grant permission to all of the foregoing to use any photographs, <br />
+                                        motion pictures, recordings, and other records of this event for promotional purposes.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-12 d-flex flex-column">
+                                <p1 style="color:#ccc"><input id="waiver" type="checkbox" style="width:16px; height:16px" required />&nbsp;By checking this box, I agree to the waiver and agree to the  <a href="/Home/Privacy" target="_blank">Privacy Policy</a></p1>
+                            </div>
+                            @*<div class="col-lg-5 d-flex justify-content-end send-btn">
+                                    <button id="btnSubmit" type="submit" class="submit-btn primary-btn mt-20 text-uppercase ">Register<span class="lnr lnr-arrow-right"></span></button>
+                                </div>*@
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- End donate Area -->
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+        <div class="container">
+            <div class="row d-flex flex-column justify-content-center">
+                <ul class="footer-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#5kRun">5kRun</a></li>
+                    <li><a href="#services">Community Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#winnerlist">Winners</a></li>
+                    <li><a href="#donate">Register</a></li>
+                    <li><a href="#faq">Faq</a></li>
+                </ul>
+                <p class="footer-text m-0">
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved
+                </p>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+    <script src="~/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="~/js/vendor/JavaScript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="~/js/vendor/bootstrap.min.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/parallax.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script language="JavaScript" type="text/javascript">
+        TrustLogo("https://www.saibaba5krun.org/img/sectigo_trust_seal_lg_140x54.png", "CL1", "none");
+    </script>
+    <a href="https://ssl.comodo.com/free-ssl-certificate.php" id="comodoTL">Free SSL</a>
+</body>
+</html>
+
