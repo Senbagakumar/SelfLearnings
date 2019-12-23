@@ -11,13 +11,16 @@ namespace Prepration
         //https://leetcode.com/problems/design-linked-list/discuss/378688/Design-Linked-List-Java
         private Node head;
         private int size;
+        public Node Head { get { return head; } }
 
         public void AddNode(int value) // At Tail
         {
             var currentNode = new Node(value);
 
             if (head == null)
+            {
                 head = currentNode;
+            }
             else
             {
                 Node current = head;
@@ -213,7 +216,7 @@ namespace Prepration
         }
 
         /*5. Reverse a singly linked list.*/
-        static Node ReverseLinkedList(Node node)
+        public static Node ReverseLinkedList(Node node)
         {
             if (node == null || node.Next == null) return node;
             var next = node.Next;
@@ -221,6 +224,22 @@ namespace Prepration
             next.Next = node;
             node.Next = null;
             return reverseNode;
+        }
+
+        public static Node ReverseLinkedListIterative(Node node)
+        {
+            Node current = node;
+            Node forward = null;
+            Node previous = null;
+
+            while(current!=null)
+            {
+                forward = current.Next;
+                current.Next = previous;
+                previous = current;
+                current = forward;
+            }
+            return previous;
         }
 
         /*6. Delete a node in linked list
@@ -390,6 +409,50 @@ namespace Prepration
             carry = sum / 10;
             sum = sum % 10;
             li.AddAtHead(sum);
+        }
+
+        //11. Delete middle of linked list
+        //https://www.geeksforgeeks.org/delete-middle-of-linked-list/
+
+        public static Node DeleteMiddleNode(Node node)
+        {
+            if (node == null || node.Next == null) return null;
+            Node fast = node.Next;
+            Node slow = node;
+            Node previous = null;
+            while(fast!=null && slow!=null)
+            {
+                previous = slow;
+                slow = fast;
+                fast = fast.Next;
+            }
+            previous.Next = slow.Next;
+            return node;
+
+
+        }
+
+        //12. Binary Tree to Doubly Linked List
+        //https://www.geeksforgeeks.org/convert-a-given-binary-tree-to-doubly-linked-list-set-4/
+
+
+        //13. Last 3rd Linked list
+        public static Node GetLast3rdLinkedList(Node node)
+        {
+            Node current = node;
+            Node fast = current;
+
+            for (int i = 0; i < 3; i++)
+            {
+                fast = fast.Next;
+            }
+
+            while(fast!=null)
+            {
+                current = current.Next;
+                fast = fast.Next;
+            }
+            return current;
         }
     }
 }

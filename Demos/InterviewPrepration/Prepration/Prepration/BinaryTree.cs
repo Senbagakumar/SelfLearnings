@@ -27,9 +27,6 @@ namespace Prepration
         public int BTHeight(Node rootNode)
         {
             if (rootNode == null) return 0;
-            if (rootNode.Left == null && rootNode.Right == null)
-                return 1;
-
             int left = BTHeight(rootNode.Left);
             int right = BTHeight(rootNode.Right);
             return Math.Max(left, right) + 1;
@@ -77,26 +74,41 @@ namespace Prepration
         }
 
         //4. Construct the binary tree
-        public static Node ConstructBinaryTree(int[] inorder, int[] postorder)
+        public static Node ConstructBinaryTree(int[] inorder, int[] postorder, bool preorder=false)
         {
 
             var map = new Dictionary<int, int>();
             for (int i = 0; i < inorder.Length; i++)
                 map.Add(inorder[i], i);
 
-            var node = Construct(postorder, 0, postorder.Length - 1, 0, map);
+            var node = Construct(postorder, 0, postorder.Length - 1, 0, map, preorder);
             return node;
         }
 
-        public static Node Construct(int[] p, int s, int e, int s_, Dictionary<int, int> inorder)
+        public static Node Construct(int[] p, int s, int e, int s_, Dictionary<int, int> inorder, bool preorder=false)
         {
             if (s > e) return null;
-            var root = p[e];
+            
+            var root = 0;
+            if (preorder)
+               root = p[s];
+            else
+               root = p[e];
             var index = inorder[root];
             var node = new Node(root);
             var len = index - s_;
-            node.Left = Construct(p, s, s + len - 1, s_, inorder);
-            node.Right = Construct(p, s + len, e - 1, index + 1, inorder);
+
+            if (!preorder)
+            {
+                node.Left = Construct(p, s, s + len - 1, s_, inorder, preorder);
+                node.Right = Construct(p, s + len, e - 1, index + 1, inorder, preorder);
+            }
+            else
+            {
+                node.Left = Construct(p, s + 1, s + len, s_, inorder, preorder);
+                node.Right = Construct(p, s + len + 1, e, index+1, inorder, preorder);
+            }
+
             return node;
         }
 
@@ -536,7 +548,77 @@ namespace Prepration
             return root;
         }
 
-        
+        //22. BT is BST
+        public static bool IsBST(Node node, int min, int max)
+        {
+            if (node == null) return true;
+            if (node.Value < min || node.Value > max) return false;
+            return IsBST(node.Left, min, node.Value) && IsBST(node.Right, node.Value, max);
+        }
+
+        //23. Print BST keys in the given range
+        // 20->L->8   8->L->4 8->R->12
+        // 20->R->22
+        // https://www.geeksforgeeks.org/print-bst-keys-in-the-given-range/
+        public static void PrintBSTKeysBetweenRange(Node node, int min, int max)
+        {
+            if (node == null) return;
+
+            if (node.Data > min)
+                PrintBSTKeysBetweenRange(node.Left, min, max);
+            if (node.Data >= min && node.Data <= max)
+                Console.WriteLine(node.Data);
+
+            if (node.Data < max)
+                PrintBSTKeysBetweenRange(node.Right, min, max);
+        }
+
+        //24.https://www.geeksforgeeks.org/the-celebrity-problem/
+
+        //25. Convert a given tree to its Sum Tree
+        //https://www.geeksforgeeks.org/convert-a-given-tree-to-sum-tree/
+
+        //26. Print nodes at k distance from root
+        //https://www.geeksforgeeks.org/print-nodes-at-k-distance-from-root/
+
+        public static void PrintAllNodeFromKDistance(Node node, int k)
+        {
+            if (node == null) return;
+            if (k == 0)
+            {
+                Console.WriteLine(node.Data);
+
+            }
+            else
+            {
+                PrintAllNodeFromKDistance(node.Left, k - 1);
+                PrintAllNodeFromKDistance(node.Right, k - 1);
+            }
+        }
+
+        //27. Transform in SomeTree
+        //https://www.geeksforgeeks.org/convert-a-given-tree-to-sum-tree/
+        private static int TransformSumTree(Node node)
+        {
+            if (node == null) return 0;
+            var oldValue = node.Data;
+            var newValue = TransformSumTree(node.Left)+ TransformSumTree(node.Right);
+            return oldValue + newValue;
+        }
+        private static void PrintSumTree(Node node)
+        {
+            if (node == null) return;
+            PrintSumTree(node.Left);
+            Console.WriteLine(node.Data);
+            PrintSumTree(node.Right);
+
+        }
+
+        public static void TransformAndPrintSumTree(Node node)
+        {
+            TransformSumTree(node);
+            PrintSumTree(node);
+        }
 
     }
 }

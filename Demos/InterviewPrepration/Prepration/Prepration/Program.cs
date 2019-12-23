@@ -1,212 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
 
 namespace Prepration
-{
+{   
     class Program
     {
 
-        public static bool isPrime(int number)
-        {
-            int counter = 0;
-            for (int j = 2; j < number; j++)
-            {
-                if (number % j == 0)
-                {
-                    counter = 1;
-                    break;
-                }
-            }
-            if (counter == 0)
-            {
-                Console.WriteLine(number);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static void NthPrime()
-        {
-            int num = 0;
-            int count = 1;
-            Console.Write("Number : ");
-            int n = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-            while (true)
-            {
-                num++;
-                if (isPrime(num))
-                {
-                    count++;
-                }
-                if (count == n)
-                {
-                    Console.WriteLine(n + "th prime number is " + num);
-                    break;
-                }
-            }
-        }
-
-        public static int CalcGCD(int firstNo, int secondNo)
-        {
-            //GCD
-            while (firstNo != secondNo)
-            {
-                if (firstNo > secondNo)
-                    firstNo -= secondNo;
-                else
-                    secondNo -= firstNo;
-            }
-            return firstNo;
-        }
-
-        public static int CalcLCM(int firstNo, int secondNo)
-        {
-            return (firstNo * secondNo) / CalcGCD(firstNo, secondNo);
-        }
-
-        public static int ReverseNo(int inputNo)
-        {
-            int reverseno = 0;
-            for(int i=inputNo; i > 0; i=i/10)
-            {
-                int remainder = i % 10;
-                reverseno = reverseno * 10 + remainder;
-            }
-            return reverseno;
-        }
-
-        public static bool ArmstrongNo(int inputNo)
-        {
-            int armstrongNo = 0;
-            for(int i=inputNo; i > 0; i=i/10)
-            {
-                int remainder = i % 10;
-                armstrongNo += (remainder * remainder * remainder);
-            }
-            if (inputNo == armstrongNo)
-                return true;
-            else
-                return false;
-        }
-
-        public static int Fibonacci(int no)
-        {
-            if (no == 0) return 0;
-            if (no == 1) return 1;
-            return Fibonacci(no-1) + Fibonacci(no - 2);
-        }
-
-        public static void PrintFibonacci(int no)
-        {
-            int i = 0;
-            while(i < no)
-            {
-                Console.WriteLine(Fibonacci(i));
-                i++;
-            }
-        }
-
-        public static int Factorial(int no)
-        {
-            if (no == 0 || no == 1) return no;
-            return no * Factorial(no - 1);
-        }
-
        
-
-        public static void FindTheDuplicates(string inputString)
-        {
-            var wordCount = new Dictionary<char, int>();
-            string s = string.Empty;
-            foreach(var c in inputString)
-            {
-                if (c == ' ') continue; 
-                if (wordCount.Keys.Contains(c))
-                {
-                    wordCount[c]++;
-                }
-                else
-                {
-                    s += c;
-                    wordCount.Add(c, 1);
-                }
-            }
-            //var v= wordCount.OrderBy(q => q.Value);
-            Console.WriteLine($"The Unique InputString is => {s}");
-           // Console.WriteLine($"The maximum duplicate word is {wordCount.Last().Key}");
-        }
-
-        public static void Palindrome(string inputString)
-        {
-            int i = 0; int j = inputString.Length-1;
-            bool isPalindrome = true;
-            while ((j + 1) / 2 > 0)
-            {
-                if (inputString[i] != inputString[j])
-                {
-                    isPalindrome = false;
-                    Console.WriteLine($"{inputString} is not a palindrome");
-                    break;
-                }
-                i++; j--;
-            }
-            if(isPalindrome)
-                Console.WriteLine($"{inputString} is a palindrome");
-        }
-
-        public static void Anagram(string firstString, string secondString)
-        {
-            firstString = firstString.ToLower();
-            secondString = secondString.ToLower();
-            var first = firstString.ToCharArray();
-            var second = secondString.ToCharArray();
-            Array.Sort(first);
-            Array.Sort(second);
-            if(new string(first) == new string(second))
-            {
-                Console.WriteLine($"{firstString} and {secondString} is Anagram");
-            }
-            else
-            {
-                Console.WriteLine($"{firstString} and {secondString} is not an Anagram");
-            }
-        }
-
-        public static void SubStringPattern(string input, string substring)
-        {
-            //HiHowHowareyou
-            //Howa
-            int i = 0, j = 0, k = 0;
-            while(i < input.Length)
-            {
-                while(j < substring.Length)
-                {
-                    if(input[i] == substring[j])
-                    {
-                        i++; j++;
-                    }
-                    else
-                    {
-                        j = 0;
-                        k++;
-                        i = k;
-                    }
-                }
-            }
-        }
-
         static void Main(string[] args)
         {
+            DesignQuestions.MyHashMap cv = new DesignQuestions.MyHashMap();
+            cv.put(5, 10);
+            cv.get(5);
+            cv.put(6,11);
+            cv.put(7, 12);
+            cv.get(6);
+            cv.get(8);
+            cv.put(2074, 20);
+            cv.put(2073, 25);
+
+
+            //DesignQuestions.LRUCache.Test();
+            //stringprograms.ValidParantheses();
+            //Microsoft.Microsoft1.FindMinimumInSortedArray();
+            //stringprograms.GetUniqueSubstring();
+            //var result=ArrayPrograms.SortedArrayToBinarySearchTree(new int[] { -10, -3, 0, 5, 9, 10 });
+            ArrayPrograms.AsteroidCollision();
+            //ArrayPrograms.MinCostPath();
+            //stringprograms.search();//"HiHoHowareyou", "How" --> "AABAACAADAABAAABAA", "AABA"
+
+            Console.Read();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //int[] B = new int[] { 1, 1, 1, 3, 3, 3, 20, 4, 4, 4 };
+            //int ones = 0;
+            //int twos = 0;
+            //int not_threes;
+            //int x;
+
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    x = B[i];
+            //    twos |= ones & x;
+            //    ones ^= x;
+            //    not_threes = ~(ones & twos);
+            //    ones &= not_threes;
+            //    twos &= not_threes;
+            //}
+
+            //ArrayPrograms.FindUniqueNo(new int[] { 12, 5, 12, 4, 12, 1, 1, 2, 3, 3,2,5 });
+            // stringprograms.RemoveDuplicates("wwwwaaadexxxxxxywww");
             //stringprograms.reverseWords("the sky is blue".ToCharArray());
-            stringprograms.CalculateValues();
+            //stringprograms.CalculateValues();
+            //bool result=stringprograms.IsIsomorphic("far", "boo");
+
+            //string[] logs = new string[] { "dig1 8 1 5 1", "let1 art can", "dig2 3 6", "let2 own kit dig", "let3 art zero" };
+            //var result = stringprograms.ReOrderTheLogFiles(logs);
+
+            //beginWord = hit; endWord=cog; dict = ["hot","dot","dog","lot","log"]
+            //int steps = stringprograms.NoOfStepsForWordLadder("hit", "cog", new List<string>() { "hot", "dot", "dog", "lot","log" });
+
+            //given [3,2,1,5,6,4] and k = 2, return 5
+            //int result = stringprograms.FindKthLargestElement(new int[] { 3, 2, 1, 5, 6, 4 }, 2);
+            //stringprograms.FindDuplicatesUseIndex("abcdefabc");
+            //stringprograms.SubStringPattern("HiHowHowareyou", "iam");
+            //stringprograms.LengthEncoding("wwwwaaadexxxxxxywww");
+            //ArrayPrograms.PrintTwoElements(new int[] { 7, 3, 4, 5, 5, 6, 2 });
             //DesignQuestions.ExecuteTicTacToe();
             //LinkedListPrograms.OddEvenLinkedList();
 
@@ -270,8 +165,10 @@ namespace Prepration
             //ArrayPrograms.RotationSearch(new int[] { 4, 5, 1, 2, 3 }, 3, 0, 5);
 
 
-            ////Binary Tree
-            //var node= BinaryTree.ConstructBinaryTree(new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 });
+            ////Binary Tree //new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 }
+            /////new int[] { 3,5,8,10,12,14,16 }, new int[] { 3,8,5,12,16,14,10} -- In, Post
+            /////new int[] { 3,5,8,10,12,14,16 }, new int[] { 10,5,3,8,14,12,16}
+            //var node = BinaryTree.ConstructBinaryTree(new int[] { 3,5,8,10,12,14,16 }, new int[] { 10, 5, 3, 8, 14, 12, 16 },true);
             //BinaryTree.SeriaizeDeserializeBinaryTree(node);
             ////Print Binary tree
             //// BinaryTree.BFSTPrintByLevel(node);
@@ -285,7 +182,14 @@ namespace Prepration
 
             //LinkedListPrograms.SumOfTwoLinkedList();
 
+            var llist = new LinkedList();
+            llist.AddNode(1);
+            llist.AddNode(2);
+            llist.AddNode(3);
+            llist.AddNode(4);
+            llist.AddNode(5);
 
+            LinkedListPrograms.ReverseLinkedList(llist.Head);
             Console.ReadKey();
         }
 
