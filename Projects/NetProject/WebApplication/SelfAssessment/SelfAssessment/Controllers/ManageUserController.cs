@@ -235,7 +235,9 @@ namespace SelfAssessment.Controllers
             var dt = Utilities.GetReport(this.UserId,level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
-            Utilities.CreatePdf(fileName, dt, companyName, address, contactName);
+            var iqLogo = Server.MapPath(Utilities.IqLogo);
+            var ciLogo = Server.MapPath(Utilities.CiiLogo);
+            Utilities.CreatePdf(fileName, dt, companyName, address, contactName,iqLogo,ciLogo);
             return File(fileName, "application/pdf", $"{dynamicName}.pdf");
 
         }
@@ -246,6 +248,8 @@ namespace SelfAssessment.Controllers
             var dt = Utilities.GetReport(this.UserId,level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.csv");
+            var iqLogo = Server.MapPath(Utilities.IqLogo);
+            var ciLogo = Server.MapPath(Utilities.CiiLogo);
             var s=Utilities.CreateCsv(dt, companyName, address, contactName);
             System.IO.File.AppendAllText(fileName, s);
             return File(fileName, "application/text", $"{dynamicName}.csv");

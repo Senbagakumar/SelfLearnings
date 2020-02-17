@@ -214,14 +214,14 @@
                 labels: bc4groups,
                 datasets: [
                     {
-                        label: "organization individual Score",
+                        label: "Organization individual Score",
                         data: bC4OrgScore,
                         borderColor: "rgba(0, 123, 255, 0.9)",
                         borderWidth: "0",
                         backgroundColor: "rgba(0, 123, 255, 0.5)"
                     },
                     {
-                        label: "manufacure individual Score",
+                        label: "Sectorwise Comparsion Score",
                         data: bC4OtherOrgScore,
                         borderColor: "rgba(0,0,0,0.09)",
                         borderWidth: "0",
@@ -286,7 +286,7 @@
                         backgroundColor: "rgba(0, 123, 255, 0.5)"
                     },
                     {
-                        label: "manufacture individual Score",
+                        label: "Sectorwise Comparison Score",
                         data: bC5OtherOrgScore,
                         borderColor: "rgba(0,0,0,0.09)",
                         borderWidth: "0",

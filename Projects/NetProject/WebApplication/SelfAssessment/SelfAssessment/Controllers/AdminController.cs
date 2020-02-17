@@ -243,7 +243,9 @@ namespace SelfAssessment.Controllers
             var dt = Utilities.GetReport(userId, level);
             var dynamicName = DateTime.Now.ToString("ddMMyyyyHHmmss");
             var fileName = Server.MapPath($"~/Downloads/{dynamicName}.pdf");
-            Utilities.CreatePdf(fileName, dt,companyName,address,contactName);
+            var iqLogo = Server.MapPath(Utilities.IqLogo);
+            var ciLogo = Server.MapPath(Utilities.CiiLogo);
+            Utilities.CreatePdf(fileName, dt,companyName,address,contactName,iqLogo,ciLogo);
             return File(fileName, "application/pdf", $"{dynamicName}.pdf");
 
         }

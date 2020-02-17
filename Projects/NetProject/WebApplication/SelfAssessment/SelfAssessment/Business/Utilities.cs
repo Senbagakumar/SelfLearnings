@@ -52,6 +52,8 @@ namespace SelfAssessment.Business
         public const string AssessmentCompletionMail = "Assessment Completion Mail";
         public const string AssessmentCompletionSubject = "Assessment Completion @ CII Online Self-Assessment System for Business Excellence";
         public const string FromMailId = "be.award@cii.in";
+        public const string IqLogo = "~/img/iqlogo.png";
+        public const string CiiLogo = "~/img/ciilogo.png";
 
         public static int CalculateScoreByAns(int answerId)
         {
@@ -106,9 +108,9 @@ namespace SelfAssessment.Business
             return sb.ToString();
 
         }
-        public static void CreatePdf(string pdfFilename, DataTable dt, string companyName, string address, string contactName)
+        public static void CreatePdf(string pdfFilename, DataTable dt, string companyName, string address, string contactName, string iqlogo, string ciilogo)
         {
-            PDFform pdfForm = new PDFform(dt, pdfFilename);
+            PDFform pdfForm = new PDFform(dt,iqlogo,ciilogo);
 
             // Create a MigraDoc document
             Document document = pdfForm.CreateDocument(companyName, address, contactName);

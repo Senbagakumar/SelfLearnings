@@ -7,10 +7,8 @@ using System.Data;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.DocumentObjectModel.Tables;
-/// <summary>
-/// Summary description for InvoiceForm
-/// </summary>
-/// 
+
+
 namespace FileDownload.Controllers
 {
     public class PDFform
@@ -32,7 +30,7 @@ namespace FileDownload.Controllers
         /// An XML invoice based on a sample created with Microsoft InfoPath.
         /// </summary>
         DataTable dt;
-        string path;
+        string IqLogo;
         /// <summary>
         /// The root navigator for the XML document.
         /// </summary>
@@ -51,10 +49,14 @@ namespace FileDownload.Controllers
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
         /// </summary>
-        public PDFform(DataTable dtIn, string pathIn)
+        /// 
+
+        string cilogo;
+        public PDFform(DataTable dtIn, string iqlogo, string ciilogo)
         {
             dt = dtIn;
-            path = pathIn;
+            IqLogo = iqlogo; //~/img/iqlogo.png
+            cilogo = ciilogo;
         }
 
         /// <summary>
@@ -112,9 +114,7 @@ namespace FileDownload.Controllers
             style.ParagraphFormat.TabStops.AddTabStop("16cm", TabAlignment.Right);
         }
 
-        /// <summary>
-        /// Creates the static parts of the invoice.
-        /// </summary>
+
 
         void CreatePage()
         {
@@ -122,12 +122,18 @@ namespace FileDownload.Controllers
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.AddImage(path);
+            Image iqimage = section.AddImage(IqLogo);
 
 
-            image.Top = ShapePosition.Top;
-            image.Left = ShapePosition.Left;
-            image.WrapFormat.Style = WrapStyle.Through;
+            iqimage.Top = ShapePosition.Top;
+            iqimage.Left = ShapePosition.Left;
+            iqimage.WrapFormat.Style = WrapStyle.Through;
+
+            Image ciLogo = section.AddImage(cilogo);
+            ciLogo.Top = ShapePosition.Top;
+            ciLogo.Left = ShapePosition.Right;
+            ciLogo.WrapFormat.Style = WrapStyle.Through;
+
 
             // Create footer
             Paragraph paragraph = section.Footers.Primary.AddParagraph();
@@ -171,15 +177,22 @@ namespace FileDownload.Controllers
 
 
 
-
+            int j = 0;
             // Before you can add a row, you must define the columns
             Column column;
             foreach (DataColumn col in dt.Columns)
             {
+                if(j ==0)
+                    column = this.table.AddColumn(Unit.FromCentimeter(1));
+                else if(j==1)
+                    column = this.table.AddColumn(Unit.FromCentimeter(4));
+                else if(j==2)
+                    column = this.table.AddColumn(Unit.FromCentimeter(7));
+                else
+                    column = this.table.AddColumn(Unit.FromCentimeter(4));
 
-                column = this.table.AddColumn(Unit.FromCentimeter(3));
                 column.Format.Alignment = ParagraphAlignment.Center;
-
+                j++;
 
             }
 
@@ -201,7 +214,6 @@ namespace FileDownload.Controllers
 
 
             }
-
 
             this.table.SetEdge(0, 0, dt.Columns.Count, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
@@ -229,23 +241,16 @@ namespace FileDownload.Controllers
             {
                 row1 = this.table.AddRow();
 
-
                 row1.TopPadding = 1.5;
 
 
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
-
                     row1.Cells[j].Shading.Color = TableGray;
                     row1.Cells[j].VerticalAlignment = VerticalAlignment.Center;
-
                     row1.Cells[j].Format.Alignment = ParagraphAlignment.Left;
                     row1.Cells[j].Format.FirstLineIndent = 1;
-
-
-
                     row1.Cells[j].AddParagraph(dt.Rows[i][j].ToString());
-
 
                     this.table.SetEdge(0, this.table.Rows.Count - 2, dt.Columns.Count, 1, Edge.Box, BorderStyle.Single, 0.75);
                 }

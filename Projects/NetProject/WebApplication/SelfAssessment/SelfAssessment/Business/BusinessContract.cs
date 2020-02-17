@@ -92,8 +92,8 @@ namespace SelfAssessment.Business
         public ValidationInformation UserCreation(UIOrganization uIOrganization)
         {
             ValidationInformation validation= this.userBValidation.RegistrationValidation(uIOrganization);
-            if (validation.IsSuccess)
 
+            if (validation.IsSuccess)
             {
                 string password = GenerateTempPassword(8, 2);
                 string[] sector = new string[2];
@@ -125,7 +125,6 @@ namespace SelfAssessment.Business
                 using (Repository<Organization> repository = new Repository<Organization>())
                 {
                     Organization organization = this.organizationMapper.Registration(uIOrganization);
-
                     organization.Cities = repository.AssessmentContext.cities.FirstOrDefault(q => q.Id == organization.CityId);
                     organization.States = repository.AssessmentContext.states.FirstOrDefault(q => q.Id == organization.StateId);
                     organization.Revenues = repository.AssessmentContext.revenues.FirstOrDefault(q => q.Id == organization.RevenueId);

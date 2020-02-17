@@ -1,4 +1,5 @@
-﻿using SelfAssessment.Business;
+﻿using Newtonsoft.Json;
+using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
 using SelfAssessment.ExceptionHandler;
 using SelfAssessment.Models;
@@ -166,10 +167,11 @@ namespace SelfAssessment.Controllers
         public JsonResult CreateOrganization(UIOrganization organization)
         {
             string errorMsg = string.Empty;
+            ValidationInformation validation=new ValidationInformation();
             try
             {
 
-               var validation=this.businessContract.UserCreation(organization);
+               validation=this.businessContract.UserCreation(organization);
                 if (validation.IsSuccess)
                     errorMsg = Utilities.Success;
                 else
@@ -182,9 +184,16 @@ namespace SelfAssessment.Controllers
             catch(Exception ex)
             {
                 UserException.LogException(ex);
+                errorMsg = Utilities.Failiure;
+                validation.ErrorMessages = new List<string>();
+                validation.ErrorMessages.Add("Some Exception Occured, Please try again later");
                 //return View();
             }
-           return Json(errorMsg, JsonRequestBehavior.AllowGet);
+
+            if(errorMsg == Utilities.Success)
+                return Json(errorMsg, JsonRequestBehavior.AllowGet);
+            else
+                return Json(JsonConvert.SerializeObject(validation), JsonRequestBehavior.AllowGet);
         }
       
     }

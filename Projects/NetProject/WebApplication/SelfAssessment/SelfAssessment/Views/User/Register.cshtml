@@ -137,7 +137,6 @@
     $(document).ready(function () {
 
         $('#State').on('change', function () {
-
             $.ajax({
                 type: "GET",
                 url: API.GetCities() + $(this).val(),
@@ -167,6 +166,8 @@
             else {
                 $('#divOthers').hide();
                 $('#txtSector').hide();
+                 $('#divOthers1').hide();
+                $('#txtSubSector').hide();
 
                 $.ajax({
                     type: "GET",
@@ -197,6 +198,10 @@
 
         $('#SubSector').on('change', function () {
             subsectoronchange();
+            if ($('#SubSector').val() != "1000") {
+                  $('#divOthers1').hide();
+                $('#txtSubSector').hide();
+            }
         });
 
         $('#btnLogin').click(function () {
@@ -210,6 +215,11 @@
                 sect = $('#Sector').val();
             else
                 sect = $('#Sector').val() + "-" + $('#txtSector').val();
+
+            if (sect == '') {
+                alert('Sector is a mandatory');
+                return;
+            }
 
             var subSect = $('#txtSubSector').val();
 
@@ -234,10 +244,26 @@
                 Type: $('#Type').val()
             };
 
-            if (model.Name.length < 6) {
+             if (model.Name.length < 6) {
                 alert("OrganizationName length should be 6 or More");
                 return false;
             }
+
+            if (model.Email == '') {
+                alert("Organization Email is a mandatory");
+                return false;
+            }
+
+            if (model.City == 0) {
+                alert("City is a mandatory");
+                return false;
+            }
+
+            if (model.State == 0) {
+                alert("Stage is a mandatory");
+                return false;
+            }
+           
 
             $.ajax({
                 type: "POST",
@@ -248,11 +274,17 @@
 
                 $('#text-input').val('');
                 $('#txtId').val('');
+                
                 if (res == "Success") {
                     location.href = API.LoginSuccess();
                 }
+                else {
+                    var failiureInfo = JSON.parse(res);
+                    alert(failiureInfo.ErrorMessages[0]);
+                }
+            }).fail(function (res) {
+                console.log(res);
             });
-
         });
 
     });
