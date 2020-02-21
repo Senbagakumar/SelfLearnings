@@ -54,6 +54,9 @@ namespace SelfAssessment.Business
         public const string FromMailId = "be.award@cii.in";
         public const string IqLogo = "~/img/iqlogo.png";
         public const string CiiLogo = "~/img/ciilogo.png";
+        public const string Ap = "NKKQThSXM86X2NbcV6GFag==";
+        public const string Au = "NtGoVOIRDIKEbIf0A9Sa0F0qr3BqbWLTCD3goKNsn2k=";
+        public const string An = "Admin";
 
         public static int CalculateScoreByAns(int answerId)
         {

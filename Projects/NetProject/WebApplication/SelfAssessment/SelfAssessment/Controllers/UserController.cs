@@ -49,9 +49,9 @@ namespace SelfAssessment.Controllers
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
-            if (email == "Admin@gmail.com" && password == "Admin")
+            if (email == StringCipher.Decrypt(Utilities.Au) && password == StringCipher.Decrypt(Utilities.Ap))
             {
-                Session["Admin"] = "Admin";
+                Session[Utilities.An] = Utilities.Ap;
                 return Redirect(Utilities.RedirectToAdmin);
             }
             else

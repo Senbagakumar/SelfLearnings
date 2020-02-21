@@ -66,7 +66,7 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        var cId = repository.All().Count();
+                        var cId = repository.All().Max(q => q.Id);
                         var city = new City()
                         {
                             Id = ++cId,

@@ -1,5 +1,6 @@
 ﻿using SelfAssessment.Business;
 using SelfAssessment.DataAccess;
+using SelfAssessment.ExceptionHandler;
 using SelfAssessment.Models;
 using SelfAssessment.Models.DBModel;
 using System;
@@ -50,7 +51,7 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        var stateCount = repository.AssessmentContext.states.Count();
+                        var stateCount = repository.All().Max(q => q.Id); //repository.AssessmentContext.states.Count();
                         repository.Create(new State() { StateName = state.StateName, Id=++stateCount, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
@@ -60,8 +61,9 @@ namespace SelfAssessment.Controllers
 
                 // return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
+                UserException.LogException(ex);
                 return Json("Failiure", JsonRequestBehavior.AllowGet);
             }
             return Json("Success", JsonRequestBehavior.AllowGet);

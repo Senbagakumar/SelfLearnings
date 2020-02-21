@@ -64,7 +64,7 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        var count = repository.All().Count();
+                        var count = repository.All().Max(q => q.Id);
                         var subSector = new SubSector()
                         {
                             Id = ++count,

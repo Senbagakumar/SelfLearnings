@@ -32,7 +32,7 @@ namespace SelfAssessment.Controllers
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            if (Session["Admin"] == null || string.IsNullOrEmpty(Session["Admin"].ToString()))
+            if (Session[Utilities.An] == null || string.IsNullOrEmpty(Session[Utilities.An].ToString()))
                 Response.Redirect(Utilities.RedirectToLogin);            
         }
 

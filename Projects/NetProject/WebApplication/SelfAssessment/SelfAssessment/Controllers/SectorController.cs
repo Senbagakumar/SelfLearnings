@@ -52,7 +52,7 @@ namespace SelfAssessment.Controllers
                     }
                     else
                     {
-                        var count = repository.All().Count(); 
+                        var count = repository.All().Max(q => q.Id);
                         repository.Create(new Sector() { Id = ++count, SectorName = sector.SectorName, CreateDate = DateTime.Now });
                     }
                     repository.SaveChanges();
