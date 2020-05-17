@@ -8,6 +8,11 @@ namespace Prepration
 {
     class LinkedList
     {
+        public LinkedList() { }
+        public LinkedList(int num)
+        {
+            AddNode(num);
+        }
         //https://leetcode.com/problems/design-linked-list/discuss/378688/Design-Linked-List-Java
         private Node head;
         private int size;
@@ -129,6 +134,8 @@ namespace Prepration
             return head;
         }
 
+        //Amazon Question
+        //Microsoft Question
         //2. Merge Sorted two linked list
         public static Node MergeSortedTwoList()
         {
@@ -215,6 +222,8 @@ namespace Prepration
             return map[mid];
         }
 
+        //Amazon Question
+        //Microsoft Question
         /*5. Reverse a singly linked list.*/
         public static Node ReverseLinkedList(Node node)
         {
@@ -242,6 +251,40 @@ namespace Prepration
             return previous;
         }
 
+        //swap two linked list
+        //q: https://leetcode.com/problems/swap-nodes-in-pairs/
+        //a: https://leetcode.com/problems/swap-nodes-in-pairs/discuss/480539/C-80ms-Runtime.-Fastest-Iterative-Solution-with-Simple-and-Easy-to-understand-code.
+        public static Node SwapPairs(Node head)
+        {
+            if (head == null || head.Next == null) return head;
+
+            Node result = head.Next;
+            //the second node will be the head after all swaps, so we keep a variable with reference to it.
+            Node firstNode = null;
+            Node secondNode = null;
+            var li= new LinkedList(0);
+            Node previousNode = li.Head;
+
+            while (head != null && head.Next != null)
+            {
+                firstNode = head;
+                secondNode = head.Next;
+
+
+                firstNode.Next = secondNode.Next;
+                
+                secondNode.Next = firstNode;
+                previousNode.Next = secondNode;
+                //secondNode will be the first node in the swapped pair. It is used to link previous and current pairs together.
+                previousNode = firstNode;
+                //firstNode will be the last node in the swapped pair for the next iteartion.
+                head = firstNode.Next;
+                //we cannot use head.next here because nodes are modified in every iteration and head.next will give false results.
+            }
+
+            return result;
+        }
+
         /*6. Delete a node in linked list
          * https://leetcode.com/problems/delete-node-in-a-linked-list/discuss/388433/Java-100-time-100-space
          */
@@ -265,9 +308,10 @@ namespace Prepration
             return head;
         }
 
+        ////Microsoft Question
         /*7. Detect Linked List 
          */
-         static bool DetectListCycle(Node node)
+        static bool DetectListCycle(Node node)
         {
             if (node == null) return false;
             Node fast = node.Next;
@@ -310,7 +354,7 @@ namespace Prepration
         {
             public bool isPalindrome = true;
         }
-        static Node RecursivePalindrome(Node slow, Node fast,Result result)
+        public static Node RecursivePalindrome(Node slow, Node fast,Result result)
         {
             if (fast == null) return slow;
             if (fast.Next == null) return slow.Next;
@@ -319,6 +363,8 @@ namespace Prepration
                 result.isPalindrome = false;
             return recur.Next;
         }
+
+        //Microsoft Question
         //9. Intersection of Two linked list
         //https://leetcode.com/problems/intersection-of-two-linked-lists/discuss/386874/JAVA-easy-O(n)-solution-beats-~99
         static Node IntersecionPointOfLinkedList(Node first, Node second)
@@ -357,10 +403,13 @@ namespace Prepration
         //Convert Sorted List to Binary Search Tree
 
 
+
         //Remove Duplicates from Sorted List II  
         //Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
 
-        //10. Sum of Two linked list
+        //Amazon Question
+        //Microsoft Question
+        //10. Sum of Two linked list or Add two liked list
         static int carry = 0;
         public static void SumOfTwoLinkedList()
         {
@@ -387,7 +436,7 @@ namespace Prepration
                 }
                 else
                 {
-                    while (different-- > 0)
+                    while (different-- <= 0)
                     {
                         b.AddAtHead(0);
                     }
@@ -414,17 +463,17 @@ namespace Prepration
         //11. Delete middle of linked list
         //https://www.geeksforgeeks.org/delete-middle-of-linked-list/
 
-        public static Node DeleteMiddleNode(Node node)
+        public static Node DeleteMiddleNode(Node node) 
         {
             if (node == null || node.Next == null) return null;
-            Node fast = node.Next;
+            Node fast = node;
             Node slow = node;
             Node previous = null;
-            while(fast!=null && slow!=null)
+            while(fast!=null && fast.Next!=null)
             {
                 previous = slow;
-                slow = fast;
-                fast = fast.Next;
+                slow = slow.Next;
+                fast = fast.Next.Next;
             }
             previous.Next = slow.Next;
             return node;
@@ -454,5 +503,29 @@ namespace Prepration
             }
             return current;
         }
+
+        //Amazon Question
+        //Microsoft Question
+        //Copy lis with Random pointer
+        // https://leetcode.com/problems/copy-list-with-random-pointer/
+        // https://leetcode.com/problems/copy-list-with-random-pointer/discuss/520109/Java-HashMap-with-Time-O(n)-and-Space-O(n)
+        private static Dictionary<Node, Node> map;
+        public Node CopyRandomList(Node head)
+        {
+            // write your code here
+            map = new Dictionary<Node, Node>();
+            return CopyHelper(head);
+        }
+        private Node CopyHelper(Node head)
+        {
+            if (head == null) return null;
+            if (map.ContainsKey(head)) return map[head];
+            Node newHead = new Node(head.Value);
+            map.Add(head, newHead);
+            newHead.Next = CopyHelper(head.Next);
+            newHead.Random = CopyHelper(head.Random);
+            return newHead;
+        }
+
     }
 }

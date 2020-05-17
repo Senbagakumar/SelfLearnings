@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.HtmlControls;
 
 namespace Prepration
 {
@@ -15,8 +19,6 @@ namespace Prepration
             this.word = word;
             this.numSteps = numSteps;
         }
-
-
     }
 
     class stringprograms
@@ -73,19 +75,20 @@ namespace Prepration
             if (word1.Length != word2.Length) return false;
             var dict1 = new Dictionary<char, char>();
             var dict2 = new Dictionary<char, char>();
+
             for (int i = 0; i < word1.Length; i++)
             {
                 char c1 = word1[i];
                 char c2 = word2[i];
-
                 if (dict1.Keys.Contains(c1))
                 {
+                   
                     if (c1 != dict2[c2])
                         return false;
                 }
                 else
                 {
-                    dict1.Add(c1, c2);
+                    dict1.Add(c1, c2); 
                     if (dict2.Keys.Contains(c2))
                     {
                         return false;
@@ -100,6 +103,7 @@ namespace Prepration
 
         }
 
+        //Amazon Question
         //5. Reorder Data in Log Files Input: logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
         //Output: ["let1 art can","let3 art zero","let2 own kit dig","dig1 8 1 5 1","dig2 3 6"]
 
@@ -144,6 +148,7 @@ namespace Prepration
             return secondIndex.All(char.IsDigit);
         }
 
+        //Amazon Question
         //6. WordLadder 
         // start = "hit" end = "cog" dict = ["hot","dot","dog","lot","log"] output =  "hit" -> "hot" -> "dot" -> "dog" -> "cog"
         public static int NoOfStepsForWordLadder(string beginWord, string endWord, List<string> noOfWord)
@@ -274,6 +279,7 @@ namespace Prepration
             }
         }
 
+        //Amazon Qustion
         //10. SubstringPattern
         public static bool SubStringPattern(string input, string substring)
         {
@@ -461,6 +467,7 @@ namespace Prepration
             return (firstNo * secondNo) / CalcGCD(firstNo, secondNo);
         }
 
+        //Amazon Question
         //18. ReverseNo
         public static int ReverseNo(int inputNo)
         {
@@ -473,7 +480,7 @@ namespace Prepration
             return reverseno;
         }
 
-        //19. ArmstrongNo
+        //19. ArmstrongNo, 371
         public static bool ArmstrongNo(int inputNo)
         {
             int armstrongNo = 0;
@@ -511,83 +518,53 @@ namespace Prepration
         //https://www.geeksforgeeks.org/remove-duplicates-from-a-given-string/
         public static string RemoveDuplicates(string input)
         {
-            int index = 0;
-            char[] ins = input.ToCharArray();
-            //wwwwaaadexxxxxxywww --> wadexy
-            for (int i = 0; i < ins.Length; i++)
+            //int index = 0;
+            //char[] ins = input.ToCharArray();
+            ////wwwwaaadexxxxxxywww --> wadexy
+            //for (int i = 0; i < ins.Length; i++)
+            //{
+            //    int j;
+            //    for (j = 0; j < i; j++)
+            //    {
+            //        if (ins[i] == ins[j])
+            //        {
+            //            break;
+            //        }
+            //    }
+            //    if (i == j)
+            //    {
+            //        ins[index++] = ins[i];
+            //    }
+            //}
+            //var res = new char[index];
+            //Array.Copy(ins, res, index);
+            //var result = new string(res);
+            //return result;
+            char[] array = input.ToCharArray();
+            int j = 0;
+            for (int i = 0; i < array.Length; i++)
             {
-                int j;
-                for (j = 0; j < i; j++)
-                {
-                    if (ins[i] == ins[j])
-                    {
-                        break;
-                    }
-                }
-                if (i == j)
-                {
-                    ins[index++] = ins[i];
-                }
+                if(array[i] != array[j])
+                    j++;
+                array[j] = array[i];
             }
-            var res = new char[index];
-            Array.Copy(ins, res, index);
+            var res = new char[j];
+            Array.Copy(array, res, j);
             var result = new string(res);
             return result;
         }
 
         //https://www.geeksforgeeks.org/anagram-substring-search-search-permutations/
 
-        //22. Get Length of Unique Substring 
-        public static void GetUniqueSubstring()
-        {
-            string input = "abcabababcd";
-            int[] ar = new int[128];
+       
+       
 
-            int j = 0, ans = 0;
-            for (int i = 0; i < input.Length; i++)
-            {
-                j = Math.Max(j, ar[input[i]]);
-                ans = Math.Max(ans, i - j + 1);
-                ar[input[i]] = (i + 1);
-            }
-        }
+       
 
-        //23. Valid Parantheses
-        //https://leetcode.com/problems/valid-parentheses/
-        public static bool ValidParantheses()
-        {
-            bool isValid = true;
-            string input = "({})";//"(]";//"()[]{}";
-            var stack = new Stack<char>();
-            char temp;
-            foreach(var i in input)
-            {
-                switch(i)
-                {
-                    case ')':
-                        temp = stack.Pop();
-                        if (temp != '(')
-                            isValid = false;
-                        break;
-                    case ']':
-                        temp = stack.Pop();
-                        if (temp != '[')
-                            isValid = false;
-                        break;
-                    case '}':
-                        temp = stack.Pop();
-                        if (temp != '{')
-                            isValid = false;
-                        break;
-                    default:
-                        stack.Push(i);
-                        break;
-                }
-                if (!isValid)
-                    break;
 
-            }
-            return isValid;
-        }
+
+      
+
+       
     }
 }

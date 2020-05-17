@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Prepration.Amazon;
+using Prepration.Microsoft;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -10,36 +12,255 @@ using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Xml.Linq;
+using static Prepration.DesignQuestions;
 
 namespace Prepration
 {   
     class Program
     {
 
-       
+        static List<char> wcount = new List<char>();
+        static List<char> bcount = new List<char>();
+        public static string gameWinner(string colors)
+        {
+            int i = 1;
+            string userName = string.Empty;
+            string firstUser = "wendy";
+            string secondUser = "bob";
+            while (!whoWin(colors))
+            {
+                if (i % 2 != 0)
+                {
+                    //string userName = user == 'w' ? "wendy" : "blob";
+                    colors = Move(colors, 'w');
+                    userName = "wendy";
+                }
+                else
+                {
+                    colors = Move(colors, 'b');
+                    userName = "blob";
+                }
+                i++;
+            }
+            if (i == 1)
+            {
+                if (bcount.Count == 0 && wcount.Count > 0)
+                    return secondUser;
+                else if (wcount.Count == 0 && bcount.Count > 0)
+                    return firstUser;
+                else
+                    return secondUser;
+            }
+            return userName;
+        }
+
+        public static string Move(string colors, char user)
+        {
+
+            int i = 0;
+            for (i = 0; i < colors.Length; i++)
+            {
+                if (colors[i] == user)
+                {
+                    break;
+                }
+            }
+            colors = colors.Remove(i, 1);
+            return colors;
+
+        }
+
+        public static bool whoWin(string colors)
+        {
+            wcount.Clear();
+            bcount.Clear();
+            foreach (var c in colors)
+            {
+                if (c == 'w')
+                    wcount.Add(c);
+                else
+                    bcount.Add(c);
+            }
+            if (wcount.Count == bcount.Count)
+                return true;
+            else
+                return false;
+        }
+            
+        static long repeatedString(string s, long n)
+        {
+
+            long count = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == 'a')
+                    count++;
+            }
+
+            long div = n / s.Length;
+            long reminder = n % s.Length;
+
+            count = div * count;
+
+            for (int i = 0; i < reminder; i++)
+            {
+                if (s[i] == 'a')
+                    count++;
+            }
+
+            return count;
+        }
+
+        public static int numberNeeded(string first, string second)
+        {
+            int[] lettercounts = new int[26];
+            foreach (char c in first)
+            {
+                lettercounts[c - 'a']++;
+            }
+            foreach (char c in second)
+            {
+                lettercounts[c - 'a']--;
+            }
+            int result = 0;
+            foreach (int i in lettercounts)
+            { 
+                result += Math.Abs(i);
+            }
+            return result;
+           
+        }
+
+        
+
+      
+
         static void Main(string[] args)
         {
-            DesignQuestions.MyHashMap cv = new DesignQuestions.MyHashMap();
-            cv.put(5, 10);
-            cv.get(5);
-            cv.put(6,11);
-            cv.put(7, 12);
-            cv.get(6);
-            cv.get(8);
-            cv.put(2074, 20);
-            cv.put(2073, 25);
+            //MinStack minStack = new MinStack();
+            //minStack.Push(-2);
+            //minStack.Push(0);
+            //minStack.Push(-3);
+            //minStack.getMin(); //--> Returns - 3.
+            //minStack.Pop();
+            //minStack.Top(); //--> Returns 0.
+            //minStack.getMin(); //--> Returns - 2.
+
+            //FreqStack fk = new FreqStack();
+            //fk.push(5); //5,7,5,7,4,5
+            //fk.push(7);
+            //fk.push(5);
+            //fk.push(7);
+            //fk.push(4);
+            //fk.push(5);
+            //int val = fk.pop(); //5
+            //val = fk.pop(); //7
+            //val = fk.pop(); //5
+            //val = fk.pop(); //4
+           //AmazonInterviewQuestions aiq = new AmazonInterviewQuestions();
+
+           // var llist = new LinkedList();
+           // llist.AddNode(1);
+           // llist.AddNode(2);
+           // llist.AddNode(3);
+           // llist.AddNode(4);
+           // llist.AddNode(5);
+
+           // aiq.reverseKGroup(llist.Head, 2);
+
+
+            //int[,] interval = new int[3,2];
+            //interval[0, 0] = 0;
+            //interval[0, 1] = 30;
+
+            //interval[1, 0] = 5;
+            //interval[1, 1] = 10;
+
+            //interval[2, 0] = 15;
+            //interval[2, 1] = 20;
+
+            //int rooms = aiq.MinMeetingRooms(interval);
+
+            //aiq.MaxArea(new int[] { 0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1 });
+
+            //aiq.ThreeSum(new int[] { -1, 0, 3, -2, -1, -4 }, 1);
+
+            //aiq.SubStringPattern("aaaa", "bba");
+            //var result=aiq.ProductExceptSelf(new int[] { 1, 2, 3, 4 });
+            //var result = aiq.FirstUniqueChar("loveleetcode");
+            //aiq.CanFinish(2, new int[,] { { 1, 0 },{ 0,1} });
+            //aiq.CutOffTree(new int[,] { {1,2,3},{ 0,0,4},{7,6,5} }); //new int[,] { {1,2,3},{ 0,0,4},{7,6,5} }
+            //var result = aiq.FloodFill(new int[,] { { 1,1,1 }, { 1,1,0 }, { 1,0,1 } },1,1,2);
+            //aiq.MergeInterval(new int[,] { { 1, 3 }, { 2, 6 }, { 8, 10 }, { 15, 18 } }); //{ 1,3 },{ 2,6},{ 8,10 },{15,18 }  { 1,4},{ 4,5}
+            //aiq.MaxSubArray(new int[] { -2, 1, -3, 4, -1, 2, 1, -5, 4 });
+            //var result=aiq.WordBreak("leetcode", new List<string>() { "leet", "code"});
+            //var result = aiq.CoinChange(new int[] { 1, 2, 5 }, 11);
+            //Console.Read();
+            //int days=Assessment.MinDays();
+            //Assessment.TestMaximumToys();
+            //stringprograms.GetUniqueSubstring();
+            // Trie trie = new Trie();
+
+            // trie.Insert("apple");
+            //bool res= trie.Search("apple");   // returns true
+            //bool res1= trie.Search("app");     // returns false
+            //bool res2= trie.StartsWith("app"); // returns true
+            // trie.Insert("app");
+            //bool res3= trie.Search("app");     // returns true
+
+            //ArrayPrograms.BestBuyAndSellStock(new int[] { 7, 1, 5, 3, 6, 4 });
+            //ArrayPrograms.SearchMatrix(new int[,] { { 1, 3, 5, 7 },{ 10, 11, 16, 20 },{ 23, 30, 34, 50 } },13);
+            //ArrayPrograms.SortColors(new int[] { 2, 0, 2, 1, 1, 0});
+            // ArrayPrograms.RemoveDuplicates(new int[] { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 });
+            //stringprograms.RemoveDuplicates("wwwwaaadexxxxxxywww");
+            new stringprograms().LetterCombinations("23");
+            //ArrayPrograms.RotateImage(new int[,] { {1,2 }, {3,4} });
+            //stringprograms.GroupAnagrams(new string[] { "eat", "tea", "tan", "ate", "nat", "bat" });
+            //stringprograms.IsWordPalindrome("race a car");
+            //stringprograms.StringToIntConversion("4193 with words");
+            //stringprograms.GetUniqueSubstring();
+            //ArrayPrograms.FindMedianOfTwoArrays(new int[] {1,2,3,4,5 }, new int[] { 6,7,8,9,10,11 });
+            //DesignQuestions.LRUCache.Test();
+            //CarDesign.BuildCar();
+
+            //var prog = new Program();
+            //var no = prog.RomanToInt("IV");
+
+            numberNeeded("cde", "abc");
+           // repeatedString1("aba", 10);
+            //Assessment.MinCostConnectedRops();
+            //int steps= Assessment.TreaureIsLand2();
+
+            LinkedList lv = new LinkedList(1);
+            //lv.AddNode(2);
+            //lv.AddNode(3);
+            //lv.AddNode(4);
+
+            //LinkedListPrograms.SwapPairs(lv.Head);
+
+           // Program.gameWinner("ww");
+            //DesignQuestions.MyHashMap cv = new DesignQuestions.MyHashMap();
+            //cv.put(5, 10);
+            //cv.get(5);
+            //cv.put(6,11);
+            //cv.put(7, 12);
+            //cv.get(6);
+            //cv.get(8);
+            //cv.put(2074, 20);
+            //cv.put(2073, 25);
 
 
             //DesignQuestions.LRUCache.Test();
+            //stringprograms.IsIsomorphic("egg","add");
+            //Microsoft.Microsoft1.KthSmallest();
             //stringprograms.ValidParantheses();
-            //Microsoft.Microsoft1.FindMinimumInSortedArray();
-            //stringprograms.GetUniqueSubstring();
             //var result=ArrayPrograms.SortedArrayToBinarySearchTree(new int[] { -10, -3, 0, 5, 9, 10 });
-            ArrayPrograms.AsteroidCollision();
+            //ArrayPrograms.AsteroidCollision();
             //ArrayPrograms.MinCostPath();
             //stringprograms.search();//"HiHoHowareyou", "How" --> "AABAACAADAABAAABAA", "AABA"
 
-            Console.Read();
+            //Console.Read();
 
 
 
@@ -84,7 +305,9 @@ namespace Prepration
             //    twos &= not_threes;
             //}
 
-            //ArrayPrograms.FindUniqueNo(new int[] { 12, 5, 12, 4, 12, 1, 1, 2, 3, 3,2,5 });
+            //int result= stringprograms.Factorial(5);
+
+           // ArrayPrograms.FindUniqueNo(new int[] { 12, 5, 12, 4, 12, 1, 1, 2, 3, 3,2,5 });
             // stringprograms.RemoveDuplicates("wwwwaaadexxxxxxywww");
             //stringprograms.reverseWords("the sky is blue".ToCharArray());
             //stringprograms.CalculateValues();
@@ -164,6 +387,7 @@ namespace Prepration
             ////Array Rotation Search
             //ArrayPrograms.RotationSearch(new int[] { 4, 5, 1, 2, 3 }, 3, 0, 5);
 
+            ArrayPrograms.SortedSquar(new int[] { -4, -1, 0, 3, 10 });
 
             ////Binary Tree //new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 }
             /////new int[] { 3,5,8,10,12,14,16 }, new int[] { 3,8,5,12,16,14,10} -- In, Post
@@ -182,15 +406,15 @@ namespace Prepration
 
             //LinkedListPrograms.SumOfTwoLinkedList();
 
-            var llist = new LinkedList();
-            llist.AddNode(1);
-            llist.AddNode(2);
-            llist.AddNode(3);
-            llist.AddNode(4);
-            llist.AddNode(5);
+            //var llist = new LinkedList();
+            //llist.AddNode(1);
+            //llist.AddNode(2);
+            //llist.AddNode(3);
+            //llist.AddNode(2);
+            //llist.AddNode(1);
 
-            LinkedListPrograms.ReverseLinkedList(llist.Head);
-            Console.ReadKey();
+            //LinkedListPrograms.RecursivePalindrome(llist.Head, llist.Head, new LinkedListPrograms.Result());
+            //Console.ReadKey();
         }
 
     }

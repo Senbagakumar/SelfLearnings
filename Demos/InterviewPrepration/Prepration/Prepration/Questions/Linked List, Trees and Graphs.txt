@@ -1,0 +1,162 @@
+Linked Lists
+  
+[Amazon, Microsoft, Apple, Adobe]
+ Reverse Linked List
+ 
+ [Amazon, Microsoft, Facebook, Google, Apple, Adobe]
+ Add Two Numbers
+ Add Two Numbers II
+ 
+ [Amazon, Microsoft, Facebook, Google, Apple, Adobe]
+ Merge Two Sorted Lists
+ 
+ [Microsoft]
+ Intersection of Two Linked Lists
+ 
+ [Microsoft, Adobe]
+ Linked List Cycle
+ 
+ [Amazon, Microsoft, Google, Adobe]
+ Merge k Sorted Lists
+ 
+ [Amazon, Microsoft, Facebook, Google, Adobe]
+ Copy List with Random Pointer
+
+ [Microsoft]
+ Reverse Nodes in k-Group 
+
+[Facebook]
+ Reorder List
+ 
+ [Google, Adobe]
+  Remove Nth Node From End of List
+ 
+
+Tress and Graphs
+
+[Adobe]
+Sum of left leaves
+
+  [Apple]
+  Same Tree
+  [Apple]
+  Maximum Depth of Binary Tree
+
+  [Apple]
+  Longest Incresing Path in a Matrix
+  
+ [Amazon, Microsoft, Facebook, Adobe]
+ Validate Binary Search Tree
+ 
+  [Amazon, Microsoft]
+ Binary Tree Level Order Traversal
+ Populating Next Right Pointers in Each Right Node
+ 
+  [Amazon, Microsoft]
+ Lowest Common ancestor of a BST
+ Construct Binary Tree from Preorder and Inorder
+ 
+ [Amazon, Apple]
+ clone Graph
+ 
+ [Microsoft, Adobe]
+ Binary Tree Inorder Traversal
+ 
+  [Amazon, Microsoft, Adobe]
+ Binary Tree Zigzag level order Traversal
+ Populating Next Right Pointers in Each Right Node II
+ 
+  [Amazon, Microsoft, Facebook, Apple]
+ Lowest Common ancestor of a BT
+ 
+ [Amazon, Microsoft, Apple]
+ Number of Islands
+ 
+ [Amazon, Facebook, Google]
+ Binary Tree Maximum Path Sum
+ 
+ [Amazon, Google]
+ Word Ladder
+ 
+ [Amazon, Google]
+ Course Scheduler
+ Course Schedule II
+ 
+ [Amazon, Facebook, Google, Apple]
+ Diameter of Binary Tree
+ 
+ [Amazon]
+ Flood Fill
+ [Amazon]
+ Symmetric Tree
+ [Amazon]
+ Word Ladder II
+ [Amazon]
+ Cut Off Trees for Gold Event
+ 
+[Facebook]
+ Flatten Binary Tree to Linked List
+ 
+[Facebook]
+ Clone Graph
+ 
+ [Facebook]
+ Binary Tree Right Side View
+ 
+ [Facebook, Google]
+ Number of Islands
+ 
+ [Facebook]
+ Binary Tree Paths
+ 
+ [Facebook]
+ Alien Dictionary
+ 
+ [Facebook]
+ Shortest distance from All Buildings
+ 
+ [Facebook]
+ Accounts Merge
+ 
+ [Facebook]
+ Convert Binary Search Tree to Sorted Doubly Linked list
+ 
+ [Facebook]
+ Is Graph Bipartite?
+ 
+ [Facebook]
+ Binary Tree Vertical Order Traversal
+
+ [Google]
+  Count Complete Tree Nodes - Frequently asked phone
+  
+  [Google]
+  Longest Increasing Path in a Matrix
+  
+  [Adobe]
+  Simplify path
+  
+  [Adobe]
+  Basic Calculator
+  
+  [Adobe]
+  Remove digits
+  
+  [Google]
+  Decode String
+  
+  [Google]
+  Evaluate Division -- Frequently asked onsite
+  
+  [Google]
+  Cracking the safe
+  
+  [Google]
+  Robot Room Cleaner -- Frequently asked onsite
+  
+  [Google]
+  Most Stones Removed with Same Row or Column -- Frequently asked onsite
+  
+  [Google]
+  Flip Equivalent Binary Trees
+  

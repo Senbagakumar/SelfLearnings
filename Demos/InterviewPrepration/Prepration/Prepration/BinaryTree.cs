@@ -49,6 +49,7 @@ namespace Prepration
             return first ?? second;
         }
 
+        //Amazon Question
         //3. Diameter of Binary Tree
         //https://leetcode.com/problems/diameter-of-binary-tree/
         //https://leetcode.com/problems/diameter-of-binary-tree/discuss/375854/C-Recursive-solution
@@ -73,6 +74,7 @@ namespace Prepration
             return res;
         }
 
+        //Microsoft Question
         //4. Construct the binary tree
         public static Node ConstructBinaryTree(int[] inorder, int[] postorder, bool preorder=false)
         {
@@ -112,6 +114,8 @@ namespace Prepration
             return node;
         }
 
+        //Amazon Question
+        //Microsoft Question
         //5. Print the elements by level
         public static void BFSTPrintByLevel(Node input)
         {
@@ -151,6 +155,8 @@ namespace Prepration
             }
         }
 
+        //Amazon Question
+        //Microsoft Question
         //6. Print the elements by Zig-Zage
         public static void BFSTPrintByZigZagLevel(Node input)
         {
@@ -246,7 +252,7 @@ namespace Prepration
             int maxNum = int.MinValue;
             int maxIndex = int.MinValue;
 
-            for (int i = 0; i < inputs.Length; i++)
+            for (int i = start; i < end; i++)
             {
                 if (inputs[i] > maxNum)
                 {
@@ -281,13 +287,13 @@ namespace Prepration
                     var current = q.Dequeue();
                     if (current.Left != null)
                     {
-                        current.Left.Value = 2 * i;
+                        current.Left.Value = current.Value * i;
                         q.Enqueue(current.Left);
                     }
 
                     if (current.Right != null)
                     {
-                        current.Right.Value = 2 * i + 1;
+                        current.Right.Value = current.Value * i + 1;
                         q.Enqueue(current.Right);
                     }
 
@@ -296,9 +302,10 @@ namespace Prepration
             return max;
         }
 
+        //Amazon Question
         //10. Binary Search Tree to Greater Sum Tree
         //https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/discuss/381336/Simple-Java-recursion-solution-100-or-100
-        //https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/discuss/323012/java-100-efficient-soln-approach1
+        //https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/
 
         public static Node GreaterSumTree(Node node)
         {
@@ -430,11 +437,12 @@ namespace Prepration
             }
         }
 
+        //Microsoft Question
         //15. InOrder traversal
         public static void InOrderTraversal(Node node)
         {
             var st = new Stack<Node>();
-            while (true)
+            while (node!=null || st.Count > 0)
             {
                 if (node != null)
                 {
@@ -448,6 +456,49 @@ namespace Prepration
                     node = node.Right;
                 }
             }
+        }
+
+        //15.1 
+        //https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+        public int KthSmallest(Node root, int k)
+        {
+            Stack<Node> stack = new Stack<Node>();
+            while (root != null || stack.Count() > 0)
+            {
+                while (root != null)
+                {
+                    stack.Push(root);
+                    root = root.Left;
+                }
+                root = stack.Pop();
+                if (--k == 0) break;
+                root = root.Right;
+            }
+            return root.Data;
+        
+    }
+        //15.2  https://leetcode.com/problems/recover-binary-search-tree/
+        // aNSWER : https://leetcode.com/problems/recover-binary-search-tree/discuss/466643/2ms-Java-solution-(96.5)-with-explanation
+
+
+
+        //15.3  https://leetcode.com/problems/find-mode-in-binary-search-tree/
+        //https://leetcode.com/problems/find-mode-in-binary-search-tree/discuss/455422/C-recursive-O(n)-time-O(1)-space
+
+
+        //15.4 https://leetcode.com/problems/subtree-of-another-tree/
+        //https://leetcode.com/problems/subtree-of-another-tree/discuss/474425/Java-Naive-and-Optimized-Preorder-Traversal-Solutions
+        public static bool isSubtree(Node s, Node t) // here s is the whole tree, t is a subtree
+        {
+            if (isEqualTree(s, t)) return true;
+            if (s == null) return false;
+            return (isSubtree(s.Left, t) || isSubtree(s.Right, t));
+        }
+
+        private static bool isEqualTree(Node s, Node t)
+        {
+            if (s == null || t == null) return t == s;
+            return s.Value == t.Value && isEqualTree(s.Left, t.Left) && isEqualTree(s.Right, t.Right);
         }
 
         //16. RootToLeaf=Sum 
@@ -476,7 +527,7 @@ namespace Prepration
             }
             return false;
         }
-
+        //Amazon Question
         //17. IsMirror Tree
         public static bool IsMirrorTree(Node first, Node second)
         {
@@ -491,6 +542,8 @@ namespace Prepration
             //if (first.Data != second.Data) return false;
             return first.Data == second.Data && IsSameTree(first.Left, second.Left) && IsSameTree(first.Right, second.Right);
         }
+
+        //Microsoft Question
         //19. Low Anchestor for BST
         public static Node LowestCommonAncestorForBST(Node root, Node first, Node second)
         {
@@ -501,6 +554,9 @@ namespace Prepration
             else
                 return root;
         }
+
+        //Amazon Question
+        //Microsoft Question
         //20. Low Anchestor for BT
         public static Node LowestCommonAncestorForBT(Node root, Node first, Node second)
         {
@@ -513,6 +569,8 @@ namespace Prepration
             return left ?? right;
         }
 
+        //Amazon Question
+        //Microsoft Question
         //21. Serialize Deserialize the binary Tree
 
         public static void SeriaizeDeserializeBinaryTree(Node node)
@@ -548,13 +606,15 @@ namespace Prepration
             return root;
         }
 
+        //Amazon Question
+        //Microsoft Interview Question
         //22. BT is BST
         public static bool IsBST(Node node, int min, int max)
         {
             if (node == null) return true;
             if (node.Value < min || node.Value > max) return false;
             return IsBST(node.Left, min, node.Value) && IsBST(node.Right, node.Value, max);
-        }
+        }   
 
         //23. Print BST keys in the given range
         // 20->L->8   8->L->4 8->R->12
@@ -618,6 +678,32 @@ namespace Prepration
         {
             TransformSumTree(node);
             PrintSumTree(node);
+        }
+
+        //Microsoft Question
+        //https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
+        //Populating Next Right Pointers in Each Node
+        //https://leetcode.com/problems/populating-next-right-pointers-in-each-node/discuss/520202/Accepted-C-(Queue%2BPeek)-solution%3A-Easy-to-understand
+        public Node PopulateNextPointer(Node node)
+        {
+            var queue = new Queue<Node>();
+            if (node != null)
+                queue.Enqueue(node);
+            while(queue.Count > 0)
+            {
+                var nqueue = new Queue<Node>();
+                while(queue.Count > 0)
+                {
+                    var cnode = queue.Dequeue();
+                    cnode.Right = queue.Count == 0 ? null : queue.Peek();
+                    if (cnode.Left != null)
+                        nqueue.Enqueue(cnode.Left);
+                    if (cnode.Right != null)
+                        nqueue.Enqueue(cnode.Right);
+                }
+                queue = nqueue;
+            }
+            return node;
         }
 
     }

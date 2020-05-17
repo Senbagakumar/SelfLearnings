@@ -1,0 +1,185 @@
+Arrays and Strings
+
+ 
+  [Adobe]
+  Find all numbers disappeared in an array
+  
+  [Apple]
+  Majority Element II
+
+  [Apple]
+  Subarray Sum Equals K
+
+  [Apple]
+  Sparse Matrix Multiplication
+
+  [Apple, Adobe]
+  4Sum
+  
+  [Adobe]
+  Positions of large groups
+  
+  [Apple, Adobe,Amazon, Facebook]
+  Product of Array Except Self
+  
+  [Apple]
+  Squares of a Sorted Array
+  
+ [Microsoft, Amazon, Apple, Adobe]
+ TwoSum
+ 
+ [Microsoft, Amazon, Facebook, Apple]
+ String to Integer (atoi)
+ 
+ [Amazon, Apple, Adobe]
+ Integer to Roman
+ 
+ [Amazon, Facebook, Google, Apple, Adobe]
+ 3Sum
+ 
+ [Amazon]
+ Implement strStr()
+ 
+ [Amazon, Microsoft]
+ Reverse words in a string
+ 
+ [Amazon, Microsoft, Google, Apple]
+ Valid Parentheses
+ 
+ [Amazon, Microsoft, Facebook, Apple]
+ Group Anagrams
+ 
+ [Microsoft]
+ SetMatrixZeroes
+ 
+ [Microsoft, Apple, Adobe]
+ Spiral Matrix
+ 
+ [Microsoft, Facebook, Apple]
+ Valid Palindrome
+ 
+ [Microsoft]
+ Reverse String
+ 
+ [Microsoft]
+ Reverse Words in a String II
+ 
+ [Microsoft]
+ Longest Palindromic Substring
+ 
+[Amazon, Microsoft, Google, Apple]
+ Trapping Rain Water
+ 
+ [Amazon, Microsoft, Google]
+ Rotate Image
+ 
+[Amazon]
+ Compare Version Numbers
+
+[Amazon, Apple, Google, Adobe]
+ Missing Number
+ 
+[Amazon, Apple]
+ First Unique Character in a String
+ 
+[Amazon]
+ Most Common Word
+ 
+[Amazon, Facebook, Google, Apple, Adobe]
+ Longest Substring Without Repeating Character
+ 
+ [Adobe]
+ Longest Common Prefix
+ 
+[Amazon, Google, Adobe]
+ Container with Most Water
+ 
+[Amazon, Facebook, Apple, Adobe]
+ Roman to Integer
+ 
+[Amazon, Apple, Adobe]
+ 3Sum Closet
+ 
+ [Google]
+ Next Closet Time
+ 
+[Amazon, Facebook, Google, Apple]
+ Minimum window Substring
+ 
+[Amazon, Facebook]
+ Integer to English Words
+ 
+[Amazon]
+ Reorder Log Files
+ 
+ [Facebook]
+  Remove Duplicatest from Sorted Array
+  
+ [Facebook, Google]
+  Next Permutation
+  
+  [Facebook, Google]
+  Multiply Strings
+ 
+ [Facebook]
+  Add Binary
+  
+  [Facebook]
+  Merge Sorted Array
+  
+  [Facebook]
+ Read N Characters Griven Read 4
+ 
+ [Facebook, Google]
+ Read N Characters Griven Read 4 II- Call multiple times
+ [Facebook]
+ One Edit Distance
+ 
+ [Facebook]
+ Move Zeroes
+ 
+ [Facebook, Google]
+ Longest Substring with At Most K distinct Characters
+ 
+ [Adobe]
+ Substring with concatenation of all words
+ 
+ [Facebook]
+ Validate Ip Address
+ 
+ [Facebook]
+ Susarray Sum Equals K
+ 
+ [Facebook]
+ Valid Palndrome ||
+ 
+ [Google]
+ Jump Game
+ 
+ [Google]
+ Plus one
+ 
+ [Google]
+ Expressive Words
+ 
+ [Google]
+  Find and Replace in String
+  
+  [Google]
+  maximize distance to closest person
+  
+  [Google]
+  Kth Largest element in an Array
+  
+  [Google]
+  Meeting Rooms II
+  
+  [Google]
+  Backspace string Compare
+  
+  [Google]
+  Minimum Cost to Hire K workers
+  
+  [Google]
+  K Closet Points to Origin
+  

@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Prepration
 {
     public class DesignQuestions
-    {
+    {  
+        
         public static void ExecuteTicTacToe()
         {
             int val= 0;
@@ -28,14 +31,18 @@ namespace Prepration
             else
                 Console.WriteLine("draw");
         }
+
+        //Amazon Question
         class TicTacToe
         {
+
             int[,] tic;
             int n;
             public TicTacToe(int n)
             {
                 this.n = n;
-                tic = new int[3, 3];
+                tic = new int[n, n];
+                
             }
 
             public int Move(int row, int col, int teamPlayer)
@@ -43,8 +50,8 @@ namespace Prepration
                 int val = teamPlayer == 1 ? 1 : -1;
                 tic[row, col] += val;
 
-                if (WinConditionForRow(teamPlayer, row) || WinConditionForColumn(teamPlayer, col) ||
-                   WinConditionForFirstDiagonal(teamPlayer) || WinConditionForSecondDiagonal(teamPlayer))
+                if (WinConditionForRow(val, row) || WinConditionForColumn(val, col) ||
+                   WinConditionForFirstDiagonal(val) || WinConditionForSecondDiagonal(val))
                 {
                     return teamPlayer;
                 }
@@ -62,7 +69,7 @@ namespace Prepration
                     {
                         win = false;
                         break;
-                    }                        
+                    }
                 }
                 return win;
             }
@@ -109,13 +116,17 @@ namespace Prepration
 
         }
 
+        //Micrsoft Question
         class Celebrity
         {
             int[,] cele;
 
             public Celebrity(int n)
             {
-                cele = new int[4, 4] { { 0,0,1,0 }, { 0,0,1,0 }, { 0,0,0,0}, { 0,0,1,0} };
+                cele = new int[4, 4] { { 0,0,1,0 },
+                                       { 0,0,1,0 },
+                                       { 0,0,0,0 },
+                                       { 0,0,1,0} };
             }
 
             public bool Knows(int a, int b)
@@ -131,11 +142,11 @@ namespace Prepration
                 {
                     st.Push(i);
                 }
-                while(st.Count > 0)
+                while(st.Count > 1)
                 {
                     int first = st.Pop();
                     int second = st.Pop();
-
+                    
                     if (Knows(first, second))
                         st.Push(second);
                     else
@@ -145,7 +156,7 @@ namespace Prepration
 
                 for(int i=0; i<n; i++)
                 {
-                    if (i != result && Knows(result, i) || !Knows(i, result))
+                    if (Knows(result, i) || !Knows(i, result))
                         return -1;
                 }
                 return result;
@@ -153,73 +164,125 @@ namespace Prepration
 
         }
 
-        class LRU
+        private class ListNode
         {
             public int Key { get; set; }
             public int Value { get; set; }
-            public bool IsRecent { get; set; }
+            public ListNode() { }
+
+            public ListNode(int key, int value)
+            {
+                Key = key;
+                Value = value;
+            }
+            public ListNode next;
+            public ListNode previous;
+
         }
 
+        //Amazon Question
+        //Microsoft Question
         public class LRUCache
         {
-            private int _Capacity;
-            private LRU[] lru;
-            private int i = 1;
+            private int Capacity;
+            private int TotalItems;
+            private Dictionary<int, ListNode> dict = new Dictionary<int, ListNode>();
+            ListNode head; ListNode tail;
 
-            public LRUCache()
-            {
-
-            }
             public LRUCache(int capacity)
             {
-                _Capacity = capacity;
-                lru = new LRU[capacity];
+                Capacity = capacity;
+                TotalItems = 0;
+
+                head = new ListNode();
+                tail = new ListNode();
+
+                head.next = tail;
+                tail.previous = head;
             }
+
 
             public int Get(int key)
             {
-                var l = lru.Where(t => t.Key == key).FirstOrDefault();
-                if (l != null)
+                var node = dict.Keys.Contains(key) ? dict[key] : null;
+                if(node!=null)
                 {
-                    l.IsRecent = true;
-                    Console.WriteLine($"return={l.Value}");
-                    return l.Value;
+                    MovetoHead(node);
+                    return node.Value;
                 }
-                else
-                {
-                    Console.WriteLine($"return -1");
-                    return -1;
-                }
+                return -1;
+            }
+
+            private void MovetoHead(ListNode node)
+            {
+                RemoveElement(node);
+                AddElementsInHead(node);
+            }
+
+            private void AddElementsInHead(ListNode node)
+            {
+                node.previous = head;
+                node.next = head.next;
+
+                head.next.previous = node;
+                head.next = node;
+
+            }
+
+            private void RemoveElement(ListNode lnode)
+            {
+                ListNode saveNext = lnode.next;
+                ListNode savePrevious = lnode.previous;
+
+                savePrevious.next = saveNext;
+                saveNext.previous = savePrevious;
             }
 
             public void Put(int key, int value)
             {
-                var temp= new LRU() { Key = key, Value = value };
-                if (_Capacity < i)
+                ListNode current = new ListNode(key,value);
+
+                var isExist= dict.Keys.Contains(key) ? dict[key] : null;
+                if(isExist!=null)
                 {
-                    var l = lru.Where(t => t.IsRecent == false).FirstOrDefault();
-                    Console.WriteLine($"Evicts key={l.Key} value={l.Value}");
-                    l.Key = temp.Key; l.Value = temp.Value; 
+                    isExist.Value = value;
+                    MovetoHead(isExist);
                 }
                 else
                 {
-                    lru[i - 1] = temp;
-                    i++;
+                    dict.Add(key, current);
+                    AddElementsInHead(current);
+                    TotalItems++;
+                    if(TotalItems > Capacity)
+                    {
+                        RemoveLeast();
+                    }
+
                 }
+
+            }
+
+            private void RemoveLeast()
+            {
+                var lastNode = tail.previous;
+                RemoveElement(lastNode);
+                dict.Remove(lastNode.Key);
+                TotalItems--;
             }
 
             public static void Test()
             {
+                int ret = 0;
                 var vi = new LRUCache(2);
                 vi.Put(1, 1);
                 vi.Put(2, 2);
-                vi.Get(1);  // return 1;
+                ret=vi.Get(1);  // return 1;
                 vi.Put(3, 3); // evicts 2;
-                vi.Get(2);  // return -1;
+                ret=vi.Get(2);  // return -1;
                 vi.Put(4, 4); //evicts 1;
-                vi.Get(1); // return -1;
-                vi.Get(3);
-                vi.Get(4);
+                ret=vi.Get(1); // return -1;
+                ret=vi.Get(3);
+                ret=vi.Get(4);
             }
 
         }
@@ -247,7 +310,7 @@ namespace Prepration
             }
 
             public int get(int key)
-            {
+            {                
                 foreach(Pair<int, int> pair in this.bucket)
                 {
                     if (pair.first.Equals(key))
@@ -289,6 +352,7 @@ namespace Prepration
             private int key_space;            
             List<Bucket> hash_table;
 
+
             /** Initialize your data structure here. */
             public MyHashMap()
             {
@@ -320,6 +384,239 @@ namespace Prepration
             {
                 int hash_key = key % this.key_space;
                 this.hash_table[hash_key].remove(key);
+            }
+        }
+
+        //Microsoft Question
+        //https://leetcode.com/problems/implement-trie-prefix-tree/
+        //https://leetcode.com/problems/implement-trie-prefix-tree/discuss/523313/C
+        public class Trie
+        {
+            private Trie[] Children = new Trie[26];
+            private bool EndOfWord = false;
+
+            /** Inserts a word into the trie. */
+            public void Insert(string word, int i = 0)
+            {
+                int code = word[i] - 'a';
+                if (Children[code] == null)
+                {
+                    Children[code] = new Trie();
+                }
+                if (word.Length - 1 == i)
+                    Children[code].EndOfWord = true;
+                else
+                    Children[code].Insert(word, i + 1);
+            }
+
+            /** Returns if the word is in the trie. */
+            public bool Search(string word, int i = 0)
+            {
+                var code = word[i] - 'a';
+                if (Children[code] == null) return false;
+
+                if (word.Length - 1 == i) return Children[code].EndOfWord;
+                else return Children[code].Search(word, i + 1);
+            }
+
+            /** Returns if there is any word in the trie that starts with the given prefix. */
+            public bool StartsWith(string prefix, int i = 0)
+            {
+                var code = prefix[i] - 'a';
+                if (Children[code] == null) return false;
+
+                if (prefix.Length - 1 == i) return true;
+                else return Children[code].StartsWith(prefix, i + 1);
+            }
+        }
+
+        //Implement Queue using Stacks
+        //https://leetcode.com/problems/implement-queue-using-stacks/
+        //https://leetcode.com/problems/implement-queue-using-stacks/discuss/516686/Concise-Java-Using-2-Stacks
+        public class MyQueue
+        {
+            Stack<int> r;
+            Stack<int> s;
+            public MyQueue()
+            {
+                r = new Stack<int>();
+                s = new Stack<int>();
+            }
+
+            public void EnQueue(int inp)
+            {
+                r.Push(inp);
+            }
+            public int DeQueue()
+            {
+                ReverseElements();
+                return s.Pop();
+            }
+
+            public int Peek()
+            {
+                ReverseElements();
+                return s.Peek();
+            }
+
+            public bool IsEmpty()
+            {
+                return r.Count == 0 && s.Count == 0;
+            }
+
+            private void ReverseElements()
+            { 
+                if(s.Count == 0)
+                {
+                    while(r.Count > 0)
+                    {
+                        s.Push(r.Pop());
+                    }
+                }
+            }
+        }
+
+        // Implement Stack using Queues
+        //https://leetcode.com/problems/implement-stack-using-queues/
+        //https://leetcode.com/problems/implement-stack-using-queues/discuss/509809/C-solution-using-a-queue-and-indexcount
+
+        public class MyStack
+        {
+            Queue<int> queue;
+            int index = 0;
+            public MyStack()
+            {
+                queue = new Queue<int>();
+            }
+
+            public void Push(int value)
+            {
+                queue.Enqueue(value);
+                index++;
+            }
+
+            public int Pop()
+            {
+                int count = 0;
+                while(count < index-1)
+                {
+                    queue.Enqueue(queue.Dequeue());
+                    count++;
+                }
+                index--;
+                return queue.Dequeue();
+            }
+            public int Top()
+            {
+                int count = 0;
+                while(count < index-1)
+                {
+                    queue.Enqueue(queue.Dequeue());
+                    count++;
+                }
+                int val = queue.Dequeue();
+                queue.Enqueue(val);
+                return val;
+            }
+            public bool Empty()
+            {
+                return queue.Count == 0 ? true : false;
+            }
+        }
+
+        //Amazon Question
+        public class MinStack
+        {
+
+            private Stack<int[]> stack = new Stack<int[]>();
+            public MinStack() { }
+
+            public void Push(int x)
+            {
+                /* If the stack is empty, then the min value
+                 * must just be the first value we add. */
+                if (stack.Count == 0)
+                {
+                    stack.Push(new int[] { x, x });
+                    return;
+                }
+
+                int currentMin = stack.Peek()[1];
+                stack.Push(new int[] { x, Math.Min(x, currentMin) });
+            }
+
+
+            public void Pop()
+            {
+                stack.Pop();
+            }
+
+
+            public int Top()
+            {
+                return stack.Peek()[0];
+            }
+
+
+            public int getMin()
+            {
+                return stack.Peek()[1];
+            }
+        }
+
+        //Amazon Question
+        public class FreqStack
+        {
+            Dictionary<int, Node> map;
+            List<Stack<Node>> list;
+            public FreqStack()
+            {
+                this.map = new Dictionary<int, Node>();
+                this.list = new List<Stack<Node>>();
+                list.Add(new Stack<Node>());
+            }
+
+            public void push(int x)
+            {
+                if (map.ContainsKey(x))
+                {
+                    Node node = map[x];
+                    node.fre++;
+                    if (list.Count < node.fre)
+                    {
+                        list.Add(new Stack<Node>());
+                    }
+                    list[node.fre - 1].Push(node);
+
+                }
+                else
+                {
+                    Node node = new Node(x);
+                    map.Add(x, node);
+                    list[0].Push(node);
+                }
+            }
+
+            public int pop()
+            {
+                int index = list.Count - 1;
+                Node node = list[index].Pop();
+                int res = node.val;
+                node.fre--;
+                if (list[index].Count == 0)
+                    list.RemoveAt(index);
+                return res;
+            }
+
+            class Node
+            {
+                public int val;
+                public int fre;
+                public Node(int val)
+                {
+                    this.val = val;
+                    this.fre = 1;
+                }
             }
         }
     }

@@ -1,0 +1,228 @@
+
+Dynamic Programming
+
+ [Microsoft, Amazon, Facebook, Google, Apple, Adobe]
+ Best Time to Buy and Sell Stock
+ 
+ [Microsoft, Adobe]
+ Longest Increasing Subsequence
+ 
+ [Microsoft, Amazon, Google, Apple, Adobe]
+ Maximum SubArray
+ 
+ [Amazon, Facebook, Google, Apple, Adobe]
+ Longest Palindromic Substring
+
+ [Amazon, Google]
+ Coin Change
+  
+ [Amazon, Facebook, Apple]
+ Word Break
+ 
+ [Adobe]
+ Climbing Stairs
+ 
+ [Facebook]
+  longest Valid Parentheses
+ 
+ [Facebook]
+  Decode Ways
+
+ [Facebook]
+  Range Sum Query 2D-Immutable
+  
+ [Facebook]
+ Continuous Subarray Sum
+
+ [Google, Adobe]
+  Maximum Product Subarray
+  
+  [Google]
+  Split Array Largest Sum  
+  
+  [Apple, Adobe]
+  Regular Expression Matching  
+  
+  [Adobe]
+  Perfect Squars
+ 
+ Design
+ 
+ [Microsoft]
+ Serialize and Deserialize BST
+ 
+ [Microsoft,Amazon]
+ Implement Trie (Prefix Tree)
+ 
+ [Microsoft,Amazon, Facebook, Google]
+ Serialzie and Deserialze BT
+ 
+ [Microsoft,Amazon, Facebook, Google, Apple, Adobe]
+ LRU Cache
+ 
+ [Amazon]
+ Find Median from Data Stream
+ 
+ [Amazon]
+ Design Tick-Tac-Toe
+ 
+ [Amazon]
+ Maximum Frequency Stack
+ 
+ [Amazon, Google, Apple, Adobe]
+ Min Stack
+
+[Amazon, Google]
+ Design Search AutoComplete System
+ 
+ [Facebook]
+ Binary Search Tree Iterator
+ 
+ [Facebook]
+  Add and Search Word-Data Structure Design  
+
+[Google]
+  Logger Rate Limiter
+  
+  [Google, Amazon]
+  Insert Delete GetRandom O(1)
+
+  [Apple]
+  Flatten Nested List Iterator
+  
+  [Adobe]
+  Encode and Decode the tiny url
+  
+Others
+
+[Adobe]
+Tenth Line
+
+ [Microsoft]
+ Single Number
+ 
+ [Microsoft]
+ Excel Sheet Column Number
+ 
+ [Microsoft]
+ Integer to English Words
+ 
+ [Microsoft]
+ Roman to Integer
+ 
+ [Microsoft]
+ Find the celebrity
+ 
+ [Microsoft]
+ The Skyline Problem
+ 
+ [Amazon, Google, Apple, Adobe]
+  Reverse Integer
+  
+  [Amazon]
+ Partition Lables
+ 
+ [Amazon]
+ Second Highest Salary
+ 
+ [Amazon]
+ Prison Cells After N Days
+ 
+ [Facebook]
+ Expression Add Operators
+   
+ [Facebook]
+  Find all anagram in a string
+  
+ [Facebook]
+  Permutation in String
+  
+ [Facebook]
+  Verifying an Alien Dictionary
+  
+ [Facebook]
+  Interval list Intersections
+  
+  [Google]
+  Candy
+  
+  [Google]
+  Isomorphic Strings
+  
+  [Google]
+  Stobogrammatic number
+  
+  [Google]
+  Bulls and Cows
+  
+  [Google]
+  Range Sum Query 2D-Mutable
+  
+  [Google]
+  My Calendar II
+  
+  [Google, Apple, Adobe]
+  Jewels and Stones
+  
+  [Google]
+  Swap Adjacent in LR String
+  
+  [Google]
+  Guess the Word
+  
+  [Google]
+  Minimum Area Rectangle
+  
+  [Adobe]
+  Maximal Rectangle
+  
+  [Adobe]
+  Rectangle Overlap
+
+  [Google]
+  Valid Sudoku
+  
+  [Apple, Adobe]  
+  Combine Two Tables
+  
+  [Apple]
+  Rank Scores
+  
+  [Apple]
+  Happy Number
+  
+  [Apple]
+  Fizz Buzz
+
+[Adobe]
+Add digits
+
+[Adobe]
+Nth Digits
+
+  
+    
+ Sql 
+ 
+ [Facebook, Adobe]
+  Second Highest Salary
+  
+  [Facebook, Adobe]
+  Nth Highest Salary
+  Customers who Never Order
+  Friend Requests 1: Overall Acceptance Rate
+  Friend Requests II: Who has the Most Friends
+  
+  [Facebook, Adobe]
+  Department Top Three Salaries
+  
+  [Adobe]
+  Big Countries
+  
+  [Google, Adobe]
+  Unique Email Addresses
+	
+  Odd Even Jump
+  License Key formatting
+  Fruit Into Baskets
+  

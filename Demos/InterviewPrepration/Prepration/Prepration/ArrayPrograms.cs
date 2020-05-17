@@ -60,50 +60,7 @@ namespace Prepration
             input[j] = temp;
         }
 
-        // 3. Rotation Search Elements
-        public static int FindPivot(int[] input, int min, int max)
-        {
-            if (input == null) return -1;
-            if (min > max) return -1;
-            int mid = min + max / 2;
-            if (mid < max && input[mid] > input[mid + 1])
-                return mid;
-            if (mid > min && input[mid] < input[mid - 1])
-                return mid - 1;
-            if (input[min] >= input[mid])
-                return FindPivot(input, min, mid - 1);
-            else
-                return FindPivot(input, mid + 1, max);
-        }
-
-        public static int RotationSearch(int[] input, int element, int min, int max)
-        {
-            int find = 0;
-            int value = FindPivot(input, min, max);
-            if (value == -1)
-                find = BinarySearch(input, element, min, max);
-            else
-            {
-                if (input[value] == element)
-                    return value;
-                find = BinarySearch(input, element, min, value - 1);
-                if (find == -1)
-                    find = BinarySearch(input, element, value + 1, max);
-            }
-            return find;
-
-        }
-
-        //4. Binary Search
-        public static int BinarySearch(int[] input, int element, int low, int high)
-        {
-            if (input == null || input.Length <= 0) return -1;
-            if (low > high) return -1;
-            int mid = (low + high) / 2;
-            if (input[mid] == element) return mid;
-            if (input[mid] < element) return BinarySearch(input, element, (mid + 1), high);
-            return BinarySearch(input, element, low, (mid - 1));
-        }
+       
 
         //5. Sorting
         public static void Sorting(int[] input)
@@ -128,7 +85,8 @@ namespace Prepration
         public static int[] SortedSquar(int[] input)
         {
             int left = 0;
-            int right = input.Length - 1; int index = input.Length - 1;
+            int right, index;
+            right = index = input.Length - 1; //int index = input.Length - 1;
             int[] res = new int[input.Length];
 
             while (index >= 0)
@@ -231,128 +189,10 @@ namespace Prepration
 
         }
 
-        //10. Set Matrix Zeroes
-        //Given a m x n matrix, if an element is 0, set its entire row and column to 0
+        
+       
 
-        public static void SetZeros()
-        {
-            int[,] input = new int[,] { { 0, 5, 6, 0 }, { 2, 3, 6, 9 }, { 5, 7, 8, 1 } };
-
-
-            int rowIndexUpperBound = input.GetLength(0);
-            int colIndexUpperBound = input.GetLength(1);
-
-            int[,] result = new int[rowIndexUpperBound, colIndexUpperBound];
-
-            for (int i = 0; i < rowIndexUpperBound; i++)
-                for (int j = 0; j < colIndexUpperBound; j++)
-                {
-                    if (input[i, j] == 0)
-                    {
-                        SetZeroForRowsAndColumns(input, i, j);
-                    }
-                }
-
-            for (int i = 0; i < rowIndexUpperBound; i++)
-                for (int j = 0; j < colIndexUpperBound; j++)
-                {
-                    if (input[i, j] == -1)
-                        input[i, j] = 0;
-                }
-        }
-
-        public static int[,] SetZeroForRowsAndColumns(int[,] input, int rowIndex, int colIndex)
-        {
-            int rowIndexUpperBound = input.GetLength(0);
-            int colIndexUpperBound = input.GetLength(1);
-
-            //Set Zero for Rows
-            for (int i = 0; i < colIndexUpperBound; i++)
-            {
-                input[rowIndex, i] = -1;
-            }
-
-            //Set Zero for Columns
-            for (int i = 0; i < rowIndexUpperBound; i++)
-            {
-                input[i, colIndex] = -1;
-            }
-
-            return input;
-        }
-
-        // 11. Find the Median 
-        public static int FindMedianOfTwoArrays(int[] first, int[] second)
-        {
-            int flen = first.Length;
-            int slen = second.Length;
-
-            if (flen > slen)
-                return FindMedianOfTwoArrays(second, first);
-
-            int min = 0;
-            int max = flen;
-
-            while (min <= max)
-            {
-                int x = (min + max) / 2;
-                int y = ((flen + slen + 1) / 2) - x;
-
-                int maxX = x == 0 ? int.MinValue : first[x - 1];
-                int minX = x == flen ? int.MaxValue : first[x];
-
-                int maxY = y == 0 ? int.MinValue : second[y - 1];
-                int minY = y == slen ? int.MaxValue : second[y];
-
-                if (maxX <= minY && maxY <= minX)
-                {
-                    if (flen + slen % 2 == 0)
-                    {
-                        int result = Math.Max(maxX, maxY) + Math.Min(minX, minY);
-                        return result / 2;
-                    }
-                    else
-                    {
-                        int result = Math.Max(maxX, maxY);
-                        return result;
-                    }
-                }
-                else if (maxX > minY)
-                {
-                    max = max - 1;
-                }
-                else
-                    min = min + 1;
-            }
-            return 0;
-        }
-
-        //12. Merge two Sorted Array
-        public static int[] MergeTwoSortedArrays(int[] first, int[] second)
-        {
-            int i = 0, j = 0, k = 0;
-            int[] result = new int[first.Length + second.Length];
-            while (i < first.Length && j < second.Length)
-            {
-                if (first[i] < second[j])
-                {
-                    result[k++] = first[i++];
-                }
-                else
-                {
-                    result[k++] = second[j++];
-                }
-            }
-            while (i < first.Length)
-            {
-                result[k++] = first[i++];
-            }
-            while (j < second.Length)
-            {
-                result[k++] = second[j++];
-            }
-            return result;
-        }
+        
 
         //13. Find the missing elelement and repeating element
         //1. use dictionary 2. using array
@@ -375,6 +215,10 @@ namespace Prepration
 
         }
 
+        //Amazon Qustion
+        //Missing number
+        //Input: [9,6,4,2,3,5,7,0,1] Output: 8
+        //https://leetcode.com/explore/interview/card/amazon/76/array-and-strings/2971/
         public static void PrintTwoElements(int[] arr)
         {
             int i;
@@ -382,7 +226,7 @@ namespace Prepration
             Console.Write("The repeating element is ");
 
             for (i = 0; i < size; i++)
-            {    
+            {
                 int abs_val = Math.Abs(arr[i]);
                 if (arr[abs_val - 1] > 0)
                     arr[abs_val - 1] = -arr[abs_val - 1];
@@ -417,7 +261,7 @@ namespace Prepration
                         break;
                     }
                 }
-                if(!isfound)
+                if (!isfound)
                 {
                     element = input[i];
                 }
@@ -426,56 +270,13 @@ namespace Prepration
         }
 
 
-        //15. https://www.geeksforgeeks.org/the-celebrity-problem/
-
-        public static string NumberToWords(int n)
-        {
-            string word = string.Empty;
-            if (n != 0) return null;
-            if(n < 0)
-            {
-                word += "Minus";
-                NumberToWords(Math.Abs(n));
-            }
-            if(n > 1000000)
-            {
-                word += $"{n/1000000} millions";
-                n = n % 1000000;
-            }
-            if(n > 1000)
-            {
-                word += $"{n / 1000} thousands";
-                n = n % 1000;
-            }
-            if(n > 100)
-            {
-                word += $"{n / 100} hundreds";
-                n = n % 100;
-            }
-            if(n > 0)
-            {
-                var twoMap = new string[] { "Zero","Ten","Twenty","Thirty","","","","Ninty"};
-                var oneMap = new string[] { "Zero", "one", "Two", "", "", "", "Ten", "eleven", "Tweleve", "", "", "Ninteen" };
-                if(n < 20)
-                {
-                    word += oneMap[n];
-                }
-                else
-                {
-                    word += twoMap[n / 10];
-                    n = n % 10;
-                    if (n > 0)
-                        word += oneMap[n];
-                }
-            }
-            return word;
-        }
+        
 
         //16. 
         //https://www.geeksforgeeks.org/find-maximum-value-of-sum-iarri-with-only-rotations-on-given-array-allowed/
         public static int maxSum()
         {
-            int[] arr = new int[]{10, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+            int[] arr = new int[] { 10, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             // Find array sum and i*arr[i] 
             // with no rotation 
             int arrSum = 0; // Stores sum of arr[i] 
@@ -531,12 +332,13 @@ namespace Prepration
         {
             int[] array = { 2, 3, 5, 4, 5, 3, 4 };
             int result = array[0];
-            for (int i=1; i<array.Length;i++)
+            for (int i = 1; i < array.Length; i++)
             {
                 result = result ^ array[i];
             }
         }
 
+        //https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/discuss/441225/Share-my-simple-solution
         //19. Find the sum of target
         public static void FindTheSumOfTargetIndices()
         {
@@ -544,7 +346,7 @@ namespace Prepration
             int target = 5;
             for (int i = 0; i < arrays.Length; i++)
             {
-                for (int j = i; j < arrays.Length; j++)
+                for (int j = i + 1; j < arrays.Length; j++)
                 {
                     if (arrays[i] + arrays[j] == target)
                     {
@@ -588,12 +390,12 @@ namespace Prepration
             int[,] c = new int[a.GetUpperBound(0) + 1, b.GetUpperBound(1) + 1];
 
             //Array Multiplication ( 2,*2)
-            for (int i=0; i<=a.GetUpperBound(0); i++)
+            for (int i = 0; i <= a.GetUpperBound(0); i++)
             {
-                for(int j=0; j<=b.GetUpperBound(1); j++)
+                for (int j = 0; j <= b.GetUpperBound(1); j++)
                 {
                     c[i, j] = 0;
-                    for(int k=0; k<=a.GetUpperBound(1); k++)
+                    for (int k = 0; k <= a.GetUpperBound(1); k++)
                     {
                         c[i, j] += a[i, k] * b[k, j];
                     }
@@ -603,46 +405,7 @@ namespace Prepration
 
         }
 
-        //21. Find Islands
-        public static void FindIsLand()
-        {
-            int[,] a = new int[,] { { 0,1,0,0 }, { 0,0,0,1}, { 0,1,0,0 }, {1,1,0,0 } };
-            int iland = 0;
-            for(int i=0; i<=a.GetUpperBound(0); i++)
-            {
-                for(int j=0; j<=a.GetUpperBound(1); j++)
-                {
-                    if(a[i,j] == 1)
-                    {
-                        iland++;
-                        Iland(a, i, j);
-                    }
-                }
-            }
-        }
-
-        private static void Iland(int[,] ab, int i,int j)
-        {
-            if(ab[i,j] == 1)
-            {
-                ab[i, j] = 0;
-
-                try
-                {
-                    Iland(ab, i + 1, j);
-                    Iland(ab, i, j + 1);
-                    Iland(ab, i + 1, j + 1);
-                    Iland(ab, i - 1, j);
-                    Iland(ab, i, j - 1);
-                    Iland(ab, i - 1, j - 1);
-                    Iland(ab, i - 1, j + 1);
-                    Iland(ab, i + 1, j - 1);
-                }
-                catch (Exception)
-                {
-                }
-            }
-        }
+        
 
         //22. Calculate Cost Path
         public static void MinCostPath()
@@ -666,9 +429,9 @@ namespace Prepration
                 }
             }
 
-            string path=string.Empty;
+            string path = string.Empty;
             //Get the path
-            int k=0; int l = 0; int one = 0;
+            int k = 0; int l = 0; int one = 0;
             while (k < a.GetUpperBound(0) || l < a.GetUpperBound(1))
             {
                 if (k == 0 && l == 0)
@@ -678,7 +441,7 @@ namespace Prepration
                 }
                 else
                 {
-                    if(one == 0)
+                    if (one == 0)
                     {
                         k = 0; l = 0;
                         one++;
@@ -699,7 +462,7 @@ namespace Prepration
                     }
                     else
                     {
-                        if(k<a.GetUpperBound(0))
+                        if (k < a.GetUpperBound(0))
                         {
                             k = k + 1;
                             path += $"{a[k, l]}-->";
@@ -714,18 +477,20 @@ namespace Prepration
             }
         }
 
+        //Amazon Question
+        //Microsoft Question
         //23. word search
         //https://www.geeksforgeeks.org/search-a-word-in-a-2d-grid-of-characters/
         public static void WordSearch()
         {
-            char[,] wd = new char[,] { { 'C','O','R' }, { 'O','A','R' }, { 'A','O','R' } };
+            char[,] wd = new char[,] { { 'C', 'O', 'R' }, { 'O', 'A', 'R' }, { 'A', 'O', 'R' } };
             string stext = "CAB";
 
-            for(int i=0; i<wd.GetUpperBound(0); i++)
+            for (int i = 0; i < wd.GetUpperBound(0); i++)
             {
-                for(int j=0; j<wd.GetUpperBound(1); j++)
+                for (int j = 0; j < wd.GetUpperBound(1); j++)
                 {
-                    if(wd[i,j] == stext[0])
+                    if (wd[i, j] == stext[0])
                     {
                         if (IsWord(wd, i, j, stext))
                         {
@@ -745,12 +510,12 @@ namespace Prepration
             if (wd[i, j] != text[0])
                 return false;
 
-            for(int dir=0; dir<8; dir++)
+            for (int dir = 0; dir < 8; dir++)
             {
                 int rd = i + xd[dir];
                 int cd = j + yd[dir];
                 int l;
-                for(l=1; l<text.Length;l++)
+                for (l = 1; l < text.Length; l++)
                 {
                     if (rd < 0 || cd < 0 || rd > wd.GetUpperBound(0) || cd > wd.GetUpperBound(1))
                         break;
@@ -767,10 +532,7 @@ namespace Prepration
             return false;
         }
 
-        //24.
-        //https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/discuss/441225/Share-my-simple-solution
-
-        //25. Converted sorted Array to Binary Search Tree
+        //24. Converted sorted Array to Binary Search Tree
         //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
         //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/discuss/440037/C-5-Lines-Code
         // int[] array = new int[] { -10, -3, 0, 5, 9 };
@@ -778,72 +540,100 @@ namespace Prepration
         {
             if (array.Length == 0) return null;
             if (array.Length == 1) return new Node(array[0]);
-            
+
             int mid = array.Length / 2;
             return new Node(array[mid])
             {
                 Left = SortedArrayToBinarySearchTree(array.Take(mid).ToArray()),
                 Right = SortedArrayToBinarySearchTree(array.Skip(mid + 1).Take(array.Length).ToArray())
-            }; 
+            };
         }
 
-        //26. https://leetcode.com/problems/asteroid-collision/
-        // Input: asteroids = [5, 10, -5] Output: [5, 10]
-        public static void AsteroidCollision()
+        //25. https://leetcode.com/problems/asteroid-collision/
+        // Input: asteroids = [5, 10, -5] Output: [5, 10]      
+
+
+
+
+
+
+
+
+
+
+
+        //Amazon Question
+        //14. Kth largest element in Array
+        //https://leetcode.com/problems/kth-largest-element-in-an-array/
+        // https://leetcode.com/problems/kth-largest-element-in-an-array/discuss/440593/Java-QuickSelect-(1ms)
+        //https://www.geeksforgeeks.org/kth-smallestlargest-element-unsorted-array/
+        //Input: [3,2,1,5,6,4] and k = 2 Output: 5 ,, Input: [3,2,3,1,2,4,5,5,6] and k = 4 Output: 4
+        public static void KthSmallest()
         {
-            var res = new List<int>();
-            int[] ast = new int[] { 5, 10, -5 };// {8,-8} {-2, -1, 1, 2 } {  5, 10, -5 };
-            var stack = new Stack<int>();
-            foreach(var i in ast)
+            int[] input = new int[] { 12, 3, 5, 7, 4, 19, 26 };
+            //var no = KthSmallest(input, 0, input.Length - 1, 3);
+            int k = 3;
+            CQuickSort(input, 0, input.Length - 1);
+            int tlno = input[input.Length - k];
+            int tsno = input[k - 1];
+        }
+        //5. Quick Sort
+        public static void QuickSort()
+        {
+            int[] input = new int[] { 12, 3, 5, 7, 4, 19, 26 };
+            CQuickSort(input, 0, input.Length - 1);
+        }
+
+        private static void CQuickSort(int[] inp, int left, int right)
+        {
+            if (left < right)
             {
-                stack.Push(i);
+                int pivot = Partition(inp, left, right);
+                if (pivot > 1)
+                    CQuickSort(inp, left, pivot - 1);
+                if (pivot + 1 < right)
+                    CQuickSort(inp, pivot + 1, right);
             }
+        }
 
-            while(stack.Count > 0)
+        private static int Partition(int[] inp, int left, int right)
+        {
+            int pivot = inp[left];
+            while (true)
             {
-                if (ast.Length == 1)
-                    res.Add(stack.Pop());
-                else if (ast.Length == 2)
+                while (inp[left] < pivot)
+                    left++;
+                while (inp[right] > pivot)
+                    right--;
+                if (left < right)
                 {
-                    var e1 = stack.Pop();
-                    var e2 = stack.Pop();
-
-                    if ((e1 < 0 && e2 < 0) || (e1 > 0 && e2 > 0))
-                    {
-                        res.Add(e1);
-                        res.Add(e2);
-                    }
-                }
-                else if(stack.Count > 1)
-                {
-                    var e1 = stack.Pop();
-                    var e2 = stack.Pop();
-
-                    if ((e1 < 0 && e2 < 0) || (e1 > 0 && e2 > 0))
-                    {
-                        res.Add(e1);
-                        res.Add(e2);
-                    }
-                    else
-                    {
-                        if (Math.Abs(e1) > Math.Abs(e2))
-                            stack.Push(e1);
-                        else
-                            stack.Push(e2);
-
-                    }
+                    var temp = inp[right];
+                    inp[right] = inp[left];
+                    inp[left] = temp;
                 }
                 else
-                {
-                    while (stack.Count > 0)
-                        res.Add(stack.Pop());
-                }
-            }            
+                    return right;
+            }
         }
 
-        //27. Trapping train water.
-        //https://leetcode.com/problems/trapping-rain-water/discuss/362788/Java-or-Time-O(N)-Space-O(N)
-        //https://leetcode.com/problems/trapping-rain-water/
+        //15. Find the minimum in sorted array
+        //https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/
+        //Input: [3,4,5,1,2] Output: 1 ,, Input: [4,5,6,7,0,1,2] Output: 0
+
+        public static int FindMinimumInSortedArray()
+        {
+            var inp = new int[] { 4, 5, 6, 7, 0, 1, 2 };
+            var result = inp[0];
+            for (int i = 0; i < inp.Length - 1; i++)
+            {
+                if (inp[i + 1] < result)
+                {
+                    result = inp[i + 1];
+                    //break;
+                }
+            }
+            return result;
+        }
 
 
     }

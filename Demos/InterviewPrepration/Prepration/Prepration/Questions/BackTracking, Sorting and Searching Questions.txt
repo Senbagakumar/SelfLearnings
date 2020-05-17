@@ -1,0 +1,123 @@
+
+BackTracking
+  [Apple]
+  Combination Sum
+  [Apple]
+  Subsets
+  
+[Amazon, Microsoft, Facebook, Google, Apple]
+Letter combination of a Phone Number
+ 
+ [Microsoft]
+ Wildcard Matching
+ 
+ [Amazon, Microsoft, Google] 
+ Word Search II
+ 
+ [Microsoft, Facebook]
+ Regular Expression Matching
+ 
+ [Amazon, Apple]
+ Word Search I
+ 
+ [Amazon, Google, Apple]
+ Generate Parentheses 
+
+ [Facebook, Apple]
+  Permutations
+  Permutations II
+ 
+ [Facebook]
+  Remove Invalid Parentheses
+
+ [Facebook]
+ Subsets
+  
+ [Facebook, Google]
+  Strobogrammatic Number II
+  
+ [Google]
+  Word Squares
+
+ [Google]
+  Android Unlock Patterns
+  
+ 
+ Sorting and Searching
+
+ [Amazon, Microsoft,Google, Apple, Adobe] 
+ Median of Two Sorted Arrays
+ 
+ [Amazon, Facebook, Google, Apple, Adobe]
+ Merge Intervals
+ 
+ [Adobe]
+ Search insert position
+ 
+ [Amazon]
+ Kth Largest element in an Array
+ 
+ [Amazon, Apple]
+ Top K Frequest Elements
+
+ [Amazon, Microsoft, Facebook, Apple] 
+ Search in Rotated Sorted Array
+ 
+ [Amazon]
+ Two Sum II-Input array is sorted
+ 
+ [Amazon]
+ Metting Rooms II
+ 
+ [Amazon, Apple]
+ K Closest Points to Origin 
+ 
+ [Microsoft]
+ Remove duplicates from Sorted Array
+ 
+ [Microsoft, Apple]
+ Sort Colors
+ 
+ [Microsoft]
+ Find Minimum in Rotated Sorted Array II
+ 
+ [Microsoft]
+ Serch a 2D Matrix
+ 
+ [Microsoft]
+ Merge Sorted Array
+ 
+ [Microsoft]
+ Find minimum in Rotated Sorted Array
+ 
+ [Microsoft]
+ Search a 2D Matrix II
+ 
+ [Facebook]
+   Divide Two Integers
+
+  [Facebook, Google]
+  Find First and Last Postion of Element in Sorted Array
+  
+  [Facebook]
+  Pow(x,n)
+  
+  [Facebook]
+  Find Peak element
+  
+  [Facebook]
+  First Bad Version
+  
+  [Facebook, Apple]
+  Intersection of Two Arrays
+  Intersection of Two Arrays II
+  
+  [Google, Apple]
+  Valid anagram
+  
+  [Google]
+  Count of smaller numbers afer self
+  
+  [Google]
+  Peak index in am montain array
+  
