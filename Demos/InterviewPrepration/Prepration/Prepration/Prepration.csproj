@@ -59,6 +59,7 @@
     <Compile Include="Assessment.cs" />
     <Compile Include="BinaryTree.cs" />
     <Compile Include="DesignQuestions.cs" />
+    <Compile Include="InterviewExperience.cs" />
     <Compile Include="JsonConversion.cs" />
     <Compile Include="LinkedListPrograms.cs" />
     <Compile Include="Microsoft\CarDesign.cs" />

@@ -23,7 +23,8 @@ namespace Prepration
                 return false;
         }
 
-        //this below method calculate the Height.
+        //https://leetcode.com/problems/maximum-depth-of-binary-tree/
+        //this below method calculate the Height/Depth
         public int BTHeight(Node rootNode)
         {
             if (rootNode == null) return 0;
@@ -453,7 +454,7 @@ namespace Prepration
                 {
                     var pnode = st.Pop();
                     Console.WriteLine(pnode.Data);
-                    node = node.Right;
+                    node = pnode.Right;
                 }
             }
         }
@@ -463,7 +464,7 @@ namespace Prepration
         public int KthSmallest(Node root, int k)
         {
             Stack<Node> stack = new Stack<Node>();
-            while (root != null || stack.Count() > 0)
+            while (root != null || stack.Count > 0)
             {
                 while (root != null)
                 {
@@ -536,6 +537,7 @@ namespace Prepration
             return first.Data == second.Data && IsMirrorTree(first.Left, second.Right) && IsMirrorTree(first.Right, second.Left);
         }
         //18. IsSame Tree
+        //https://leetcode.com/problems/symmetric-tree/
         public static bool IsSameTree(Node first, Node second)
         {
             if (first == null || second == null) return true;
@@ -704,6 +706,155 @@ namespace Prepration
                 queue = nqueue;
             }
             return node;
+        }
+
+
+        //https://www.geeksforgeeks.org/fix-two-swapped-nodes-of-bst/
+        //Two of the nodes of a Binary Search Tree(BST) are swapped.Fix(or correct) the BST.
+        Node first, middle, last, previous;
+        private void CorrectBSTUtil(Node root)
+        {
+            if (root != null)
+            {
+                CorrectBSTUtil(root.Left);
+
+                if (previous != null && root.Value < previous.Value)
+                {
+                    if (first == null)
+                    {
+                        first = previous;
+                        middle = root;
+                    }
+                    else
+                        last = root;
+                }
+                previous = root;
+                CorrectBSTUtil(root.Right);
+            }
+        }
+
+        public void CorrectBST(Node node)
+        {
+            first = middle = last = previous = null;
+            CorrectBSTUtil(node);
+            if (first != null && last != null)
+            {
+                var temp = first.Value;
+                first.Value = last.Value;
+                last.Value = temp;
+            }
+            else if (first != null && middle != null)
+            {
+                var temp = first.Value;
+                first.Value = middle.Value;
+                middle.Value = temp;
+            }
+        }
+
+        public void PrintInOrder(Node node)
+        {
+            if (node == null) return;
+            PrintInOrder(node.Left);
+            Console.WriteLine(node.Value);
+            PrintInOrder(node.Right);
+        }
+
+        //https://leetcode.com/problems/sum-of-left-leaves/
+        //Find the sum of all left leaves in a given binary tree.
+        public static int SumLeft(Node root, bool isLeft)
+        {
+            if (root == null)
+                return 0;
+            if (root.Left == null && root.Right == null && isLeft)
+                return root.Value;
+            return SumLeft(root.Left, true) + SumLeft(root.Right, false);
+        }
+
+        //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/
+        //Flatten Binary Tree to Linked List
+        public static void Flatten(Node root)
+        {
+            Help(root);
+        }
+
+        public static Node Help(Node root)
+        {
+            if (root == null) return root;
+            if (root.Left == null && root.Right == null) return root;
+
+
+            Node left = Help(root.Left);
+            Node right = Help(root.Right);
+
+            Node tleft = root.Left;
+            Node tright = root.Right;
+
+            if (left != null)
+            {
+                left.Right = tright;
+                root.Right = tleft;
+                root.Left = null;
+            }
+            return right != null ? right : left;
+        }
+
+        //https://leetcode.com/problems/binary-tree-right-side-view/
+        public IList<int> RightSideView(Node root)
+        {
+            IList<int> res = new List<int>();
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            Result(root, res, map, 0);
+            return res;
+        }
+        public void Result(Node root, IList<int> res, Dictionary<int, int> map, int level)
+        {
+            if (root == null) return;
+            if (!map.ContainsKey(level))
+            {
+                map[level] = root.Value;
+                res.Add(root.Value);
+            }
+            level++;
+            Result(root.Right, res, map, level);
+            Result(root.Left, res, map, level);
+        }
+
+        //https://leetcode.com/problems/binary-tree-paths/
+        //Binary Tree Path.
+        public List<String> binaryTreePaths(Node root)
+        {
+            List<String> result = new List<string>();
+            return printUtil2(root, result, "");
+        }
+        public List<String> printUtil2(Node root, List<String> result, String path)
+        {
+            if (root == null)
+            {
+                return result;
+            }
+            path = path + root.Value.ToString();
+            if (root.Left == null && root.Right == null)
+            {
+                result.Add(path);
+                return result;
+            }
+
+            printUtil2(root.Left, result, path + "->");
+            printUtil2(root.Right, result, path + "->");
+
+            return result;
+        }
+
+        //https://leetcode.com/problems/count-complete-tree-nodes/
+        //Given a complete binary tree, count the number of nodes.
+
+        public int CountNodes(Node root)
+        {
+            if (root == null)
+            {
+                return 0;
+            }
+            return 1 + CountNodes(root.Left) + CountNodes(root.Right);
         }
 
     }

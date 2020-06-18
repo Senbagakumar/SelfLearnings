@@ -138,6 +138,59 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+            //string str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7\nstr8\nstr9\nstr10\nstr11\nstr12\nstr13\nstr14\nstr15\nstr16\nstr17\nstr18\nstr19\nstr20\nstr21\nstr22\nstr23\nstr24\nstr25";
+            //str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7";
+            //new ArrayPrograms().PrintLast10LineOfGivenFile(str,'\n');
+            new ArrayPrograms().FindRepeatingCharacter(8, 3);
+            //new ArrayPrograms().UniquePaths(3, 2);
+            //List<IList<int>> input = new List<IList<int>>();
+            //input.Add(new List<int> { 0, 1 });
+            //input.Add(new List<int> { 1, 2 });
+            //input.Add(new List<int> { 2, 0 });
+            //input.Add(new List<int> { 1, 3 });
+            //new ArrayPrograms().CriticalConnections(4, input);
+            //[1,2],[3,5],[6,7],[8,10],[12,16]
+
+            //int[][] interval = new int[2][];
+            //interval[0] = new int[2] { 1,3};
+            //interval[1] = new int[2] { 6,9};
+
+            //int[] insert = new int[] { 2,5 };
+
+            //int[][] interval = new int[5][];
+            //interval[0] = new int[2] { 1, 2 };
+            //interval[1] = new int[2] { 3, 5 };
+            //interval[2] = new int[2] { 6, 7 };
+            //interval[3] = new int[2] { 8, 10 };
+            //interval[4] = new int[2] { 12, 16 };
+
+            //int[] insert = new int[] { 4,8 };
+
+
+            //var result = new ArrayPrograms().Insert(interval, insert);
+            //var result = new ArrayPrograms().ClimbStairs(10);
+            //var result = new ArrayPrograms().MinCostClimbingStairs(new int[] { 1, 100, 1, 1, 1, 100, 1, 1, 100, 1 });
+            //new ArrayPrograms().NumDecodings("12");
+            //new ArrayPrograms().LongestConsecutive(new int[] { 100, 4, 200, 1, 3, 2 });
+            //new AmazonInterviewQuestions().MaxProductArray(new int[] { -2, 0, -1 }); 
+            //new ArrayPrograms().HammingWeight(11); //100 //001
+            //var leng = AmazonInterviewQuestions.GetUniqueSubstring("abcabcbb");
+            //var v = new MedianFinder();
+            //v.AddNum(1);
+            //v.AddNum(2);
+            //v.AddNum(4);
+            //v.AddNum(3);
+            //v.AddNum(6);
+            //v.AddNum(5);
+            //var result = v.FindMedian();
+            //new stringprograms().Subsets(new int[] { 1,2,2 });
+            //new stringprograms().permute(new int[] { 1,2,3,4 });
+            //new stringprograms().combinationSum(new int[] { 2, 3, 6, 7 }, 7);
+            //new stringprograms().partition("aab");
+            //new stringprograms().MaxSlidingWindow(new int[] { 1, 3, -1, -3, 5, 3, 6, 7 }, 3);
+            //new stringprograms().SearchRange(new int[] { 5, 7, 7, 8, 8, 9 }, 8);
+            //stringprograms.IsSubsequence("axc", "ahbgdc");
+            //stringprograms.RepeatedSubstringPattern("ababab");
             //MinStack minStack = new MinStack();
             //minStack.Push(-2);
             //minStack.Push(0);
@@ -158,16 +211,27 @@ namespace Prepration
             //val = fk.pop(); //7
             //val = fk.pop(); //5
             //val = fk.pop(); //4
-           //AmazonInterviewQuestions aiq = new AmazonInterviewQuestions();
+            //AmazonInterviewQuestions aiq = new AmazonInterviewQuestions();
 
-           // var llist = new LinkedList();
-           // llist.AddNode(1);
-           // llist.AddNode(2);
-           // llist.AddNode(3);
-           // llist.AddNode(4);
-           // llist.AddNode(5);
+            //var llist = new LinkedList();
+            //llist.AddNode(1);
+            //llist.AddNode(2);
+            //llist.AddNode(3);
+            //llist.AddNode(4);
+            //llist.AddNode(5);
 
-           // aiq.reverseKGroup(llist.Head, 2);
+            // new LinkedListPrograms().ReorderList(llist.Head);
+            var node = BinaryTree.ConstructBinaryTree(new int[] { 3, 2, 4, 1, 5, 6 }, new int[] { 3, 4, 2, 6, 5, 1 });
+            BinaryTree.Flatten(node);
+
+            //var node = BinaryTree.ConstructBinaryTree(new int[] { 2, 5, 20, 10, 8 }, new int[] { 2, 20, 5, 8, 10 });
+            ////var reslut = new LinkedListPrograms().TreeToDoublyList(node);
+            //var b = new BinaryTree();
+            //b.PrintInOrder(node);
+            //b.CorrectBST(node);
+            //b.PrintInOrder(node);
+
+            // aiq.reverseKGroup(llist.Head, 2);
 
 
             //int[,] interval = new int[3,2];
@@ -214,7 +278,7 @@ namespace Prepration
             //ArrayPrograms.SortColors(new int[] { 2, 0, 2, 1, 1, 0});
             // ArrayPrograms.RemoveDuplicates(new int[] { 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 });
             //stringprograms.RemoveDuplicates("wwwwaaadexxxxxxywww");
-            new stringprograms().LetterCombinations("23");
+            // new stringprograms().LetterCombinations("23");
             //ArrayPrograms.RotateImage(new int[,] { {1,2 }, {3,4} });
             //stringprograms.GroupAnagrams(new string[] { "eat", "tea", "tan", "ate", "nat", "bat" });
             //stringprograms.IsWordPalindrome("race a car");
@@ -227,19 +291,19 @@ namespace Prepration
             //var prog = new Program();
             //var no = prog.RomanToInt("IV");
 
-            numberNeeded("cde", "abc");
-           // repeatedString1("aba", 10);
+            // numberNeeded("cde", "abc");
+            // repeatedString1("aba", 10);
             //Assessment.MinCostConnectedRops();
             //int steps= Assessment.TreaureIsLand2();
 
-            LinkedList lv = new LinkedList(1);
+            // LinkedList lv = new LinkedList(1);
             //lv.AddNode(2);
             //lv.AddNode(3);
             //lv.AddNode(4);
 
             //LinkedListPrograms.SwapPairs(lv.Head);
 
-           // Program.gameWinner("ww");
+            // Program.gameWinner("ww");
             //DesignQuestions.MyHashMap cv = new DesignQuestions.MyHashMap();
             //cv.put(5, 10);
             //cv.get(5);
@@ -307,7 +371,7 @@ namespace Prepration
 
             //int result= stringprograms.Factorial(5);
 
-           // ArrayPrograms.FindUniqueNo(new int[] { 12, 5, 12, 4, 12, 1, 1, 2, 3, 3,2,5 });
+            // ArrayPrograms.FindUniqueNo(new int[] { 12, 5, 12, 4, 12, 1, 1, 2, 3, 3,2,5 });
             // stringprograms.RemoveDuplicates("wwwwaaadexxxxxxywww");
             //stringprograms.reverseWords("the sky is blue".ToCharArray());
             //stringprograms.CalculateValues();
@@ -387,7 +451,7 @@ namespace Prepration
             ////Array Rotation Search
             //ArrayPrograms.RotationSearch(new int[] { 4, 5, 1, 2, 3 }, 3, 0, 5);
 
-            ArrayPrograms.SortedSquar(new int[] { -4, -1, 0, 3, 10 });
+            // ArrayPrograms.SortedSquar(new int[] { -4, -1, 0, 3, 10 });
 
             ////Binary Tree //new int[] { 9, 3, 15, 20, 7 }, new int[] { 9, 15, 7, 20, 3 }
             /////new int[] { 3,5,8,10,12,14,16 }, new int[] { 3,8,5,12,16,14,10} -- In, Post

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -635,6 +636,331 @@ namespace Prepration
             return result;
         }
 
+        //https://leetcode.com/problems/insert-interval/
+        //Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+        //You may assume that the intervals were initially sorted according to their start times.
 
+        //Input: intervals = [[1,3],[6,9]], newInterval = [2,5] Output: [[1,5],[6,9]]
+        //Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8] Output: [[1,2],[3,10],[12,16]]
+
+        public int[][] Insert(int[][] intervals, int[] insert)
+        {
+            List<int[]> list = new List<int[]>();
+            int i = 0;
+            int[] temp = new int[2];
+            if (intervals.Length == 0 || intervals == null)
+            {
+                list.Add(insert);
+                return list.ToArray();
+            }
+            while (i < intervals.Length)
+            {
+                int[] current = intervals[i];
+                if (current[1] < insert[0])
+                {
+                    list.Add(current);
+                    temp = insert;
+                    i++;
+                }
+
+                else if (current[0] > insert[1])
+                {
+                    list.Add(insert);
+                    temp = current;
+                    break;
+                }
+
+                else
+                {
+                    insert[0] = Math.Min(insert[0], current[0]);
+                    insert[1] = Math.Max(insert[1], current[1]);
+                    temp = insert;
+                    i++;
+
+                }
+            }
+
+            if (i == intervals.Length - 1 || i == intervals.Length)
+            {
+                list.Add(temp);
+            }
+
+            //if (i < intervals.Length && i != intervals.Length - 1)
+            //{
+            //    for (int j = i; j < intervals.Length; j++)
+            //    {
+            //        list.Add(intervals[j]);
+            //    }
+            //}
+
+            return list.ToArray();
+
+        }
+
+        //https://leetcode.com/problems/climbing-stairs/
+        //Climbing Stairs
+        //You are climbing a stair case. It takes n steps to reach to the top.
+        //Each time you can either climb 1 or 2 steps.In how many distinct ways can you climb to the top?
+        //Input: 2 Output: 2 Explanation: There are two ways to climb to the top. 1. 1 step + 1 step 2. 2 steps
+        //Input: 3 Output: 3 Explanation: There are three ways to climb to the top. 1. 1 step + 1 step + 1 step 2. 1 step + 2 steps 3. 2 steps + 1 step
+        public int ClimbStairs(int n)
+        {
+            var f=new int[n + 1];
+            f[0] = 1;
+            f[1] = 1;
+            for (int i = 2; i < n + 1; i++)
+            {
+                f[i] = f[i - 1] + f[i - 2];
+            }
+            var result =f[n];
+            return result;
+        }
+
+        //Min Cost Climbing Stairs
+        //https://leetcode.com/problems/min-cost-climbing-stairs/
+        //Once you pay the cost, you can either climb one or two steps. You need to find minimum cost to reach the top of the floor, 
+        //and you can either start from the step with index 0, or the step with index 1.
+
+        //Input: cost = [10, 15, 20] Output: 15 Explanation: Cheapest is start on cost[1], pay that cost and go to the top.
+        //Input: cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1] Output: 6 Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3].
+        public int MinCostClimbingStairs(int[] cost)
+        {
+            int n = cost.Length;
+            int[] dp = new int[n+1];
+            dp[0] = cost[0];
+            dp[1] = cost[1];
+
+            for (int i = 2; i <= n; i++)
+            {
+                dp[i] = Math.Min(dp[i - 1], dp[i - 2]) + (i == n ? 0 : cost[i]);
+            }
+            var result = dp[n];
+            return result;
+        }
+
+        //DecodeWays
+        //https://leetcode.com/problems/decode-ways/
+        //A message containing letters from A-Z is being encoded to numbers using the following mapping:
+        //'A' -> 1 'B' -> 2 'Z' -> 26
+        //Input: "12" Output: 2 Explanation: It could be decoded as "AB" (1 2) or "L" (12).
+        //Input: "226" Output: 3 Explanation: It could be decoded as "BZ" (2 26), "VF" (22 6), or "BBF" (2 2 6).
+        public int NumDecodings(string s)
+        {
+            //Corner case - 
+            if (s[0] == '0') return 0;
+
+            //General case - 
+            int len = s.Length;
+            int[] dp = new int[len + 1];
+            //dp[i] = number of ways to decode the array till i
+            dp[0] = 1;
+            dp[1] = 1;
+
+            for (int i = 2; i <= len; i++)
+            {
+                int one = Convert.ToInt16(s.Substring(i - 1, 1));
+                int two = Convert.ToInt16(s.Substring(i - 2, 2));
+
+                if (one >= 1) 
+                    dp[i] = dp[i] + dp[i - 1];
+                if (two >= 10 && two <= 26) 
+                    dp[i] = dp[i] + dp[i - 2];
+            }
+
+            var result=dp[len];
+            return result;
+        }
+
+        //Longest Consecutive Sequence
+        //Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+        //Your algorithm should run in O(n) complexity.
+        //https://leetcode.com/problems/longest-consecutive-sequence/
+        //Input: [100, 4, 200, 1, 3, 2] Output: 4 Explanation: The longest consecutive elements sequence is [1, 2, 3, 4]. Therefore its length is 4.
+        public int LongestConsecutive(int[] arr)
+        {
+            var hashset = new HashSet<int>();
+            for (int i = 0; i < arr.Length; i++)
+            {
+                hashset.Add(arr[i]);
+            }
+
+            int max = 0;
+            while (hashset.Count > 0)
+            {
+                var e = hashset.First();
+                hashset.Remove(e);
+                var u = GetConsecativeSeqUp(hashset, e + 1);
+                var d = GetConsecativeSeqDown(hashset, e - 1);
+                if (u + d + 1 > max) max = u + d + 1;
+            }
+            return max;
+        }
+
+        private int GetConsecativeSeqUp(HashSet<int> hashset, int e)
+        {
+            if (hashset.Contains(e))
+            {
+                hashset.Remove(e);
+                return 1 + GetConsecativeSeqUp(hashset, e + 1);
+            }
+            return 0;
+        }
+        private int GetConsecativeSeqDown(HashSet<int> hashset, int e)
+        {
+            if (hashset.Contains(e))
+            {
+                hashset.Remove(e);
+                return 1 + GetConsecativeSeqDown(hashset, e - 1);
+            }
+            return 0;
+        }
+
+
+        //https://leetcode.com/problems/reverse-bits/
+        // Reverse Bits
+        //Reverse bits of a given 32 bits unsigned integer.
+        //Input: 00000010100101000001111010011100   Output: 00111001011110000010100101000000
+        //Explanation: The input binary string 00000010100101000001111010011100 represents the unsigned integer 43261596, so return 964176192 which its binary representation is 00111001011110000010100101000000.
+        public uint ReverseBits(uint n)
+        {
+            uint result = 0;
+
+            for (int i = 0; i < 32; i++) //32
+            {
+                result <<= 1;
+                result += (n & 1);
+                n >>= 1;
+            }
+
+            return result;
+        }
+        //https://leetcode.com/problems/number-of-1-bits/
+        //Write a function that takes an unsigned integer and return the number of '1' bits it has (also known as the Hamming weight).
+        //Input: 00000000000000000000000000001011 Output: 3
+        //Explanation: The input binary string 00000000000000000000000000001011 has a total of three '1' bits.
+        // soln : https://leetcode.com/problems/number-of-1-bits/discuss/502030/C-Mask
+        public int HammingWeight(uint n)
+        {
+            int ans = 0;
+            while (n > 0)
+            {
+                ans++;
+                n = n & (n - 1);
+            }
+            return ans;
+        }
+
+        //https://leetcode.com/problems/jump-game/
+
+        //https://leetcode.com/problems/critical-connections-in-a-network/
+        //https://leetcode.com/problems/critical-connections-in-a-network/discuss/397045/C-Trajan's-Algorithm-%2B-unit-test
+        //Input: n = 4, connections = [[0,1],[1,2],[2,0],[1,3]] Output: [[1,3]] Explanation: [[3,1]] is also accepted.
+        public IList<IList<int>> CriticalConnections(int n, IList<IList<int>> connections)
+        {
+            List<IList<int>> result = new List<IList<int>>();
+
+            Dictionary<int, List<int>> dict = new Dictionary<int, List<int>>();
+            //the graph is connected two ways
+            foreach (var list in connections)
+            {
+                if (!dict.ContainsKey(list[0]))
+                {
+                    dict.Add(list[0], new List<int>());
+                }
+                dict[list[0]].Add(list[1]);
+
+
+                if (!dict.ContainsKey(list[1]))
+                {
+                    dict.Add(list[1], new List<int>());
+                }
+                dict[list[1]].Add(list[0]);
+
+            }
+
+            foreach (var key in dict.Keys)
+            {
+                if (dict[key].Count > 1) continue;
+                result.Add(new List<int>() { key, dict[key][0] });
+            }
+            return result;
+        }
+
+
+        //https://leetcode.com/problems/unique-paths/
+        //A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+        //The robot can only move either down or right at any point in time.The robot is trying to reach the bottom-right corner of the grid(marked 'Finish' in the diagram below).
+        //How many possible unique paths are there?
+        public int UniquePaths(int m, int n)
+        {
+            //DP reasoning:
+            //d[i][j] = d[i][j-1] + d[i-1][j]
+            //d[0][j] = 1
+            //d[i][0] = 1
+
+            int[,] dp = new int[m,n];
+            dp[0,0] = 1;
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (j == 0 && i > 0)
+                    {
+                        dp[i,0] = dp[i - 1,0];
+                        continue;
+                    }
+                    if (i == 0 && j > 0)
+                    {
+                        dp[0,j] = dp[0,j - 1];
+                        continue;
+                    }
+                    if (i > 0 && j > 0)
+                    {
+                        dp[i,j] = dp[i,j - 1] + dp[i - 1,j];
+                    }
+                }
+            }
+            int res = dp[m - 1,n - 1];
+            return res;
+        }
+
+        //https://www.geeksforgeeks.org/print-last-10-lines-of-a-given-file/
+        public void PrintLast10LineOfGivenFile(string text, char delm)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return;
+            string[] texts = text.Split(delm);
+            int i = 0;
+            if (texts.Length > 10)
+                i = texts.Length - 10;
+            while(i < texts.Length)
+            {
+                Console.WriteLine(texts[i]);
+                i++;
+            }
+        }
+        //https://www.geeksforgeeks.org/find-recurring-sequence-fraction/
+        public void FindRepeatingCharacter(int num, int denr)
+        {
+            string res = string.Empty;
+            if (num == 0) return;
+            int rem = num%denr;
+            Dictionary<int, int> mp = new Dictionary<int, int>();
+            while(rem!=0 && !mp.ContainsKey(rem))
+            {
+                // Store this remainder 
+                mp[rem] = res.Length;
+
+                // Multiply remainder with 10 
+                rem = rem * 10;
+
+                // Append rem / denr to result 
+                int res_part = rem / denr;
+                res += res_part.ToString();
+
+                // Update remainder 
+                rem = rem % denr;
+            }
+            string v= (rem == 0) ? "" : res.Substring(mp[rem]);
+        }
     }
 }

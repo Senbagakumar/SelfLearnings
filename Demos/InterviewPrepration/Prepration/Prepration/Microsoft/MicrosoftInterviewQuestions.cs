@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace Prepration.Microsoft
         //Amazon Questions
         //1. Two Sums
         //https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/173/
+        //https://leetcode.com/problems/two-sum/
         //Given nums = [2, 7, 11, 15], target = 9,  Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].
         public void TwoSum(int[] nums, int target)
         {
@@ -33,6 +35,7 @@ namespace Prepration.Microsoft
         }
 
         //2. Valid Palindrome
+        //https://leetcode.com/problems/best-time-to-buy-and-sell-stock/
         //Input: "A man, a plan, a canal: Panama" Output: true
         //Input: "race a car" Output: false
         public static bool IsWordPalindrome(string input)
@@ -175,12 +178,12 @@ namespace Prepration.Microsoft
         //Amazon Question
         //7. Longest Palindromic Substring
         //Input: "babad" Output: "bab" Note: "aba" is also a valid answer.
-        //https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/180/
+        //https://leetcode.com/problems/longest-palindromic-substring/
         //https://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
-        public static int LongestPalindrome()
+        public static int LongestPalindrome(string str)
         {
-            string str = "babad";
-            str = "forgeeksskeegfor";
+            //string str = "babad";
+            //str = "forgeeksskeegfor";
             int low, high,start=0;
             int len = str.Length;
             int maxLength = 1;

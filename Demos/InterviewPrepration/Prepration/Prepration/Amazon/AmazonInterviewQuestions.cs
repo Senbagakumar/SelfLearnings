@@ -75,7 +75,7 @@ namespace Prepration.Amazon
 		//2. Critical Connections in a Network
 		//https://leetcode.com/problems/critical-connections-in-a-network/
 		//https://leetcode.com/problems/critical-connections-in-a-network/discuss/552431/Java-easy-to-read-solution
-
+		//Added in ArrayPrograms
 
 		//3. Meeting Rooms II
 		//https://leetcode.com/problems/meeting-rooms-ii/
@@ -113,7 +113,7 @@ namespace Prepration.Amazon
 		}
 
 		//3. Container with Most Water
-		//Question: https://leetcode.com/explore/interview/card/amazon/76/array-and-strings/2963/
+		//Question: https://leetcode.com/problems/container-with-most-water/
 		public int MaxArea(int[] height) //1, 8, 6, 2, 5, 4, 8, 3, 7 }-- Ans : 49
 		{
 			int maxarea = 0, l = 0, r = height.Length - 1;
@@ -163,6 +163,7 @@ namespace Prepration.Amazon
 		}
 
 		//5. 3Sum //[-1, 0, 1, 2, -1, -4]
+		//https://leetcode.com/problems/3sum/
 		public List<List<int>> ThreeSum(int[] arr, int target)
 		{
 			//List<List<int>> ans = new List<List<int>>();
@@ -273,7 +274,7 @@ namespace Prepration.Amazon
 
 		//7. Compare Version Number //If version1 > version2 return 1; if version1 < version2 return -1;otherwise return 0
 		//Input: version1 = "0.1", version2 = "1.1" output: -1
-		public int CompareVersion(String version1, String version2)
+		public int CompareVersion(String version1, string version2)
 		{
 			string[] nums1 = version1.Split('.');
 			string[] nums2 = version2.Split('.');
@@ -449,11 +450,13 @@ namespace Prepration.Amazon
 			return ans;
 		}
 
+		//Microsoft
+		//https://leetcode.com/problems/reverse-nodes-in-k-group/
 		//11. Reverse K nodes in a Group
 		//Given this linked list: 1->2->3->4->5
 		//For k = 2, you should return: 2->1->4->3->5
 		//For k = 3, you should return: 3->2->1->4->5
-		public Node reverseLinkedList(Node head, int k)
+		private Node reverseLinkedList(Node head, int k)
 		{
 
 			// Reverse k nodes of the given linked list.
@@ -757,6 +760,7 @@ namespace Prepration.Amazon
 			}
 		}
 
+		//https://leetcode.com/problems/merge-intervals/
 		//15. Merge Intervals  //Inp:[[1,3],[2,6],[8,10],[15,18]] //Out: [[1,6],[8,10],[15,18]]
 		public List<MeetingTime> MergeInterval(int[,] interval)
 		{
@@ -814,6 +818,7 @@ namespace Prepration.Amazon
 		}
 
 		//Microsoft Question
+		//https://leetcode.com/problems/maximum-subarray/
 		//17. MaxSubArray or Maximum Subarray
 		//Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum
 		//Input: [-2,1,-3,4,-1,2,1,-5,4], Output: 6
@@ -832,6 +837,28 @@ namespace Prepration.Amazon
 			return maxSum;
 		}
 
+		//https://leetcode.com/problems/maximum-product-subarray/
+		//Maximum Product Subarray
+		//Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
+		//Input: [2,3,-2,4] Output: 6 Explanation: [2,3] has the largest product 6.
+		//Input: [-2,0,-1] Output: 0 Explanation: The result cannot be 2, because[-2, -1] is not a subarray.
+
+		public int MaxProductArray(int[] nums)
+		{
+			int n = nums.Length;
+			int currSum = nums[0];
+			int maxSum = nums[0];
+
+			for (int i = 1; i < n; ++i)
+			{
+				currSum = Math.Max(nums[i], currSum * nums[i]);
+				maxSum = Math.Max(maxSum, currSum);
+			}
+			return maxSum;
+		}
+
+
+		//https://leetcode.com/problems/word-break/
 		//18. WordBreak //s = "leetcode", wordDict = ["leet", "code"]
 		public bool WordBreak(string s, List<string> wordDict)
 		{
@@ -887,9 +914,10 @@ namespace Prepration.Amazon
 		//21. Get Length of Unique Substring 
 		//Input: "pwwkew" Output: 3
 		//https://leetcode.com/explore/interview/card/amazon/76/array-and-strings/2961/
-		public static int GetUniqueSubstring()
+		//https://leetcode.com/problems/longest-substring-without-repeating-characters/
+		public static int GetUniqueSubstring(string input)
 		{
-			string input = "abcabababcd";
+			//string input = "abcabababcd";
 			int[] ar = new int[128];
 			int j = 0, ans = 0;
 			for (int i = 0; i < input.Length; i++)
@@ -909,6 +937,11 @@ namespace Prepration.Amazon
 			//ans = res.Length;
 
 		}
+
+		//https://leetcode.com/discuss/general-discussion/640977/stone-game-iii
+
+
+
 
 	}
 

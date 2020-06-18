@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Prepration.Microsoft;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 
 namespace Prepration
 {
@@ -33,6 +35,7 @@ namespace Prepration
         }
 
         //Amazon Question
+        //Microsoft Question
         class TicTacToe
         {
 
@@ -60,7 +63,7 @@ namespace Prepration
             }
 
             //Row Check
-            public bool WinConditionForRow(int player, int row)
+            private bool WinConditionForRow(int player, int row)
             {
                 bool win = true;
                 for (int i = 0; i < n; i++)
@@ -74,7 +77,7 @@ namespace Prepration
                 return win;
             }
             //Column check
-            public bool WinConditionForColumn(int player, int column)
+            private bool WinConditionForColumn(int player, int column)
             {
                 bool win = true;
                 for (int i = 0; i < n; i++)
@@ -88,7 +91,7 @@ namespace Prepration
                 return win;
             }
 
-            public bool WinConditionForFirstDiagonal(int player)
+            private bool WinConditionForFirstDiagonal(int player)
             {
                 bool win = true;
                 for(int i=0; i<n; i++)
@@ -101,7 +104,7 @@ namespace Prepration
                 return win;
             }
 
-            public bool WinConditionForSecondDiagonal(int player)
+            private bool WinConditionForSecondDiagonal(int player)
             {
                 bool win = true;
                 for (int i = 0; i < n; i++)
@@ -618,6 +621,113 @@ namespace Prepration
                     this.fre = 1;
                 }
             }
+        }
+
+        //https://leetcode.com/problems/find-median-from-data-stream/
+        //Find the median from datastream
+        //[2,3,4], the median is 3 ; [2,3], the median is (2 + 3) / 2 = 2.5
+        //addNum(1)
+        //addNum(2)
+        //findMedian() -> 1.5
+        //addNum(3)
+        //findMedian() -> 2
+
+        public class MedianFinder
+        {
+
+            /** initialize your data structure here. */
+            //use a sorted List;
+            //Find the Median will be easy;
+            //if odd count; take the middle number;
+            //if even, take the average of the two middle number;
+            //the question is the sorted list;
+            //during AddNum we need to use binary search to find the location for insertion.
+            private List<int> data = new List<int>();
+           
+
+            public void AddNum(int num)
+            {
+                if (data.Count == 0)
+                    data.Add(num);
+                else
+                {
+                    int left = 0;
+                    int right = data.Count - 1;
+
+                    while (left <= right)
+                    {
+                        int mid = (left + right) / 2;
+                        if (data[mid] >= num)
+                            right = mid - 1;
+                        else
+                            left = mid + 1;
+                    }
+                    data.Insert(left, num);
+                }
+            }
+
+            public double FindMedian()
+            {
+                if (data.Count % 2 == 1)
+                    return (double)data[data.Count / 2];
+                else if (data.Count >= 2)
+                {
+                    double x = (double)data[data.Count / 2];
+                    double y = (double)data[(data.Count / 2) - 1];
+                    double result = (x + y) / 2;
+                    return result;
+                }
+                else
+                    return 0.0;
+            }
+        }
+
+        //https://leetcode.com/problems/clone-graph/
+        //Clone Graph
+        //Given a reference of a node in a connected undirected graph.
+        //Return a deep copy(clone) of the graph.
+
+        public class CNode
+        {
+            public int val;
+            public IList<CNode> neighbors;
+
+            public CNode()
+            {
+                val = 0;
+                neighbors = new List<CNode>();
+            }
+
+            public CNode(int _val)
+            {
+                val = _val;
+                neighbors = new List<CNode>();
+            }
+
+            public CNode(int _val, List<CNode> _neighbors)
+            {
+                val = _val;
+                neighbors = _neighbors;
+            }
+        }
+
+        public CNode CloneGraph(CNode node)
+        {
+            var visited = new Dictionary<CNode, CNode>();
+            if (node == null) return null;
+            CNode result = DFSCloneGraph(node, visited);
+            return result;
+        }
+
+        private CNode DFSCloneGraph(CNode node, Dictionary<CNode, CNode> visited)
+        {
+            if (visited.ContainsKey(node))
+                return visited[node];
+            var newNode = new CNode(node.val, new List<CNode>());
+            visited.Add(node, newNode);
+            foreach (CNode cnode in node.neighbors)
+                newNode.neighbors.Add(DFSCloneGraph(cnode, visited));
+            return newNode;
         }
     }
 }

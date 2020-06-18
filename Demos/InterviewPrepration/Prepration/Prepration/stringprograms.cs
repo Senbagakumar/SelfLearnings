@@ -23,7 +23,362 @@ namespace Prepration
 
     class stringprograms
     {
-        
+
+        //1. https://leetcode.com/articles/is-subsequence/
+        // Subsequence
+        // Input: s = "abc", t = "ahbgdc" Output: true, Input: s = "axc", t = "ahbgdc" Output: false
+        public static bool IsSubsequence(string sub, string whole)
+        {
+            int i = 0;
+            int j = 0;
+            while (j < sub.Length)
+            {
+                while (i < whole.Length)
+                {
+                    if (sub[j] == whole[i])
+                        j++;
+                    i++;
+                }
+                if (j == sub.Length)
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
+        //1. 1 https://leetcode.com/articles/repeated-substring-pattern/
+        //Given a non-empty string check if it can be constructed by taking a substring of it and appending multiple copies of the substring together
+        //Input: "abab" Output: True Explanation: It's the substring "ab" twice; Input: "aba" Output: False
+        public static bool RepeatedSubstringPattern(string s)
+        {
+            // var v = (s + s); //abababab
+            // var v1 = v.Substring(1, 2 * s.Length - 1); //Now let's cut the first and the last characters in the doubled string- EX: bababa
+            // bool res = v1.Contains(s);
+            // return res;
+
+            int n = s.Length;
+            int[] dp = new int[n];
+            // Construct partial match table (lookup table).
+            // It stores the length of the proper prefix that is also a proper suffix.
+            // ex. ababa --> [0, 0, 1, 2, 1]
+            // ab --> the length of common prefix / suffix = 0
+            // aba --> the length of common prefix / suffix = 1
+            // abab --> the length of common prefix / suffix = 2
+            // ababa --> the length of common prefix / suffix = 3
+
+            //ababa => 0,0,1,2,
+            for (int i = 1; i < n; ++i)
+            {
+                int j = dp[i - 1];
+                while (j > 0 && s[i] != s[j])
+                {
+                    j = dp[j - 1];
+                }
+                if (s[i] == s[j])
+                {
+                    ++j;
+                }
+                dp[i] = j;
+            }
+
+            int l = dp[n - 1];
+            // check if it's repeated pattern string
+            bool res= l != 0 && (n % (n - l) == 0);
+            return res;
+
+        }
+
+        //1.2 https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+        //Given an array of integers nums sorted in ascending order, find the starting and ending position of a given target value
+        //Input: nums = [5,7,7,8,8,10], target = 8 Output: [3,4]
+        //Input: nums = [5,7,7,8,8,10], target = 6 Output: [-1,-1]
+        public int[] SearchRange(int[] nums, int target)
+        {
+            int left = LeftBoundary(nums, target);
+            //here perform the boundary check
+            if (left >= nums.Length || nums[left] != target)
+                return new int[] { -1, -1 };
+            int right = LeftBoundary(nums, target + 1);
+            return new int[] { left, right - 1 };
+        }
+
+        private int LeftBoundary(int[] nums, int target)
+        {
+            int left = 0;
+            //int right = nums.Length - 1;
+            int right = nums.Length;
+            while (left <= right)
+            {
+                //int mid = (right - left) / 2 + left;
+                int mid = (left + right) / 2;
+                if (nums[mid] < target)
+                {
+                    left = mid + 1;
+                }
+                else if (nums[mid] > target || nums[mid] == target)
+                {
+                    right = mid - 1;
+                }
+            }
+            return left;
+        }
+
+        //1.3 https://leetcode.com/problems/sliding-window-maximum/
+        // Sliding window Maximum
+        //Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3 Output: [3,3,5,5,6,7]
+        public int[] MaxSlidingWindow(int[] nums, int k)
+        {
+            // A deque which holds the max elements for window size of k
+            var maxWindowQueue = new LinkedList<int>();
+
+            // Max window to be returned
+            int[] maxWindow = new int[nums.Length + 1 - k];
+
+            int left = 0, right = 0, mwCtr = 0;
+
+            while (right < nums.Length)
+            {
+                int dig = nums[right];
+
+                // Remove from the end, those elements which are smaller than dig.
+                while (maxWindowQueue.Count > 0 && dig > maxWindowQueue.Last())
+                {
+                    maxWindowQueue.RemoveLast();
+                }
+
+                // Add the new found element.
+                maxWindowQueue.AddLast(dig);
+
+                // We have reached the window size
+                if (right - left + 1 == k)
+                {
+                    maxWindow[mwCtr] = maxWindowQueue.First();
+                    mwCtr++;
+
+                    // Now we need to slice the left corner
+                    // Doing so, If you find the number being removed is the max element we need to pop
+                    // that element as well from the dequeue
+                    if (nums[left] == maxWindowQueue.First())
+                    {
+                        maxWindowQueue.RemoveFirst();
+                    }
+                    // Slice the left corner
+                    left++;
+                }
+
+                // Increment right as usual
+                right++;
+            }
+            return maxWindow;
+        }
+
+        //1.4 https://leetcode.com/problems/subsets/
+        //Given a set of distinct integers, nums, return all possible subsets (the power set).
+        //Input: nums = [1,2,3]
+        //Output:
+        //[
+        //  [3],
+        //  [1],
+        //  [2],
+        //  [1,2,3],
+        //  [1,3],
+        //  [2,3],
+        //  [1,2],
+        //  []
+        //]
+
+        //Input: [1,2,2]
+        //Output:
+        //[
+        //  [2],
+        //  [1],
+        //  [1,2,2],
+        //  [2,2],
+        //  [1,2],
+        //  []
+        //]
+
+        public List<List<int>> Subsets(int[] nums)
+        {
+            List<List<int>> list = new List<List<int>>();
+            Array.Sort(nums);
+            backtrack(list, new List<int>(), nums, 0);
+            return list;
+        }
+
+        private void backtrack(List<List<int>> list, List<int> tempList, int[] nums, int start)
+        {
+            list.Add(new List<int>(tempList));
+            for (int i = start; i < nums.Length; i++)
+            {
+                if (i > start && nums[i] == nums[i - 1]) continue; // skip duplicates if you have in the input
+                tempList.Add(nums[i]);
+                backtrack(list, tempList, nums, i + 1);
+                tempList.RemoveAt(tempList.Count - 1);
+            }
+        }
+
+        //https://leetcode.com/problems/permutations/
+        //Given a collection of distinct integers, return all possible permutations.
+        //Input: [1,2,3]
+        // Output:
+        //[
+        //  [1,2,3],
+        //  [1,3,2],
+        //  [2,1,3],
+        //  [2,3,1],
+        //  [3,1,2],
+        //  [3,2,1]
+        //]
+
+        //Input: [1,1,2]
+        //Output:
+        //[
+        //  [1,1,2],
+        //  [1,2,1],
+        //  [2,1,1]
+        //]
+
+        public List<List<int>> permute(int[] nums)
+        {
+            List<List<int>> list = new List<List<int>>();
+            // Arrays.sort(nums); // not necessary
+            pbacktrack(list, new List<int>(), nums);
+            return list;
+        }
+
+        private void pbacktrack(List<List<int>> list, List<int> tempList, int[] nums)
+        {
+            if (tempList.Count == nums.Length)
+            {
+                list.Add(new List<int>(tempList));
+            }
+            else
+            {
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (tempList.Contains(nums[i])) continue; // element already exists, skip
+                    tempList.Add(nums[i]);
+                    pbacktrack(list, tempList, nums);
+                    tempList.RemoveAt(tempList.Count - 1);
+                }
+            }
+        }
+
+        public List<List<int>> permuteUnique(int[] nums)
+        {
+            List<List<int>> list = new List<List<int>>();
+            Array.Sort(nums);
+            backtrack(list, new List<int>(), nums, new bool[nums.Length]);
+            return list;
+        }
+
+        private void backtrack(List<List<int>> list, List<int> tempList, int[] nums, bool[] used)
+        {
+            if (tempList.Count == nums.Length)
+            {
+                list.Add(new List<int>(tempList));
+            }
+            else
+            {
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    if (used[i] || i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) continue;
+                    used[i] = true;
+                    tempList.Add(nums[i]);
+                    backtrack(list, tempList, nums, used);
+                    used[i] = false;
+                    tempList.RemoveAt(tempList.Count - 1);
+                }
+            }
+        }
+
+        //https://leetcode.com/problems/combination-sum/
+        //Given a set of candidate numbers (candidates) (without duplicates) and a target number (target), find all unique combinations in candidates where the candidate numbers sums to target.
+        //The same repeated number may be chosen from candidates unlimited number of times.
+        //Input: candidates = [2,3,6,7], target = 7,
+        //A solution set is:
+        //[
+        //  [7],
+        //  [2,2,3]
+        //]
+
+        //can't reuse same element
+        //Input: candidates = [2,3,5], target = 8,
+        //A solution set is:
+        //[
+        //  [2,2,2,2],
+        //  [2,3,3],
+        //  [3,5]
+        //]
+
+        public List<List<int>> combinationSum(int[] nums, int target)
+        {
+            List<List<int>> list = new List<List<int>>();
+            Array.Sort(nums);
+            backtrack(list, new List<int>(), nums, target, 0);
+            return list;
+        }
+
+        private void backtrack(List<List<int>> list, List<int> tempList, int[] nums, int remain, int start)
+        {
+            if (remain < 0) return;
+            else if (remain == 0) list.Add(new List<int>(tempList));
+            else
+            {
+                for (int i = start; i < nums.Length; i++)
+                {
+                    if (i > start && nums[i] == nums[i - 1]) continue; // skip duplicates: can't reuse same element
+                    tempList.Add(nums[i]);
+                    backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+                    tempList.RemoveAt(tempList.Count - 1);
+                }
+            }
+        }
+
+        //https://leetcode.com/problems/palindrome-partitioning/
+        //Given a string s, partition s such that every substring of the partition is a palindrome.
+        //Return all possible palindrome partitioning of s.
+
+        //Input: "aab"
+        //Output:
+        //[
+        //  ["aa","b"],
+        //  ["a","a","b"]
+        //]
+
+        public List<List<string>> partition(string s)
+        {
+            List<List<string>> list = new List<List<string>>();
+            backtrack(list, new List<string>(), s, 0);
+            return list;
+        }
+
+        private void backtrack(List<List<string>> list, List<string> tempList, string s, int start)
+        {
+            if (start == s.Length)
+                list.Add(new List<string>(tempList));
+            else
+            {
+                for (int i = start; i < s.Length; i++)
+                {
+                    if (isPalindrome(s, start, i))
+                    {
+                        tempList.Add(s.Substring(start, i + 1-start));
+                        backtrack(list, tempList, s, i + 1);
+                        tempList.RemoveAt(tempList.Count - 1);
+                    }
+                }
+            }
+        }
+
+        private bool isPalindrome(String s, int low, int high)
+        {
+            while (low < high)
+                if (s[low++] != s[high--]) return false;
+            return true;
+        }
 
         //https://www.programcreek.com/2012/12/leetcode-evaluate-reverse-polish-notation/
         //2. ["2", "1", "+", "3", "*"] -> ((2 + 1) * 3) -> 9

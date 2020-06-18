@@ -222,6 +222,7 @@ namespace Prepration
             return map[mid];
         }
 
+        //https://leetcode.com/problems/reverse-linked-list/
         //Amazon Question
         //Microsoft Question
         /*5. Reverse a singly linked list.*/
@@ -308,6 +309,7 @@ namespace Prepration
             return head;
         }
 
+        //https://leetcode.com/problems/linked-list-cycle/
         ////Microsoft Question
         /*7. Detect Linked List 
          */
@@ -477,21 +479,43 @@ namespace Prepration
             }
             previous.Next = slow.Next;
             return node;
-
-
         }
+
+        //https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+        //Given linked list: 1->2->3->4->5, and n = 2.
+        //After removing the second node from the end, the linked list becomes 1->2->3->5.
+
+        public Node RemoveNthFromEnd(Node head, int n)
+        {
+            Node fast = head;
+            Node slow = head;
+            Node pre = null;
+
+            for (int i = 0; i < n; i++)
+                fast = fast.Next;
+
+            while (fast != null)
+            {
+                fast = fast.Next;
+                pre = slow;
+                slow = slow.Next;
+            }
+            pre.Next = slow.Next;
+            return head;
+        }
+
 
         //12. Binary Tree to Doubly Linked List
         //https://www.geeksforgeeks.org/convert-a-given-binary-tree-to-doubly-linked-list-set-4/
 
 
         //13. Last 3rd Linked list
-        public static Node GetLast3rdLinkedList(Node node)
+        public static Node GetLast3rdLinkedList(Node node, int n=3)
         {
             Node current = node;
-            Node fast = current;
+            Node fast = node;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < n; i++)
             {
                 fast = fast.Next;
             }
@@ -527,5 +551,95 @@ namespace Prepration
             return newHead;
         }
 
+        //https://leetcode.com/problems/reorder-list/
+        //Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+        //reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+        //Given 1->2->3->4, reorder it to 1->4->2->3.
+        //Given 1->2->3->4->5, reorder it to 1->5->2->4->3.
+        //https://leetcode.com/problems/reorder-list/discuss/628313/Simple-Java-Solution-faster-than-99.83
+        public void ReorderList(Node head)
+        {
+
+            if (head == null || head.Next == null)
+                return;
+
+            Node slow = head;
+            Node fast = head;
+
+            while (fast != null && fast.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+            }
+            Node reversedSecondHalf = reverse(slow);
+
+            while (head != slow)
+            {
+                Node nextOfFirstHalf = head.Next;
+                head.Next = reversedSecondHalf;
+
+                Node nextOfreversedSecondHalf = reversedSecondHalf.Next;
+                reversedSecondHalf.Next = nextOfFirstHalf;
+
+                reversedSecondHalf = nextOfreversedSecondHalf;
+                head = nextOfFirstHalf;
+            }
+            head.Next = null;
+        }
+
+        private Node reverse(Node secondHalf)
+        {
+            Node prev = null;
+            while (secondHalf != null)
+            {
+
+                Node next = secondHalf.Next;
+                secondHalf.Next = prev;
+                prev = secondHalf;
+                secondHalf = next;
+            }
+            return prev;
+        }
+
+        //https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/
+        //Convert Binary Search Tree to Sorted Doubly Linked List
+        //Convert a Binary Search Tree to a sorted Circular Doubly-Linked List in place.
+        //You can think of the left and right pointers as synonymous to the predecessor and successor pointers in a doubly-linked list.
+        //For a circular doubly linked list, the predecessor of the first element is the last element, and the successor of the last element is the first element.
+
+        //Input: root = [4,2,5,1,3]  Output: [1,2,3,4,5]
+
+        //        4
+        //    2        5
+        //1       3
+        Node prev;
+        public Node TreeToDoublyList(Node root)
+        {
+            if (root == null) return null;
+
+            Node dummy = new Node(0);
+            prev = dummy;
+
+            helper(root);
+            prev.Right = dummy.Right;
+            dummy.Right.Left = prev;
+
+            return dummy.Right;
+        }
+
+        private void helper(Node root)
+        {
+            if (root == null) return;
+
+            helper(root.Left);
+
+            prev.Right = root;
+            root.Left = prev;
+            prev = root;
+
+            helper(root.Right);
+        }
+
+        
     }
 }
