@@ -44,13 +44,19 @@
     <Compile Include="BlankDjango\wsgi.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Django\static\site.css" />
+    <Content Include="Django\templates\Django\about.html" />
+    <Content Include="Django\templates\Django\AboutLayout.html" />
+    <Content Include="Django\templates\Django\HomeLayout.html" />
     <Content Include="Django\templates\Django\index.html" />
+    <Content Include="Django\templates\Django\Layout.html" />
     <Content Include="requirements.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BlankDjango\" />
     <Folder Include="Django\" />
     <Folder Include="Django\migrations\" />
+    <Folder Include="Django\static\" />
     <Folder Include="Django\templates\" />
     <Folder Include="Django\templates\Django\" />
   </ItemGroup>

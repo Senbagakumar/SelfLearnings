@@ -1,9 +1,13 @@
 <html>
-<head><title>{{ title }}</title></head>
-
+<head>
+    <title>{{ title }}</title>
+    {% load staticfiles %}
+    <link href="{% static  'site.css'%}" rel="stylesheet" type="text/css" />
+ </head>
 <body>
 
-    <strong>{{ message }}</strong> {{ content }}
-
+    <span class="message"> {{ message }}</span> {{ content }}
+    <div><a href="about">About</a></div>
+    <div><a href="HomeLayout">HomeLayout</a></div>
 </body>
 </html>

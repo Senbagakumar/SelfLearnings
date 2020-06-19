@@ -15,3 +15,26 @@ def index(request):
                       'message' : "Hello Django!",
                       'content' : " on " + now.strftime("%A, %d %B, %Y at %X")
                   })
+
+def about(request):
+    return render(request, "Django/about.html",
+                  {
+                      'title' : "Django",
+                      'content' : 'Example of another app page' 
+                  })
+
+def HomeLayout(request):
+    now = datetime.now()
+    return render(request, "Django/HomeLayout.html",
+                  {
+                      'title' : "Django",
+                      'message' : "Hello Django Home Layout!",
+                      'content' : " on " + now.strftime("%A, %d %B, %Y at %X")
+                  })
+
+def AboutLayout(request):
+    return render(request, "Django/AboutLayout.html",
+                  {
+                      'title' : "Django",
+                      'content' : "Example of another app Layout page"
+                  })

@@ -27,4 +27,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls)
     url(r'^$', Django.views.index, name='index'),
     url(r'^home$', Django.views.index, name='home'),
+    url(r'^about$', Django.views.about, name='about'),
+    url(r'^HomeLayout$', Django.views.HomeLayout, name='HomeLayout'),
+    url(r'^AboutLayout$', Django.views.AboutLayout, name='AboutLayout'),
 ]
