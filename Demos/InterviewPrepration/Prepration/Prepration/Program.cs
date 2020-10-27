@@ -138,10 +138,11 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+            OnLineAssessment.MinCostOfDuplicationLetter("aaaa", new int[] { 3,4,5,6 });
             //string str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7\nstr8\nstr9\nstr10\nstr11\nstr12\nstr13\nstr14\nstr15\nstr16\nstr17\nstr18\nstr19\nstr20\nstr21\nstr22\nstr23\nstr24\nstr25";
             //str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7";
             //new ArrayPrograms().PrintLast10LineOfGivenFile(str,'\n');
-            new ArrayPrograms().FindRepeatingCharacter(8, 3);
+            //new ArrayPrograms().FindRepeatingCharacter(8, 3);
             //new ArrayPrograms().UniquePaths(3, 2);
             //List<IList<int>> input = new List<IList<int>>();
             //input.Add(new List<int> { 0, 1 });
@@ -221,8 +222,8 @@ namespace Prepration
             //llist.AddNode(5);
 
             // new LinkedListPrograms().ReorderList(llist.Head);
-            var node = BinaryTree.ConstructBinaryTree(new int[] { 3, 2, 4, 1, 5, 6 }, new int[] { 3, 4, 2, 6, 5, 1 });
-            BinaryTree.Flatten(node);
+            //var node = BinaryTree.ConstructBinaryTree(new int[] { 3, 2, 4, 1, 5, 6 }, new int[] { 3, 4, 2, 6, 5, 1 });
+            //BinaryTree.Flatten(node);
 
             //var node = BinaryTree.ConstructBinaryTree(new int[] { 2, 5, 20, 10, 8 }, new int[] { 2, 20, 5, 8, 10 });
             ////var reslut = new LinkedListPrograms().TreeToDoublyList(node);
