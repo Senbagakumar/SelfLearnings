@@ -911,32 +911,7 @@ namespace Prepration.Amazon
 		//ORDER BY Salary DESC
 		//LIMIT 1 OFFSET 1
 
-		//21. Get Length of Unique Substring 
-		//Input: "pwwkew" Output: 3
-		//https://leetcode.com/explore/interview/card/amazon/76/array-and-strings/2961/
-		//https://leetcode.com/problems/longest-substring-without-repeating-characters/
-		public static int GetUniqueSubstring(string input)
-		{
-			//string input = "abcabababcd";
-			int[] ar = new int[128];
-			int j = 0, ans = 0;
-			for (int i = 0; i < input.Length; i++)
-			{
-				j = Math.Max(j, ar[input[i]]);
-				ans = Math.Max(ans, i - j + 1);
-				ar[input[i]] = (i + 1);
-			}
-			return ans;
-
-			//string res = string.Empty;
-			//foreach(var c in input)
-			//{
-			//    if (res.IndexOf(c) == -1)
-			//        res += c;
-			//}
-			//ans = res.Length;
-
-		}
+		
 
 		//https://leetcode.com/discuss/general-discussion/640977/stone-game-iii
 

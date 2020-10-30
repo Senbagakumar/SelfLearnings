@@ -57,6 +57,7 @@
     <Compile Include="Amazon\AmazonInterviewQuestions.cs" />
     <Compile Include="ArrayPrograms.cs" />
     <Compile Include="Assessment.cs" />
+    <Compile Include="BasicQuestions.cs" />
     <Compile Include="BinaryTree.cs" />
     <Compile Include="DesignQuestions.cs" />
     <Compile Include="InterviewExperience.cs" />

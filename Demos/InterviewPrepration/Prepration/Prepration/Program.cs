@@ -138,7 +138,8 @@ namespace Prepration
 
         static void Main(string[] args)
         {
-            OnLineAssessment.MinCostOfDuplicationLetter("aaaa", new int[] { 3,4,5,6 });
+            new stringprograms().MinimumWindowSubstring("abdzfgabz", "az");
+            //OnLineAssessment.MinCostOfDuplicationLetter("aaaa", new int[] { 3,4,5,6 });
             //string str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7\nstr8\nstr9\nstr10\nstr11\nstr12\nstr13\nstr14\nstr15\nstr16\nstr17\nstr18\nstr19\nstr20\nstr21\nstr22\nstr23\nstr24\nstr25";
             //str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7";
             //new ArrayPrograms().PrintLast10LineOfGivenFile(str,'\n');
