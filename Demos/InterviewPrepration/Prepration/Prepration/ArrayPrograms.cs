@@ -962,5 +962,24 @@ namespace Prepration
             }
             string v= (rem == 0) ? "" : res.Substring(mp[rem]);
         }
+
+        //https://leetcode.com/problems/brick-wall/
+        //554. Brick Wall
+        public static int LeastBricks(IList<IList<int>> wall)
+        {
+            var list = new List<int>();
+            foreach (var row in wall)
+            {
+                var sum = 0;
+                for (var j = 0; j < row.Count - 1; j++)
+                {
+                    sum += row[j];
+                    list.Add(sum);
+                }
+            }
+
+            var groups = list.GroupBy(x => x).ToList();
+            return wall.Count - (groups.Any() ? groups.Select(g => g.Count()).Max() : 0);
+        }
     }
 }

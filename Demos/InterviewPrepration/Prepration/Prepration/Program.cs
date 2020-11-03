@@ -129,7 +129,6 @@ namespace Prepration
                 result += Math.Abs(i);
             }
             return result;
-           
         }
 
         
@@ -138,7 +137,29 @@ namespace Prepration
 
         static void Main(string[] args)
         {
-            new stringprograms().MinimumWindowSubstring("abdzfgabz", "az");
+            string reverse = stringprograms.reverseInParentheses("(u(love)i)");
+            var listlist = new List<IList<int>>();
+            listlist.Add(new List<int>() { 1, 2, 2, 1 });
+            listlist.Add(new List<int>() { 3,1,2 });
+            listlist.Add(new List<int>() { 1, 3, 2 });
+            listlist.Add(new List<int>() { 2, 4 });
+            listlist.Add(new List<int>() { 3, 1, 2 });
+            listlist.Add(new List<int>() { 1, 3, 1, 1 });
+
+            int count = ArrayPrograms.LeastBricks(listlist);
+            //int length = stringprograms.StringCompression(new string[] { "a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b" });
+           // var res = stringprograms.LengthEncoding("a");
+            new stringprograms().DailyTemperatures(new int[] { 73, 74, 75, 71, 69, 72, 76, 73 });
+
+            char[][] mins = new char[4][];
+            mins[0] = new char[5] { 'E', 'E', 'E', 'E', 'E' };
+            mins[1] = new char[5] { 'E', 'E', 'M', 'E', 'E' };
+            mins[2] = new char[5] { 'E', 'E', 'E', 'E', 'E' };
+            mins[3] = new char[5] { 'E', 'E', 'E', 'E', 'E' };
+
+            new DesignQuestions().updateBoard(mins, new int[] { 0, 0 });
+
+            // new stringprograms().MinimumWindowSubstring("abdzfgabz", "az");
             //OnLineAssessment.MinCostOfDuplicationLetter("aaaa", new int[] { 3,4,5,6 });
             //string str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7\nstr8\nstr9\nstr10\nstr11\nstr12\nstr13\nstr14\nstr15\nstr16\nstr17\nstr18\nstr19\nstr20\nstr21\nstr22\nstr23\nstr24\nstr25";
             //str = "str1\nstr2\nstr3\nstr4\nstr5\nstr6\nstr7";

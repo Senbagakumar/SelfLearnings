@@ -729,5 +729,214 @@ namespace Prepration
                 newNode.neighbors.Add(DFSCloneGraph(cnode, visited));
             return newNode;
         }
+
+        //https://leetcode.com/problems/time-based-key-value-store/
+        //Create a timebased key-value store class TimeMap, that supports two operations.
+        //1. set(string key, string value, int timestamp)
+
+        //Stores the key and value, along with the given timestamp.
+        //2. get(string key, int timestamp)
+
+        //Returns a value such that set(key, value, timestamp_prev) was called previously, with timestamp_prev <= timestamp.
+        //If there are multiple such values, it returns the one with the largest timestamp_prev.
+        //If there are no values, it returns the empty string ("").
+
+        //Exa mple:
+        //Input: inputs = ["TimeMap","set","set","get","get","get","get","get"], inputs = [[],["love","high",10],["love","low",20],["love",5],["love",10],["love",15],["love",20],["love",25]]
+        //Output: [null,null,null,"","high","high","low","low"]
+
+        public class TimeMap
+        {            
+            Dictionary<string, List<(int timestamp,string value)>> _data;
+
+            public TimeMap()
+            {
+                _data = new Dictionary<string, List<(int timestamp, string value)>>();
+            }
+
+            public void Set(string key, string value, int timestamp)
+            {
+                if (!_data.ContainsKey(key))
+                {
+                    _data[key] = new List<(int timestamp, string value)>();
+                }
+
+                _data[key].Add((timestamp, value));
+            }
+
+            public string Get(string key, int timestamp)
+            {
+                if (!_data.ContainsKey(key))
+                {
+                    return string.Empty;
+                }
+
+                var list = _data[key];
+
+                int left = 0;
+                int right = list.Count - 1;
+
+                while (left < right)
+                {
+                    if (right - left == 1)
+                    {
+                        break;
+                    }
+
+                    int mid = left + (right - left) / 2;
+
+                    var midItem = list[mid];
+                    if (midItem.timestamp == timestamp)
+                    {
+                        return midItem.value;
+                    }
+
+                    if (midItem.timestamp < timestamp)
+                    {
+                        left = mid;
+                        continue;
+                    }
+
+                    right = mid;
+                }
+
+                if (list[right].timestamp <= timestamp)
+                {
+                    return list[right].value;
+                }
+
+                if (list[left].timestamp <= timestamp)
+                {
+                    return list[left].value;
+                }
+
+                return string.Empty;
+            }
+        }
+
+
+        //Minesweeper
+        //https://leetcode.com/problems/minesweeper/
+
+        //Input: 
+
+        //[['E', 'E', 'E', 'E', 'E'],
+        //['E', 'E', 'M', 'E', 'E'],
+        //['E', 'E', 'E', 'E', 'E'],
+        //['E', 'E', 'E', 'E', 'E']]
+
+        //Click : [3,0]
+
+        //Output: 
+
+        //[['B', '1', 'E', '1', 'B'],
+        //['B', '1', 'M', '1', 'B'],
+        //['B', '1', '1', '1', 'B'],
+        //['B', 'B', 'B', 'B', 'B']]
+
+        int[] xdirs = new int[] { 1, 0, -1, 0, -1, -1, 1, 1 };
+        int[] ydirs = new int[] { 0, 1, 0, -1, -1, 1, -1, 1 };
+
+        public char[][] updateBoard(char[][] board, int[] click)
+        {
+            if (board.Length == 0) { return board; }
+
+            if (board[click[0]][click[1]] == 'M')
+            {
+                board[click[0]][click[1]] = 'X';
+                return board;
+            }
+
+            Queue<int[]> queue = new Queue<int[]>();
+            queue.Enqueue(new int[] { click[0], click[1] });
+
+            while (queue.Count > 0)
+            {
+                int[] cur = queue.Dequeue();
+                char adjacentMines = getAdjacentMines(cur[0], cur[1], board);
+
+                if (board[cur[0]][cur[1]] != 'E') { continue; }
+
+                if (adjacentMines != '0')
+                {
+                    board[cur[0]][cur[1]] = adjacentMines;
+                }
+                else
+                {
+                    board[cur[0]][cur[1]] = 'B';
+
+                    for (int i = 0; i < xdirs.Length; i++)
+                    {
+                        int newX = cur[0] + xdirs[i];
+                        int newY = cur[1] + ydirs[i];
+
+                        if (newX >= 0 && newY >= 0 && newX < board.Length && newY < board[0].Length
+                          && board[newX][newY] == 'E')
+                        {
+                            queue.Enqueue(new int[] { newX, newY });
+                        }
+                    }
+                }
+            }
+
+            return board;
+        }
+
+        private char getAdjacentMines(int row, int col, char[][] board)
+        {
+            int mines = 0;
+
+            for (int i = 0; i < xdirs.Length; i++)
+            {
+                int newX = row + xdirs[i];
+                int newY = col + ydirs[i];
+
+                if (newX >= 0 && newY >= 0 && newX < board.Length && newY < board[0].Length
+                  && board[newX][newY] == 'M')
+                {
+                    mines++;
+                }
+            }
+
+            return (char)(mines + '0');
+        }
+
+        //380. Insert Delete GetRandom O(1)
+        //https://leetcode.com/problems/insert-delete-getrandom-o1/
+        public class RandomizedSet
+        {
+
+            /** Initialize your data structure here. */
+            private HashSet<int> set;
+            public RandomizedSet()
+            {
+                set = new HashSet<int>();
+            }
+
+            /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
+            public bool Insert(int val)
+            {
+                if (set.Contains(val)) return false;
+                set.Add(val);
+                return true;
+            }
+
+            /** Removes a value from the set. Returns true if the set contained the specified element. */
+            public bool Remove(int val)
+            {
+                if (!set.Contains(val)) return false;
+                set.Remove(val);
+                return true;
+            }
+
+            /** Get a random element from the set. */
+            public int GetRandom()
+            {
+                if (set.Count == 0) return 0;
+                var rand = new Random();
+                return set.ElementAt(rand.Next(set.Count));
+            }
+        }
+
     }
 }

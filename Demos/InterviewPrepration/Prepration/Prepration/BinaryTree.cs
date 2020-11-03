@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -502,11 +503,11 @@ namespace Prepration
             return s.Value == t.Value && isEqualTree(s.Left, t.Left) && isEqualTree(s.Right, t.Right);
         }
 
-        //16. RootToLeaf=Sum 
+        //16. RootToLeaf=Sum  Path Sum 1
         public static bool RootToLeafSum(Node node, int target, List<int> path)
         {
             if (node == null) return false;
-            if (node.Left == null || node.Right == null)
+            if (node.Left == null && node.Right == null)
             {
                 if (node.Data == target)
                 {
@@ -528,6 +529,71 @@ namespace Prepration
             }
             return false;
         }
+
+        //Path Sum 2
+        //https://leetcode.com/problems/path-sum-ii/
+        //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+        public List<List<int>> ans = new List<List<int>>();
+
+        public List<List<int>> pathSum2(Node root, int sum)
+        {
+            helper(root, sum, new List<int>());
+            return ans;
+        }
+
+        public void helper(Node node, int sum, List<int> arr)
+        {
+
+            if (node == null) return;
+
+            arr.Add(node.Value);
+
+            if (node.Left == null && node.Right == null && sum == node.Value) ans.Add(new List<int>(arr));
+
+            helper(node.Left, sum - node.Value, arr);
+            helper(node.Right, sum - node.Value, arr);
+
+            arr.Remove(arr.Count - 1);
+
+        }
+
+
+        //Path Sum 3
+        //https://leetcode.com/problems/path-sum-iii/
+        //Find the number of paths that sum to a given value.
+        private int Count = 0;
+        public int pathSum3(Node root, int sum)
+        {
+            getPathSum(root, sum);
+            return Count;
+        }
+
+        private void getPathSum(Node node, int sum)
+        {
+            if (node == null)
+                return;
+            getSumIncludingRoot(node, sum);
+            getPathSum(node.Left, sum);
+            getPathSum(node.Right, sum);
+        }
+
+
+        private void getSumIncludingRoot(Node node, int sum)
+        {
+            if (node == null)
+                return;
+
+            if (node.Value == sum)
+            {
+                Count++;
+            }
+            getSumIncludingRoot(node.Left, sum - node.Value);
+            getSumIncludingRoot(node.Right, sum - node.Value);
+        }
+
+
+
         //Amazon Question
         //17. IsMirror Tree
         public static bool IsMirrorTree(Node first, Node second)

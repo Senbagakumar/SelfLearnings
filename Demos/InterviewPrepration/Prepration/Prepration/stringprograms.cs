@@ -715,6 +715,31 @@ namespace Prepration
             }
             return result;
         }
+
+        //https://leetcode.com/problems/string-compression/
+        //Input: chars = ["a","a","b","b","c","c","c"]
+        //Output: Return 6, and the first 6 characters of the input array should be: ["a","2","b","2","c","3"]
+        //Explanation: The groups are "aa", "bb", and "ccc". This compresses to "a2b2c3".
+        public static int StringCompression(string[] input)
+        {
+            int length = input.Length;
+            string result = string.Empty;
+            for (int i = 0; i < length; i++)
+            {
+                int count = 1;
+                while (i < length - 1 && input[i] == input[i + 1])
+                {
+                    i++;
+                    count++;
+                }
+                if (count > 1)
+                    result += input[i] + count.ToString();
+                else
+                    result += input[i];
+            }
+            return result.Length;
+        }
+
         //https://www.geeksforgeeks.org/anagram-substring-search-search-permutations/
 
         // 21. Remove duplicates
@@ -829,5 +854,119 @@ namespace Prepration
 
             return defaultValue;
         }
+
+
+        //https://leetcode.com/problems/break-a-palindrome/
+        //1328. Break a Palindrome  . Input: palindrome = "abccba" Output: "aaccba" Input: palindrome = "a"  Output: ""
+        public string BreakPalindrome(string palindrome)
+        {
+            if (palindrome.Length == 1)
+            {
+                return "";
+            }
+
+            StringBuilder res = new StringBuilder(palindrome);
+
+            for (int i = 0; i < res.Length; i++)
+            {
+                if (res[i] != 'a')
+                {
+                    if (!(res.Length % 2 == 1 && i == res.Length / 2))
+                    {
+                        res[i] = 'a';
+                        return res.ToString();
+                    }
+                }
+
+            }
+
+            res[res.Length - 1] = 'b';
+            return res.ToString();
+        }
+
+        //739. Daily Temperatures
+        //https://leetcode.com/problems/daily-temperatures/
+        //For example, given the list of temperatures T = [73, 74, 75, 71, 69, 72, 76, 73], your output should be [1, 1, 4, 2, 1, 1, 0, 0].
+        public int[] DailyTemperatures(int[] T)
+        {
+            Stack<int> stack = new Stack<int>();
+            int[] result = new int[T.Length];
+
+            for (int i = 0; i < T.Length; i++)
+            {
+                while (stack.Count > 0 && T[stack.Peek()] < T[i])
+                {
+                    int index = stack.Pop();
+                    result[index] = i - index;
+                }
+                stack.Push(i);
+            }
+
+            return result;
+        }
+
+
+        //https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/
+        //Input: s = "(u(love)i)" Output: "iloveu"
+        //Input: s = "(abcd)"     Output: "dcba"
+        //Input: s = "(ed(et(oc))el)" Output: "leetcode"
+        //Input: s = "a(bcdefghijkl(mno)p)q"  Output: "apmnolkjihgfedcbq"
+        public static string reverseInParentheses(string inputString)
+        {
+            if (inputString == null || inputString.Length <= 1) return inputString;
+
+            var stack = new Stack<string>();
+            string str = "";
+            foreach (var c in inputString)
+            {
+                if (c <= 'z' && c >= 'a')
+                {
+                    str += c;
+                }
+                else if (c == '(')
+                {
+                    stack.Push(str);
+                    str = "";
+                }
+                else
+                {
+                    var p = stack.Pop();
+                    var arr = str.ToCharArray();
+                    Array.Reverse(arr);
+                    var newstr = new string(arr); // reverse current
+                    str = p + newstr;
+                }
+            }
+
+            return str;
+        }
+
+
+        //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/
+        //1047. Remove All Adjacent Duplicates In String
+        //Input: "abbaca" Output: "ca"
+        public String removeDuplicates(String str)
+        {
+            Stack<char> stack = new Stack<char>();
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i <= str.Length - 1; i++)
+            {
+                if (stack.Count == 0 || stack.Peek() != str[i])
+                {
+                    stack.Push(str[i]);
+                }
+                else
+                    stack.Pop();
+            }
+            while (stack.Count > 0)
+            {
+                sb.Append(stack.Pop());
+            }
+            char[] s = sb.ToString().ToCharArray();
+            Array.Reverse(s);
+            return new string(s);
+        }
+
     }
 }
