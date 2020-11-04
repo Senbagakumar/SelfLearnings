@@ -981,5 +981,99 @@ namespace Prepration
             var groups = list.GroupBy(x => x).ToList();
             return wall.Count - (groups.Any() ? groups.Select(g => g.Count()).Max() : 0);
         }
+
+        //https://leetcode.com/problems/rectangle-overlap/
+        //836. Rectangle Overlap
+        //Example 1: Input: rec1 = [0,0,2,2], rec2 = [1,1,3,3] Output: true
+        //Example 2: Input: rec1 = [0,0,1,1], rec2 = [1,0,2,1] Output: false
+        //Example 3: Input: rec1 = [0,0,1,1], rec2 = [2,2,3,3] Output: false
+        public bool IsRectangleOverlap(int[] rec1, int[] rec2)
+        {
+            return rec1[0] < rec2[2] && rec1[1] < rec2[3] && rec1[2] > rec2[0] && rec1[3] > rec2[1];
+        }
+
+        //https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/
+        //1481. Least Number of Unique Integers after K Removals
+        // Input: arr = [5,5,4], k = 1      Output: 1 Explanation: Remove the single 4, only 5 is left.
+        //Input: arr = [4,3,1,1,3,3,2], k = 3  Output: 2 Explanation: Remove 4, 2 and either one of the two 1s or three 3s. 1 and 3 will be left.
+        public int FindLeastNumOfUniqueInts(int[] arr, int k)
+        {
+            var dict = new Dictionary<int, int>();
+            foreach(int i in arr)
+            {
+                if (dict.ContainsKey(i))
+                    dict[i]++;
+                else
+                    dict[i] = 1;
+            }
+
+            var keys = dict.OrderBy(q => q.Key);
+
+            int currentk = 0;
+            int count=0;
+            foreach(var i in keys)
+            {
+                if (currentk + dict[i.Key] <= k)
+                    currentk += dict[i.Key];
+                else
+                    count++;
+            }
+            return count;
+
+        }
+
+        //https://leetcode.com/problems/powx-n/
+        //50. Pow(x, n)
+        public double MyPow(double x, int n)
+        {
+            return 0.0;
+        }
+
+        //https://leetcode.com/problems/basic-calculator-ii/
+        //227. Basic Calculator II
+        //Example 1: Input: "3+2*2" Output: 7 Example 2: Input: " 3/2 " Output: 1 Example 3: Input: " 3+5 / 2 " Output: 5
+        public static int Calculate(string s)
+        {
+            var st = new Stack<int>();
+            char sign = '+';
+            int cur = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                var ch = s[i];
+                if (ch == ' ') continue;
+
+                if (char.IsDigit(ch))
+                    cur = cur * 10 + (ch - '0');
+                if (!char.IsDigit(ch) || i == s.Length - 1)
+                {
+                    if (sign == '+')
+                    {
+                        st.Push(cur);
+                    }
+                    if (sign == '*')
+                    {
+                        var last = st.Pop();
+                        st.Push(last * cur);
+                    }
+                    if (sign == '-')
+                    {
+                        st.Push(-1 * cur);
+                    }
+                    if (sign == '/')
+                    {
+                        var last = st.Pop();
+                        st.Push(last / cur);
+                    }
+                    cur = 0;
+                    sign = ch;
+                }
+            }
+            int ret = 0;
+            while (st.Any())
+                ret += st.Pop();
+            return ret;
+
+
+        }
     }
 }

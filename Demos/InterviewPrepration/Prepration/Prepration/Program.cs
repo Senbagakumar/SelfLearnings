@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.WebSockets;
 using System.Xml.Linq;
 using static Prepration.DesignQuestions;
 
@@ -137,6 +138,29 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+
+            int[][] costs = new int[3][];
+            costs[0] = new int[] { 17, 2, 17 };
+            costs[1] = new int[] { 16, 16, 5};
+            costs[2] = new int[] { 14, 3, 19 };
+
+            new DesignQuestions().MinCost(costs);
+
+            ArrayPrograms.Calculate("3+2*2");
+            new stringprograms().RestoreIpAddresses("25525511135");
+            new ArrayPrograms().FindLeastNumOfUniqueInts(new int[] { 4, 3, 1, 1, 3, 3, 2 }, 3);
+            MicrosoftInterviewQuestions.FindIsLand();
+
+            var mi = new MicrosoftInterviewQuestions();
+            int[][] rc = new int[3][];
+            rc[0] = new int[] { 0, 0, 1, 0, 0};
+            rc[1] = new int[] { 0, 1, 0, 1, 0 };
+            rc[2] = new int[] { 0, 1, 1, 1, 0 };
+
+            int re = mi.ClosedIsland(rc);
+
+
+            string decode = stringprograms.decodeString("3[a]2[bc]");
             string reverse = stringprograms.reverseInParentheses("(u(love)i)");
             var listlist = new List<IList<int>>();
             listlist.Add(new List<int>() { 1, 2, 2, 1 });

@@ -1,6 +1,7 @@
 ﻿using Prepration.Microsoft;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,11 +13,11 @@ using System.Xml.XPath;
 namespace Prepration
 {
     public class DesignQuestions
-    {  
-        
+    {
+
         public static void ExecuteTicTacToe()
         {
-            int val= 0;
+            int val = 0;
             var tictactoe = new TicTacToe(3);
             val = tictactoe.Move(0, 0, 1); //1 - first player
             val = tictactoe.Move(0, 2, 2); //2 - second player
@@ -45,7 +46,7 @@ namespace Prepration
             {
                 this.n = n;
                 tic = new int[n, n];
-                
+
             }
 
             public int Move(int row, int col, int teamPlayer)
@@ -59,7 +60,7 @@ namespace Prepration
                     return teamPlayer;
                 }
                 else
-                   return 0;
+                    return 0;
             }
 
             //Row Check
@@ -94,9 +95,9 @@ namespace Prepration
             private bool WinConditionForFirstDiagonal(int player)
             {
                 bool win = true;
-                for(int i=0; i<n; i++)
+                for (int i = 0; i < n; i++)
                 {
-                    if(tic[i,i] != player)
+                    if (tic[i, i] != player)
                     {
                         win = false; break;
                     }
@@ -109,7 +110,7 @@ namespace Prepration
                 bool win = true;
                 for (int i = 0; i < n; i++)
                 {
-                    if (tic[i, n-i-1] != player)
+                    if (tic[i, n - i - 1] != player)
                     {
                         win = false; break;
                     }
@@ -141,15 +142,15 @@ namespace Prepration
             {
                 var st = new Stack<int>();
 
-                for(int i=0; i<n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     st.Push(i);
                 }
-                while(st.Count > 1)
+                while (st.Count > 1)
                 {
                     int first = st.Pop();
                     int second = st.Pop();
-                    
+
                     if (Knows(first, second))
                         st.Push(second);
                     else
@@ -157,7 +158,7 @@ namespace Prepration
                 }
                 int result = st.Pop();
 
-                for(int i=0; i<n; i++)
+                for (int i = 0; i < n; i++)
                 {
                     if (Knows(result, i) || !Knows(i, result))
                         return -1;
@@ -208,7 +209,7 @@ namespace Prepration
             public int Get(int key)
             {
                 var node = dict.Keys.Contains(key) ? dict[key] : null;
-                if(node!=null)
+                if (node != null)
                 {
                     MovetoHead(node);
                     return node.Value;
@@ -243,10 +244,10 @@ namespace Prepration
 
             public void Put(int key, int value)
             {
-                ListNode current = new ListNode(key,value);
+                ListNode current = new ListNode(key, value);
 
-                var isExist= dict.Keys.Contains(key) ? dict[key] : null;
-                if(isExist!=null)
+                var isExist = dict.Keys.Contains(key) ? dict[key] : null;
+                if (isExist != null)
                 {
                     isExist.Value = value;
                     MovetoHead(isExist);
@@ -256,7 +257,7 @@ namespace Prepration
                     dict.Add(key, current);
                     AddElementsInHead(current);
                     TotalItems++;
-                    if(TotalItems > Capacity)
+                    if (TotalItems > Capacity)
                     {
                         RemoveLeast();
                     }
@@ -279,13 +280,13 @@ namespace Prepration
                 var vi = new LRUCache(2);
                 vi.Put(1, 1);
                 vi.Put(2, 2);
-                ret=vi.Get(1);  // return 1;
+                ret = vi.Get(1);  // return 1;
                 vi.Put(3, 3); // evicts 2;
-                ret=vi.Get(2);  // return -1;
+                ret = vi.Get(2);  // return -1;
                 vi.Put(4, 4); //evicts 1;
-                ret=vi.Get(1); // return -1;
-                ret=vi.Get(3);
-                ret=vi.Get(4);
+                ret = vi.Get(1); // return -1;
+                ret = vi.Get(3);
+                ret = vi.Get(4);
             }
 
         }
@@ -313,8 +314,8 @@ namespace Prepration
             }
 
             public int get(int key)
-            {                
-                foreach(Pair<int, int> pair in this.bucket)
+            {
+                foreach (Pair<int, int> pair in this.bucket)
                 {
                     if (pair.first.Equals(key))
                         return pair.second;
@@ -325,7 +326,7 @@ namespace Prepration
             public void update(int key, int value)
             {
                 bool found = false;
-                foreach(Pair<int, int> pair in this.bucket)
+                foreach (Pair<int, int> pair in this.bucket)
                 {
                     if (pair.first.Equals(key))
                     {
@@ -339,7 +340,7 @@ namespace Prepration
 
             public void remove(int key)
             {
-                foreach(Pair<int, int> pair in this.bucket)
+                foreach (Pair<int, int> pair in this.bucket)
                 {
                     if (pair.first.Equals(key))
                     {
@@ -352,7 +353,7 @@ namespace Prepration
 
         public class MyHashMap
         {
-            private int key_space;            
+            private int key_space;
             List<Bucket> hash_table;
 
 
@@ -468,10 +469,10 @@ namespace Prepration
             }
 
             private void ReverseElements()
-            { 
-                if(s.Count == 0)
+            {
+                if (s.Count == 0)
                 {
-                    while(r.Count > 0)
+                    while (r.Count > 0)
                     {
                         s.Push(r.Pop());
                     }
@@ -501,7 +502,7 @@ namespace Prepration
             public int Pop()
             {
                 int count = 0;
-                while(count < index-1)
+                while (count < index - 1)
                 {
                     queue.Enqueue(queue.Dequeue());
                     count++;
@@ -512,7 +513,7 @@ namespace Prepration
             public int Top()
             {
                 int count = 0;
-                while(count < index-1)
+                while (count < index - 1)
                 {
                     queue.Enqueue(queue.Dequeue());
                     count++;
@@ -643,7 +644,7 @@ namespace Prepration
             //the question is the sorted list;
             //during AddNum we need to use binary search to find the location for insertion.
             private List<int> data = new List<int>();
-           
+
 
             public void AddNum(int num)
             {
@@ -746,8 +747,8 @@ namespace Prepration
         //Output: [null,null,null,"","high","high","low","low"]
 
         public class TimeMap
-        {            
-            Dictionary<string, List<(int timestamp,string value)>> _data;
+        {
+            Dictionary<string, List<(int timestamp, string value)>> _data;
 
             public TimeMap()
             {
@@ -938,5 +939,139 @@ namespace Prepration
             }
         }
 
+        //https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/
+        //158. Read N Characters Given Read4 II - Call multiple times
+        //File file("abcde"); // File is "abcde", initially file pointer (fp) points to 'a'
+        //char[] buf4 = new char[4]; // Create buffer with enough space to store characters
+        //read4(buf4); // read4 returns 4. Now buf4 = "abcd", fp points to 'e'
+        //read4(buf4); // read4 returns 1. Now buf4 = "e", fp points to end of file
+        //read4(buf4); // read4 returns 0. Now buf4 = "", fp points to end of file
+        //https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/discuss/242427/C-Solution-100
+
+        //https://leetcode.com/problems/paint-house/
+        //256. Paint House
+        //Input: costs = [[17,2,17],[16,16,5],[14,3,19]]
+        //Output: 10
+        //Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 into blue.
+        //Minimum cost: 2 + 5 + 3 = 10.
+        public int MinCost(int[][] costs)
+        {
+            int prevR = 0;
+            int prevG = 0;
+            int prevB = 0;
+
+            int r = 0;
+            int g = 0;
+            int b = 0;
+
+            for (int i = 0; i < costs.Length; i++)
+            {
+                if (i == 0)
+                {
+                    r = costs[i][0];
+                    g = costs[i][1];
+                    b = costs[i][2];
+                }
+                else
+                {
+                    r = Math.Min(prevG, prevB) + costs[i][0];
+                    g = Math.Min(prevR, prevB) + costs[i][1];
+                    b = Math.Min(prevR, prevG) + costs[i][2];
+                }
+
+                prevR = r;
+                prevG = g;
+                prevB = b;
+            }
+
+            return Math.Min(r, Math.Min(g, b));
+        }
+
+        //https://leetcode.com/problems/design-hit-counter/
+        //362. Design Hit Counter
+        //https://leetcode.com/problems/design-hit-counter/discuss/83483/Super-easy-design-O(1)-hit()-O(s)-getHits()-no-fancy-data-structure-is-needed!
+        public class HitCounter
+        {
+            private int[] times;
+            private int[] hits;
+            /** Initialize your data structure here. */
+            public HitCounter()
+            {
+                times = new int[300];
+                hits = new int[300];
+            }
+
+            /** Record a hit.
+                @param timestamp - The current timestamp (in seconds granularity). */
+            public void hit(int timestamp)
+            {
+                int index = timestamp % 300;
+                if (times[index] != timestamp)
+                {
+                    times[index] = timestamp;
+                    hits[index] = 1;
+                }
+                else
+                {
+                    hits[index]++;
+                }
+            }
+
+            /** Return the number of hits in the past 5 minutes.
+                @param timestamp - The current timestamp (in seconds granularity). */
+            public int getHits(int timestamp)
+            {
+                int total = 0;
+                for (int i = 0; i < 300; i++)
+                {
+                    if (timestamp - times[i] < 300)
+                    {
+                        total += hits[i];
+                    }
+                }
+                return total;
+            }
+        }
+
+        public class HtmlParser
+        {
+            public List<String> GetUrls(String url) { }
+        }
+        //https://leetcode.com/problems/web-crawler-multithreaded/
+        //1242. Web Crawler Multithreaded
+        //https://leetcode.com/problems/web-crawler-multithreaded/discuss/554526/Simple-Task-based-code-with-comments-beats-95-on-CPU-uses-TryAdd
+        ConcurrentDictionary<string, string> done = new ConcurrentDictionary<string, string>();
+        HtmlParser parser;
+        string hostname;
+        public IList<string> Crawl(string startUrl, HtmlParser htmlParser)
+        {
+            this.parser = htmlParser;
+            Uri myUri = new Uri(startUrl);
+            hostname = @"http://" + myUri.Host;
+            done.TryAdd(startUrl, startUrl);
+            CCrawl(startUrl);
+            return done.Keys.ToList();
+        }
+
+        private void CCrawl(string url)
+        {
+            var res = parser.GetUrls(url);
+            List<Task> toWait = new List<Task>();
+
+            // This will initiate child tasks. Also, it will only return when all the tasks are done.
+            Parallel.ForEach(res, (item) =>
+            {
+                if (!done.ContainsKey(item))
+                {
+                    if (item.StartsWith(hostname))
+                    {
+                        // If TryAdd fails we will be adding duplicates.
+                        if (done.TryAdd(item, item))
+                            CCrawl(item);
+                    }
+                }
+            });
+        }
     }
+
 }

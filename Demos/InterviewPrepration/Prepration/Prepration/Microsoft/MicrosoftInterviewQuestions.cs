@@ -808,7 +808,12 @@ namespace Prepration.Microsoft
         //25. Find Islands
         public static void FindIsLand()
         {
-            int[,] a = new int[,] { { 0, 1, 0, 0 }, { 0, 0, 0, 1 }, { 0, 1, 0, 0 }, { 1, 1, 0, 0 } };
+            int[,] a = new int[,] { 
+                                   { 1, 1, 0, 0, 0 }, 
+                                   { 1, 1, 0, 0, 0 }, 
+                                   { 0, 0, 1, 0, 0 },
+                                   { 0, 0, 0, 1, 1 } 
+                                  };
             int iland = 0;
             for (int i = 0; i <= a.GetUpperBound(0); i++)
             {
@@ -825,25 +830,56 @@ namespace Prepration.Microsoft
 
         private static void Iland(int[,] ab, int i, int j)
         {
-            if (ab[i, j] == 1)
-            {
-                ab[i, j] = 0;
+            if (i < 0 || j < 0 || i >= ab.GetLength(0) || j >= ab.GetLength(1) || ab[i, j] == 0)
+                return;
 
-                try
+            ab[i, j] = 0;
+
+
+            Iland(ab, i + 1, j);
+            Iland(ab, i, j + 1);
+            //Iland(ab, i + 1, j + 1);
+            Iland(ab, i - 1, j);
+            Iland(ab, i, j - 1);
+            //Iland(ab, i - 1, j - 1);
+            //Iland(ab, i - 1, j + 1);
+            //Iland(ab, i + 1, j - 1);
+
+        }
+
+        //https://leetcode.com/problems/number-of-closed-islands/
+
+        public int ClosedIsland(int[][] grid)
+        {
+            int count = 0;
+            for (int i = 0; i < grid.Length; i++)
+            {
+                for (int j = 0; j < grid[0].Length; j++)
                 {
-                    Iland(ab, i + 1, j);
-                    Iland(ab, i, j + 1);
-                    Iland(ab, i + 1, j + 1);
-                    Iland(ab, i - 1, j);
-                    Iland(ab, i, j - 1);
-                    Iland(ab, i - 1, j - 1);
-                    Iland(ab, i - 1, j + 1);
-                    Iland(ab, i + 1, j - 1);
-                }
-                catch (Exception)
-                {
+                    if (grid[i][j] == 0 && DFS(grid, i, j))
+                        count++;
                 }
             }
+            return count;
+        }
+
+        private bool DFS(int[][] grid, int i, int j)
+        {
+            if (i < 0 || i == grid.Length ||
+                j < 0 || j == grid[0].Length ||
+                grid[i][j] == 1)
+                return true;
+
+            if (i == 0 || i == grid.Length - 1 ||
+                j == 0 || j == grid[0].Length - 1)
+                return false;
+
+            grid[i][j] = 1;
+
+            return DFS(grid, i + 1, j) &
+                   DFS(grid, i, j - 1) &
+                   DFS(grid, i - 1, j) &
+                   DFS(grid, i, j + 1);
         }
     }
 }

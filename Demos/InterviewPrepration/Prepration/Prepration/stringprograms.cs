@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.HtmlControls;
+using System.Xml;
 
 namespace Prepration
 {
@@ -968,5 +969,104 @@ namespace Prepration
             return new string(s);
         }
 
+        //https://leetcode.com/problems/decode-string/
+        //394. Decode String
+        //k[encoded_string], where the encoded_string inside the square brackets is being repeated exactly k times.
+        //Example 1: Input: s = "3[a]2[bc]" Output: "aaabcbc"
+        //Example 2: Input: s = "3[a2[c]]" Output: "accaccacc"
+        //Example 3: Input: s = "2[abc]3[cd]ef" Output: "abcabccdcdcdef"
+        //Example 4: Input: s = "abc3[cd]xyz" Output: "abccdcdcdxyz"
+        //another solution link: https://leetcode.com/problems/decode-string/discuss/613799/C-faster-than-90.16-less-than-10.00-Mem-O(n)
+        public static string decodeString(string s)
+        {
+            Stack<string> val = new Stack<string>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] != ']')
+                {
+                    val.Push(char.ToString(s[i]));
+                }
+                else
+                {
+                    string str = string.Empty;
+                    while (val.Count > 0 && !val.Peek().Equals("["))
+                    {
+                        str = val.Pop() + str;
+                    }
+                    if (val.Peek().Equals("["))
+                    {
+                        val.Pop();
+                    }
+                    string num = string.Empty;
+                    while (val.Count > 0 && char.IsDigit(val.Peek()[0]))
+                    {
+                        num = val.Pop() + num;
+                    }
+                    if (!string.IsNullOrEmpty(num))
+                    {
+                        int cnt = int.Parse(num);
+                        StringBuilder sb = new StringBuilder();
+                        while (cnt > 0)
+                        {
+                            sb.Append(str);
+                            cnt--;
+                        }
+                        str = sb.ToString();
+                    }
+                    val.Push(str);
+                }
+            }
+            string str1 = string.Empty;
+            while (val.Count > 0)
+            {
+                str1 = val.Pop() + str1;
+            }
+            return str1;
+        }
+
+        //https://leetcode.com/problems/restore-ip-addresses/
+        //93. Restore IP Addresses
+        //Input: s = "25525511135" Output: ["255.255.11.135","255.255.111.35"]
+        //https://leetcode.com/problems/restore-ip-addresses/discuss/414678/Simple-C-solution-using-backtracking
+        public IList<string> RestoreIpAddresses(string s)
+        {
+            List<string> result = new List<string>();
+
+            StringBuilder ip = new StringBuilder();
+
+            Traverse(result, ip, 0, 0, s);
+            return result;
+        }
+
+        private void Traverse(List<string> result, StringBuilder ip, int idx, int start, String s)
+        {
+            if (idx == 4)
+            {
+                if (start == s.Length)
+                {
+                    ip.Length--;
+                    result.Add(ip.ToString());
+                }
+                return;
+            }
+
+            int len = 0;
+            int num = 0;
+
+            for (int i = start; i < Math.Min(s.Length, start + 3); i++)
+            {
+                if (i > start && num == 0) { return; }
+
+                num *= 10;
+                num += (s[i] - '0');
+
+                if (num > 255) { return; }
+
+                len = ip.Length;
+                ip.Append(num).Append(".");
+                Traverse(result, ip, idx + 1, i + 1, s);
+                ip.Length = len;
+            }
+        }
     }
 }
