@@ -289,13 +289,13 @@ namespace Prepration
                     var current = q.Dequeue();
                     if (current.Left != null)
                     {
-                        current.Left.Value = current.Value * i;
+                        current.Left.Value = current.Value * 2;
                         q.Enqueue(current.Left);
                     }
 
                     if (current.Right != null)
                     {
-                        current.Right.Value = current.Value * i + 1;
+                        current.Right.Value = current.Value * 2 + 1;
                         q.Enqueue(current.Right);
                     }
 
