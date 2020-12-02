@@ -18,5 +18,6 @@ namespace Prepration
         public Node Right = null; //Binary Tree Ritht
         public Node Next = null;  //Linked List
         public Node Random = null;
+        public Node Prev = null;
     }   
 }

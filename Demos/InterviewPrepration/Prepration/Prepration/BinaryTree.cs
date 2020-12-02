@@ -28,10 +28,27 @@ namespace Prepration
         //this below method calculate the Height/Depth
         public int BTHeight(Node rootNode)
         {
+            //Leetcode
             if (rootNode == null) return 0;
             int left = BTHeight(rootNode.Left);
             int right = BTHeight(rootNode.Right);
             return Math.Max(left, right) + 1;
+
+            //HackerRank
+            int leftHeight = 0;
+            int rightHeight = 0;
+
+            if (rootNode.Left != null)
+            {
+                leftHeight = 1 + BTHeight(rootNode.Left);
+            }
+
+            if (rootNode.Right != null)
+            {
+                rightHeight = 1 + BTHeight(rootNode.Right);
+            }
+            return Math.Max(leftHeight, rightHeight);
+
         }
 
 

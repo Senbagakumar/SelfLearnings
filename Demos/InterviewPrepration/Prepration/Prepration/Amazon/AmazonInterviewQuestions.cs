@@ -52,19 +52,19 @@ namespace Prepration.Amazon
 					cur.Next = l2;
 					l2 = l2.Next;
 				}
-				if (l2 == null)
+				else if (l2 == null)
 				{
 					cur.Next = l1;
 					l1 = l1.Next;
 				}
-				if (l1.Value <= l2.Value)
+				else if (l1.Value <= l2.Value)
 				{
-					cur.Next = l1;
+					cur.Next = new Node(l1.Value);
 					l1 = l1.Next;
 				}
 				else
 				{
-					cur.Next = l2;
+					cur.Next = new Node(l2.Value);
 					l2 = l2.Next;
 				}
 				cur = cur.Next;

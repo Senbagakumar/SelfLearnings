@@ -1,0 +1,30 @@
+TypeScript:
+
+Reference: https://www.tutorialspoint.com/typescript/typescript_environment_setup.htm
+
+Install Node.js : https://nodejs.org/en/download/
+
+See the version of node: node -v
+
+Install TypeScript:  npm install -g typescript
+
+IDE: Visual Studio Code: https://code.visualstudio.com/docs?dv=win
+
+
+Compile and Run in Node.js
+
+C:\Source\SelfLearnings\Projects\Script\TypeScript\Demo1>tsc hellowworld.ts --> Compile typescript
+C:\Source\SelfLearnings\Projects\Script\TypeScript\Demo1>node hellowworld.js --> Run TypeScript
+
+
+If you get this below error while compile the typescript in Visual Studio Code:
+
+tsc : File C:\Users\v-sesiga\AppData\Roaming\npm\tsc.ps1 cannot be loaded. The file C:\Users\v-sesiga\AppData\Roaming\npm\tsc.ps1 is not digitally signed. You cannot run this script on the current system. For more 
+information about running scripts and setting execution policy, see about_Execution_Policies at https:/go.microsoft.com/fwlink/?LinkID=135170.
+
+Solution: Execute the below command.
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned
+
+
+Multiple files can be compiled at once.
+	tsc file1.ts, file2.ts, file3.ts

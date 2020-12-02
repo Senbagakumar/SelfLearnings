@@ -1035,7 +1035,7 @@ namespace Prepration
 
         public class HtmlParser
         {
-            public List<String> GetUrls(String url) { }
+            public List<String> GetUrls(String url) { return new List<string>(); }
         }
         //https://leetcode.com/problems/web-crawler-multithreaded/
         //1242. Web Crawler Multithreaded

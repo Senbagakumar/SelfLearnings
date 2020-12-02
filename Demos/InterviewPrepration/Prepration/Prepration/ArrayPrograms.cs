@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -282,7 +283,6 @@ namespace Prepration
             // with no rotation 
             int arrSum = 0; // Stores sum of arr[i] 
             int currVal = 0; // Stores sum of i*arr[i] 
-
             for (int i = 0; i < arr.Length; i++)
             {
                 arrSum = arrSum + arr[i];

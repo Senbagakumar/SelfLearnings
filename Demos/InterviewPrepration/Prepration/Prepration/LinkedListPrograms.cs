@@ -250,6 +250,21 @@ namespace Prepration
                 current = forward;
             }
             return previous;
+
+            //Double Linked List
+            //Node reverseH = null;
+
+            //while (node != null)
+            //{
+            //    Node forward = node.Next;
+            //    node.Next = reverseH;
+            //    node.Prev = forward;
+
+            //    reverseH = node;
+            //    node = forward;
+            //}
+            //return reverseH;
+
         }
 
         //swap two linked list
@@ -316,16 +331,17 @@ namespace Prepration
         static bool DetectListCycle(Node node)
         {
             if (node == null) return false;
-            Node fast = node.Next;
+            Node fast = node;
             Node slow = node;
 
             while (slow != null && fast != null)
             {
-                if (slow.Value == fast.Value)
+                slow = slow.Next;
+                fast = fast.Next.Next;
+
+                if (slow == fast)
                     return true;
 
-                slow = slow.Next;
-                fast = fast.Next;
             }
             return false;
         }

@@ -132,12 +132,52 @@ namespace Prepration
             return result;
         }
 
-        
 
-      
+        public static string decryptPassword(string s)
+        {
+            int len = s.Length;
+            char[] result = new char[len * 2];
+            for (int i = 0; i < len; i++)
+            {
+                if (i < len - 1 && char.IsLower(s[i]) && char.IsUpper(s[i + 1]))
+                {
+                    char temp = s[i + 1];
+                    result[i + 1] = s[i];
+                    result[i] = temp;
+
+                    result[i + 2] = '*';
+                }
+                else if (char.IsDigit(s[i]))
+                {
+                    result[i] = '0';
+                    result[0] = s[i];
+                }
+                else
+                    result[i] = s[i];
+            }
+            string res = new string(result).Trim();
+            return res;
+        }
+
 
         static void Main(string[] args)
         {
+
+            decryptPassword("51Pa*0Lp*0e");
+
+            string[] ovalue = "1 4".Split(' ');
+
+            Node head1 = new Node(1);
+            head1.Next = new Node(2);
+            head1.Next.Next = new Node(3);
+
+            Node head2 = new Node(2);
+            head2.Next = new Node(3);
+            head2.Next.Next = new Node(4);
+
+            AmazonInterviewQuestions amazonInterviewQuestions = new AmazonInterviewQuestions();
+          var mg=amazonInterviewQuestions.MergeTwoLists(head1, head2);
+
 
             int[][] costs = new int[3][];
             costs[0] = new int[] { 17, 2, 17 };
