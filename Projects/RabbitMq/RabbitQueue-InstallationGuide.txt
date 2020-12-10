@@ -1,0 +1,9 @@
+https://www.rabbitmq.com/install-windows.html
+
+https://www.rabbitmq.com/tutorials/tutorial-four-dotnet.html
+
+dotnet new console --name NewTask
+move Program.cs NewTask.cs
+dotnet add package RabbitMQ.Client
+dotnet restore
+dotnet run
