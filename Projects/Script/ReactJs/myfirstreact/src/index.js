@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-import Garage from './Car';
+//import Garage from './Car';
+import NewCar from './stateobj';
 import reportWebVitals from './reportWebVitals';
 
 // ReactDOM.render(
@@ -16,7 +17,8 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
  // <Car/>, document.getElementById('text2') // Class Componenet sample
  //<Car color='red' />, document.getElementById('text2') // Props sample
- <Garage />, document.getElementById('text2')
+ //<Garage />, document.getElementById('text2')
+ <NewCar />, document.getElementById("text2")
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -13,6 +13,8 @@ namespace Prepration
 {
     public class Assessment
     {
+        //https://leetcode.com/discuss/interview-question/344650/Amazon-Online-Assessment-Questions
+
         //1. Reorder the data in log files
         //2. https://leetcode.com/discuss/interview-question/344677  -- https://leetcode.com/problems/minimum-cost-to-connect-sticks (premium)
         //Input: ropes = [8, 4, 6, 12]
