@@ -162,6 +162,11 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+            Amazon.OnlineAssessment.RoverControl.Rover_Control(new string[] { "R", "D", "L", "L", "D" }, 4);
+
+            Amazon.OnlineAssessment.SubstringsOfSizeKwithK_1DistinctChars.GetMaxSubstring("awaglknagawunagwkwagl", 4);
+
+            Amazon.OnlineAssessment.AmazonMusicPairs.NumPairsDivisibleBy60(new int[] { 30, 20, 150, 100, 40 });
 
             decryptPassword("51Pa*0Lp*0e");
 

@@ -461,51 +461,6 @@ namespace Prepration
         }
 
         //Amazon Question
-        //5. Reorder Data in Log Files Input: logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
-        //Output: ["let1 art can","let3 art zero","let2 own kit dig","dig1 8 1 5 1","dig2 3 6"]
-
-        public static string[] ReOrderTheLogFiles(string[] inputs)
-        {
-            List<string> letter = new List<string>();
-            List<string> digit = new List<string>();
-
-            foreach (var input in inputs)
-            {
-                if (IsDigit(input))
-                {
-                    digit.Add(input);
-                }
-                else
-                {
-                    letter.Add(input);
-                }
-            }
-
-            letter.Sort(delegate (string x, string y)
-            {
-                int result;
-
-                string a = x.Substring(x.IndexOf(' ') + 1);
-                string b = y.Substring(y.IndexOf(' ') + 1);
-
-                result = a.CompareTo(b);
-                if (result == 0)
-                    result = x.CompareTo(y);
-
-                return result;
-            });
-
-            return letter.Concat(digit).ToArray();
-        }
-
-        private static bool IsDigit(string input)
-        {
-            var split = input.Split(' ');
-            var secondIndex = split[1];
-            return secondIndex.All(char.IsDigit);
-        }
-
-        //Amazon Question
         //6. WordLadder 
         // start = "hit" end = "cog" dict = ["hot","dot","dog","lot","log"] output =  "hit" -> "hot" -> "dot" -> "dog" -> "cog"
         public static int NoOfStepsForWordLadder(string beginWord, string endWord, List<string> noOfWord)
@@ -788,6 +743,7 @@ namespace Prepration
 
         //21. Get Length of Unique Substring 
         //Input: "pwwkew" Output: 3
+        //longest substring without repeating characters
         //https://leetcode.com/explore/interview/card/amazon/76/array-and-strings/2961/
         //https://leetcode.com/problems/longest-substring-without-repeating-characters/
         public static int GetMaxSubstring(string input)

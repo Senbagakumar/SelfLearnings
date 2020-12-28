@@ -57,7 +57,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Amazon\OnlineAssessment\AmazonFulfillmentBuilder.cs" />
     <Compile Include="Amazon\AmazonInterviewQuestions.cs" />
+    <Compile Include="Amazon\OnlineAssessment\AmazonMusicPairs.cs" />
+    <Compile Include="Amazon\OnlineAssessment\MostCommonWord.cs" />
+    <Compile Include="Amazon\OnlineAssessment\RoverControl.cs" />
+    <Compile Include="Amazon\OnlineAssessment\SubstringsOfSizeKwithK-1DistinctChars.cs" />
+    <Compile Include="Amazon\OnlineAssessment\TopKFrequentlyMentionedKeywords.cs" />
+    <Compile Include="Amazon\OnlineAssessment\TransactionLogs.cs" />
+    <Compile Include="Amazon\OnlineAssessment\Turnstile.cs" />
     <Compile Include="ArrayPrograms.cs" />
     <Compile Include="Assessment.cs" />
     <Compile Include="BasicQuestions.cs" />
