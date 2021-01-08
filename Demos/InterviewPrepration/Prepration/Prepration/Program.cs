@@ -1,6 +1,8 @@
 ﻿using Prepration.Amazon;
+using Prepration.Amazon.OnlineAssessment;
 using Prepration.Microsoft;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -13,10 +15,11 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.WebSockets;
 using System.Xml.Linq;
+using System.Xml.XPath;
 using static Prepration.DesignQuestions;
 
 namespace Prepration
-{   
+{
     class Program
     {
 
@@ -87,10 +90,9 @@ namespace Prepration
             else
                 return false;
         }
-            
+
         static long repeatedString(string s, long n)
         {
-
             long count = 0;
 
             for (int i = 0; i < s.Length; i++)
@@ -126,7 +128,7 @@ namespace Prepration
             }
             int result = 0;
             foreach (int i in lettercounts)
-            { 
+            {
                 result += Math.Abs(i);
             }
             return result;
@@ -159,9 +161,153 @@ namespace Prepration
             return res;
         }
 
+        private static int solve(string s1, string s2)
+        {
+            if (s1.Length % s2.Length != 0)
+                return -1;
+            int l2 = s2.Length;
+            for (int i = 0; i < s1.Length; i++)
+            {
+                int s2p = i % l2;
+                if (s1[i] != s2[s2p])
+                    return -1;
+            }
+            for (int i = 0; i < s2.Length; i++)
+            {
+                int j = 0;
+                for (; j < s2.Length; j++)
+                {
+                    int s2pos = j % (i + 1);
+                    if (s2[j] != s2[s2pos])
+                        break;
+                }
+                if (j == s2.Length)
+                {
+                    return i + 1;
+                }
+            }
+            return -1;
+        }
+
+
+        public int SubstringKdistinctCharacter(string A, int K)
+        {
+
+            int res = 0;
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            int start = 0;
+            int current = 0;
+            for (int i = 0; i < A.Length; i++)
+            {
+                if (dict.ContainsKey(A[i]))
+                {
+                    dict[A[i]]++;
+                }
+                else
+                {
+                    dict[A[i]] = 1;
+                }
+                if (dict.Keys.Count >= K)
+                {
+                    while (dict[A[current]] > 1)
+                    {
+                        dict[A[current++]]--;
+                    }
+                    if (dict.Keys.Count == K)
+                    {
+                        res += current - start + 1;
+                    }
+                    else
+                    {
+                        dict.Remove(A[current++]);
+                        start = current;
+                        dict[A[i]] = 0;
+                        i--;
+                    }
+                }
+            }
+            return res;
+        }
 
         static void Main(string[] args)
         {
+            PartitionLabels.StringPartion("ababcbacadefegdehijhklij");
+            new Program().SubstringKdistinctCharacter("pqpqs", 2);
+
+            var list = new List<IList<int>>();
+            list.Add(new List<int>() { 0, 1 });
+            list.Add(new List<int>() { 0, 2 });
+            list.Add(new List<int>() { 1, 3 });
+            list.Add(new List<int>() { 2, 3 });
+            list.Add(new List<int>() { 3, 4 });
+            list.Add(new List<int>() { 2, 5 });
+            list.Add(new List<int>() { 5, 6 });
+
+            new ArrayPrograms().CriticalConnections(7, list);
+
+            var products = new int[3][];
+            products[0] = new int[2] { 4, 4};
+            products[1] = new int[] { 1,2 };
+            products[2] = new int[] { 3,6 };
+
+            //new Program().FiveStarReviews(products, 77);
+
+            KeywordSuggestions.SuggestedProducts2(new string[] { "mobile", "mouse", "moneypot", "monitor", "mousepad" }, "mouse");
+
+            var res = SlowestKeyPress.LongestKeyPress(new int[] { 9, 29, 49, 50 }, "cbcd");
+
+            MultiProcessorSystems.ProcessorSystem(5, new int[] { 3, 1, 7, 2, 4 }, 15);
+            MicrosoftInterviewQuestions.TwoSum(new int[] { 2, 7, 11, 15 }, 9);
+            //Turnstile.getTimes(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
+
+            //Turnstile.getTimes(5, new int[] { 1, 2,2,4,4 }, new int[] { 0,1,0,0,1 });
+
+            Turnstile.getTimes(4, new int[] { 1, 1, 2, 6 }, new int[] { 0, 1, 1, 0 });
+
+
+            string gs = "aaaaaa";
+            string t = "a";
+
+            int v1 = solve(gs, t);
+
+            string rs = gs.Replace(t, "");
+            string substring = string.Empty;
+
+            if (string.IsNullOrEmpty(rs) || rs.Length == t.Length)
+            {
+                int[] abc = new int[26];
+                int j = 0;
+                int ans = 0;
+
+                for (int i = 0; i < t.Length; i++)
+                {
+                    j = Math.Max(j, abc[t[i] - 'a']);
+
+                    if (i - j + 1 > ans)
+                    {
+                        ans = i - j + 1;
+                        substring = t.Substring(j, ans);
+                    }
+                    abc[t[i] - 'a'] = i + 1;
+                }
+            }
+
+
+
+            //Validate given string and given substring
+
+
+
+
+            Console.Read();
+
+
+            var v = new int[3][];
+            v[0] = new int[] { 1, 1, 0 };
+            v[1] = new int[] { 1, 1, 0 };
+            v[2] = new int[] { 0, 0, 1 };
+            Amazon.OnlineAssessment.GiftingGroups.FindCircleNum(v);
+            Amazon.OnlineAssessment.RoboticsChallenge.CalPoints(new string[] { "5", "2", "C", "D", "+" });
             Amazon.OnlineAssessment.RoverControl.Rover_Control(new string[] { "R", "D", "L", "L", "D" }, 4);
 
             Amazon.OnlineAssessment.SubstringsOfSizeKwithK_1DistinctChars.GetMaxSubstring("awaglknagawunagwkwagl", 4);
@@ -181,12 +327,12 @@ namespace Prepration
             head2.Next.Next = new Node(4);
 
             AmazonInterviewQuestions amazonInterviewQuestions = new AmazonInterviewQuestions();
-          var mg=amazonInterviewQuestions.MergeTwoLists(head1, head2);
+            var mg = amazonInterviewQuestions.MergeTwoLists(head1, head2);
 
 
             int[][] costs = new int[3][];
             costs[0] = new int[] { 17, 2, 17 };
-            costs[1] = new int[] { 16, 16, 5};
+            costs[1] = new int[] { 16, 16, 5 };
             costs[2] = new int[] { 14, 3, 19 };
 
             new DesignQuestions().MinCost(costs);
@@ -198,7 +344,7 @@ namespace Prepration
 
             var mi = new MicrosoftInterviewQuestions();
             int[][] rc = new int[3][];
-            rc[0] = new int[] { 0, 0, 1, 0, 0};
+            rc[0] = new int[] { 0, 0, 1, 0, 0 };
             rc[1] = new int[] { 0, 1, 0, 1, 0 };
             rc[2] = new int[] { 0, 1, 1, 1, 0 };
 
@@ -209,7 +355,7 @@ namespace Prepration
             string reverse = stringprograms.reverseInParentheses("(u(love)i)");
             var listlist = new List<IList<int>>();
             listlist.Add(new List<int>() { 1, 2, 2, 1 });
-            listlist.Add(new List<int>() { 3,1,2 });
+            listlist.Add(new List<int>() { 3, 1, 2 });
             listlist.Add(new List<int>() { 1, 3, 2 });
             listlist.Add(new List<int>() { 2, 4 });
             listlist.Add(new List<int>() { 3, 1, 2 });
@@ -217,7 +363,7 @@ namespace Prepration
 
             int count = ArrayPrograms.LeastBricks(listlist);
             //int length = stringprograms.StringCompression(new string[] { "a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b" });
-           // var res = stringprograms.LengthEncoding("a");
+            // var res = stringprograms.LengthEncoding("a");
             new stringprograms().DailyTemperatures(new int[] { 73, 74, 75, 71, 69, 72, 76, 73 });
 
             char[][] mins = new char[4][];

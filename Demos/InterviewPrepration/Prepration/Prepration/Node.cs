@@ -9,6 +9,7 @@ namespace Prepration
     public class Node
     {
         public int Value;
+        public List<Node> children;
         public Node(int value)
         {
             this.Value = value;
@@ -19,5 +20,11 @@ namespace Prepration
         public Node Next = null;  //Linked List
         public Node Random = null;
         public Node Prev = null;
+
+        Node(int _val, List<Node> _children)
+        {
+            Value = _val;
+            children = _children;
+        }
     }   
 }

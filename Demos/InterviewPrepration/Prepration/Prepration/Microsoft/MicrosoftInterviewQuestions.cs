@@ -14,20 +14,25 @@ namespace Prepration.Microsoft
         //1. Two Sums
         //https://leetcode.com/explore/interview/card/microsoft/30/array-and-strings/173/
         //https://leetcode.com/problems/two-sum/
+        //https://leetcode.com/discuss/interview-question/372434 -- for duplication
         //Given nums = [2, 7, 11, 15], target = 9,  Because nums[0] + nums[1] = 2 + 7 = 9, return [0, 1].
-        public void TwoSum(int[] nums, int target)
+        public static void TwoSum(int[] nums, int target)
         {
             var dict = new Dictionary<int, int>();
+            HashSet<int> seen = new HashSet<int>();
             for (int i = 0; i < nums.Length; i++)
             {
                 if (target < nums[i]) continue;
                 var remainder = target - nums[i];
                 int result;
-                if (dict.TryGetValue(nums[i], out result))
+                int count=0;
+                if (dict.TryGetValue(nums[i], out result) && !seen.Contains(nums[i]))
                 {
+                    seen.Add(nums[i]);
                     Console.WriteLine(i + "," + result);
+                    count++;
                 }
-                else
+                else if(!dict.ContainsKey(remainder))
                 {
                     dict.Add(remainder, i);
                 }
@@ -642,7 +647,7 @@ namespace Prepration.Microsoft
             return false;
         }
 
-        //20. Search in 2D Matrix II
+        //20. Search a 2D Matrix II
         //[1,   4,  7, 11, 15],
         //[2,   5,  8, 12, 19],
         //[3,   6,  9, 16, 22],
@@ -808,6 +813,9 @@ namespace Prepration.Microsoft
         //25. Find Islands
         public static void FindIsLand()
         {
+            int[][] ab = new int[4][];
+            
+
             int[,] a = new int[,] { 
                                    { 1, 1, 0, 0, 0 }, 
                                    { 1, 1, 0, 0, 0 }, 
