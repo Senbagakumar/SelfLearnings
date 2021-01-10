@@ -72,11 +72,6 @@ namespace Prepration.Amazon
 			return dummy.Next;
 		}
 
-		//2. Critical Connections in a Network
-		//https://leetcode.com/problems/critical-connections-in-a-network/
-		//https://leetcode.com/problems/critical-connections-in-a-network/discuss/552431/Java-easy-to-read-solution
-		//Added in ArrayPrograms
-
 		//3. Meeting Rooms II
 		//https://leetcode.com/problems/meeting-rooms-ii/
 		//https://leetcode.com/problems/meeting-rooms-ii/discuss/533279/C-Sorted-List-and-Stack

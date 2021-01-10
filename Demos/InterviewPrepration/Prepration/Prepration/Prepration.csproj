@@ -62,10 +62,15 @@
     <Compile Include="Amazon\OnlineAssessment\AmazonMusicPairs.cs" />
     <Compile Include="Amazon\OnlineAssessment\BreakAPalindrome.cs" />
     <Compile Include="Amazon\OnlineAssessment\CountsubstringswithexactlyKdistinctchars.cs" />
+    <Compile Include="Amazon\OnlineAssessment\CriticalRouters.cs" />
     <Compile Include="Amazon\OnlineAssessment\DivisiblityOfString.cs" />
+    <Compile Include="Amazon\OnlineAssessment\FavoriteGenres.cs" />
     <Compile Include="Amazon\OnlineAssessment\FiveStarSellers.cs" />
     <Compile Include="Amazon\OnlineAssessment\KeywordSuggestions.cs" />
     <Compile Include="Amazon\OnlineAssessment\MaximalSquare.cs" />
+    <Compile Include="Amazon\OnlineAssessment\MaxOfMinAltitudes.cs" />
+    <Compile Include="Amazon\OnlineAssessment\MinCostToConnectAllNodes.cs" />
+    <Compile Include="Amazon\OnlineAssessment\MinCostToRepairEdges.cs" />
     <Compile Include="Amazon\OnlineAssessment\MultiProcessorSystems.cs" />
     <Compile Include="Amazon\OnlineAssessment\PartitionLabels.cs" />
     <Compile Include="Amazon\OnlineAssessment\SlowestKeyPress.cs" />

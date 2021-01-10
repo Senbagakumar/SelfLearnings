@@ -10,6 +10,7 @@ namespace Prepration.Amazon
 
     class AmazonFulfillmentBuilder
     {
+        // or Minimum cost to connect sticks
         //https://leetcode.com/discuss/interview-question/935558/Amazon-SDE1-or-OA-2020-or-Amazon-Fulfillment-Builder
 
         //2. https://leetcode.com/discuss/interview-question/344677  -- https://leetcode.com/problems/minimum-cost-to-connect-sticks (premium)

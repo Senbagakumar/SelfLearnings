@@ -189,50 +189,43 @@ namespace Prepration
             return -1;
         }
 
-
-        public int SubstringKdistinctCharacter(string A, int K)
-        {
-
-            int res = 0;
-            Dictionary<char, int> dict = new Dictionary<char, int>();
-            int start = 0;
-            int current = 0;
-            for (int i = 0; i < A.Length; i++)
-            {
-                if (dict.ContainsKey(A[i]))
-                {
-                    dict[A[i]]++;
-                }
-                else
-                {
-                    dict[A[i]] = 1;
-                }
-                if (dict.Keys.Count >= K)
-                {
-                    while (dict[A[current]] > 1)
-                    {
-                        dict[A[current++]]--;
-                    }
-                    if (dict.Keys.Count == K)
-                    {
-                        res += current - start + 1;
-                    }
-                    else
-                    {
-                        dict.Remove(A[current++]);
-                        start = current;
-                        dict[A[i]] = 0;
-                        i--;
-                    }
-                }
-            }
-            return res;
-        }
+        
 
         static void Main(string[] args)
         {
+            var newEdges = new int[3][];
+            newEdges[0] = new int[] { 1, 2, 12 };
+            newEdges[1] = new int[] { 3, 4, 30 };
+            newEdges[2] = new int[] { 1, 5, 8 };
+
+
+            var edges = new int[5][];
+            edges[0] = new int[] { 1, 2 };
+            edges[1] = new int[] { 2, 3 };
+            edges[2] = new int[] { 3, 4 };
+            edges[3] = new int[] { 4, 5 };
+            edges[4] = new int[] { 1, 5 };
+
+
+            int v = new MinCostToRepairEdges().MinCostToRepair(5, edges, newEdges);
+
+            MicrosoftInterviewQuestions.LongestPalindrome("babad");
+
+            var usersongs = new Dictionary<string, List<string>>();
+            usersongs.Add("David", new List<string>() { "song1", "song2", "song3", "song4", "song8" });
+            usersongs.Add("Emma", new List<string>() { "song5", "song6", "song7" });
+
+            var songgenres = new Dictionary<string, List<string>>();
+            songgenres.Add("Rock", new List<string>() { "song1", "song3" });
+            songgenres.Add("Dubstep", new List<string>() { "song7" });
+            songgenres.Add("Techno", new List<string>() { "song2", "song4" });
+            songgenres.Add("Pop", new List<string>() { "song5", "song6" });
+            songgenres.Add("Jazz", new List<string>() { "song8", "song9" });
+
+            FavoriteGenres.FavoriteGenre(usersongs, songgenres);
+
             PartitionLabels.StringPartion("ababcbacadefegdehijhklij");
-            new Program().SubstringKdistinctCharacter("pqpqs", 2);
+          
 
             var list = new List<IList<int>>();
             list.Add(new List<int>() { 0, 1 });
@@ -242,8 +235,6 @@ namespace Prepration
             list.Add(new List<int>() { 3, 4 });
             list.Add(new List<int>() { 2, 5 });
             list.Add(new List<int>() { 5, 6 });
-
-            new ArrayPrograms().CriticalConnections(7, list);
 
             var products = new int[3][];
             products[0] = new int[2] { 4, 4};
@@ -302,11 +293,11 @@ namespace Prepration
             Console.Read();
 
 
-            var v = new int[3][];
-            v[0] = new int[] { 1, 1, 0 };
-            v[1] = new int[] { 1, 1, 0 };
-            v[2] = new int[] { 0, 0, 1 };
-            Amazon.OnlineAssessment.GiftingGroups.FindCircleNum(v);
+            //var v = new int[3][];
+            //v[0] = new int[] { 1, 1, 0 };
+            //v[1] = new int[] { 1, 1, 0 };
+            //v[2] = new int[] { 0, 0, 1 };
+            //Amazon.OnlineAssessment.GiftingGroups.FindCircleNum(v);
             Amazon.OnlineAssessment.RoboticsChallenge.CalPoints(new string[] { "5", "2", "C", "D", "+" });
             Amazon.OnlineAssessment.RoverControl.Rover_Control(new string[] { "R", "D", "L", "L", "D" }, 4);
 
