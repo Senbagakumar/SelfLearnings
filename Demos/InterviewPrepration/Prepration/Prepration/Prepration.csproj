@@ -86,6 +86,7 @@
     <Compile Include="Amazon\OnlineAssessment\TopKFrequentlyMentionedKeywords.cs" />
     <Compile Include="Amazon\OnlineAssessment\TransactionLogs.cs" />
     <Compile Include="Amazon\OnlineAssessment\Turnstile.cs" />
+    <Compile Include="Amazon\OnlineAssessment\UtilizationCheck.cs" />
     <Compile Include="Amazon\OnlineAssessment\ZombieInMatrix.cs" />
     <Compile Include="ArrayPrograms.cs" />
     <Compile Include="Assessment.cs" />
