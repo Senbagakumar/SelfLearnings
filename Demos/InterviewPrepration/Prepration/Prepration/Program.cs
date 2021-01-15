@@ -233,6 +233,12 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+
+            Turnstile.getTimes1(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
+
+            //Turnstile.getTimes(5, new int[] { 1, 2,2,4,4 }, new int[] { 0,1,0,0,1 });
+
+
             new Program().MinDifficulty(new int[] { 11, 111, 22, 222, 33, 333, 44, 444 }, 6);
 
             var newEdges = new int[3][];
@@ -291,9 +297,7 @@ namespace Prepration
 
             MultiProcessorSystems.ProcessorSystem(5, new int[] { 3, 1, 7, 2, 4 }, 15);
             MicrosoftInterviewQuestions.TwoSum(new int[] { 2, 7, 11, 15 }, 9);
-            //Turnstile.getTimes(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
-
-            //Turnstile.getTimes(5, new int[] { 1, 2,2,4,4 }, new int[] { 0,1,0,0,1 });
+          
 
             Turnstile.getTimes(4, new int[] { 1, 1, 2, 6 }, new int[] { 0, 1, 1, 0 });
 
