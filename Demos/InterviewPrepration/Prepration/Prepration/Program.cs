@@ -1,6 +1,7 @@
 ﻿using Prepration.Amazon;
 using Prepration.Amazon.OnlineAssessment;
 using Prepration.Microsoft;
+using Prepration.Microsoft.OnlineAssessment;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -233,6 +234,8 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+
+            PatternRecognition.GetCount(";bcdefbcbebc|abcdebcfgsdf|cbdbesfbcy|1bcdef23423bc32");
 
             Turnstile.getTimes1(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
 

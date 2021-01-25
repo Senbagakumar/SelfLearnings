@@ -137,7 +137,9 @@ namespace Prepration.Amazon.OnlineAssessment
         //https://leetcode.com/problems/largest-sum-of-averages/ 
         // Same Category as above
 
-
+        // https://leetcode.com/discuss/interview-question/872961/Amazon-or-OA-2020-or-Nearest-City
+        // https://leetcode.com/problems/number-of-provinces/
+        // https://leetcode.com/discuss/interview-question/992156/Amazon-or-OA-or-Earliest-Time-To-Complete-Deliveries
 
 
     }

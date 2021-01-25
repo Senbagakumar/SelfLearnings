@@ -66,6 +66,7 @@
     <Compile Include="Amazon\OnlineAssessment\DivisiblityOfString.cs" />
     <Compile Include="Amazon\OnlineAssessment\FavoriteGenres.cs" />
     <Compile Include="Amazon\OnlineAssessment\FiveStarSellers.cs" />
+    <Compile Include="Amazon\OnlineAssessment\FreshPromotion.cs" />
     <Compile Include="Amazon\OnlineAssessment\KeywordSuggestions.cs" />
     <Compile Include="Amazon\OnlineAssessment\MaximalSquare.cs" />
     <Compile Include="Amazon\OnlineAssessment\MaxOfMinAltitudes.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="LinkedListPrograms.cs" />
     <Compile Include="Microsoft\CarDesign.cs" />
     <Compile Include="Microsoft\MicrosoftInterviewQuestions.cs" />
+    <Compile Include="Microsoft\OnlineAssessment\PatternRecognition.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="OnLineAssessment.cs" />
     <Compile Include="Program.cs" />
@@ -128,6 +130,7 @@
     <Content Include="Questions\Linked List, Trees and Graphs.txt" />
     <Content Include="Questions\Microsoft Interview Questions.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
