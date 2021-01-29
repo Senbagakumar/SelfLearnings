@@ -60,6 +60,7 @@
     <Compile Include="Amazon\OnlineAssessment\AmazonFulfillmentBuilder.cs" />
     <Compile Include="Amazon\AmazonInterviewQuestions.cs" />
     <Compile Include="Amazon\OnlineAssessment\AmazonMusicPairs.cs" />
+    <Compile Include="Amazon\OnlineAssessment\BetaTesting.cs" />
     <Compile Include="Amazon\OnlineAssessment\BreakAPalindrome.cs" />
     <Compile Include="Amazon\OnlineAssessment\CountsubstringswithexactlyKdistinctchars.cs" />
     <Compile Include="Amazon\OnlineAssessment\CriticalRouters.cs" />

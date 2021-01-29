@@ -190,59 +190,66 @@ namespace Prepration
             return -1;
         }
 
-        public int MinDifficulty(int[] jobDifficulty, int d)
+        void MyMethod1()
         {
-            checked
+            try
             {
-                long[,] dp = new long[jobDifficulty.Length + 1, d + 1];
-
-                for (int i = 1; i <= jobDifficulty.Length; i++)
-                {
-                    dp[i, 0] = int.MaxValue;
-                }
-
-                for (int i = 1; i <= d; i++)
-                {
-                    dp[0, i] = int.MaxValue;
-                }
-
-                for (int i = 1; i <= jobDifficulty.Length; i++)
-                {
-                    for (int j = 1; j <= d; j++)
-                    {
-                        dp[i, j] = int.MaxValue;
-
-                        if (j > i)
-                        {
-                            continue;
-                        }
-
-                        int max = int.MinValue;
-                        for (int k = i; k >= 1; k--)
-                        {
-                            max = Math.Max(max, jobDifficulty[k - 1]);
-                            dp[i, j] = Math.Min(dp[i, j], dp[k - 1, j - 1] + max);
-                        }
-
-                    }
-                }
-
-                var res = dp[jobDifficulty.Length, d];
-                return res >= int.MaxValue ? -1 : (int)res;
+                MyMethod2();
             }
+            catch (Exception e)
+            {
+                //do something with the exception
+            }
+        }
+
+
+        void MyMethod2()
+        {
+            Task updateRoutingThread = new Task(() =>
+            {
+                try
+                {
+                    //perform actions that need cleaning up
+                    throw new Exception();
+                }
+                finally
+                {
+                    //clean up
+                }
+            });
+
+            updateRoutingThread.Start();
+            int timeoutMs = 60 * 10 * 1000;
+            bool timedOut = !updateRoutingThread.Wait(timeoutMs);
+        }
+
+        public class Error
+        {
+            public string code { get; set; }
+            public string message { get; set; }
+        }
+
+
+
+        public class Root
+        {
+            public Error error { get; set; }
         }
 
         static void Main(string[] args)
         {
 
+            string jsonmsg = "{'error':{'code':'Forbidden','message':'Hi 'how' are you, im good'}}";
+            int startIndex = jsonmsg.IndexOf("message") + 9;
+            string msg = jsonmsg.Substring(startIndex, jsonmsg.Length - (startIndex + 2));
+
+
+            new Program().MyMethod1();
             PatternRecognition.GetCount(";bcdefbcbebc|abcdebcfgsdf|cbdbesfbcy|1bcdef23423bc32");
 
             Turnstile.getTimes1(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
 
             //Turnstile.getTimes(5, new int[] { 1, 2,2,4,4 }, new int[] { 0,1,0,0,1 });
-
-
-            new Program().MinDifficulty(new int[] { 11, 111, 22, 222, 33, 333, 44, 444 }, 6);
 
             var newEdges = new int[3][];
             newEdges[0] = new int[] { 1, 2, 12 };
