@@ -8,6 +8,9 @@ namespace Prepration
 {
     public class OnLineAssessment
     {
+        //https://molchevskyi.medium.com/numbers-with-equal-digit-sum-c8a7e01ad7db -- Have to check
+
+
         //https://leetcode.com/discuss/interview-question/398023/Microsoft-Online-Assessment-Questions/
         //https://leetcode.com/discuss/interview-question/344650/Amazon-Online-Assessment-Questions
 
@@ -20,7 +23,7 @@ namespace Prepration
             steps += S.Length;
             Console.WriteLine(steps);
             return steps;
-        }
+        } 
 
         //int[] A = {1, 2, 3, 3};  int[] B = { 2, 3, 1, 4 }; int N = 4; Answer: 4
         //A=[1,2,4,5] B=[2,3,5,6] int N=6 ; Answer: 2
@@ -97,6 +100,98 @@ namespace Prepration
             return cost;
         }
 
+        //Stack Programming Questions
+        public int StackProgram(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return -1;
+            string[] inputs = input.Split(' ');
+            var stack = new Stack<int>();
+            foreach (string inp in inputs)
+            {
+                switch (inp)
+                {
+                    case "dup":
+                        {
+                            stack.Push(stack.Peek());
+                        }
+                        break;
+                    case "pop":
+                        {
+                            stack.Pop();
+                        }
+                        break;
+                    case "+":
+                        {
+                            if (stack.Count > 1)
+                            {
+                                stack.Push(stack.Pop() + stack.Pop());
+                            }
+                            else return -1;
+                        }
+                        break;
+                    case "-":
+                        {
+                            if (stack.Count > 1)
+                            {
+                                int firstTop = stack.Pop();
+                                int secondTop = stack.Pop();
+                                stack.Push(secondTop - firstTop);
+                            }
+                            else
+                                return -1;
 
+                        }
+                        break;
+                    default:
+                        {
+                            int num = 0;
+                            if(int.TryParse(inp, out num))
+                            {
+                                stack.Push(num);
+                            }
+                        }
+                        break;
+                }
+            }
+            if (stack.Count > 1)
+                return stack.Peek();
+            else
+                return -1;
+        }
+
+        //Max Sum of numbers with same digits sum
+
+        int SumOfDigits(int a)
+        {
+            int sum = 0;
+            while(a > 0)
+            {
+                sum += a % 10;
+                a = a / 10;
+            }
+            return sum;
+        }
+
+        int CalculateSum(int[] numbers)
+        {
+            int maxSum = 0;
+            int sum = 0;
+            var dict = new Dictionary<int, int>();
+
+            foreach(int num in numbers)
+            {
+                int digitSum = SumOfDigits(num);
+                if (!dict.ContainsKey(num))
+                    dict.Add(digitSum, num);
+                else
+                {
+                    maxSum = Math.Max(maxSum, dict[digitSum] + num);
+                    dict[digitSum] = Math.Max(dict[digitSum], num);
+                }
+            }
+
+            return maxSum > 0 ? maxSum : -1;
+        }
     }
 }

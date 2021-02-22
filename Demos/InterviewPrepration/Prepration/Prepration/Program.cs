@@ -1,5 +1,6 @@
 ﻿using Prepration.Amazon;
 using Prepration.Amazon.OnlineAssessment;
+using Prepration.HR;
 using Prepration.Microsoft;
 using Prepration.Microsoft.OnlineAssessment;
 using System;
@@ -238,6 +239,28 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+            Almost_Equivalent_String.AreAlmostEquivalent(new string[] { "aabaab", "aaaaabb" }, new string[] { "bbabbc", "abb" });
+
+            SortAnArray.GetMinimumMoves(new int[] { 5, 1, 3, 2 });
+
+            var boxes = new List<int>();
+            boxes.Add(7000);
+            boxes.Add(7000);
+            boxes.Add(12000);
+            boxes.Add(13000);
+            boxes.Add(6900);
+
+            var units = new List<int>();
+            units.Add(6910);
+            units.Add(7010);
+            units.Add(7000);
+            units.Add(12000);
+            units.Add(18000);
+            units.Add(15000);
+            units.Add(10450);
+
+            GeologicalSorting.SortIntersect(boxes.ToArray(), units.ToArray());
+            //FillTheTruck.getMaxUnit(3, boxes, 3, units, 6);
 
             string jsonmsg = "{'error':{'code':'Forbidden','message':'Hi 'how' are you, im good'}}";
             int startIndex = jsonmsg.IndexOf("message") + 9;

@@ -571,7 +571,7 @@ namespace Prepration
             helper(node.Left, sum - node.Value, arr);
             helper(node.Right, sum - node.Value, arr);
 
-            arr.Remove(arr.Count - 1);
+            arr.RemoveAt(arr.Count - 1);
 
         }
 

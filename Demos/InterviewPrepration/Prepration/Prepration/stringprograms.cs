@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.UI.HtmlControls;
 using System.Xml;
@@ -89,6 +90,26 @@ namespace Prepration
             bool res= l != 0 && (n % (n - l) == 0);
             return res;
 
+
+
+            //RegEx:
+
+            //bool isRepeat = Regex.Matches(s, "^([a-z]+)\\1+$");
+
+            int n1 = s.Length;
+
+            for(int i= n1/2; i> 0; i--)
+            {
+                if(n1 % i == 0)
+                {
+                    int j = 0;
+                    while (i + j < n1 && s[j] == s[i + j])
+                        j++;
+                    if (i + j == n1)
+                        return true;
+                }
+            }
+            return false;
         }
 
         //1.2 https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/

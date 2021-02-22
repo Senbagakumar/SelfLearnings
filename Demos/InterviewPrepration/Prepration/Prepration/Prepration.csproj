@@ -96,6 +96,9 @@
     <Compile Include="BinaryTree.cs" />
     <Compile Include="DesignQuestions.cs" />
     <Compile Include="DP.cs" />
+    <Compile Include="HR\Almost_Equivalent_String.cs" />
+    <Compile Include="HR\GeologicalSorting.cs" />
+    <Compile Include="HR\SortAnArray.cs" />
     <Compile Include="InterviewExperience.cs" />
     <Compile Include="JsonConversion.cs" />
     <Compile Include="LinkedListPrograms.cs" />

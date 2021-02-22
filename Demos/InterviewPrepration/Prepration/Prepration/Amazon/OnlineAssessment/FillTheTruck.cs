@@ -8,6 +8,8 @@ namespace Prepration.Amazon.OnlineAssessment
 {
     class FillTheTruck
     {
+        //Hackerrank Efficient Shipping
+
         //An Amazon Warehouse manager needs to create a shipment to fill a truck.All of the products in the warehouse are in boxes of the same size.Each product is packed in some number of units per box.
 
         //Given the number of boxes the truck can hold, write an algorithm to determine the maximum number of units of any mix of products that can be shipped.
@@ -78,6 +80,7 @@ namespace Prepration.Amazon.OnlineAssessment
                 }
             }
 
+            unitsMaxHeap.Sort();
             unitsMaxHeap.Reverse();
              
             int k = 0;
