@@ -182,6 +182,7 @@ namespace Prepration
         /* https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/discuss/320431/Simple-JAVA-solution-beats-100 
          3. Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
          */
+        //https://allhackerranksolutionsbykaira.blogspot.com/2020/06/delete-duplicate-value-nodes-from.html //Delete duplicate-value nodes from a sorted linked list - Hacker Rank Solution
         static Node DeleteDuplicates(Node head)
         {
             if (head == null || head.Next == null) return null;

@@ -98,6 +98,10 @@
     <Compile Include="DP.cs" />
     <Compile Include="HR\Almost_Equivalent_String.cs" />
     <Compile Include="HR\GeologicalSorting.cs" />
+    <Compile Include="HR\GridClimbing.cs" />
+    <Compile Include="HR\HRQuestions.cs" />
+    <Compile Include="HR\OfficeDesign.cs" />
+    <Compile Include="HR\PlusMultArray.cs" />
     <Compile Include="HR\SortAnArray.cs" />
     <Compile Include="InterviewExperience.cs" />
     <Compile Include="JsonConversion.cs" />

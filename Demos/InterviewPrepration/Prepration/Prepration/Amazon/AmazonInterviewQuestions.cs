@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
@@ -155,6 +156,26 @@ namespace Prepration.Amazon
 				}
 			}
 			return total;
+		}
+
+		public string IntToRoman(int no)
+		{
+			int[] num = new int[] { 1, 4, 5, 9, 10, 40, 50, 90, 100, 400, 500, 900, 1000 };
+			string[] sym = new string[] { "I", "IV", "V", "IX", "X", "XL", "L", "XC", "C", "CD", "D", "CM", "M" };
+			int i = 12;
+			string str = "";
+			while (no > 0)
+			{
+				var div = no / num[i];
+				no = no % num[i];
+				while(div >0)
+                {
+					str = str + sym[i];
+					div = div - 1;
+                }
+				i = i - 1;
+			}
+			return str;
 		}
 
 		//5. 3Sum //[-1, 0, 1, 2, -1, -4]
@@ -666,6 +687,7 @@ namespace Prepration.Amazon
 		}
 
 		//14. Flood Fill
+		//https://leetcode.com/problems/flood-fill/
 		public int[,] FloodFill(int[,] image, int sr, int sc, int newColor)
 		{
 			int color = image[sr,sc];

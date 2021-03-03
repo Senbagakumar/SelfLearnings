@@ -239,6 +239,40 @@ namespace Prepration
 
         static void Main(string[] args)
         {
+            var pict = new char[4][];
+            pict[0] = new char[] { 'b','b','b','a' };
+            pict[1] = new char[] { 'a','b','b','a' };
+            pict[2] = new char[] { 'a', 'c','a','a' };
+            pict[3] = new char[] { 'a', 'a', 'a', 'c' };
+
+            HRQuestions.strokesRequired(pict);
+
+            int tikets = HRQuestions.countMoves(new int[] { 3, 4, 6, 6, 3 });
+            int number = HRQuestions.GetNumber(new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            int[] resi= HRQuestions.maxMin(new int[] { 1,2,3,1}, new string[] {"push","push","push","pop"});
+            HRQuestions.minDifference(new int[] { 1, 3, 3, 2, 4 });
+            var hlist = new List<int>();
+            hlist.Add(1);
+            hlist.Add(2);
+            hlist.Add(3);
+            hlist.Add(4);
+            hlist.Add(6);
+
+            HRQuestions.balancedSum(hlist);
+
+            int[][] grid = new int[4][];
+            grid[0] = new int[] { 1, 1, 1 };
+            grid[1] = new int[] { 0, 1, 0 };
+            grid[2] = new int[] { 0, 0, 0 };
+            grid[3] = new int[] { 1, 1, 0 };
+
+            GridClimbing.NumberOfConnections(grid);
+
+
+            string result=new AmazonInterviewQuestions().IntToRoman(49);
+            PlusMultArray.PlusMult(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 , 10 });
+            OfficeDesign.GetMaxColors(new int[] { 2, 3, 5, 1, 1, 2, 1 }, 7);
+
             Almost_Equivalent_String.AreAlmostEquivalent(new string[] { "aabaab", "aaaaabb" }, new string[] { "bbabbc", "abb" });
 
             SortAnArray.GetMinimumMoves(new int[] { 5, 1, 3, 2 });
