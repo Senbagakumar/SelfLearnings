@@ -944,7 +944,8 @@ namespace Prepration
             }
 
             var groups = list.GroupBy(x => x).ToList();
-            return wall.Count - (groups.Any() ? groups.Select(g => g.Count()).Max() : 0);
+            int max = groups.Any() ? groups.Select(g => g.Count()).Max() : 0;
+            return wall.Count - max;
         }
 
         //https://leetcode.com/problems/rectangle-overlap/
@@ -1039,6 +1040,22 @@ namespace Prepration
             return ret;
 
 
+        }
+
+        //1480. Running Sum of 1d Array
+        //https://leetcode.com/problems/running-sum-of-1d-array/
+        public int[] RunningSum(int[] nums)
+        {
+            int[] result = new int[nums.Length];
+            if (nums.Length == 0)
+                return result;
+            int sum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                result[i] = sum;
+            }
+            return result;
         }
     }
 }

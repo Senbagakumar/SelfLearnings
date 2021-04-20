@@ -336,7 +336,7 @@ namespace Prepration
             Node fast = node;
             Node slow = node;
 
-            while (slow != null && fast != null)
+            while (slow != null && fast.Next != null)
             {
                 slow = slow.Next;
                 fast = fast.Next.Next;

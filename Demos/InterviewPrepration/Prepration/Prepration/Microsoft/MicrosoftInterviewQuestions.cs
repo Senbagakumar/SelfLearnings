@@ -142,14 +142,14 @@ namespace Prepration.Microsoft
         //6. Valid Parantheses
         //https://leetcode.com/problems/valid-parentheses/
         //Input: "()" Output: true, Input: "([)]" Output: false
-        public static bool ValidParantheses()
+        public static bool ValidParantheses(string input)
         {
             bool isValid = true;
-            string input = "({})";//"(]";//"()[]{}";
+            //string input = "({})";//"(]";//"()[]{}";
 
             var stack = new Stack<char>();
             char temp;
-
+            int validCount = 0;
             foreach (var i in input)
             {
                 switch (i)
@@ -158,16 +158,22 @@ namespace Prepration.Microsoft
                         temp = stack.Pop();
                         if (temp != '(')
                             isValid = false;
+                        else
+                            validCount++;
                         break;
                     case ']':
                         temp = stack.Pop();
                         if (temp != '[')
                             isValid = false;
+                        else
+                            validCount++;
                         break;
                     case '}':
                         temp = stack.Pop();
                         if (temp != '{')
                             isValid = false;
+                        else
+                            validCount++;
                         break;
                     default:
                         stack.Push(i);
@@ -723,7 +729,6 @@ namespace Prepration.Microsoft
             }
             return 0;
         }
-
         //Amazon Question
         //22. Best Time to Buy and Sell Stock
         //Input: [7,1,5,3,6,4]

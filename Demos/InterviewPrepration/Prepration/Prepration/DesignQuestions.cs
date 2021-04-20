@@ -15,6 +15,9 @@ namespace Prepration
     public class DesignQuestions
     {
 
+        //https://leetcode.com/discuss/interview-question/1140451/helpful-list-of-leetcode-posts-on-system-design-at-facebook-google-amazon-uber-microsoft
+
+
         public static void ExecuteTicTacToe()
         {
             int val = 0;
@@ -854,9 +857,10 @@ namespace Prepration
             while (queue.Count > 0)
             {
                 int[] cur = queue.Dequeue();
-                char adjacentMines = getAdjacentMines(cur[0], cur[1], board);
 
                 if (board[cur[0]][cur[1]] != 'E') { continue; }
+
+                char adjacentMines = getAdjacentMines(cur[0], cur[1], board);
 
                 if (adjacentMines != '0')
                 {
@@ -1030,6 +1034,36 @@ namespace Prepration
                     }
                 }
                 return total;
+            }
+        }
+        //Average of K numbers in a stream
+        //var c1 = new CalculateAverage(2);
+        //double avg = c1.Add(1);
+        //avg = c1.Add(2); --> 1.5
+        //avg = c1.Add(3); --> 2.5
+        //avg = c1.Add(4); --> 3.5
+        //avg = c1.Add(5); --> 4.5
+        public class CalculateAverage
+        {
+            Queue<int> t = null;
+            double sum = 0.0;
+            int maxSize = 0;
+
+            public CalculateAverage(int k)
+            {
+                maxSize = k;
+                t = new Queue<int>();
+                sum = 0.0;
+            }
+
+            public double Add(int num)
+            {
+                if (t.Count() == maxSize)
+                    sum -= t.Dequeue();
+
+                t.Enqueue(num);
+                sum += num;
+                return sum / maxSize;
             }
         }
 

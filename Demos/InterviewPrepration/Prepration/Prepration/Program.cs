@@ -4,13 +4,16 @@ using Prepration.HR;
 using Prepration.Microsoft;
 using Prepration.Microsoft.OnlineAssessment;
 using System;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI;
@@ -22,8 +25,181 @@ using static Prepration.DesignQuestions;
 
 namespace Prepration
 {
+    public class no
+    {
+        public int value { get; private set; }
+        public no next;
+        public no(int value)
+        {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    public class QueueImplementation
+    {
+        public no Head { get; private set; }
+        public int Count { get; private set; }
+
+        public void EnQueue(int value)
+        {
+            no cvalue = new no(value);
+            if (Head == null)
+                Head = cvalue;
+            else
+            {
+                no cv = Head;
+                while (cv.next != null)
+                    cv = cv.next;
+                cv.next = cvalue;
+            }
+            Count++;
+        }
+        public int DeQueue()
+        {
+            if (Head == null)
+                throw new Exception("There is no elements in the Queue");
+
+            int value = Head.value;
+            Head = Head.next;
+
+            Count--;
+            return value;
+        }
+        public int Peek()
+        {
+            if (Head == null)
+                throw new Exception("There is no elements in the Queue");
+            return Head.value;
+        }
+
+        public bool IsEmpty()
+        {
+            return Count == 0 ? true : false;
+        }
+    }
+
+    public class StackImplementation
+    {
+        public no Head { get; private set; }
+        public int Count { get; private set; }
+
+        public void Push(int value)
+        {
+            var cvalue = new no(value);
+            if (Head == null)
+                Head = cvalue;
+            else
+            {
+                cvalue.next = Head;
+                Head = cvalue;
+            }
+            Count++;
+        }
+
+        public int Pop()
+        {
+            if (Head == null)
+                throw new Exception("No elemeent in the stack");
+            int value = Head.value;
+            Head = Head.next;
+            Count--;
+            return value;
+        }
+
+        public int Peek()
+        {
+            if (Head == null)
+                throw new Exception("No elemeent in the stack");
+            return Head.value;
+        }
+
+        public bool IsEmpty()
+        {
+            return Count == 0 ? true : false;
+        }
+
+    }
+
+
+
     class Program
     {
+
+        public int LargestUniqueNumber(int[] array)
+        {
+            var dict = new Dictionary<int,int>();
+            for(int i=0; i<array.Length;i++)
+            {
+                if (dict.ContainsKey(array[i]))
+                    dict[array[i]]++;
+                else
+                    dict[array[i]] = 1;
+            }
+
+            int result = -1;
+            foreach(int key in dict.Keys)
+            {
+                if(dict[key] == 1 && key > result)
+                {
+                    result = key;
+                }
+            }
+            return result;
+        }
+        
+        void MergeSortedArray(int[] input)
+        {
+            int[] helper = new int[input.Length];
+           Merge(input, helper, 0, input.Length-1);
+        }
+
+        void Merge(int[] input, int[] helper, int left, int right)
+        {
+            int mid = (left + right) / 2;
+            if(left < right)
+            {
+                Merge(input, helper, left, mid);
+                Merge(input, helper, mid + 1, right);
+                Merg(input, helper, left, mid, right);
+
+            }
+        }
+
+        void Merg(int[] input, int[] helper, int left, int mid, int right)
+        {
+            int[] res = new int[input.Length];
+            int k = left;
+            int i = left;
+            int j = mid + 1;
+
+            for (int i1 = left; i1 <= right; i1++)
+                helper[i1] = input[i1];
+
+            while(i <= mid && j <= right)
+            {
+                if (helper[i] < helper[j])
+                    input[k++] = helper[i++];
+                else
+                    input[k++] = helper[j++];
+            }
+
+            while(i <= mid)
+            {
+                input[k++] = helper[i++];
+            }
+
+            while (j <= right)
+            {
+                input[k++] = helper[j++];
+            }
+
+            //for(i=right; i>=left; i--)
+            //{
+            //    input[i] = res[--k];
+            //}
+        }
+
 
         static List<char> wcount = new List<char>();
         static List<char> bcount = new List<char>();
@@ -230,7 +406,7 @@ namespace Prepration
             public string message { get; set; }
         }
 
-
+       
 
         public class Root
         {
@@ -239,24 +415,73 @@ namespace Prepration
 
         static void Main(string[] args)
         {
-            var pict = new char[4][];
-            pict[0] = new char[] { 'b','b','b','a' };
-            pict[1] = new char[] { 'a','b','b','a' };
-            pict[2] = new char[] { 'a', 'c','a','a' };
-            pict[3] = new char[] { 'a', 'a', 'a', 'c' };
+            MicrosoftInterviewQuestions.ValidParantheses("(()");
+            new Program().LargestUniqueNumber(new int[] { 5, 7, 3, 9, 4, 9, 8, 3, 1 });
+            new Program().MergeSortedArray(new int[] { 12, 11, 13, 5, 6, 7 });
 
-            HRQuestions.strokesRequired(pict);
+            stringprograms.GetMaxSubstring("pwwkew");
 
-            int tikets = HRQuestions.countMoves(new int[] { 3, 4, 6, 6, 3 });
-            int number = HRQuestions.GetNumber(new int[] { 0, 0, 1, 1, 0, 1, 0 });
-            int[] resi= HRQuestions.maxMin(new int[] { 1,2,3,1}, new string[] {"push","push","push","pop"});
-            HRQuestions.minDifference(new int[] { 1, 3, 3, 2, 4 });
+
+            var stack = new StackImplementation();
+            stack.Push(1);
+            stack.Push(2);
+            stack.Push(3);
+            int popv = stack.Pop();
+            int value = stack.Count;
+            popv = stack.Pop();
+            value = stack.Count;
+            popv = stack.Pop();
+            value = stack.Count;
+            
+
+            var qi = new QueueImplementation();
+            qi.EnQueue(1);
+            qi.EnQueue(2);
+            qi.EnQueue(3);
+
+            int peek = qi.Peek();
+            int count = qi.Count;
+            int dequeue = qi.DeQueue();
+            count = qi.Count;
+
+            new stringprograms().Subsets(new int[] { 1, 2, 2 });
+            //string reverse = stringprograms.reverseInParentheses("(u(love)i)");
+
+            MicrosoftInterviewQuestions.BestBuyAndSellStock(new int[] { 7, 1, 5, 3, 6, 4 });
+
+            ArrayPrograms.FindElementAppearsOnce();
+            new ArrayPrograms().FindRepeatingCharacter(11, 2);
+
+            var listlist = new List<IList<int>>();
+            listlist.Add(new List<int>() { 1, 2, 2, 1 });
+            listlist.Add(new List<int>() { 3, 1, 2 });
+            listlist.Add(new List<int>() { 1, 3, 2 });
+            listlist.Add(new List<int>() { 2, 4 });
+            listlist.Add(new List<int>() { 3, 1, 2 });
+            listlist.Add(new List<int>() { 1, 3, 1, 1 });
+
+            int countb = ArrayPrograms.LeastBricks(listlist);
+            ArrayPrograms.Calculate("3+2*2");
+
+            //var pict = new char[4][];
+            //pict[0] = new char[] { 'b','b','b','a' };
+            //pict[1] = new char[] { 'a','b','b','a' };
+            //pict[2] = new char[] { 'a', 'c','a','a' };
+            //pict[3] = new char[] { 'a', 'a', 'a', 'c' };
+
+            //HRQuestions.strokesRequired(pict);
+
+            //int tikets = HRQuestions.countMoves(new int[] { 3, 4, 6, 6, 3 });
+            //int number = HRQuestions.GetNumber(new int[] { 0, 0, 1, 1, 0, 1, 0 });
+            //int[] resi= HRQuestions.maxMin(new int[] { 1,2,3,1}, new string[] {"push","push","push","pop"});
+            //HRQuestions.minDifference(new int[] { 1, 3, 3, 2, 4 });
             var hlist = new List<int>();
+            hlist.Add(6);
             hlist.Add(1);
             hlist.Add(2);
             hlist.Add(3);
             hlist.Add(4);
-            hlist.Add(6);
+            hlist.Sort();
 
             HRQuestions.balancedSum(hlist);
 
@@ -456,16 +681,16 @@ namespace Prepration
 
 
             string decode = stringprograms.decodeString("3[a]2[bc]");
-            string reverse = stringprograms.reverseInParentheses("(u(love)i)");
-            var listlist = new List<IList<int>>();
-            listlist.Add(new List<int>() { 1, 2, 2, 1 });
-            listlist.Add(new List<int>() { 3, 1, 2 });
-            listlist.Add(new List<int>() { 1, 3, 2 });
-            listlist.Add(new List<int>() { 2, 4 });
-            listlist.Add(new List<int>() { 3, 1, 2 });
-            listlist.Add(new List<int>() { 1, 3, 1, 1 });
+            //string reverse = stringprograms.reverseInParentheses("(u(love)i)");
+            //var listlist = new List<IList<int>>();
+            //listlist.Add(new List<int>() { 1, 2, 2, 1 });
+            //listlist.Add(new List<int>() { 3, 1, 2 });
+            //listlist.Add(new List<int>() { 1, 3, 2 });
+            //listlist.Add(new List<int>() { 2, 4 });
+            //listlist.Add(new List<int>() { 3, 1, 2 });
+            //listlist.Add(new List<int>() { 1, 3, 1, 1 });
 
-            int count = ArrayPrograms.LeastBricks(listlist);
+            //int count = ArrayPrograms.LeastBricks(listlist);
             //int length = stringprograms.StringCompression(new string[] { "a", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b", "b" });
             // var res = stringprograms.LengthEncoding("a");
             new stringprograms().DailyTemperatures(new int[] { 73, 74, 75, 71, 69, 72, 76, 73 });
