@@ -745,7 +745,7 @@ namespace Prepration.Microsoft
             {
                 if (stock < minprice)
                     minprice = stock;
-                else if (maxprofit < stock)
+                else if (maxprofit < (stock-minprice))
                     maxprofit = stock - minprice;
             }
             return maxprofit;

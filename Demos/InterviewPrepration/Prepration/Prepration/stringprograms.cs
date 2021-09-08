@@ -413,7 +413,6 @@ namespace Prepration
                 char c2 = word2[i];
                 if (dict1.Keys.Contains(c1))
                 {
-                   
                     if (c1 != dict2[c2])
                         return false;
                 }
@@ -468,12 +467,10 @@ namespace Prepration
                             noOfWord.Remove(newWord);
                         }
                         chars[i] = temp;
-
                     }
                 }
             }
             return 0;
-
         }
 
         //7. Find the kth largest element in an unsorted array
@@ -497,7 +494,6 @@ namespace Prepration
                         array[i] = array[j];
                         array[j] = temp;
                     }
-
                 }
             }
             return array[array.Length - k];
@@ -744,30 +740,44 @@ namespace Prepration
         public string MinimumWindowSubstring(string inputString, string substring)
         {
             //inputString: abdzfgabz substring: az result: 3
-
-            int j = 0;
-            string windowString = string.Empty;
             int length = 0;
-            for(int i=0; i<inputString.Length; i++)
+            string windowString = string.Empty;
+            for (int i=1; i<inputString.Length; i++)
             {
-                string gs = inputString.Substring(j, i - j + 1);
-                string isPresent = IsSubstring(gs, substring);
-                if (isPresent == "NothingPresent")
-                    j++;
-                if (isPresent == "BothPresent")
+                for(int j=0; j<i; j++)
                 {
-                    length = i - j + 1;
-                    j = i;
-                    windowString = gs;
+                    string currentSubstring = inputString.Substring(j, i - j + 1);
+                    if (substring.Length >= currentSubstring.Length && IsSubstring(currentSubstring, substring))
+                    {
+                        length = i - j + 1;
+                        windowString = currentSubstring;
+                    }
                 }
             }
+
+            //int j = 0;
+            //string windowString = string.Empty;
+            //int length = 0;
+            //for(int i=0; i<inputString.Length; i++)
+            //{
+            //    string gs = inputString.Substring(j, i - j + 1);
+            //    string isPresent = IsSubstring(gs, substring);
+            //    if (isPresent == "NothingPresent")
+            //        j++;
+            //    if (isPresent == "BothPresent")
+            //    {
+            //        length = i - j + 1;
+            //        j = i;
+            //        windowString = gs;
+            //    }
+            //}
             return windowString;
 
         }
 
-        private string IsSubstring(string gs, string substring)
+        private bool IsSubstring(string gs, string substring)
         {
-            string defaultValue = "NothingPresent";
+           // string defaultValue = "NothingPresent";
             HashSet<char> ch = new HashSet<char>();
             foreach (char sub in substring)
                 ch.Add(sub);
@@ -776,14 +786,14 @@ namespace Prepration
             {
                 if (ch.Contains(g))
                 {
-                    defaultValue = "PartialPresent";
+                   // defaultValue = "PartialPresent";
                     ch.Remove(g);
                 }
             }
-            if (ch.Count == 0)
-                defaultValue = "BothPresent";
+            return ch.Count == 0 ? true : false;
+               // defaultValue = "BothPresent";
 
-            return defaultValue;
+//return defaultValue;
         }
 
 

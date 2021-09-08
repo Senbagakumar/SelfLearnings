@@ -30,6 +30,8 @@ namespace Prepration.Amazon.OnlineAssessment
 
         public static int NumPairsDivisibleBy60(int[] time)
         {
+            time = new int[] { 30, 20, 150, 100, 40 };
+
             int count = 0;
             int mod = 0;
             int[] lookup = new int[60];
@@ -37,7 +39,8 @@ namespace Prepration.Amazon.OnlineAssessment
             for (int i = 0; i < time.Length; i++)
             {
                 mod = time[i] % 60;
-                count += lookup[(mod == 0) ? 0 : 60 - mod];
+                int index = (mod == 0) ? 0 : 60 - mod;
+                count += lookup[index];
                 lookup[mod]++;
             }
 

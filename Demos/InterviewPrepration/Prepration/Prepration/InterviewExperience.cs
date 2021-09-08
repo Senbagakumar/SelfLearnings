@@ -10,7 +10,7 @@ namespace Prepration
     {
         //https://leetcode.com/list/xoqag3yj/  --- 75 Questions
         //https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns/544912
-
+        //https://leetcode.com/discuss/interview-question/1380561/template-for-dynamic-programming
 
 
         //Amazon

@@ -28,7 +28,7 @@ namespace Prepration.Amazon.OnlineAssessment
 
                 for (int i = 1; i <= jobDifficulty.Length; i++)
                 {
-                    dp[i, 0] = int.MaxValue;
+                    dp[i,0] = int.MaxValue;
                 }
 
                 for (int i = 1; i <= d; i++)
