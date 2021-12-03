@@ -145,7 +145,6 @@ namespace Prepration
                 if (A[mid] < A[mid + 1])
                 {
                     low = mid + 1;
-
                 }
                 else
                 {
@@ -190,11 +189,6 @@ namespace Prepration
             return result.ToArray();
 
         }
-
-        
-       
-
-        
 
         //13. Find the missing elelement and repeating element
         //1. use dictionary 2. using array
@@ -552,16 +546,6 @@ namespace Prepration
 
         //25. https://leetcode.com/problems/asteroid-collision/
         // Input: asteroids = [5, 10, -5] Output: [5, 10]      
-
-
-
-
-
-
-
-
-
-
 
         //Amazon Question
         //14. Kth largest element in Array
@@ -986,7 +970,7 @@ namespace Prepration
             }
             return count;
 
-        }
+        }  
 
         //https://leetcode.com/problems/powx-n/
         //50. Pow(x, n)
@@ -1056,6 +1040,35 @@ namespace Prepration
                 result[i] = sum;
             }
             return result;
+        }
+
+        //https://leetcode.com/problems/subarray-sum-equals-k/
+
+        public static int SubArraySumEquals(int[] nums, int k)
+        {
+            var dic = new Dictionary<int, int>();
+            int count = 0;
+            int sum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum += nums[i];
+                if (sum == k) count++;
+
+                if (dic.ContainsKey(sum - k))
+                    count += dic[sum - k];
+
+                if (!dic.ContainsKey(sum))
+                {
+                    dic.Add(sum, 1);
+                }
+                else
+                {
+                    dic[sum] = dic[sum] + 1;
+                }
+            }
+
+            return count;
+
         }
     }
 }

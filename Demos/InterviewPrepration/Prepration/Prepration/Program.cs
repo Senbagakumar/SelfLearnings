@@ -22,6 +22,8 @@ using System.Web.WebSockets;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using static Prepration.DesignQuestions;
+using Microsoft.CSharp;
+using System.Numerics;
 
 namespace Prepration
 {
@@ -122,9 +124,104 @@ namespace Prepration
     }
 
 
+    public class PalindromicPrime
+    {
+        //public static bool IsPrime(int x)
+        //{
+        //    if (x % 2 == 0 && x != 2)
+        //    {
+        //        return false;
+        //    }
+        //    int sqr = (int)Math.Sqrt(x);
+        //    for (int i = 3; i <= sqr; i += 2)
+        //    {
+        //        if (x % i == 0)
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    return true;
+        //}
+
+        public static bool IsPrime(BigInteger n)
+        {
+            if (n == 2 || n == 3)
+                return true;
+
+            if (n <= 1 || n % 2 == 0 || n % 3 == 0)
+                return false;
+
+            for (BigInteger i = 5; i * i <= n; i += 6)
+            {
+                if (n % i == 0 || n % (i + 2) == 0)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool IsPalindrome(BigInteger x)
+        {
+            BigInteger reverse = 0;
+            BigInteger givenNo = x;
+            while(x > 0)
+            {
+                reverse = reverse * 10 + x % 10;
+                x = x / 10;
+            }
+
+            if (reverse == givenNo)
+                return true;
+            else
+                return false;
+        }
+
+        public static BigInteger Pow(int a, long b)
+        {
+            if (b == 0)
+                return 1;
+
+            BigInteger answer = a;
+            BigInteger increment = a;
+            int i, j;
+
+            for (i = 1; i < b; i++)
+            {
+                for (j = 1; j < a; j++)
+                {
+                    answer += increment;
+                }
+                increment = answer;
+            }
+            return answer;
+        }
+
+
+        public static BigInteger SumOfDigits(BigInteger number)
+        {
+            BigInteger sum = new BigInteger(0);
+            BigInteger zero = new BigInteger(0);
+            while (number > 0)
+            {
+                sum = new BigInteger(0);
+                while (number > 0)
+                {
+                    sum += number % 10;
+                    number = number / 10;
+                }
+                if (sum > 9)
+                    number = sum;
+            }
+            return sum;
+        }
+
+       
+    }
+
 
     class Program
     {
+       
 
         public int LargestUniqueNumber(int[] array)
         {
@@ -168,7 +265,6 @@ namespace Prepration
 
         void Merg(int[] input, int[] helper, int left, int mid, int right)
         {
-            int[] res = new int[input.Length];
             int k = left;
             int i = left;
             int j = mid + 1;
@@ -365,103 +461,185 @@ namespace Prepration
             return -1;
         }
 
-        void MyMethod1()
+        public static int[][] Merge(int[][] intervals)
         {
-            try
-            {
-                MyMethod2();
-            }
-            catch (Exception e)
-            {
-                //do something with the exception
-            }
-        }
 
-        void MyMethod2()
-        {
-            Task updateRoutingThread = new Task(() =>
+            int intervalLength = intervals.Length;
+            int[] temp = null;
+
+            var result = new List<int[]>();
+
+            if (intervalLength <= 1)
+                return intervals;
+
+            intervals = intervals.OrderBy(x => x[0]).ToArray();
+
+            int[] firstNo = intervals[0];
+
+            for (int i = 1; i < intervalLength;)
             {
-                try
+                int[] secondNo = intervals[i];
+
+                //secondNo = i+1 < intervalLength ? intervals[i+1] : intervals[i];
+
+                if (firstNo[1] < secondNo[0])
                 {
-                    //perform actions that need cleaning up
-                    throw new Exception();
-                }
-                finally
-                {
-                    //clean up
-                }
-            });
-
-            updateRoutingThread.Start();
-            int timeoutMs = 60 * 10 * 1000;
-            bool timedOut = !updateRoutingThread.Wait(timeoutMs);
-        }
-
-        public class Error
-        {
-            public string code { get; set; }
-            public string message { get; set; }
-        }       
-
-        public class Root
-        {
-            public Error error { get; set; }
-        }
-
-        public int BinaryGap(int N)
-        {
-            // write your code in Java SE 8
-
-            int max_gap = 0;
-            int current_gap = 0;
-            bool counting = false;
-
-            // Using the "concept of bit manipulation" and "& operation"
-
-            while (N != 0)
-            {
-
-                if (counting == false)
-                {    // for the first "1"   
-                    if ((N & 1) == 1)
-                    {      // note: cannot use n&1 withoug "()"
-                        counting = true;  // start to count
-                    }
+                    result.Add(firstNo);
+                    // i +=1;
                 }
                 else
-                {                    // counting = true
-                    if ((N & 1) == 0)
-                    {      // note: cannot use n&1 withoug "()"
-                        current_gap++;
-                    }
-                    else
-                    { // N & 1 == 1
-                        max_gap = Math.Max(max_gap, current_gap);
-                        current_gap = 0; // reset
-                    }
+                {
+                    firstNo = new int[] { Math.Min(firstNo[0], secondNo[0]), Math.Max(firstNo[1], secondNo[1]) };
+                    // i +=2;
                 }
-
-                N = N >> 1; // shift by one (right side) 
-                            // note: cannot just write "N >> 1"
+                i++;
             }
 
-            return max_gap;
+            return result.ToArray();
         }
+
+        //https://leetcode.com/problems/remove-outermost-parentheses/
+        public string RemoveOuterParentheses(String str)
+        {
+            String outputStr = "";
+            int counter = 0;
+
+            for (int i = 0; i <= str.Length - 1; i++)
+            {
+                if (str[i] == '(')
+                {
+                    if (counter != 0)
+                    {
+                        outputStr += str[i];
+                    }
+                    counter++;
+                }
+                else //if (str[i] == ')')
+                {
+                    counter--;
+                    if (counter != 0)
+                    {
+                        outputStr += str[i];
+                    }
+                }
+            }
+            return outputStr;
+        }
+
+        public string RemoveOuterParentheses1(string s)
+        {
+            var str = new StringBuilder();
+            var stack = new Stack<char>();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == ')')// && stack.Peek() == '('
+                {
+                    stack.Pop();
+                    if (stack.Count != 0)
+                        str.Append(s[i]);
+                }
+                else
+                {
+                    if (stack.Count != 0)
+                        str.Append(s[i]);
+                    stack.Push(s[i]);
+                }
+
+            }
+
+            return str.ToString();
+        }
+    
 
 
         static void Main(string[] args)
         {
-            var prog = new AmazonInterviewQuestions();
-            var no = prog.RomanToInt("IV");
+            ArrayPrograms.PrintTwoElements(new int[] { });
 
-            int v11j =(int)Math.Sqrt(8);
+           string removeParenthesis = new Program().RemoveOuterParentheses1("(()())(())(()(()))");//(()())(())
+            var v=new FreqStack();
+            v.push(5);
+            v.push(7);
+            v.push(5);
+            v.push(7);
+            v.push(4);
+            v.push(5);
 
-            int n = 4;
-            var array = new int[] { 2,3,1,5 };
-            int missno= Enumerable.Range(1, n + 1).Sum() - array.Sum();
+            v.pop();
+            v.pop();
+            v.pop();
 
-           
-            new Program().BinaryGap(529);
+            new MicrosoftInterviewQuestions().LetterCombinations("23");
+           // SubArraySumEquals(new int[] { 1, 1, 1 }, 2);
+            var intervals = new int[4][];
+            intervals[0] = new int[] { 1, 3 };
+            intervals[1] = new int[] { 2, 6 };
+            intervals[2] = new int[] { 8, 10 };
+            intervals[3] = new int[] { 15, 18 };
+
+            Merge(intervals);
+
+            //1 10000000000
+            //654321 9876543210
+            //32154 919958846846
+            //1098000 500000491
+            //8128434 98754848569
+
+            BigInteger counter = 0;
+            BigInteger start = 1;
+            BigInteger end = 10000000000;
+            while (start < end)
+            {
+                if (PalindromicPrime.IsPalindrome(start) && PalindromicPrime.IsPrime(start))
+                {
+                    Console.Write(counter + "\t");
+                    //if (counter % 10 == 0) Console.WriteLine();
+                    counter++;
+                }
+                start++;
+            }
+
+            Console.WriteLine($"Result : { counter}");
+
+            Console.Read();
+
+            string arrayInputs = @"62426,4;87605,5;38277,8;70308,1;32531,5;48853,2;13635,8;70476,1;15883,2;89319,8;98629,2;6018,1;
+45071,5;29809,2;5494,7;1748,4;45432,1;41458,7;18554,4;63523,2;73870,7;18845,5;79817,5;48481,2;11345,5;78002,4;74829,8;6040,7;
+87374,4;32347,2;94668,1;79872,1;3914,4;72553,2;11314,7;78689,5;52349,5;69189,8;22097,5;24909,8;52400,4;441,8;32510,4;46944,1;
+44992,7;63196,7;39451,2;99889,2;79527,8;16029,8;40950,1;1838,4;85040,4;77302,7;62444,4;27167,5;91557,8;57847,2;37732,7;1965,8;
+90405,8;97354,7;21266,4;99331,2;35366,4;55991,5;73323,8;82911,8;30842,4;3051,8;82712,4;44278,7;31105,2;6085,2;35346,1;48452,4;
+15632,4;20301,8;9880,7;75090,1;51244,7;782,4;11706,1;84209,5;17750,4;52084,7;84724,7;24033,8;21863,5;31121,5;14782,7;87800,4;
+39499,2;10649,5;573,8;19088,4;41259,8;47022,1;46583,5;23070,1";
+
+            string[] inputs = arrayInputs.Split(';');
+            int counti = 1;
+            foreach(string inp in inputs)
+            {
+                string[] inps = inp.Split(',');
+                var watch = new System.Diagnostics.Stopwatch();
+                watch.Start();
+                var power = PalindromicPrime.Pow(2, Convert.ToInt32(inps[0]));
+                //var power = BigInteger.Pow(2, Convert.ToInt32(inps[0]));
+                var digits= (int)PalindromicPrime.SumOfDigits(power);
+                watch.Stop();
+                if (digits == Convert.ToInt16(inps[1]))
+                    Console.WriteLine($"{counti} : Execution Time: {watch.ElapsedMilliseconds} ms");
+                else
+                    Console.WriteLine($"Unmatched: input: {inps[0]} and Result: {inps[1]}, Code o/p: {digits}");
+                counti++;
+            }
+
+            //int pow =(int)Math.Pow(2, 4);
+            //int pow1 = 1 << 4; // 2 ^ 4 both is same (this is left shift operator )
+
+            PalindromicPrime.IsPrime(11);
+           // new ArrayPrograms().UniquePaths(5, 4);
+
+            new ArrayPrograms().MinCostClimbingStairs(new int[] { 10, 15, 20 });
+            AmazonMusicPairs.NumPairsDivisibleBy60(new int[] { });
+
+            stringprograms.reverseInParentheses("(ed(et(oc))el)");
 
             MicrosoftInterviewQuestions.ValidParantheses("(()");
            new Program().LargestUniqueNumber(new int[] { 5, 7, 3, 9, 4, 9, 8, 3, 1 });
@@ -573,8 +751,6 @@ namespace Prepration
             int startIndex = jsonmsg.IndexOf("message") + 9;
             string msg = jsonmsg.Substring(startIndex, jsonmsg.Length - (startIndex + 2));
 
-
-            new Program().MyMethod1();
             PatternRecognition.GetCount(";bcdefbcbebc|abcdebcfgsdf|cbdbesfbcy|1bcdef23423bc32");
 
             Turnstile.getTimes1(4, new int[] { 0, 0, 1, 5 }, new int[] { 0, 1, 1, 0 });
@@ -595,7 +771,7 @@ namespace Prepration
             edges[4] = new int[] { 1, 5 };
 
 
-            int v = new MinCostToRepairEdges().MinCostToRepair(5, edges, newEdges);
+           // int v = new MinCostToRepairEdges().MinCostToRepair(5, edges, newEdges);
 
             MicrosoftInterviewQuestions.LongestPalindrome("babad");
 

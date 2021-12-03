@@ -14,7 +14,7 @@ namespace Prepration.Amazon.OnlineAssessment
         //Output: 7
         //Explanation: ["pq", "pqp", "pqpq", "qp", "qpq", "pq", "qs"]
 
-        //        Input: s = "aabab", k = 3
+        //Input: s = "aabab", k = 3
         //Output: 0
 
         //Time Limit Exceeded;

@@ -12,7 +12,7 @@ using System.Xml;
 using static Prepration.Assessment;
 
 namespace Prepration.Amazon
-{
+{  
 	class AmazonInterviewQuestions
 	{
 		//Microsoft Question
@@ -30,7 +30,6 @@ namespace Prepration.Amazon
 
 		public Node MergeKLists(Node[] lists, int left, int right)
 		{
-
 			int middle = (right + left) / 2;
 			if (left < right)
 			{
@@ -127,27 +126,32 @@ namespace Prepration.Amazon
 		//4. Roman to Integer
 		private static Dictionary<char, int> RomanMap = new Dictionary<char, int>()
 		{
-			{'I', 1},
-			{'V', 5},
-			{'X', 10},
-			{'L', 50},
-			{'C', 100},
-			{'D', 500},
-			{'M', 1000}
-		};
-
-		public static int RomanToInteger(string roman)
-		{
-			int number = 0;
-			for (int i = 0; i < roman.Length; i++)
+			Dictionary<char, int> numeralValues = new Dictionary<char, int>
 			{
-				if (i + 1 < roman.Length && RomanMap[roman[i]] < RomanMap[roman[i + 1]])
+				{'I', 1},
+				{'V', 5},
+				{'X', 10},
+				{'L', 50},
+				{'C', 100},
+				{'D', 500},
+				{'M', 1000}
+			 };
+
+			var numeralArray = s.ToCharArray();
+			var total = 0;
+			for (var index = 0; index < numeralArray.Length; index++)
+			{
+				if (index == numeralArray.Length - 1)
 				{
-					number -= RomanMap[roman[i]];
+					total += numeralValues[s[index]];
+				}
+				else if (numeralValues[s[index]] >= numeralValues[s[index+1]])
+				{
+					total += numeralValues[s[index]];
 				}
 				else
 				{
-					number += RomanMap[roman[i]];
+					total -= numeralValues[s[index]];
 				}
 			}
 			return number;
@@ -230,8 +234,7 @@ namespace Prepration.Amazon
 			int minDiff = int.MaxValue;
 			for (int i = 0; i < nums.Length; i++)
 			{
-				int j = i + 1; int k = nums.Length - 1;
-				//int currentTarget = target - nums[i];
+				int j = i + 1; int k = nums.Length - 1;		
 				while (j < k)
 				{
 					int sum = nums[j] + nums[k] + nums[i];
@@ -282,6 +285,61 @@ namespace Prepration.Amazon
 			}
 			return index;
 		}
+
+		//Substring pattern KMP
+
+		public int[] ComputeTemporaryArray(string substring)
+        {
+			int[] pattern = new int[substring.Length];
+			int index = 0;
+			for (int i = 1; i < substring.Length;)
+			{
+				if (substring[i] == substring[index])
+				{
+					pattern[i] = index + 1;
+					i++;
+					index++;
+				}
+				else
+				{
+					if (index != 0)
+						index = pattern[index - 1];
+					else
+					{
+						pattern[i] = 0;
+						i++;
+					}
+
+				}
+			}
+			return pattern;
+        }
+
+		public bool KMP(string givenString, string substring)
+        {
+			int[] lps = ComputeTemporaryArray(substring);
+			int i = 0;
+			int j = 0;
+			while(i<givenString.Length && j<substring.Length)
+            {
+				if(givenString[i] == substring[j])
+                {
+					i++;
+					j++;
+                }
+                else
+                {
+					if (j != 0)
+						j = lps[j - 1];
+					else
+						i++;
+                }
+            }
+			if (j == substring.Length)
+				return true;
+			else
+				return false;
+        }
 
 		//7. Compare Version Number //If version1 > version2 return 1; if version1 < version2 return -1;otherwise return 0
 		//Input: version1 = "0.1", version2 = "1.1" output: -1
@@ -703,38 +761,38 @@ namespace Prepration.Amazon
 
 		//https://leetcode.com/problems/merge-intervals/
 		//15. Merge Intervals  //Inp:[[1,3],[2,6],[8,10],[15,18]] //Out: [[1,6],[8,10],[15,18]]
-		public List<MeetingTime> MergeInterval(int[,] interval)
+		public int[][] Merge(int[][] intervals)
 		{
-			var lmtime = new List<MeetingTime>();
-			var result = new List<MeetingTime>();
-			for (int i=0; i<interval.GetLength(0); i++)
-			{
-				lmtime.Add(new MeetingTime() { stime = interval[i, 0], etime = interval[i, 1] });
-			}
-			lmtime = lmtime.OrderBy(q => q.stime).ToList();
 
-			int k = 0;
-			MeetingTime f, s;
-			while(k<lmtime.Count)
-			{
-				f = lmtime[k];
-				if (k + 1 < lmtime.Count)
-					s = lmtime[k + 1];
-				else
-					s = lmtime[k];
+			int intervalLength = intervals.Length;
 
-				if (f.etime >= s.stime)
+			var result = new List<int[]>();
+
+			if (intervalLength <= 1)
+				return intervals;
+
+			intervals = intervals.OrderBy(x => x[0]).ToArray();
+
+			int[] firstNo = intervals[0];
+
+			for (int i = 1; i < intervalLength;)
+			{
+				int[] secondNo = intervals[i];
+
+				if (firstNo[1] < secondNo[0])
 				{
-					result.Add(new MeetingTime() { stime = f.stime, etime = s.etime });
-					k = k + 2;
+					result.Add(firstNo);
+					firstNo = secondNo;
 				}
 				else
 				{
-					result.Add(new MeetingTime() { stime = f.stime, etime = f.etime });
-					k = k + 1;
+					firstNo = new int[] { Math.Min(firstNo[0], secondNo[0]), Math.Max(firstNo[1], secondNo[1]) };
 				}
+				i++;
 			}
-			return result;
+			result.Add(firstNo);
+
+			return result.ToArray();
 		}
 
 		//16. TopFrequent
