@@ -9,6 +9,7 @@ namespace Prepration
 {
     public class BinaryTree
     {
+        // Collapse to definitions. CTRL + M , O. Expand all outlining. CTRL + M , X. Expand or collapse everything. CTRL + M , L.
 
         //1. Balanced Tree  https://leetcode.com/problems/balanced-binary-tree/discuss/384299/Java-Recursive-Solution
 

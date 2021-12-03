@@ -2,3 +2,29 @@ https://www.w3schools.com/react/
 
 Ajax-Call: https://reactjs.org/docs/faq-ajax.html
 
+Download NPM: https://nodejs.org/en/
+
+Ctrl + C -> Terminate build
+
+https://reactjs.org/docs/optimizing-performance.html
+
+https://github.com/facebook/create-react-app 
+
+npm create-react-app apicall
+npm run build
+npm start
+
+
+npm install
+npm run build
+npm start
+
+for JsComplete
+$ npm run dev:server
+$ npm run dev:bundler
+
+
+Reference : https://jscomplete.com/learn/1rd-reactful
+----
+
+

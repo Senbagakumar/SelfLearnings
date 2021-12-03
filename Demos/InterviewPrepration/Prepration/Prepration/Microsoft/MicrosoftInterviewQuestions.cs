@@ -257,9 +257,11 @@ namespace Prepration.Microsoft
                 }
                 else
                 {
-                    List<string> newSub = new List<string>();
-                    newSub.Add(strs[i]);
-                    map.Add(curKey, newSub);
+                    //List<string> newSub = new List<string>();
+                    //newSub.Add(strs[i]);
+                    //map.Add(curKey, newSub);
+
+                    map[curKey] = new List<string>() { strs[i] };
                 }
             }
             List<List<string>> val = map.Values.ToList();

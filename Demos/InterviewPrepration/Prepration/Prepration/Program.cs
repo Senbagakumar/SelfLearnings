@@ -200,7 +200,6 @@ namespace Prepration
             //}
         }
 
-
         static List<char> wcount = new List<char>();
         static List<char> bcount = new List<char>();
         public static string gameWinner(string colors)
@@ -312,7 +311,6 @@ namespace Prepration
             return result;
         }
 
-
         public static string decryptPassword(string s)
         {
             int len = s.Length;
@@ -379,7 +377,6 @@ namespace Prepration
             }
         }
 
-
         void MyMethod2()
         {
             Task updateRoutingThread = new Task(() =>
@@ -404,22 +401,73 @@ namespace Prepration
         {
             public string code { get; set; }
             public string message { get; set; }
-        }
-
-       
+        }       
 
         public class Root
         {
             public Error error { get; set; }
         }
 
+        public int BinaryGap(int N)
+        {
+            // write your code in Java SE 8
+
+            int max_gap = 0;
+            int current_gap = 0;
+            bool counting = false;
+
+            // Using the "concept of bit manipulation" and "& operation"
+
+            while (N != 0)
+            {
+
+                if (counting == false)
+                {    // for the first "1"   
+                    if ((N & 1) == 1)
+                    {      // note: cannot use n&1 withoug "()"
+                        counting = true;  // start to count
+                    }
+                }
+                else
+                {                    // counting = true
+                    if ((N & 1) == 0)
+                    {      // note: cannot use n&1 withoug "()"
+                        current_gap++;
+                    }
+                    else
+                    { // N & 1 == 1
+                        max_gap = Math.Max(max_gap, current_gap);
+                        current_gap = 0; // reset
+                    }
+                }
+
+                N = N >> 1; // shift by one (right side) 
+                            // note: cannot just write "N >> 1"
+            }
+
+            return max_gap;
+        }
+
+
         static void Main(string[] args)
         {
-            MicrosoftInterviewQuestions.ValidParantheses("(()");
-            new Program().LargestUniqueNumber(new int[] { 5, 7, 3, 9, 4, 9, 8, 3, 1 });
-            new Program().MergeSortedArray(new int[] { 12, 11, 13, 5, 6, 7 });
+            var prog = new AmazonInterviewQuestions();
+            var no = prog.RomanToInt("IV");
 
-            stringprograms.GetMaxSubstring("pwwkew");
+            int v11j =(int)Math.Sqrt(8);
+
+            int n = 4;
+            var array = new int[] { 2,3,1,5 };
+            int missno= Enumerable.Range(1, n + 1).Sum() - array.Sum();
+
+           
+            new Program().BinaryGap(529);
+
+            MicrosoftInterviewQuestions.ValidParantheses("(()");
+           new Program().LargestUniqueNumber(new int[] { 5, 7, 3, 9, 4, 9, 8, 3, 1 });
+           new Program().MergeSortedArray(new int[] { 12, 11, 13, 5, 6, 7 });
+
+           stringprograms.GetMaxSubstring("pwwkew");
 
 
             var stack = new StackImplementation();

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 //import App from './App';
-//import Garage from './Car';
+import Garage from './Car';
 import NewCar from './stateobj';
 import reportWebVitals from './reportWebVitals';
 
