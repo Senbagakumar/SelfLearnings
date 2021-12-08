@@ -124,18 +124,18 @@ namespace Prepration.Amazon
 		}
 
 		//4. Roman to Integer
-		private static Dictionary<char, int> RomanMap = new Dictionary<char, int>()
+		public int RomanToInt(string s)
 		{
 			Dictionary<char, int> numeralValues = new Dictionary<char, int>
-			{
-				{'I', 1},
-				{'V', 5},
-				{'X', 10},
-				{'L', 50},
-				{'C', 100},
-				{'D', 500},
-				{'M', 1000}
-			 };
+				{
+					{'I', 1},
+					{'V', 5},
+					{'X', 10},
+					{'L', 50},
+					{'C', 100},
+					{'D', 500},
+					{'M', 1000}
+				 };
 
 			var numeralArray = s.ToCharArray();
 			var total = 0;
@@ -145,7 +145,7 @@ namespace Prepration.Amazon
 				{
 					total += numeralValues[s[index]];
 				}
-				else if (numeralValues[s[index]] >= numeralValues[s[index+1]])
+				else if (numeralValues[s[index]] >= numeralValues[s[index + 1]])
 				{
 					total += numeralValues[s[index]];
 				}
@@ -154,8 +154,9 @@ namespace Prepration.Amazon
 					total -= numeralValues[s[index]];
 				}
 			}
-			return number;
+			return total;
 		}
+
 
 		public string IntToRoman(int no)
 		{
